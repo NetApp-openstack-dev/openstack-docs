@@ -126,23 +126,23 @@ NetApp NFS driver when using the NetApp Copy Offload tool.
    Flowchart
    :width: 5.75000in
 
-   Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
+Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
 
-    **Note**
+**Note**
 
-    In the second decision point in the flowchart described in
-    `figure\_title <#glance.rapid_cloning_flowchart>`__, Cinder
-    determines if the source image from Glance and the destination
-    volume would reside in the same FlexVol volume. This can be achieved
-    by creating a directory structure within the NFS export to segment
-    the Glance images from Cinder volumes, and appropriately setting the
-    ``filesystem_datastore_dir`` and ``nfs_shares_config``.
+ In the second decision point in the flowchart described in
+ `figure\_title <#glance.rapid_cloning_flowchart>`__, Cinder
+ determines if the source image from Glance and the destination
+ volume would reside in the same FlexVol volume. This can be achieved
+ by creating a directory structure within the NFS export to segment
+ the Glance images from Cinder volumes, and appropriately setting the
+ ``filesystem_datastore_dir`` and ``nfs_shares_config``.
 
-    **Note**
+**Note**
 
-    Refer to `??? <#glance.eic.configuration>`__ for a complete list of
-    configuration changes needed for Enhanced Instance Creation and Copy
-    Offload tool.
+ Refer to `??? <#glance.eic.configuration>`__ for a complete list of
+ configuration changes needed for Enhanced Instance Creation and Copy
+ Offload tool.
 
 In order to take advantage of the Enhanced Instance Creation feature,
 there are several configuration options that must be appropriately set

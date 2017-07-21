@@ -10,7 +10,7 @@ consumer of the volume and the Cinder service providing the volume can
 be achieved with the iSCSI, NFS, or Fibre Channel storage protocols
 (dependent on the support of the Cinder driver deployed).
 
-    **Warning**
+.. important::
 
     A Cinder volume is an abstract storage object that may or may not
     directly map to a "volume" concept from the underlying backend

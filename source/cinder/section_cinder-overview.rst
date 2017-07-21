@@ -24,7 +24,7 @@ solution for block storage provisioning and lifecycle management.
     controller, as depicted in
     `figure\_title <#cinder.logical_architecture>`__.
 
-.. figure:: ../images/Cinder and Nova Architecture.png
+.. figure:: ../images/cinder_nova_architecture.png
    :alt: Cinder and Nova Logical Architecture
    :width: 5.75000in
 

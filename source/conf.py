@@ -21,8 +21,6 @@
 # serve to show the default.
 
 import os
-
-
 import openstackdocstheme
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -54,9 +52,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Installation Guide for Shared File Systems Service'
-bug_tag = u'install-guide'
-copyright = u'2016, OpenStack contributors'
+project = u'OpenStack Deployment and Operations Guide'
+bug_tag = u''
+copyright = u'2017, NetApp'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -73,7 +71,7 @@ release = '0.1'
 #           extracted from git log.
 #   bug_tag: Tag for categorizing the bug. Must be set manually.
 # These variables are passed to the logabug code via html_context.
-giturl = u'https://git.openstack.org/cgit/openstack/manila/tree/install-guide/source'
+giturl = u'https://github.com/netapp/openstack-deploy-ops-guide'
 git_cmd = "/usr/bin/git log | head -n1 | cut -f2 -d' '"
 gitsha = os.popen(git_cmd).read().strip('\n')
 # source tree
@@ -211,7 +209,7 @@ html_show_sourcelink = False
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'install-guide'
+htmlhelp_basename = 'deploy-ops-guide'
 
 # If true, publish source files
 html_copy_source = False
@@ -233,8 +231,9 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    ('index', 'InstallGuide.tex', u'Install Guide',
-     u'OpenStack contributors', 'manual'),
+    ('index', 'DeployOpsGuide.tex',
+     u'OpenStack Deployment and Operations Guide',
+     u'NetApp Inc.', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -277,10 +276,10 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'InstallGuide', u'Install Guide',
-     u'OpenStack contributors', 'InstallGuide',
+    ('index', 'OpenStack Deployment and Operations Guide', u'OpenStack Deployment and Operations Guide',
+     u'NetApp Inc. ', 'DeployOpsGuide',
      'This guide shows OpenStack end users how to install '
-     'an OpenStack cloud.', 'Miscellaneous'),
+     'and configure NetApp storage platforms for their OpenStack cloud.', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -301,6 +300,6 @@ locale_dirs = ['locale/']
 # -- Options for PDF output --------------------------------------------------
 
 pdf_documents = [
-    ('index', u'InstallGuide', u'Install Guide',
-     u'OpenStack contributors')
+    ('index', u'DeployOpsGuide', u'OpenStack Deployment and Operations Guide',
+     u'NetApp Inc.')
 ]
