@@ -6,11 +6,9 @@ are modular in nature and generally capable of being used independently.
 They are intended to knit together into a net capability greater than
 the sum of the individual parts.
 
-.. figure:: ../images/OpenStack Architecture.png
+.. figure:: ../images/openstack_architecture.png
    :alt: OpenStack High Level Architecture
    :width: 5.75000in
-
-   OpenStack High Level Architecture
 
 OpenStack enables enterprises and service providers to offer on-demand
 computing resources, by provisioning and managing large networks of

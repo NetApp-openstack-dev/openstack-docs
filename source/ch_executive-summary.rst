@@ -8,6 +8,12 @@ integrated with OpenStack avail a unique combination of advanced storage
 efficiency, integrated data protection, and non-disruptive operations
 with the ability to scale while preserving performance.
 
+NetApp creates innovative storage and data management solutions that
+help our customers accelerate business breakthroughs and achieve
+outstanding cost efficiency. Our dedication to principles of simplicity,
+innovation, and customer success has made us one of the fastest-growing
+storage and data management providers today.
+
 With NetApp, organizations can lower risk and enable a broad spectrum of
 cloud SLAs by combining the power and ingenuity of OpenStack cloud
 management with proven data integrity and fully-developed storage
