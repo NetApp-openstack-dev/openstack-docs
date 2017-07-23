@@ -21,7 +21,7 @@
 # serve to show the default.
 
 import os
-import openstackdocstheme
+import netappdocstheme
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -135,7 +135,7 @@ html_theme = 'openstackdocs'
 # html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = [openstackdocstheme.get_html_theme_path()]
+html_theme_path = [netappdocstheme.get_html_theme_path()]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -276,10 +276,12 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'OpenStack Deployment and Operations Guide', u'OpenStack Deployment and Operations Guide',
+    ('index', 'OpenStack Deployment and Operations Guide',
+     u'OpenStack Deployment and Operations Guide',
      u'NetApp Inc. ', 'DeployOpsGuide',
      'This guide shows OpenStack end users how to install '
-     'and configure NetApp storage platforms for their OpenStack cloud.', 'Miscellaneous'),
+     'and configure NetApp storage platforms for their OpenStack cloud.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
