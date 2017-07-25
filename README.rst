@@ -1,29 +1,18 @@
 NetApp OpenStack Deployment & Operations Guide
-===============================================
-You must have Maven (and a JDK) installed, and the first time you run mvn you will need internet connectivity to download requisite dependencies.
+==============================================
 
-You must set the Maven options environment variable to allocate sufficient memory to the JVM:
+To build this guide, you will need `tox`.
 
-```
-export MAVEN_OPTS='-Xms256m -XX:MaxPermSize=512m -Xmx512m'
-```
+Install tox by running::
 
-To build in draft mode, run:
+  pip install tox
 
-```
-mvn clean generate-resources -B -Ddraft.status=on -Ddraft.mode=yes
-```
 
-or for a clean copy:
+From inside the repository, build this guide with::
 
-```
-mvn clean generate-resources -B
-```
+  tox -e docs
 
-If successful, the PDF output will be in target/docbkx/pdf/bk-deployment-ops-guide.pdf; HTML output in target/docbkx/webhelp/bk-deployment-ops-guide-external/
 
-TODO:
+A "build" folder is created with doctrees and html output.
 
-- add spell check as part of build process
-
-See [this page](https://wikid.netapp.com/w/OpenStack/Development/OpenStackDeployOpsGuideAuthoring) for more information on how to make changes to this using our CI system.
+.. _tox: https://tox.readthedocs.io/en/latest/
