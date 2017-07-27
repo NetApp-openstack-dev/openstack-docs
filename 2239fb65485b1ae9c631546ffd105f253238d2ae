@@ -1,0 +1,9 @@
+Code-Review+2: Sumit Kumar <sumit.kumar2@netapp.com>
+QA-Review+2: Sumit Kumar <sumit.kumar2@netapp.com>
+Release+1: Sumit Kumar <sumit.kumar2@netapp.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Wed, 26 Jul 2017 20:06:13 -0400
+Reviewed-on: https://review.openstack.netapp.com/104
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
