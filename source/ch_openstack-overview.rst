@@ -1,6 +1,16 @@
 OpenStack Overview
 ==================
 
+
+.. toctree::
+   :maxdepth: 1
+
+   openstack-overview/section_openstack-foundation.rst
+   openstack-overview/section_contributions.rst
+   openstack-overview/section_modular-collection.rst
+   openstack-overview/section_releases-distribution.rst
+
+
 The OpenStack community is a global collaboration of developers and
 cloud computing technologists producing the ubiquitous open source cloud
 computing platform for public and private clouds. The project aims to

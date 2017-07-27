@@ -1,5 +1,6 @@
+*****************
 Executive Summary
-=================
+*****************
 
 Most options for OpenStack integrated storage solutions aspire to offer
 scalability, but often lack the features and performance needed for
@@ -43,6 +44,7 @@ to enable production OpenStack deployments. In particular, it’s meant to
 address the needs of system architects, system administrators, and
 storage administrators who are investigating the use or deployment of
 OpenStack.
+
 
 Authors and Contributors
 ========================

@@ -1,6 +1,15 @@
 OpenStack Object Storage Service (Swift)
 ========================================
 
+.. toctree::
+   :maxdepth: 1
+
+   swift/section_swift-overview.rst
+   swift/section_swift-disk-pools.rst
+   swift/section_swift-partitioning.rst
+   swift/section_swift-ring-considerations.rst
+   swift/section_swift-e-series.rst
+
 OpenStack Object Storage provides a fully distributed, scale-out,
 API-accessible storage platform that can be integrated directly into
 applications or used for backup, archiving and data retention. Object
