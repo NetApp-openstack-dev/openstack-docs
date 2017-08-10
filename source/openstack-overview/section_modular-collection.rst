@@ -8,7 +8,12 @@ the sum of the individual parts.
 
 .. figure:: ../images/openstack_architecture.png
    :alt: OpenStack High Level Architecture
-   :width: 5.75000in
+   :scale: 65
+
+   Figure 2.1. OpenStack High Level Architecture
+
+OpenStack Compute (project name: Nova)
+--------------------------------------
 
 OpenStack enables enterprises and service providers to offer on-demand
 computing resources, by provisioning and managing large networks of

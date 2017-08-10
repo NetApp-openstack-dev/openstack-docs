@@ -1,0 +1,5 @@
+build/*
+.tox/*
+update_html
+netappdocstheme/*
+openstack_deploy_ops_guide.egg-info/*
