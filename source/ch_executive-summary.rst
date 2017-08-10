@@ -46,8 +46,7 @@ storage administrators who are investigating the use or deployment of
 OpenStack.
 
 
-Authors and Contributors
-========================
+**Authors and Contributors**
 
 Rushi Agrawal, Sajid Akhtar, Tom Barron, Jon Benedict, Bob Callaway,
 Robert Esker, Chuck Fouts, Jim Holl, Eric Johannes, Andrew Kerr, Clinton

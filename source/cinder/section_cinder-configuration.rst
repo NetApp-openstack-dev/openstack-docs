@@ -181,7 +181,7 @@ deployment that uses the iSCSI storage protocol.
 | ``use_chap_auth``                     | Optional   |                     | This option is defined as a boolean, and specifies if unidirectional CHAP is enabled. Provides authenticated communication between iSCSI initiators and targets. For Data ONTAP the TCP port 22 (SSH) on the cluster management LIF must be open and available to set CHAP authentication credentials on the storage system.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 +---------------------------------------+------------+---------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Configuration options for clustered Data ONTAP with iSCSI
+#Table: Configuration options for clustered Data ONTAP with iSCSI
 
     **Caution**
 
@@ -918,213 +918,127 @@ ONTAP operating in 7-Mode) are:
    reports its current size, so the Cinder scheduler is never made aware
    of the autogrow limit that may or may not be enabled for the FlexVol.
 
-When configuring the NetApp unified driver to interact with a clustered
-Data ONTAP instance, you must specify the administrative account to use
-when operations are invoked by the Cinder driver. While a SVM scoped
-account is functional and supported, full functionality requires a
-cluster scoped account. The following functionality have been identified
-to not work with SVM scoped accounts at the present time:
+The NetApp unified driver talks to ONTAP via ONTAP API and HTTP(S). At a
+minimum, the ONTAP SVM administrator (vsadmin) role is required. The
+cinder driver requires cluster level rights to support scheduling based
+on some of the more advanced features. Such rights cannot be granted to
+even the SVM administrators. The following limitations apply when using
+a SVM admin role:
 
--  QoS specs API (Quality of Service), for further details see
-   `??? <#section_cinder-api-overview>`__
+cinder volume type extra specs which cannot be used, for further
+details, see `??? <#section_cinder-api-overview>`__ and
+`??? <#section_cinder-deployment-choices>`__
 
--  Disk Type extra spec, netapp\_disk\_type, for further details see
-   `??? <#section_cinder-deployment-choices>`__
+-  QoS support will be disabled and hence QOS specs cannot be used when
+   creating volumes (QoS\_support)
 
--  RAID Type extra spec, netapp\_raid\_type, for further details see
-   `??? <#section_cinder-deployment-choices>`__
+-  Disk types considerations will not be possible when creating volumes
+   (netapp\_disk\_type)
 
-    **Note**
+-  Space Efficieny will not be considered when creating volumes
+   (netapp\_dedup, netapp\_compression)
 
-    The following commands from
-    `table\_title <#cinder.cdot.permissions>`__ require cluster scoped
-    users:
+-  Headroom considerations cannot be made when creating volumes,
+   effectively, goodness and filter functions are disabled.
+   (filter\_function, goodness\_function)
 
-    -  ``snapmirror``: for versions prior to 8.2; Available at SVM level
-       for version 8.2 and above.
+-  Disk protection leves will not be considered when creating volume
+   (netapp\_raid\_type)
 
-    -  ``storage aggregate``
+**Creating least privileged role for a Cluster-Scoped Account.**
 
-    -  ``storage disk``
+1. Create role with appropriate command directory permissions for cinder
 
-    -  ``qos policy-group``
-
-    -  ``volume file modify``
-
-    Please note that SVM-scoped accounts have reduced functionality due
-    to their inability to call certain APIs.
-
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| -                                                                          | Command                           | Account Level                                                               | Access Level   |
-+============================================================================+===================================+=============================================================================+================+
-| ``Required with Cluster Account``                                          | ``vserver``                       | ``Cluster``                                                                 | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required with Cluster Account``                                          | ``event``                         | ``Cluster``                                                                 | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required with Cluster Account``                                          | ``security``                      | ``Cluster``                                                                 | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required for headroom calculation``                                      | ``statistics``                    | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Extra Specs Support``                                       | ``snapmirror``                    | ``Prior to version 8.2 : Cluster. Version 8.2 and above: SVM or Cluster``   | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Extra Specs Support``                                       | ``storage aggregate``             | ``Cluster``                                                                 | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Extra Specs Support``                                       | ``storage disk``                  | ``Cluster``                                                                 | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Extra Specs Support``                                       | ``volume``                        | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Extra Specs Support``                                       | ``volume efficiency``             | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For QoS Spec Support``                                          | ``qos policy-group``              | ``Cluster``                                                                 | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun create``                    | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun delete``                    | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun resize``                    | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun move``                      | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun``                           | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support (versions earlier than ONTAP 8.3)``           | ``lun map``                       | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support (ONTAP 8.3 or later)``                        | ``lun mapping create``            | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support (versions earlier than ONTAP 8.3)``           | ``lun unmap``                     | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support (ONTAP 8.3 or later)``                        | ``lun mapping delete``            | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun mapped``                    | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun igroup modify``             | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun igroup add``                | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun igroup create``             | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``lun igroup``                    | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``network interface``             | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``vserver iscsi``                 | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``vserver iscsi interface``       | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``version``                       | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``volume``                        | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For iSCSI Support``                                             | ``volume file clone create``      | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``fcp initiator show``            | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``fcp portname show``             | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun create``                    | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun delete``                    | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun resize``                    | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun move``                      | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun``                           | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support (versions earlier than ONTAP 8.3)``   | ``lun map``                       | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support (ONTAP 8.3 or later)``                | ``lun mapping create``            | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support (versions earlier than ONTAP 8.3)``   | ``lun unmap``                     | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support (ONTAP 8.3 or later)``                | ``lun mapping delete``            | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun mapped``                    | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun igroup modify``             | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun igroup add``                | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun igroup create``             | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``lun igroup``                    | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``vserver fcp``                   | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``vserver fcp interface``         | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``version``                       | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``volume``                        | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For Fibre Channel Support``                                     | ``volume file clone create``      | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For NFS Support``                                               | ``network interface``             | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For NFS Support``                                               | ``version``                       | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For NFS Support``                                               | ``volume``                        | ``SVM or Cluster``                                                          | ``readonly``   |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For NFS Support``                                               | ``volume file clone create``      | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For NFS Support``                                               | ``volume file modify``            | ``Cluster``                                                                 | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-| ``Required For NFS Support``                                               | ``volume file show-disk-usage``   | ``SVM or Cluster``                                                          | ``all``        |
-+----------------------------------------------------------------------------+-----------------------------------+-----------------------------------------------------------------------------+----------------+
-
-Table: Required Access Level Permissions for Commands
-
-**Creating Role for Cluster-Scoped Account.**
-
-To create a role with the necessary privilege’s required, with access
-via ONTAP API only, use the following command syntax to create the role
-and the cDOT ONTAP user:
-
-1. Create role with appropriate command directory permissions (note you
-   will need to execute this command for each of the required access
-   levels as described in the earlier tables).
+   Assign the following persmissions which are exclusive of DR,
+   replication, and protocols, each of which will be added next.
 
    ::
 
-       security login role create –role openstack –cmddirname [required command from earlier tables] -access [Required Access Level]
-                               
+       security login role create -role cluster-scoped-limited-permissions -cmddirname vserver -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "system node" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname security -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "security login role" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname statistics -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "statistics catalog counter" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "statistics catalog instance" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "statistics catalog" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "storage disk" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "storage aggregate" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "network interface" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "volume efficiency" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "qos policy-group" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname version -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname event -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "volume file clone" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "volume file clone split" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "volume snapshot" -access all
+                                       
+
+   Assign the following permissions if NetApp cinder driver is to
+   support NFS
+
+   ::
+
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "volume file" -access all
+                                       
+
+   Assign the following permissions if NetApp cinder driver is to
+   support iSCSI and or FC
+
+   ::
+
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "lun" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "lun mapping" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "lun igroup" -access all
+                                       
+
+   Assign the following permissions if NetApp cinder driver is to
+   support iSCSI
+
+   ::
+
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "vserver iscsi interface" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "vserver iscsi security" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "vserver iscsi" -access readonly
+                                       
+
+   Assign the following permissions if NetApp cinder driver is to
+   support FC
+
+   ::
+
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "vserver fcp portname" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "vserver fcp interface" -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "vserver fcp" -access readonly
+                                       
+
+   Assign the following permissions if NetApp cinder driver is to
+   support replication but not cheesecake DR
+
+   ::
+
+       security login role create -role cluster-scoped-limited-permissions -cmddirname snapmirror -access readonly
+       security login role create -role cluster-scoped-limited-permissions -cmddirname volume -access readonly
+                                       
+
+   Assign the following permissions if NetApp cinder driver is to
+   support replication along with cheesecake DR
+
+   ::
+
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "cluster peer" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "cluster peer policy" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname "vserver peer" -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname snapmirror -access all
+       security login role create -role cluster-scoped-limited-permissions -cmddirname volume -access all
+                                       
 
 2. Command to create user with appropriate role
 
    ::
 
-       security login create –username openstack –application ontapi –authmethod password –role openstack
-                               
-
-**Creating Role for SVM-Scoped Account.**
-
-To create a role with the necessary privileges required, with access via
-ONTAP API only, use the following command syntax to create the role and
-the cDOT ONTAP user:
-
-1. Create role with appropriate command directory permissions (note you
-   will need to execute this command for each of the required access
-   levels as described in the earlier tables).
-
-   ::
-
-       security login role create –role openstack -vserver [vserver_name] –cmddirname [required command from earlier tables] -access [Required Access Level]
-                               
-
-2. Command to create user with appropriate role
-
-   ::
-
-       security login create –username openstack –application ontapi –authmethod password –role openstack -vserver [vserver_name]
-                               
-
-    **Tip**
-
-    For more information on how to grant these access level permissions
-    to a role, and then assign the role to an SVM administrative
-    account, please refer to the `System Administration Guide for
-    Cluster Administrators <http://support.netapp.com>`__ document in
-    the Clustered DATA ONTAP documentation.
+       security login create –username openstack –application ontapi –authmethod password –role cluster-scoped-limited-permissions
+                                       
 
 1. Ensure there is segmented network connectivity between the hypervisor
    nodes and the Data LIF interfaces from Data ONTAP.

@@ -5,15 +5,26 @@ Using thin provisioning, FlexVol volumes can be configured to appear to
 provide more storage than available. If FlexVol volumes associated with
 an aggregate show more storage as available than the physical resources
 available to the aggregates (disk pools) backing the FlexVol, the
-aggregate is overcommitted. When an aggregate is overcommitted, it is
+aggregate is over committed. When an aggregate is over committed, it is
 possible for writes to LUNs or files in FlexVols contained by that
 aggregate to fail if there is insufficient free space available to
-accommodate those writes. Consider the following scenarios:
+accommodate those writes.
+
+Consider the following scenarios:
 
     **Note**
 
     For the following scenarios, assume that the reserved\_percentage is
-    set to 0, and max\_oversubsubscription\_ratio is set to 0.
+    set to 0, and max\_over\_subscription\_ratio is set to 1.0.
+
+Before we begin, note the cinder syntax to create a volume type that
+supports thin provisioning:
+
+::
+
+    [admin@openstack ~(keystonerc_admin)]$ cinder type-create thin
+    [admin@openstack ~(keystonerc_admin)]$ cinder type-key thin set thin_provisioning_support="<is> True"
+                
 
 Scenario A: Creating a Cinder Volume with Sufficient Available Space in
 Aggregate Aggregate Capacity: 10 TB FlexVol Size: 100 TB (Thin
@@ -23,9 +34,7 @@ Volume 2 Requirement: 5TB (Thin Provisioned)
 
 ::
 
-    [admin@openstack ~(keystone_admin)]$ cinder type-create thin
-    [admin@openstack ~(keystone_admin)]$ cinder type-key thin set netapp_thin_provisioned=True
-    [admin@openstack ~(keystone_admin)]$ cinder create --name cinder-vola --volume-type thin 5000
+    [admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-a --volume-type thin 5000
             
 
 The above command to create a new 5TB thin provisioned Cinder volume
@@ -44,7 +53,7 @@ Requirement: 10TB (Thin Provisioned)
 
 ::
 
-    [admin@openstack ~(keystone_admin)]$ cinder create --name cinder-volb --volume-type thin 10000
+    [admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-b --volume-type thin 10000
             
 
 The above command to create a new thin provisioned Cinder volume will
@@ -54,22 +63,22 @@ provisioning request.
 Scenario C: Resizing Thin Provisioned FlexVol Volume for Cinder
 Volume(s) Aggregate Capacity: 500 TB FlexVol Size: 50 TB (Thin
 Provisioned) Cinder Volume 1 Size: 10TB (Thin Provisioned Extra Spec),
-10TB used (volume is already provisioned). Available: 90 TB Cinder
+10TB used (volume is already provisioned). Available: 40 TB Cinder
 Volume 2 Requirement: 100TB (Thin Provisioned)
 
 ::
 
-    [admin@openstack ~(keystone_admin)]$ cinder create --name cinder-volc --volume-type thin 100000
+    [admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-c --volume-type thin 100000
             
 
 The above command to create a new thin provisioned Cinder volume will
 fail since the FlexVol size is smaller than the requirement for
-cinder-volc. In order to provision this 100TB Cinder volume, please
-resize the FlexVol, and try the provisioning request again. As an
-alternative, please adjust the max\_oversubscription\_ratio from 0 to a
-higher value. Details on this cinder.conf parameter are available below.
+cinder-vol-c. In order to provision this 100TB Cinder volume, resize the
+FlexVol and try the provisioning request again. As an alternative,
+please adjust the max\_over\_subscription\_ratio from 1.0 to a higher
+value. Details on this ``cinder.conf`` parameter are available below.
 
-If you have overcommitted your aggregate, you must monitor your
+If you have over committed your aggregate, you must monitor your
 available space and add storage to the aggregate as needed to avoid
 write errors due to insufficient space. Aggregates can provide storage
 to FlexVol volumes associated with more than one Storage Virtual Machine
@@ -90,17 +99,17 @@ technical reports:
     **Note**
 
     Thin provisioning helps maximize storage utilization. However, if
-    aggregates are overcommitted through thin provisioning, usage must
+    aggregates are over committed through thin provisioning, usage must
     be monitored, and capacity must be increased as usage nears
     predefined thresholds.
 
 In order to provision a larger capacities than allowed, use the
-max\_oversubscription\_ratio parameter in the cinder.conf file. For
-example:
+``max_over_subscription_ratio`` parameter in the ``cinder.conf`` file.
+For example:
 
 ::
 
-    #/etc/cinder/cinder.conf
+    # /etc/cinder/cinder.conf
 
     [DEFAULT]
     …
@@ -108,15 +117,15 @@ example:
     [NetAppBackend]
     …
     …
-    max_over_subscription_ratio=1
+    max_over_subscription_ratio = 2.0
             
 
-In this case, the max\_oversubscription\_ratio will permit the creation
-of volumes that that are oversubscribed by a factor of 1. Consider the
-following scenarios:
+In this case, the max\_over\_subscription\_ratio will permit the
+creation of volumes that that are oversubscribed by a factor of 2.
+Consider the following scenarios:
 
-Scenario X: FlexVol Volume Size: 10GB max\_over\_subscription\_ratio=0
-Total Thin Provisioned Capacity: 10 + (0\*10) = 10GB
+Scenario X: FlexVol Volume Size: 10GB max\_over\_subscription\_ratio =
+1.0 Total Perceived Free Capacity for Provisioning: 1.0 \* 10 = 10GB
 
 ::
 
@@ -124,8 +133,8 @@ Total Thin Provisioned Capacity: 10 + (0\*10) = 10GB
     # cinder create 11 # failure, since no oversubscription is allowed
             
 
-Scenario Y: FlexVol Volume Size: 10GB max\_over\_subscription\_ratio=1
-Total Thin Provisioned Capacity: 10 + (1\*10) = 20GB
+Scenario Y: FlexVol Volume Size: 10GB max\_over\_subscription\_ratio =
+2.0 Total Perceived Free Capacity for Provisioning: 2.0 \* 10 = 20GB
 
 ::
 
@@ -134,25 +143,29 @@ Total Thin Provisioned Capacity: 10 + (1\*10) = 20GB
     # cinder create 21 # failure
             
 
-Scenario Z: FlexVol Volume Size: 10GB max\_over\_subscription\_ratio=4
-Total Thin Provisioned Capacity: 10 + (4\*10) = 50GB
+Scenario Z: FlexVol Volume Size: 10GB max\_over\_subscription\_ratio = 4
+Total Perceived Free Capacity for Provisioning: 4.0 \* 10 = 40GB
 
 ::
 
-    # cinder create 50 # success, since up to 40GB of capacity can be oversubscribed
-    # cinder create 51 # failure
+    # cinder create 40 # success, since up to 40GB of capacity can be oversubscribed
+    # cinder create 41 # failure
             
 
     **Note**
 
-    After adjusting the max\_over\_subscription\_ratio, please restart
-    the cinder scheduler and volume services. ex. systemctl restart
-    openstack-cinder-{scheduler,volume}
+    After adjusting the max\_over\_subscription\_ratio, restart the
+    cinder scheduler and volume services. ex:
+
+    ::
+
+                            systemctl restart openstack-cinder-{scheduler,volume}
+                        
 
 This represents a part of the FlexVol that is reserved and cannot be
 used for provisioning. This can be useful, for example, if a FlexVol is
 used for multiple applications, some of them using storage that is not
-managed by OpenStack Cinder. Specify this parameter in cinder.conf:
+managed by OpenStack Cinder. Specify this parameter in ``cinder.conf``:
 
 ::
 
@@ -170,23 +183,15 @@ managed by OpenStack Cinder. Specify this parameter in cinder.conf:
 Consider another example:
 
 FlexVol Size: 100GB Snapshot reserve: 10% Effective FlexVol Size: 90GB
-reserved\_percentage=50 #specified in cinder.conf FlexVol size as seen
-by Cinder backend: 50%\*90 = 45GB
+max\_over\_subscription\_ratio = 1.5 reserved\_percentage = 50
+#specified in ``cinder.conf`` Total Perceived Free Capacity for
+Provisioning: 1.5 \* 50%\*90 = 67.5GB
 
 ::
 
-    # cinder create 45 #succeeds since 45GB is allocated for this Cinder backend
-    # cinder create 46 #fails
+    # cinder create 67 # succeeds since that much free space is perceived to be available
+    # cinder create 68 # fails
             
-
-    **Note**
-
-    Thin provisioning will allow the creation of multiple FlexVols whose
-    total size can exceed the capacity reserved. In the above scenario,
-    it is possible to create another Cinder volume of size 45GB if thin
-    provisioning is enabled, and the
-    thin\_provisioning=\ ``"<is> True"`` extra spec is used. (assume
-    max\_oversubscription\_ratio=0).
 
 Be sure to refer to the `Clustered Data ONTAP NFS Best Practices and
 Implementation
@@ -277,5 +282,5 @@ Storage Options at the Hypervisor section.
     **Note**
 
     In order to use live migration with E-Series it is necessary to set
-    netapp\_enable\_multiattach in cinder.conf. Please refer to Nova
+    netapp\_enable\_multiattach in ``cinder.conf``. Please refer to Nova
     Live Migration of Instances with Attached E-Series Volumes.
