@@ -18,7 +18,7 @@ project name Manila, which adds a shared file system service to the
 existing block and object storage services. This addresses a critical
 gap in OpenStack’s storage services coverage and enablesg a new category
 of on-demand file storage for Infrastructure as a Service (IaaS)
-deployments. Refer to `??? <#ch_manila>`__ for more information on
+deployments. Refer to :doc:`OpenStack Shared File System Service (Manila) <../../ch_manila>` for more information on
 Manila.
 
 Where possible, NetApp intends to (and has to date) contribute
