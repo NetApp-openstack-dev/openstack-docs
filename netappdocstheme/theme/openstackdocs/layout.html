@@ -17,17 +17,17 @@
     <link rel="shortcut icon" href="{{ pathto('_static/favicon.ico') }}"/>
 {% endif %}
 {% if theme_analytics_tracking_code %}
-<!-- Google Analytics -->
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+<!--&lt;!&ndash; Google Analytics &ndash;&gt;-->
+<!--<script>-->
+<!--(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){-->
+<!--(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),-->
+<!--m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)-->
+<!--})(window,document,'script','//www.google-analytics.com/analytics.js','ga');-->
 
-ga('create', '{{ theme_analytics_tracking_code }}', 'auto');
-ga('send', 'pageview');
-</script>
-<!-- End Google Analytics -->
+<!--ga('create', '{{ theme_analytics_tracking_code }}', 'auto');-->
+<!--ga('send', 'pageview');-->
+<!--</script>-->
+<!--&lt;!&ndash; End Google Analytics &ndash;&gt;-->
 {% endif %}
   </head>
   <body>
@@ -87,7 +87,7 @@ ga('send', 'pageview');
               {%- if bug_project %}
               <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
               {%- endif %}
-              <a href="http://ask.openstack.org" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
             </div>
           </div>
         </div>
