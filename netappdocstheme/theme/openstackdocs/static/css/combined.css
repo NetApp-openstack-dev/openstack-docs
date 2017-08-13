@@ -1304,7 +1304,7 @@ a.overview-btn {
   margin-bottom: 5px; }
 
 a.overview-btn:hover {
-  background: #2A4E68; }
+  background: #0067C5; }
 
 a.overview-btn.left-btn {
   border-top-right-radius: 0;
@@ -1449,7 +1449,7 @@ li.customer-logos img {
   text-align: center; }
 
 a.customer-btn {
-  background: #2A4E68;
+  background: #0067C5;
   color: #fff;
   text-transform: uppercase;
   border-radius: 4px;
@@ -2037,7 +2037,7 @@ footer {
   margin-bottom: 20px; }
 
 .postEvent a {
-  background: #2A4E68;
+  background: #0067C5;
   padding: 10px 25px;
   border-radius: 4px;
   color: #fff; }
@@ -2229,7 +2229,7 @@ img.icehouse-video {
 
 .documentation a:hover {
   text-decoration: none;
-  background: #2A4E68; }
+  background: #0067C5; }
 
 @media (max-width: 767px) {
   .documentation a {
@@ -2902,7 +2902,7 @@ img.summit-landing-logo {
 
 .carousel-inner .item {
   height: 350px;
-  background: #2A4E68; }
+  background: #0067C5; }
 
 .carousel-control {
   text-shadow: none; }
@@ -3209,7 +3209,7 @@ a.main-video:hover .video-description-wrapper .video-description p {
 
 .featured-row {
   width: 100%;
-  background: #2A4E68;
+  background: #0067C5;
   padding: 0;
   position: relative;
   display: block;
@@ -3394,7 +3394,7 @@ a.main-video:hover .video-description-wrapper .video-description p {
 
 .video-dropdown > .dropdown-menu li a:hover {
   color: white;
-  background: #2A4E68; }
+  background: #0067C5; }
 
 .video-dropdown > .dropdown-menu li a:focus {
   outline: none; }
@@ -3524,7 +3524,7 @@ p.single-video-description {
   margin-top: 10px; }
 
 a.media-btn {
-  background: #2A4E68;
+  background: #0067C5;
   color: white;
   padding: 10px 20px;
   border-radius: 4px;
@@ -3668,7 +3668,7 @@ input.docs-main-search:-ms-input-placeholder {
   font-weight: 300; }
 
 .docs-dropdown > a {
-  background: #2A4E68;
+  background: #0067C5;
   padding: 20px 5px;
   text-align: center;
   font-size: 13px;
@@ -3832,7 +3832,7 @@ a.overview-btn.contribute-btn i {
   width: 100%; }
 
 .docs-sidebar-releases button {
-  background: #2A4E68;
+  background: #0067C5;
   color: #edf2f7;
   display: inline-block;
   text-align: center;
