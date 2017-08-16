@@ -22,6 +22,9 @@ business requirements.
 
 Data ONTAP powers NetApp’s fabric-attached storage (FAS) hardware line.
 
+Clustered Data ONTAP
+--------------------
+
 Scaling performance while controlling costs is one of the most
 challenging efforts in the data center. High-performance, technical
 computing, and digital media content applications place extreme demands
@@ -57,7 +60,7 @@ Clustered Data ONTAP is an operating system from NetApp that includes:
 NetApp’s storage clustering feature within Data ONTAP provides a number
 of key benefits, including the ability to:
 
-**Accelerate performance.**
+**Accelerate Performance**
 
 Clustered Data ONTAP uses a clustered file system technology to provide
 maximum input/output (I/O) throughput and remove the bottlenecks that
@@ -70,7 +73,7 @@ load-balancing mirrors within Data ONTAP with a clustering system or add
 NetApp FlexCache storage accelerators in front of the system to deliver
 much higher read throughput.
 
-**Simplify storage and data management.**
+**Simplify Storage and Data Management**
 
 Clustered Data ONTAP supports fully integrated storage solutions that
 are easy to install, manage, and maintain. Enhancing this with its
@@ -81,7 +84,7 @@ even if that data is moved. By offering a single system image across
 multiple storage nodes, the global namespace eliminates the need for
 complex automounter maps and symbolic link scripts.
 
-**Improve data access.**
+**Improve Data Access**
 
 Storage is virtualized at the file system level to enable all compute
 nodes to mount a single file system, access all stored data, and
@@ -90,7 +93,7 @@ transparent to the compute cluster. Each client can access a huge pool
 of information residing anywhere in the storage cluster through a single
 mount point.
 
-**Keep resources in balance without disrupting operations.**
+**Keep Resources in Balance Without Disrupting Operations**
 
 As storage nodes are added to the cluster, physical resources, including
 CPU, cache memory, network I/O bandwidth, and disk I/O bandwidth, are
@@ -104,7 +107,7 @@ these tasks are accomplished without the need to remount shares, modify
 client settings, or stop active workloads as is typically the case with
 traditional or other high-performance computing storage systems.
 
-**Simplify installation and maintenance.**
+**Simplify Installation and Maintenance**
 
 Using standard Network File System (NFS) and Common Internet File System
 (CIFS) protocols to access clustered Data ONTAP systems without needing
@@ -115,7 +118,7 @@ capacity allocation and storage management tasks, resulting in more time
 to address organizational goals and objectives and less time spent
 managing storage.
 
-**Meet high-availability requirements.**
+**Meet High-Availability Requirements**
 
 Along with stringent performance requirements, high reliability is
 important for technical applications and cluster computing. Clustered
@@ -129,7 +132,7 @@ reconfiguration of the storage infrastructure while online, enabling
 applications to run uninterrupted as more storage capacity, processing
 power, and/or throughput is added.
 
-**Enable continuous operations.**
+**Enable Continuous Operations**
 
 Clustered Data ONTAP is configured for continuous operation with the use
 of high-performance and modular NetApp storage components. Each system
@@ -145,6 +148,9 @@ tiers of disk as performance requirements change. This capability makes
 sure that data center and IT administrators can maximize performance
 where needed while simultaneously improving capacity utilization.
 
+Data ONTAP operating in 7-Mode
+------------------------------
+
 While clustered Data ONTAP is the preferred operating mode for nearly
 all new Data ONTAP installations, and is NetApp’s focal point for future
 delivery of additional enhancement and innovation, there are a
@@ -153,36 +159,32 @@ valid operational considerations that require ongoing use. While NetApp
 has provided Cinder driver enablement for 7-Mode systems, NetApp
 recommends that clustered Data ONTAP be used whenever possible.
 
-    **Important**
-
-    The NetApp unified driver in Cinder currently provides integration
-    for two major generations of the ONTAP operating system: the current
-    “clustered” ONTAP and the legacy 7-mode. NetApp’s “full support” for
-    7-mode ended in August of 2015 and the current “limited support”
-    period will end in February of 2017 [1].
-
-    In accordance with community policy [2], we are initiating the
-    deprecation process for the 7-mode components of the Cinder NetApp
-    unified driver set to conclude with their removal in the Queens
-    release. This will apply to all three protocols currently supported
-    in this driver: iSCSI, FC and NFS.
-
-    -  ``What is being deprecated:`` Cinder drivers for NetApp Data
-       ONTAP 7-mode NFS, iSCSI, FC
-
-    -  ``Period of deprecation:`` 7-mode drivers will be around in
-       stable/ocata and stable/pike and will be removed in the Queens
-       release (All milestones of this release)
-
-    -  ``What should users/operators do:`` Follow the recommended
-       migration path to upgrade to Clustered Data ONTAP [3] or get in
-       touch with your NetApp support representative.
-
-    1. `Transition Fundamentals and
-       Guidance <https://transition.netapp.com/>`__
-
-    2. `OpenStack deprecation
-       policy <https://governance.openstack.org/tc/reference/tags/assert_follows-standard-deprecation.html>`__
-
-    3. `Clustered Data ONTAP for 7-Mode
-       Administrators <https://mysupport.netapp.com/info/web/ECMP1658253.html>`__
+.. important:: The NetApp unified driver in Cinder currently provides 
+   integration for two major generations of the ONTAP operating system: 
+   the current “clustered” ONTAP and the legacy 7-mode. NetApp’s “full 
+   support” for 7-mode ended in August of 2015 and the current “limited 
+   support” period will end in February of 2017 [1]_. 
+   
+   In accordance with community policy [2]_, we are initiating the
+   deprecation process for the 7-mode components of the Cinder NetApp
+   unified driver set to conclude with their removal in the Queens
+   release. This will apply to all three protocols currently supported
+   in this driver: iSCSI, FC and NFS. 
+   
+   - What is being deprecated: Cinder drivers for NetApp Data
+     ONTAP 7-mode NFS, iSCSI, FC    
+   - Period of deprecation: 7-mode drivers will be around in
+     stable/ocata and stable/pike and will be removed in the Queens
+     release (All milestones of this release)
+   - What should users/operators do: Follow the recommended
+     migration path to upgrade to Clustered Data ONTAP [3]_ or get in
+     touch with your NetApp support representative.
+  
+   .. [1]
+      `Transition Fundamentals and Guidance <https://transition.netapp.com/>`_
+  
+   .. [2]
+      `OpenStack Deprecation Policy <https://governance.openstack.org/tc/reference/tags/assert_follows-standard-deprecation.html>`_
+ 
+   .. [3]
+      `Clustered Data ONTAP for 7-Mode Administrators <https://mysupport.netapp.com/info/web/ECMP1658253.html>`_
