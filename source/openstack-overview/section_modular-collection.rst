@@ -8,10 +8,15 @@ the sum of the individual parts.
 
 .. figure:: ../images/openstack_architecture.png
    :alt: OpenStack High Level Architecture
-   :width: 5.75000in
+   :scale: 65
+
+   Figure 2.1. OpenStack High Level Architecture
+
+OpenStack Compute (project name: Nova)
+--------------------------------------
 
 OpenStack enables enterprises and service providers to offer on-demand
-computing resources, by provisioning and managing large networks of
+computing resources by provisioning and managing large networks of
 virtual machines. Compute resources are accessible via APIs for
 developers building cloud applications and through web interfaces for
 administrators and users. The compute architecture is designed to scale
@@ -22,6 +27,9 @@ It is designed to manage and automate pools of compute resources and can
 work with widely available virtualization technologies, as well as bare
 metal and high-performance computing configurations.
 
+OpenStack Block Storage (project name: Cinder)
+----------------------------------------------
+
 OpenStack Block Storage provides a “block storage as a service”
 capability. It provides persistent block devices mapped to OpenStack
 compute instances (which are otherwise assumed to be ephemeral). The
@@ -31,6 +39,9 @@ booting and provides mechanisms for creating Snapshot copies and
 cloning. While fully integrated with OpenStack Compute and Dashboard, it
 can also be used independent of OpenStack to provide a standardized
 abstraction for block storage provisioning.
+
+OpenStack Object Storage (project name: Swift)
+----------------------------------------------
 
 OpenStack Object Storage provides a fully distributed, scale-out,
 API-accessible storage platform that can be integrated directly into
@@ -43,6 +54,9 @@ similar to CDMI, proposes an open standard for cloud storage. It can
 also function as an alternative endpoint for Amazon Web Services S3 and
 as a CDMI server through the use of add-on components.
 
+OpenStack Dashboard (project name: Horizon)
+-------------------------------------------
+
 The OpenStack Dashboard provides administrators and users a graphical
 interface to access, provision and automate cloud-based resources. The
 extensible design makes it easy to plug in and expose third-party
@@ -54,6 +68,9 @@ Developers can automate access or build tools to manage their resources
 that use the native OpenStack API or the EC2 compatibility API. The
 dashboard provides users a self-service portal to provision their own
 resources within the limits set by administrators.
+
+OpenStack Identity (project name: Keystone)
+-------------------------------------------
 
 OpenStack Identity provides a central directory of users mapped to the
 OpenStack services they can access. It acts as a common authentication
@@ -79,6 +96,9 @@ OpenStack Identity enables:
    API requests or log into the web dashboard to create resources owned
    by your account
 
+OpenStack Image Service (project name: Glance)
+----------------------------------------------
+
 The OpenStack Image Service provides discovery, registration and
 delivery services for disk and server images. The ability to copy or
 snapshot a server image and immediately store it away is a powerful
@@ -93,6 +113,9 @@ Image Service API provides a standard REST interface for querying
 information about disk images and lets clients stream the images to new
 servers. A multiformat image registry allowing uploads of private and
 public images in a variety of formats.
+
+OpenStack Network Service (project name: Neutron)
+-------------------------------------------------
 
 OpenStack Networking is a pluggable, scalable and API-driven system for
 managing networks and IP addresses. Like other aspects of the cloud
@@ -109,12 +132,18 @@ framework allowing additional network services, such as intrusion
 detection systems (IDS), load balancing, firewalls and virtual private
 networks (VPN) to be deployed and managed.
 
+OpenStack Telemetry (project name: Ceilometer)
+----------------------------------------------
+
 OpenStack Telemetry provides common infrastructure to collect usage and
 performance measurements within an OpenStack cloud. Its primary initial
 targets are monitoring and metering, but the framework is expandable to
 collect data for other needs. Ceilometer was promoted from incubation
 status to an integrated component of OpenStack in the Grizzly (April
 2013) release.
+
+OpenStack Orchestration (project name: Heat)
+--------------------------------------------
 
 OpenStack Orchestration implements a service to orchestrate multiple
 composite cloud applications that use the Amazon Web Services (AWS)
@@ -123,6 +152,9 @@ CloudFormation-compatible API. It is intended, in part, to facilitate
 movement of workloads from AWS to OpenStack deployments. Heat was
 promoted from incubation status to an integrated component of OpenStack
 in the Grizzly (April 2013) release.
+
+OpenStack Database as a Service (project name: Trove)
+-----------------------------------------------------
 
 OpenStack Database as a Service allows users to quickly and easily
 utilize the features of a relational database without the burden of
@@ -134,11 +166,17 @@ including deployment, configuration, patching, backups, restores, and
 monitoring. Trove was promoted from incubation status to an integrated
 component of OpenStack in the Icehouse (April 2014) release.
 
+OpenStack Hadoop as a Service (project name: Sahara)
+----------------------------------------------------
+
 The OpenStack Hadoop as a Service project aims to provide users with
 simple means to provision a Hadoop cluster by specifying several
 parameters like Hadoop version, cluster topology, nodes' hardware
 details, etc. Sahara was promoted from incubation status to an
 integrated component of OpenStack in the Icehouse (April 2014) release.
+
+OpenStack File Share Service (project name: Manila)
+---------------------------------------------------
 
 OpenStack File Share Service provides coordinated access to shared or
 distributed file systems. While the primary consumption of file shares
@@ -151,8 +189,6 @@ intended to be sufficiently abstract to accommodate any of a variety of
 shared or distributed file system types. Manila was officially denoted
 as an incubated OpenStack program during the Juno release cycle.
 
-    **Note**
-
-    The OpenStack Foundation regularly evaluates new project
-    contributions for eventual inclusion as officially integrated. As
-    such, the list declared previously is expected to grow over time.
+.. note:: The OpenStack Foundation regularly evaluates new project
+   contributions for eventual inclusion as officially integrated.
+   As such, the list declared previously is expected to grow over time.

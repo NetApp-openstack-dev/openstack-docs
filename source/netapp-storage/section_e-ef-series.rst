@@ -1,3 +1,5 @@
+.. _ef-series:
+
 Description of E-Series and EF-Series Systems
 =============================================
 

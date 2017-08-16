@@ -16,16 +16,15 @@ more comprehensive cloud infrastructure. This is not an explicit
 requirement, as Cinder has been successfully deployed as a standalone
 solution for block storage provisioning and lifecycle management.
 
-    **Tip**
+.. tip::
 
-    As a management service, Cinder controls the provisioning and
-    lifecycle management of block storage volumes. It does not reside in
-    the I/O (data) path between the hypervisor and the storage
-    controller, as depicted in
-    `figure\_title <#cinder.logical_architecture>`__.
+   As a management service, Cinder controls the provisioning and
+   lifecycle management of block storage volumes. It does not reside in
+   the I/O (data) path between the hypervisor and the storage
+   controller, as depicted in Figure 4.1 below.
 
 .. figure:: ../images/cinder_nova_architecture.png
    :alt: Cinder and Nova Logical Architecture
-   :width: 5.75000in
+   :scale: 100
 
-   Cinder and Nova Logical Architecture
+   Figure 4.1. Cinder and Nova Logical Architecture

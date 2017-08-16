@@ -1,6 +1,9 @@
 Key Concepts
 ============
 
+Volume
+------
+
 A Cinder volume is the fundamental resource unit allocated by the Block
 Storage service. It represents an allocation of persistent, readable,
 and writable block storage that could be utilized as the root disk for a
@@ -10,7 +13,7 @@ consumer of the volume and the Cinder service providing the volume can
 be achieved with the iSCSI, NFS, or Fibre Channel storage protocols
 (dependent on the support of the Cinder driver deployed).
 
-.. important::
+.. warning::
 
     A Cinder volume is an abstract storage object that may or may not
     directly map to a "volume" concept from the underlying backend
@@ -27,7 +30,7 @@ Cinder.
 The actual blocks provisioned in support of a Cinder volume reside on a
 single Cinder backend. Starting in the Havana release, a Cinder volume
 can be migrated from one storage backend to another within a deployment
-of the Cinder service; refer to `??? <#cinder.examples.cinder_cli>`__
+of the Cinder service; refer to the section called ":ref:`cinder-cli`"
 for an example of volume migration.
 
 The ``cinder manage`` command allows importing existing storage objects
@@ -40,17 +43,19 @@ The imported storage object could be a file, LUN, or a volume depending
 on the protocol (iSCSI/FC/NFS) and driver (Data ONTAP operating in
 7-mode, clustered Data ONTAP, or E-Series) in use. This feature is
 useful in migration scenarios where virtual machines or other data need
-to be managed by Cinder; refer to
-`??? <#cinder.examples.cinder_cli.manage>`__ for an example of the
-``cinder manage`` command.
+to be managed by Cinder; refer to the section called
+":ref:`cinder-manage`" for an example of the ``cinder manage`` command.
 
 The ``cinder unmanage`` command allows Cinder to cease management of a
 particular Cinder volume. All data stored in the Cinder database related
 to the volume is removed, but the volume's backing file, LUN, or
 appropriate storage object is not deleted. This allows the volume to be
-transferred to another environment for other use cases; refer to
-`??? <#cinder.examples.cinder_cli.unmanage>`__ for an example of the
+transferred to another environment for other use cases; refer to the
+section called ":ref:`cinder-unmanage`" for an example of the
 ``cinder unmanage`` command.
+
+Snapshot
+--------
 
 A Cinder snapshot is a point-in-time, read-only copy of a Cinder volume.
 Snapshots can be created from an existing Cinder volume that is
@@ -59,6 +64,9 @@ Cinder snapshot can serve as the content source for a new Cinder volume
 when the Cinder volume is created with the *create from snapshot* option
 specified.
 
+Backend
+-------
+
 A Cinder backend is the configuration object that represents a single
 provider of block storage upon which provisioning requests may be
 fulfilled. A Cinder backend communicates with the storage system through
@@ -66,32 +74,37 @@ a Cinder driver. Cinder supports multiple backends to be simultaneously
 configured and managed (even with the same Cinder driver) as of the
 Grizzly release.
 
-    **Note**
+.. note::
 
-    A single Cinder backend may be defined in the ``[DEFAULT]`` stanza
-    of ``cinder.conf``; however, NetApp recommends that the
-    ``enabled_backends`` configuration option be set to a
-    comma-separated list of backend names, and each backend name have
-    its own configuration stanza with the same name as listed in the
-    ``enabled_backends`` option. Refer to
-    `??? <#cinder.configuration>`__ for an example of the use of this
-    option.
+   A single Cinder backend may be defined in the ``[DEFAULT]`` stanza
+   of ``cinder.conf``; however, NetApp recommends that the
+   ``enabled_backends`` configuration option be set to a
+   comma-separated list of backend names, and each backend name have
+   its own configuration stanza with the same name as listed in the
+   ``enabled_backends`` option. Refer to the section called
+   ":ref:`cinder`" for an example of the use of this option.
+
+Driver
+------
 
 A Cinder driver is a particular implementation of a Cinder backend that
 maps the abstract APIs and primitives of Cinder to appropriate
 constructs within the particular storage solution underpinning the
 Cinder backend.
 
-    **Caution**
+.. caution::
 
-    The use of the term "driver" often creates confusion given common
-    understanding of the behavior of “device drivers” in operating
-    systems. The term can connote software that provides a data I/O
-    path. In the case of Cinder driver implementations, the software
-    provides provisioning and other manipulation of storage devices but
-    does not lay in the path of data I/O. For this reason, the term
-    "driver" is often used interchangeably with the alternative (and
-    perhaps more appropriate) term “provider”.
+   The use of the term "driver" often creates confusion given common
+   understanding of the behavior of “device drivers” in operating
+   systems. The term can connote software that provides a data I/O
+   path. In the case of Cinder driver implementations, the software
+   provides provisioning and other manipulation of storage devices but
+   does not lay in the path of data I/O. For this reason, the term
+   "driver" is often used interchangeably with the alternative (and
+   perhaps more appropriate) term “provider”.
+
+Volume Type
+-----------
 
 A Cinder volume type is an abstract collection of criteria used to
 characterize Cinder volumes. They are most commonly used to create a
@@ -110,33 +123,35 @@ Cinder scheduler, which are then compared against volume type
 definitions when determining which backend will fulfill a provisioning
 request.
 
-**Extra Spec.**
+Extra Spec
+----------
 
 An extra spec is a key/value pair, expressed in the style of
 ``key=value``. Extra specs are associated with Cinder volume types, so
 that when users request volumes of a particular volume type, the volumes
 are created on storage backends that meet the specified criteria.
 
-    **Note**
+.. note::
 
-    The list of default capabilities that may be reported by a Cinder
-    driver and included in a volume type definition include:
+   The list of default capabilities that may be reported by a Cinder
+   driver and included in a volume type definition include:
 
-    -  ``volume_backend_name``: The name of the backend as defined in
-       ``cinder.conf``
+   -  ``volume_backend_name``: The name of the backend as defined in
+      ``cinder.conf``
 
-    -  ``vendor_name``: The name of the vendor who has implemented the
-       driver (e.g. ``NetApp``)
+   -  ``vendor_name``: The name of the vendor who has implemented the
+      driver (e.g. ``NetApp``)
 
-    -  ``driver_version``: The version of the driver (e.g. ``1.0``)
+   -  ``driver_version``: The version of the driver (e.g. ``1.0``)
 
-    -  ``storage_protocol``: The protocol used by the backend to export
-       block storage to clients (e.g. ``iSCSI``, ``fc``, or ``nfs``)
+   -  ``storage_protocol``: The protocol used by the backend to export
+      block storage to clients (e.g. ``iSCSI``, ``fc``, or ``nfs``)
 
-    For a table of NetApp supported extra specs, refer to
-    `??? <#cinder.netapp.extra_specs>`__.
+   For a table of NetApp supported extra specs, refer to
+   :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”<table-4.11>`.
 
-**Quality of Service.**
+Quality of Service
+------------------
 
 The Cinder Quality of Service (QoS) support for volumes can be enforced
 either at the hypervisor or at the storage subsystem (``backend``), or
@@ -156,7 +171,7 @@ using NetApp QoS policy groups, introduced with clustered Data ONTAP
    Cinder extra-spec. Use the netapp:qos\_policy\_group option when a
    Service Level Objective (SLO) needs to be applied to a set of Cinder
    volumes. For more information on this, see
-   `??? <#cinder.netapp.extra_specs>`__.
+   :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”<table-4.11>`.
 
 -  *QoS Spec*: QoS specifications are added as standalone objects that
    can then be associated with Cinder volume types. A Cinder QoS Spec
@@ -173,6 +188,8 @@ using NetApp QoS policy groups, introduced with clustered Data ONTAP
    the QoS Spec feature when a SLO needs to be applied to a single
    Cinder volume.
 
+.. _qos-spec:
+
 +-----------------+---------------------------------------------------------------------------+
 | Option          | Description                                                               |
 +=================+===========================================================================+
@@ -185,7 +202,12 @@ using NetApp QoS policy groups, introduced with clustered Data ONTAP
 | maxIOPSperGiB   | The maximum IOPS allowed per GiB of Cinder volume capacity.               |
 +-----------------+---------------------------------------------------------------------------+
 
-Table: NetApp Supported Backend QoS Spec Options
+Table 4.1. NetApp Supported Backend QoS Spec Options
+
+.. _storage-pools:
+
+Storage Pools
+-------------
 
 With the Juno release of OpenStack, Cinder has introduced the concept of
 "storage pools". The backend storage may present one or more logical
@@ -214,7 +236,10 @@ protocol used:
    configuration option ``netapp_pool_name_search_pattern``.
 
 For additonal information, refer to
-`??? <#cinder.volume.storage.pools.details>`__.
+:ref:`cinder-schedule-resource-pool`.
+
+Consistency Groups
+------------------
 
 With the Mitaka release of OpenStack, NetApp supports Cinder Consistency
 Groups when using E-series or 7-Mode/Clustered Data ONTAP iSCSI/Fibre
@@ -252,12 +277,10 @@ has been debited $100 without account B getting the corresponding
 credit.
 
 Before using consistency groups, you must change policies for the
-consistency group APIs in the */etc/cinder/policy.json* file. By
+consistency group APIs in the ``/etc/cinder/policy.json`` file. By
 default, the consistency group APIs are disabled. Enable them before
 running consistency group operations. Here are existing policy entries
-for consistency groups:
-
-::
+for consistency groups::
 
     "consistencygroup:create": "group:nobody",
     "consistencygroup:delete": "group:nobody",
@@ -268,11 +291,8 @@ for consistency groups:
     "consistencygroup:delete_cgsnapshot": "group:nobody",
     "consistencygroup:get_cgsnapshot": "group:nobody",
     "consistencygroup:get_all_cgsnapshots": "group:nobody",
-            
 
-Remove group:nobody to enable these APIs:
-
-::
+Remove ``group:nobody`` to enable these APIs::
 
     "consistencygroup:create": "",
     "consistencygroup:delete": "",
@@ -283,10 +303,12 @@ Remove group:nobody to enable these APIs:
     "consistencygroup:delete_cgsnapshot": "",
     "consistencygroup:get_cgsnapshot": "",
     "consistencygroup:get_all_cgsnapshots": "",
-            
 
 Remember to restart the Block Storage API service after changing
 policies.
+
+Backup and Restore
+------------------
 
 Cinder offers OpenStack tenants self-service backup and restore
 operations for their Cinder volumes. These operations are performed on
@@ -312,6 +334,9 @@ themselves that hold Cinder volumes. See
 http://netapp.github.io/openstack/2015/03/12/cinder-backup-restore/ for
 a valuable approach to administrative backups when clustered Data ONTAP
 storage pools are used to host Cinder volumes.
+
+Disaster Recovery
+-----------------
 
 In the Newton release of OpenStack, NetApp's Cinder driver for clustered
 Data ONTAP (for FC, NFS, iSCSI) was updated to match Cinder's v2.1 spec
