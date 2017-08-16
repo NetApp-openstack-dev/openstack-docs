@@ -1,207 +1,36 @@
-:orphan:
-
-Examples
-========
-
-``cinder.conf``
----------------
-
-This section provides an example Cinder configuration file
-(``cinder.conf``) that contains three backends - one for clustered Data
-ONTAP with the NFS storage protocol, one for clustered Data ONTAP with
-the iSCSI storage protocol, and one for an E-Series deployment
-(leveraging iSCSI).
-
-::
-
-    [DEFAULT]
-    rabbit_password=netapp123
-    rabbit_hosts=192.168.33.40
-    rpc_backend=cinder.openstack.common.rpc.impl_kombu
-    notification_driver=cinder.openstack.common.notifier.rpc_notifier
-    periodic_interval=60
-    lock_path=/opt/stack/data/cinder
-    state_path=/opt/stack/data/cinder
-    osapi_volume_extension=cinder.api.contrib.standard_extensions
-    rootwrap_config=/etc/cinder/rootwrap.conf
-    api_paste_config=/etc/cinder/api-paste.ini
-    sql_connection=mysql://root:netapp123@127.0.0.1/cinder?charset=utf8
-    iscsi_helper=tgtadm
-    my_ip=192.168.33.40
-    volume_name_template=volume-%s
-    verbose=True
-    debug=True
-    auth_strategy=keystone
-    #ceilometer settings
-    cinder_volume_usage_audit=True
-    cinder_volume_usage_audit_period=hour
-    control_exchange=cinder
-
-    enabled_backends=cdot-iscsi,cdot-nfs,eseries-iscsi
-
-    [cdot-iscsi]
-    volume_backend_name=cdot-iscsi
-    volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_server_hostname=10.63.40.150
-    netapp_server_port=80
-    netapp_storage_protocol=iscsi
-    netapp_storage_family=ontap_cluster
-    netapp_login=admin
-    netapp_password=netapp123
-    netapp_vserver=demo-iscsi-svm
-
-    [cdot-nfs]
-    volume_backend_name=cdot-nfs
-    volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_server_hostname=10.63.40.150
-    netapp_server_port=80
-    netapp_storage_protocol=nfs
-    netapp_storage_family=ontap_cluster
-    netapp_login=admin
-    netapp_password=netapp123
-    netapp_vserver=demo-nfs-svm
-    nfs_shares_config=/etc/cinder/nfs.shares
-
-    [eseries-iscsi]
-    volume_backend_name=eseries-iscsi
-    volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
-    netapp_server_hostname=10.63.165.26
-    netapp_server_port=8080
-    netapp_transport_type=http
-    netapp_storage_protocol=iscsi
-    netapp_storage_family=eseries
-    netapp_login=admin
-    netapp_password=netapp123
-    netapp_sa_password=password
-    netapp_controller_ips=10.63.215.225,10.63.215.226
-    netapp_pool_name_search_pattern=(cinder_pool_[\d]+)
-
--  The content of ``/etc/cinder/nfs.shares`` is:
-
-   ::
-
-       10.63.40.153:/vol2_dedup
-       10.63.40.153:/vol3_compressed
-       10.63.40.153:/vol4_mirrored
-       10.63.40.153:/vol5_plain
-
-Clustered Data ONTAP
---------------------
-
-This section provides an example configuration script to be executed
-within Data ONTAP that enables two SVMs, appropriately configured for
-the Cinder configuration referenced in
-`section\_title <#cinder.examples.cinder_conf>`__. Note that you may
-have to edit IP addresses and feature lists based on the environment and
-licenses present.
-
-::
-
-    # create aggrs
-    storage aggregate create -aggregate aggr1 -diskcount 24 -nodes \
-    democluster-1-01
-
-    storage aggregate create -aggregate aggr2 -diskcount 24 -nodes \
-    democluster-1-02
-
-    # create SVMs
-    vserver create -vserver demo-iscsi-svm -rootvolume vol1 \
-    -aggregate aggr1 -ns-switch file -rootvolume-security-style unix
-
-    vserver create -vserver demo-nfs-svm -rootvolume vol1 \
-    -aggregate aggr2 -ns-switch file -rootvolume-security-style unix
-
-    # iSCSI setup
-    iscsi create -vserver demo-iscsi-svm
-
-    network interface create -vserver demo-iscsi-svm -lif \
-    demo-iscsi-data -role data -data-protocol iscsi -home-node \
-    democluster-1-01 -home-port e0d -address 10.63.40.149 \
-     -netmask 255.255.192.0
-
-    volume create -vserver demo-iscsi-svm -volume vol2 \
-    -aggregate aggr1 -size 10g
-
-    vserver export-policy rule create -vserver demo-iscsi-svm \
-    -policyname default -clientmatch 0.0.0.0/0 -rorule any -rwrule \
-    any -superuser any -anon 0
-
-    volume create -vserver rcallawa-iscsi-vserver -volume vol1_plain \
-    -aggregate aggr1 -size 10g
-
-    # NFS setup
-    nfs create -vserver demo-nfs-svm -access true
-    network interface create -vserver demo-nfs-svm -lif demo-nfs-data \
-    -role data -home-node democluster-1-02 -home-port e0d -address \
-    10.63.40.153 -netmask 255.255.192.0
-
-    vserver export-policy rule create -vserver demo-nfs-svm \
-    -policyname default -clientmatch 0.0.0.0/0 -rorule any -rwrule \
-    any -superuser any -anon 0
-
-    volume create -vserver demo-nfs-svm -volume vol2_dedup -aggregate \
-    aggr2 -size 6g -junction-path /vol2_dedup
-
-    volume create -vserver demo-nfs-svm -volume vol3_compressed \
-    -aggregate aggr2 -size 6g -junction-path /vol3_compressed
-
-    volume create -vserver demo-nfs-svm -volume vol4_mirrored \
-    -aggregate aggr2 -size 5g -junction-path /vol4_mirrored
-
-    volume create -vserver demo-nfs-svm -volume vol4_mirror_dest \
-    -aggregate aggr2 -size 5g -type DP
-
-    volume create -vserver demo-nfs-svm -volume vol5_plain \
-    -aggregate aggr2 -size 6g -junction-path /vol5_plain
-
-    # SSC features
-    volume efficiency on -vserver demo-nfs-svm -volume vol2_dedup
-
-    volume efficiency on -vserver demo-nfs-svm -volume vol3_compressed
-
-    volume efficiency modify -vserver demo-nfs-svm -volume \
-    vol3_compressed -compression true -inline-compression true
-
-    snapmirror create -source-path demo-nfs-svm:vol4_mirrored \
-    -destination-path demo-nfs-svm:vol4_mirror_dest -type DP \
-    -vserver demo-nfs-svm
-
-    snapmirror initialize -source-path demo-nfs-svm:vol4_mirrored \
-    -destination-path demo-nfs-svm:vol4_mirror_dest -type DP
-
-    # enable v4.0, v4.1, pNFS
-    nfs modify -vserver demo-nfs-svm -v4.0 enabled -v4.1 enabled \
-    -v4.1-pnfs enabled
-                
+.. _cinder-cli:
 
 Cinder Command Line Interface (CLI)
------------------------------------
+===================================
+
+Cinder Service Verification
+---------------------------
 
 In this section, we use the Cinder CLI to verify that the configuration
 presented in `section\_title <#cinder.examples.cinder_conf>`__ has been
-properly initialized by Cinder.
-
-::
+properly initialized by Cinder.::
 
     vagrant@precise64:~/devstack$ cinder service-list
     +------------------+--------------------------+------+---------+-------+------------------------+-----------------+
     |      Binary      |            Host          | Zone |  Status | State |         Updated_at     | Disabled Reason |
     +------------------+--------------------------+------+---------+-------+------------------------+-----------------+
     | cinder-scheduler |         precise64        | nova | enabled |   up  | 2014-05-20T17:14:12.00 |       None      |
-    |  cinder-volume   |   precise64@cdot-iscsi | nova | enabled |   up  | 2014-05-20T17:14:10.00 |       None      |
-    |  cinder-volume   |    precise64@cdot-nfs  | nova | enabled |   up  | 2014-05-20T17:14:11.00 |       None      |
-    |  cinder-volume   | precise64@eseries-iscsi| nova | enabled |   up  | 2014-05-20T17:14:06.00 |       None      |
+    |  cinder-volume   |   precise64@cdot-iscsi   | nova | enabled |   up  | 2014-05-20T17:14:10.00 |       None      |
+    |  cinder-volume   |    precise64@cdot-nfs    | nova | enabled |   up  | 2014-05-20T17:14:11.00 |       None      |
+    |  cinder-volume   | precise64@eseries-iscsi  | nova | enabled |   up  | 2014-05-20T17:14:06.00 |       None      |
     +------------------+--------------------------+------+---------+-------+------------------------+-----------------+
-                    
 
--  This is the backend defined by the configuration stanza
-   ``[cdot-iscsi]``.
+-  ``precise64@cdot-iscsi`` is the backend defined by the configuration 
+   stanza ``[cdot-iscsi]``.
 
--  This is the backend defined by the configuration stanza
-   ``[cdot-nfs]``.
+-  ``precise64@cdot-nfs`` is the backend defined by the configuration
+   stanza ``[cdot-nfs]``.
 
--  This is the backend defined by the configuration stanza
-   ``[eseries-iscsi]``.
+-  ``precise64@eseries-iscsi`` is the backend defined by the 
+   configuration stanza ``[eseries-iscsi]``.
+
+Creating and Defining Cinder Volume Types
+-----------------------------------------
 
 In this section, we create a variety of Cinder Volume Types that
 leverage both the default capabilities of each driver, as well as the
@@ -236,9 +65,7 @@ NetApp specific extra specs described in
 
 -  The ``encrypted`` type provisions Cinder volumes onto any backend
    that has Flexvol encryption enabled (NVE) (in this example, that
-   would be ``[cdot-iscsi]``).
-
-::
+   would be ``[cdot-iscsi]``).::
 
     vagrant@precise64:~/devstack$ cinder type-create iscsi
     +--------------------------------------+-------+
@@ -314,7 +141,9 @@ NetApp specific extra specs described in
     | ae110bfc-0f5a-4e93-abe1-1a31856c0ec7 |   bronze  |      {u'netapp_compression': u'true'}      |
     | f820211a-ee1c-47ff-8f70-2be45112826d |   silver  |         {u'netapp_dedup': u'true'}         |
     +--------------------------------------+-----------+--------------------------------------------+
-                    
+
+Creating Cinder Volumes with Volume Types
+-----------------------------------------
 
 In this section, we create volumes with no type, as well as each of the
 previously defined volume types.
@@ -528,33 +357,38 @@ features enabled that matched the Cinder volume type definitions.
     10.63.40.153:/vol5_plain on /opt/stack/data/cinder/mnt/e15a92dcf98a7b3fdb3963e39ed0796f type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
     vagrant@precise64:~/devstack$ cd /opt/stack/data/cinder/
     vagrant@precise64:/opt/stack/data/cinder$ find . -name volume-\*
-    ./mnt/89af08204a543dd0985fa11b16f3d22f/volume-3678281e-3924-4512-952a-5b89713fac4d 
-    ./mnt/aac4e6312b50b1fd6ddaf25d8dec8aaa/volume-459b388f-ae1d-49bf-9c1d-3fe3b18afad3 
-    ./mnt/6fbcc46d69a86a6be25f3df3e6ae55ba/volume-6dd3e64d-ca02-4156-8532-24294db89329 
-    ./mnt/6fbcc46d69a86a6be25f3df3e6ae55ba/volume-4ccf1a4c-cfe0-4b35-8435-400547cabcdd 
+    ./mnt/89af08204a543dd0985fa11b16f3d22f/volume-3678281e-3924-4512-952a-5b89713fac4d [1]
+    ./mnt/aac4e6312b50b1fd6ddaf25d8dec8aaa/volume-459b388f-ae1d-49bf-9c1d-3fe3b18afad3 [2]
+    ./mnt/6fbcc46d69a86a6be25f3df3e6ae55ba/volume-6dd3e64d-ca02-4156-8532-24294db89329 [3]
+    ./mnt/6fbcc46d69a86a6be25f3df3e6ae55ba/volume-4ccf1a4c-cfe0-4b35-8435-400547cabcdd [4]
                     
 
--  This is the volume of type ``gold`` which was placed on
-   ``10.63.40.153:/vol4_mirrored``.
+1.  This is the volume of type ``gold`` which was placed on
+    ``10.63.40.153:/vol4_mirrored``.
 
--  This is the volume of type ``bronze`` which was placed on
-   ``10.63.40.153:/vol3_compressed``.
+2.  This is the volume of type ``bronze`` which was placed on
+    ``10.63.40.153:/vol3_compressed``.
 
--  This is the volume of type ``silver`` which was placed on
-   ``10.63.40.153:/vol2_dedup``.
+3.  This is the volume of type ``silver`` which was placed on
+    ``10.63.40.153:/vol2_dedup``.
 
--  This is the volume of type ``nfs`` which was placed on
-   ``10.63.40.153:/vol2_dedup``. It could have been placed on
-   ``10.63.40.153:/vol3_compressed``, ``10.63.40.153:/vol4_mirrored``,
-   or ``10.63.40.153:/vol5_plain`` as any of those destinations would
-   have fulfilled the volume type criteria of ``storage_protocol=nfs``.
+4.  This is the volume of type ``nfs`` which was placed on
+    ``10.63.40.153:/vol2_dedup``. It could have been placed on
+    ``10.63.40.153:/vol3_compressed``, ``10.63.40.153:/vol4_mirrored``,
+    or ``10.63.40.153:/vol5_plain`` as any of those destinations would
+    have fulfilled the volume type criteria of ``storage_protocol=nfs``.
 
-    **Note**
+.. note::
 
-    Note that the volumes of type ``analytics`` and ``iscsi``, as well
-    as the volume created without a type did not appear under the NFS
-    mount points because they were created as iSCSI LUNs within the
-    E-Series and CDOT systems, respectively.
+   Note that the volumes of type ``analytics`` and ``iscsi``, as well
+   as the volume created without a type did not appear under the NFS
+   mount points because they were created as iSCSI LUNs within the
+   E-Series and CDOT systems, respectively.
+
+.. _cinder-manage:
+
+Cinder Manage Usage
+-------------------
 
 In this section we import a Data ONTAP iSCSI LUN by specifying it by
 name or UUID.
@@ -632,9 +466,7 @@ name or UUID.
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 
 In this section we import an E-Series volume by specifying its label or
-world-wide identifier.
-
-::
+world-wide identifier.::
 
     $ cinder get-pools
     +----------+-------------------------+
@@ -706,9 +538,7 @@ world-wide identifier.
     | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 
-In this section we import a Data ONTAP NFS file by specifying its path.
-
-::
+In this section we import a Data ONTAP NFS file by specifying its path.::
 
     $ cinder get-pools
     +----------+------------------------------+
@@ -752,11 +582,13 @@ In this section we import a Data ONTAP NFS file by specifying its path.
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
     | f068e1f7-f008-4eb3-8a74-bacb24afb49a |   available    | None |  1   |     None    |  false   |             |
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
+
+.. _cinder-unmanage:
         
+Cinder Unmanage Usage
+---------------------
 
-In this section we unmanage a Cinder volume by specifying its ID.
-
-::
+In this section we unmanage a Cinder volume by specifying its ID.::
 
     $ cinder list
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
@@ -776,10 +608,11 @@ In this section we unmanage a Cinder volume by specifying its ID.
     | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 
-In this section, we will configure a Cinder volume type, a Cinder QoS
-spec, and lastly associate the QoS spec with the volume type.
+Applying Cinder QoS via the Command Line
+----------------------------------------
 
-::
+In this section, we will configure a Cinder volume type, a Cinder QoS
+spec, and lastly associate the QoS spec with the volume type.::
 
     $ cinder type-create vol_type_qos_demo
     +--------------------------------------+-------------------+
@@ -836,15 +669,12 @@ spec, and lastly associate the QoS spec with the volume type.
     |                user_id                |   322aff449dac4503b7cab8f38440597e   |
     |              volume_type              |          vol_type_qos_demo           |
     +---------------------------------------+--------------------------------------+
-                
 
 After we associate the QoS spec with the volume type, we can use the
 volume type just as we did in
 `simplesect\_title <#cinder.examples.volume_types>`__. The example below
 shows how to verify that the QoS policy group has been created on the
-NetApp storage controller.
-
-::
+NetApp storage controller.::
 
     qos policy-group show -policy-group *66027b97-11d1-4399-b8c6-031ad8e38da0*
     Name             Vserver     Class        Wklds Throughput
@@ -859,14 +689,15 @@ QoS policy group has been assigned to the file or LUN on the storage
 controller to ensure an isolated, independent limit is enforced on a
 per-Cinder-volume basis.
 
+Manipulating Cinder Consistency Groups via the Command Line
+-----------------------------------------------------------
+
 In this section, we will configure a Cinder volume type, associate the
 volume type with a backend capable of supporting consistency groups,
 create a Cinder consistency group, create a Cinder volume within the
 consistency group, take a snapshot of the consistency group, and then
 finally create a second consistency group from the snapshot of the first
-consistency group.
-
-::
+consistency group.::
 
     $ cinder type-create consistency-group-support
     +--------------------------------------+---------------------------+-----------+
@@ -941,14 +772,11 @@ consistency group.
     |    id    | f84529af-e639-477e-a6e7-53dd401ab909 |
     |   name   |                 cg2                  |
     +----------+--------------------------------------+
-                
 
 To delete a consistency group, first make sure that any snapshots of the
 consistency group have first been deleted, and that any volumes in the
 consistency group have been removed via an update command on the
-consistency group.
-
-::
+consistency group.::
 
     $ cinder consisgroup-update cg2 --remove-volumes ddb31a53-6550-410c-ba48-a0a912c8ae95
 

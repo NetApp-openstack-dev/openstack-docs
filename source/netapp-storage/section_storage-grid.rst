@@ -23,7 +23,7 @@ NetApp Cinder drivers and NetApp storage, StorageGRID Webscale customers
 can be confident they are building on a rock-solid foundation for their
 web data repositories, data archives, and media repositories.
 
-**Efficient, Durable, and Flexible.**
+**Efficient, Durable, and Flexible**
 
 Drive cost savings without sacrificing durability with NetApp
 StorageGRID Webscale’s hierarchical erasure coding. Protecting at the
@@ -33,7 +33,7 @@ can choose a combination of full copies and/or geo-distributed coded
 copies to balance performance needs and cost savings between different
 sets of data or during the object’s lifecycle.
 
-**Enable the Hybrid Cloud.**
+**Enable the Hybrid Cloud**
 
 Achieve new levels of cost savings by enabling cloud-to-cloud data
 management. StorageGRID Webscale can manage and store objects not only
@@ -43,7 +43,7 @@ realizing additional data protection with an external cloud while
 driving cost savings by performing more expensive operations against
 locally managed copies.
 
-**Designed for Always-On Operations.**
+**Designed for Always-On Operations**
 
 NetApp StorageGRID Webscale provides the foundation for global data
 availability anytime, anywhere, to facilitate nonstop operations.

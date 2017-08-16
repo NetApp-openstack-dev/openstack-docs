@@ -1,3 +1,5 @@
+.. _cinder-api:
+
 API Overview
 ============
 
@@ -8,7 +10,10 @@ in Cinder; for more information, please refer to the `OpenStack
 Configuration
 Reference. <http://docs.openstack.org/icehouse/config-reference/content/config_overview.html>`__
 
-`table\_title <#cinder.api.volume_table>`__ specifies the valid
+Volume API
+----------
+
+Table 4.2, “Cinder API Overview - Volume” specifies the valid
 operations that can be performed on Cinder volumes. Please note that
 Cinder volumes are identified as CLI command arguments by either their
 names or UUID.
@@ -37,9 +42,12 @@ names or UUID.
 | Unmanage          | ``cinder unmanage``          | Cease management of an existing Cinder volume without deleting the backing storage object                                         |
 +-------------------+------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Cinder API Overview - Volume
+Table 4.2. Cinder API Overview - Volume
 
-`table\_title <#cinder.api.snapshot_table>`__ specifies the valid
+Snapshot API
+------------
+
+Table 4.3, “Cinder API Overview - Snapshot” specifies the valid
 operations that can be performed on Cinder snapshots. Please note that
 Cinder snapshots are identified as CLI command arguments by either their
 display name or UUID.
@@ -62,45 +70,51 @@ display name or UUID.
 | Show          | ``cinder snapshot-show``          | Show details about a Cinder snapshot                   |
 +---------------+-----------------------------------+--------------------------------------------------------+
 
-Table: Cinder API Overview - Snapshot
+Table 4.3. Cinder API Overview - Snapshot
 
-`table\_title <#cinder.api.consistency_group_table>`__ specifies the
+Consistency Group API
+---------------------
+
+Table 4.4, “Cinder API Overview - Consistency Groups” specifies the
 valid operations that can be performed on Cinder consistency groups.
 Please note that Cinder consistency groups and cgsnapshots are
 identified as CLI command arguments by either their display name or
 UUID.
 
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Operation                                                                   | CLI Command                              | Description                                                                                                                |
-+=============================================================================+==========================================+============================================================================================================================+
-| Create                                                                      | ``cinder consisgroup-create``            | Create a consistency group with support for at least one volume type                                                       |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Show                                                                        | ``cinder consisgroup-show``              | Display details for a specified consistency group                                                                          |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| List                                                                        | ``cinder consisgroup-list``              | Show a list of all created consistency groups                                                                              |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Create a volume and add it to a consistency group                           | ``cinder create``                        | Expand a consistency group to have another volume by creating a volume with the --consisgroup-id parameter                 |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Create a cgsnapshot                                                         | ``cinder cgsnapshot-create``             | Generate a snapshot of a consistency group                                                                                 |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Show a snapshot of a consistency group                                      | ``cinder cgsnapshot-show``               | Display details for the cgsnapshot of consistency group                                                                    |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| List consistency group snapshots                                            | ``cinder cgsnapshot-list``               | Display all cgsnapshots for a consistency group                                                                            |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Delete a snapshot of a consistency group                                    | ``cinder cgsnapshot-delete``             | Remove a cgsnapshot                                                                                                        |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Delete a consistency group                                                  | ``cinder consisgroup-delete``            | The --force flag is required when volumes are inside the consistency group                                                 |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Modify a consistency group                                                  | ``cinder consisgroup-update``            | Add or remove volumes from a consistency group with --add-volumes [UUID-list] or --remove-volumes [UUID-list] parameters   |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Create a consistency group from the snapshot of another consistency group   | ``cinder consisgroup-create-from-src``   | Use a cgsnapshot to generate a new consistency group                                                                       |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
-| Create a consistency group from a source consistency group                  | ``cinder consisgroup-create-from-src``   | Copy a consistency group                                                                                                   |
-+-----------------------------------------------------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Operation                                                                   | CLI Command                              | Description                                                                                                                        |
++=============================================================================+==========================================+====================================================================================================================================+
+| Create                                                                      | ``cinder consisgroup-create``            | Create a consistency group with support for at least one volume type                                                               |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Show                                                                        | ``cinder consisgroup-show``              | Display details for a specified consistency group                                                                                  |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| List                                                                        | ``cinder consisgroup-list``              | Show a list of all created consistency groups                                                                                      |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Create a volume and add it to a consistency group                           | ``cinder create``                        | Expand a consistency group to have another volume by creating a volume with the ``--consisgroup-id`` parameter                     |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Create a cgsnapshot                                                         | ``cinder cgsnapshot-create``             | Generate a snapshot of a consistency group                                                                                         |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Show a snapshot of a consistency group                                      | ``cinder cgsnapshot-show``               | Display details for the cgsnapshot of consistency group                                                                            |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| List consistency group snapshots                                            | ``cinder cgsnapshot-list``               | Display all cgsnapshots for a consistency group                                                                                    |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Delete a snapshot of a consistency group                                    | ``cinder cgsnapshot-delete``             | Remove a cgsnapshot                                                                                                                |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Delete a consistency group                                                  | ``cinder consisgroup-delete``            | The ``--force`` flag is required when volumes are inside the consistency group                                                     |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Modify a consistency group                                                  | ``cinder consisgroup-update``            | Add or remove volumes from a consistency group with ``--add-volumes [UUID-list]`` or ``--remove-volumes [UUID-list]`` parameters   |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Create a consistency group from the snapshot of another consistency group   | ``cinder consisgroup-create-from-src``   | Use a cgsnapshot to generate a new consistency group                                                                               |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
+| Create a consistency group from a source consistency group                  | ``cinder consisgroup-create-from-src``   | Copy a consistency group                                                                                                           |
++-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Cinder API Overview - Consistency Groups
+Table 4.4. Cinder API Overview - Consistency Groups
 
-`table\_title <#cinder.api.backup_table>`__ specifies the valid
+Backup API
+----------
+
+Table 4.5, “Cinder API Overview - Backup” specifies the valid
 operations that can be performed on Cinder backups. Please note that
 Cinder backups are identified as CLI command arguments by either their
 display name or UUID.
@@ -119,9 +133,12 @@ display name or UUID.
 | Show        | ``cinder backup-show``      | Show details about a Cinder backup             |
 +-------------+-----------------------------+------------------------------------------------+
 
-Table: Cinder API Overview - Backup
+Table 4.5. Cinder API Overview - Backup
 
-`table\_title <#cinder.api.volume_type_table>`__ specifies the valid
+Volume Type API
+---------------
+
+Table 4.6, “Cinder API Overview - Volume Type” specifies the valid
 operations that can be performed on Cinder volume types. Please note
 that Cinder volume types are identified as CLI command arguments by
 either their display name or UUID.
@@ -136,9 +153,12 @@ either their display name or UUID.
 | List        | ``cinder type-list``     | List existing Cinder volume type   |
 +-------------+--------------------------+------------------------------------+
 
-Table: Cinder API Overview - Volume Type
+Table 4.6. Cinder API Overview - Volume Type
 
-`table\_title <#cinder.api.volume_type_extra_specs_table>`__ specifies
+Volume Type Extra Specs API
+---------------------------
+
+Table 4.7, “Cinder API Overview - Volume Type Extra Specs” specifies
 the valid operations that can be performed on Cinder volume type extra
 specs. Please note that Cinder volume type extra specs are properties of
 Cinder volume types and are identified by their parent object.
@@ -151,9 +171,12 @@ Cinder volume types and are identified by their parent object.
 | Unset extra specs   | ``cinder type-key vtype unset``   | Remove extra specs from Cinder volume type   |
 +---------------------+-----------------------------------+----------------------------------------------+
 
-Table: Cinder API Overview - Volume Type Extra Specs
+Table 4.7. Cinder API Overview - Volume Type Extra Specs
 
-`table\_title <#cinder.api.volume_type_qos_specs_table>`__ specifies the
+Volume Type QoS Specs API
+-------------------------
+
+Table 4.8, “Cinder API Overview - Volume Type QoS Specs” specifies the
 valid operations that can be performed on Cinder volume type QoS specs.
 Please note that Cinder volume type QoS specs are created independently
 of Cinder volume types and are subsequently associated with a Cinder
@@ -177,4 +200,4 @@ volume type.
 | Edit QoS spec            | ``cinder qos-key``            | Set or unset specifications for a Cinder QoS Spec          |
 +--------------------------+-------------------------------+------------------------------------------------------------+
 
-Table: Cinder API Overview - Volume Type QoS Specs
+Table 4.8. Cinder API Overview - Volume Type QoS Specs

@@ -1,11 +1,11 @@
 OpenStack Releases and Distributions
 ====================================
 
-OpenStack’s major release cadence switched from every three months to 6
-months starting with the Essex release. The Kilo release date is
+OpenStack’s major release cadence switched from every three months to six
+months starting with the Essex release. The Pike release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for October of
-2015, by convention, will start with the letter “L.”
+alphabetically incremented. Hence, the release intended for March of
+2018, by convention, will start with the letter “Q.”
 
 +------------+------------------+
 | Release    | Date             |
@@ -40,8 +40,10 @@ alphabetically incremented. Hence, the release intended for October of
 +------------+------------------+
 | Ocata      | February 2017    |
 +------------+------------------+
+| Pike       | September 2017   |
++------------+------------------+
 
-Table: OpenStack Releases to Date
+Table 2.1: OpenStack Releases to Date
 
 Additionally, for each major version a stable branch is maintained.
 These branches represent a centralized effort to maintain bugfixes and
