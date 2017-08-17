@@ -13,9 +13,8 @@ more comprehensive cloud infrastructure. This is not an explicit
 requirement, as Manila has been successfully deployed as a standalone
 solution for shared file system provisioning and lifecycle management.
 
-    **Tip**
-
-    As a management service, Manila controls the provisioning and
-    lifecycle management of shared filesystems. It does not reside in
-    the I/O (data) path between clients and the storage controller
-    hosting the filesystem.
+.. tip::
+   As a management service, Manila controls the provisioning and
+   lifecycle management of shared filesystems. It does not reside in
+   the I/O (data) path between clients and the storage controller
+   hosting the filesystem.

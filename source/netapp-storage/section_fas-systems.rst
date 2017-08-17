@@ -13,11 +13,11 @@ SATA) as well as all flash configurations.
 Detailed information on the individual options within the FAS family is
 available at: http://www.netapp.com/us/products/storage-systems/.
 
-    **Note**
+.. note::
 
-    NetApp’s OpenStack Block Storage drivers interact directly with Data
-    ONTAP and are abstract to the specific FAS platform. Any given
-    hardware platform supported by a version of Data ONTAP that in turn
-    is supported by a particular OpenStack Block Storage driver. Refer
-    to `??? <#cinder.fas.configuration>`__ for more information on
-    prerequisites for Data ONTAP.
+   NetApp’s OpenStack Block Storage drivers interact directly with Data
+   ONTAP and are abstract to the specific FAS platform. Any given
+   hardware platform supported by a version of Data ONTAP that in turn
+   is supported by a particular OpenStack Block Storage driver. Refer
+   to the section called ":ref:`data-ontap-config`" for more information
+   on prerequisites for Data ONTAP.

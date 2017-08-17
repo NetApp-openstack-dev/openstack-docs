@@ -7,7 +7,10 @@ comprehensive list that is representative of all functionality present
 in Manila; for more information, please refer to the help text from
 running ``manila help``.
 
-`table\_title <#manila.api.share_table>`__ specifies the valid
+Share API
+---------
+
+Table 6.1, “Manila API Overview - Share” specifies the valid
 operations that can be performed on Manila shares. Please note that
 Manila shares are identified as CLI command arguments by either their
 names or UUID.
@@ -34,17 +37,20 @@ names or UUID.
 | Unmanage    | ``manila unmanage``   | Cease management of an existing Manila share without deleting the backing storage object                                                                                                                                                                                                        |
 +-------------+-----------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Manila API Overview - Share
+Table 6.1. Manila API Overview - Share
 
-`table\_title <#manila.api.share_access_table>`__ specifies the valid
+Share Access API
+----------------
+
+Table 6.2, “Manila API Overview - Share Access” specifies the valid
 access operations that can be performed on Manila shares. Please note
 that Manila shares are identified as CLI command arguments by either
 their names or UUID.
 
-    **Warning**
+.. warning::
 
     Please refer to the caveat as explained in
-    `??? <#manila.share.access_rules>`__.
+    the section called ":ref:`share-access-rules`".
 
 +-------------+---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Operation   | CLI Command               | Description                                                                                                                                             |
@@ -56,9 +62,12 @@ their names or UUID.
 | List        | ``manila access-list``    | List all Manila share access rules                                                                                                                      |
 +-------------+---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Manila API Overview - Share Access
+Table 6.2. Manila API Overview - Share Access
 
-`table\_title <#manila.api.share_export_location_table>`__ specifies the
+Share Export Location API
+-------------------------
+
+Table 6.3, “Manila API Overview - Share Export Location” specifies the
 operations that can be performed to get export locations of Manila
 shares. Please note that Manila shares are identified as CLI command
 arguments by either their names or UUID. There may be multiple export
@@ -74,39 +83,42 @@ performance.
 | Show        | ``manila share-export-location-show``   | Show details for a specific export location.    |
 +-------------+-----------------------------------------+-------------------------------------------------+
 
-Table: Manila API Overview - Share Export Location
+Table 6.3. Manila API Overview - Share Export Location
 
-`table\_title <#manila.api.snapshot_table>`__ specifies the valid
+Snapshot API
+------------
+
+Table 6.4, “Manila API Overview - Snapshot” specifies the valid
 operations that can be performed on Manila snapshots. Please note that
 Manila snapshots are identified as CLI command arguments by either their
 display name or UUID.
 
-    **Important**
+.. important::
 
-    In the Mitaka and Newton release of OpenStack, snapshot support is
-    enabled by default for a newly created share type. Starting with the
-    Ocata release, the ``snapshot_support`` extra spec must be set to
-    ``True`` in order to allow snapshots for a share type. If the
-    'snapshot\_support' extra\_spec is omitted or if it is set to False,
-    users would not be able to create snapshots on shares of this share
-    type.
+   In the Mitaka and Newton release of OpenStack, snapshot support is
+   enabled by default for a newly created share type. Starting with the
+   Ocata release, the ``snapshot_support`` extra spec must be set to
+   ``True`` in order to allow snapshots for a share type. If the
+   'snapshot\_support' extra\_spec is omitted or if it is set to False,
+   users would not be able to create snapshots on shares of this share
+   type.
 
-    Other snapshot-related extra specs in the Ocata release (and later)
-    include:
+   Other snapshot-related extra specs in the Ocata release (and later)
+   include:
 
-    -  ``create_share_from_snapshot_support``: Allow the creation of a
-       new share from a snapshot
+   -  ``create_share_from_snapshot_support``: Allow the creation of a
+      new share from a snapshot
 
-    -  ``revert_to_snapshot_support``: Allow a share to be reverted to
-       the most recent snapshot
+   -  ``revert_to_snapshot_support``: Allow a share to be reverted to
+      the most recent snapshot
 
-    If an extra-spec is left unset, it will default to 'False', but a
-    newly created share may or may not end up on a backend with the
-    associated capability. Set the extra spec explicitly to ``False``,
-    if you would like your shares to be created only on backends that do
-    not support the associated capabilities. For a table of NetApp
-    supported extra specs, refer to
-    `??? <#manila.netapp.extra_specs>`__.
+   If an extra-spec is left unset, it will default to 'False', but a
+   newly created share may or may not end up on a backend with the
+   associated capability. Set the extra spec explicitly to ``False``,
+   if you would like your shares to be created only on backends that do
+   not support the associated capabilities. For a table of NetApp
+   supported extra specs, refer to
+   :ref:`Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”<table-6.10>`.
 
 +----------------------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Operation            | CLI Command                       | Description                                                                                                                                                                          |
@@ -130,9 +142,12 @@ display name or UUID.
 | Revert to SnapShot   | ``manila revert-to-snapshot``     | Revert a Manila share (in place) to the latest snapshot. The ``snapshot_support`` and ``revert_to_snapshot_support`` extra specs must be set to True for the associated share type   |
 +----------------------+-----------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Manila API Overview - Snapshot
+Table 6.4. Manila API Overview - Snapshot
 
-`table\_title <#manila.api.share_type_table>`__ specifies the valid
+Share Type API
+--------------
+
+Table 6.5, “Manila API Overview - Share Type” specifies the valid
 operations that can be performed on Manila share types. Please note that
 Manila share types are identified as CLI command arguments by either
 their display name or UUID. Creation or deletion of share types normally
@@ -148,9 +163,12 @@ requires administrative privileges.
 | List        | ``manila type-list``     | List existing Manila share type   |
 +-------------+--------------------------+-----------------------------------+
 
-Table: Manila API Overview - Share Type
+Table 6.5. Manila API Overview - Share Type
 
-`table\_title <#manila.api.share_type_extra_specs_table>`__ specifies
+Share Type Extra Specs API
+--------------------------
+
+Table 6.6, “Manila API Overview - Share Type Extra Specs” specifies
 the valid operations that can be performed on Manila share type extra
 specs. Please note that Manila share type extra specs are properties of
 Manila share types and are identified by their parent object. Modifying
@@ -167,9 +185,10 @@ administrative privileges.
 | Unset extra specs   | ``manila type-key stype unset``   | Remove extra specs from Manila share type                        |
 +---------------------+-----------------------------------+------------------------------------------------------------------+
 
-Table: Manila API Overview - Share Type Extra Specs
+Table 6.6. Manila API Overview - Share Type Extra Specs
 
-`table\_title <#manila.api.cg_table>`__
+Consistency Group API
+---------------------
 
 +----------------------------+--------------------------------------+-------------------------------------------------------------------+
 | Operation                  | CLI Command                          | Description                                                       |
@@ -201,9 +220,10 @@ Table: Manila API Overview - Share Type Extra Specs
 | Update CG Snapshot         | ``manila cg-snapshot-update``        | Update details of a consistency group snapshot.                   |
 +----------------------------+--------------------------------------+-------------------------------------------------------------------+
 
-Table: Manila API Overview - Consistency Groups
+Table 6.7. Manila API Overview - Consistency Groups
 
-`table\_title <#manila.api.replication_table>`__
+Share Replication API
+---------------------
 
 +---------------------------+------------------------------------------------+---------------------------------------------------------------------+
 | Operation                 | CLI Command                                    | Description                                                         |
@@ -225,9 +245,12 @@ Table: Manila API Overview - Consistency Groups
 | Reset Replication State   | ``manila share-replica-reset-replica-state``   | Update the replica\_state attribute of a replica.                   |
 +---------------------------+------------------------------------------------+---------------------------------------------------------------------+
 
-Table: Manila API Overview - Share Replication
+Table: 6.8. Manila API Overview - Share Replication
 
-`table\_title <#manila.api.migration_table>`__
+Share Migration API
+-------------------
+
+.. _table-6.9:
 
 +----------------+-------------------------------------+--------------------------------------------------------------------------------------------------------------------+
 | Operation      | CLI Command                         | Description                                                                                                        |
@@ -241,14 +264,14 @@ Table: Manila API Overview - Share Replication
 | Cancel         | ``manila migration-cancel``         | Cancel the migration of a share.                                                                                   |
 +----------------+-------------------------------------+--------------------------------------------------------------------------------------------------------------------+
 
-Table: Manila API Overview - Share Migration
+Table 6.9. Manila API Overview - Share Migration
 
-    **Note**
+.. note::
 
-    Several parameters need to be specified when starting migration for
-    a share. For a list of supported parameters, refer to the help text
-    from running ``manila help migration-start``. For example, the
-    NetApp driver supports preserving snapshots and file system
-    metadata, and can perform in-Vserver migrations non-disruptively. In
-    order to do so, ``preserve_metadata``, ``preserve_snapshots``, and
-    ``nondisruptive`` must be set to ``True``.
+   Several parameters need to be specified when starting migration for
+   a share. For a list of supported parameters, refer to the help text
+   from running ``manila help migration-start``. For example, the
+   NetApp driver supports preserving snapshots and file system
+   metadata, and can perform in-Vserver migrations non-disruptively. In
+   order to do so, ``preserve_metadata``, ``preserve_snapshots``, and
+   ``nondisruptive`` must be set to ``True``.

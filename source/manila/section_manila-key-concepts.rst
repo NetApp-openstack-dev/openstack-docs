@@ -1,6 +1,9 @@
 Key Concepts
 ============
 
+Share
+-----
+
 A Manila share is the fundamental resource unit allocated by the Shared
 File System service. It represents an allocation of a persistent,
 readable, and writable filesystem that can be accessed by OpenStack
@@ -11,11 +14,11 @@ achieved with a variety of protocols, including NFS and CIFS (protocol
 support is dependent on the Manila driver deployed and the selection of
 the end user).
 
-    **Warning**
+.. warning::
 
-    A Manila share is an abstract storage object that may or may not
-    directly map to a "share" concept from the underlying backend
-    provider of storage.
+   A Manila share is an abstract storage object that may or may not
+   directly map to a "share" concept from the underlying backend
+   provider of storage.
 
 Manila shares can be identified uniquely through a UUID assigned by the
 Manila service at the time of share creation. A Manila share may also be
@@ -26,6 +29,9 @@ Manila.
 The actual capacity provisioned in support of a Manila share resides on
 a single Manila backend within a single resource pool.
 
+Backend
+-------
+
 A Manila backend is the configuration object that represents a single
 provider of resource pools upon which provisioning requests for shared
 file systems may be fulfilled. A Manila backend communicates with the
@@ -33,16 +39,18 @@ storage system through a Manila driver. Manila supports multiple
 backends to be configured and managed simultaneously (even with the same
 Manila driver).
 
-    **Note**
+.. note::
 
-    A single Manila backend may be defined in the ``[DEFAULT]`` stanza
-    of ``manila.conf``; however, NetApp recommends that the
-    ``enabled_share_backends`` configuration option be set to a
-    comma-separated list of backend names, and each backend name have
-    its own configuration stanza with the same name as listed in the
-    ``enabled_share_backends`` option. Refer to
-    `??? <#manila.configuration>`__ for an example of the use of this
-    option.
+   A single Manila backend may be defined in the ``[DEFAULT]`` stanza
+   of ``manila.conf``; however, NetApp recommends that the
+   ``enabled_share_backends`` configuration option be set to a
+   comma-separated list of backend names, and each backend name have
+   its own configuration stanza with the same name as listed in the
+   ``enabled_share_backends`` option. Refer to the section called
+   ":ref:`manila-conf`" for an example of the use of this option.
+
+Storage Pools
+-------------
 
 With the Kilo release of OpenStack, Manila has introduced the concept of
 "storage pools". The backend storage may present one or more logical
@@ -52,26 +60,29 @@ Manila drivers contained some logic that determined which aggregate a
 Manila share would be placed into; with the introduction of pools, all
 scheduling logic is performed completely within the Manila scheduler.
 
-    **Important**
+.. important::
 
-    For NetApp's Manila drivers, a Manila storage pool is an aggregate
-    defined within Data ONTAP.
+   For NetApp's Manila drivers, a Manila storage pool is an aggregate
+   defined within Data ONTAP.
+
+Driver
+------
 
 A Manila driver is a particular implementation of a Manila backend that
 maps the abstract APIs and primitives of Manila to appropriate
 constructs within the particular storage solution underpinning the
 Manila backend.
 
-    **Caution**
+.. caution::
 
-    The use of the term "driver" often creates confusion given common
-    understanding of the behavior of “device drivers” in operating
-    systems. The term can connote software that provides a data I/O
-    path. In the case of Manila driver implementations, the software
-    provides provisioning and other manipulation of storage devices but
-    does not lay in the path of data I/O. For this reason, the term
-    "driver" is often used interchangeably with the alternative (and
-    perhaps more appropriate) term “provider”.
+   The use of the term "driver" often creates confusion given common
+   understanding of the behavior of “device drivers” in operating
+   systems. The term can connote software that provides a data I/O
+   path. In the case of Manila driver implementations, the software
+   provides provisioning and other manipulation of storage devices but
+   does not lay in the path of data I/O. For this reason, the term
+   "driver" is often used interchangeably with the alternative (and
+   perhaps more appropriate) term “provider”.
 
 A Manila share type is an abstract collection of criteria used to
 characterize Manila shares. They are most commonly used to create a
@@ -90,7 +101,8 @@ Manila scheduler for each pool, which are then compared against share
 type definitions when determining which pool will fulfill a provisioning
 request.
 
-**Extra Spec.**
+Extra Spec
+----------
 
 An extra spec is a key/value pair, expressed in the style of
 ``key=value``. Extra specs are associated with Manila share types, so
@@ -98,24 +110,27 @@ that when users request shares of a particular share type, the shares
 are created on pools within storage backends that meet the specified
 criteria.
 
-    **Note**
+.. note::
 
-    The list of default capabilities that may be reported by a Manila
-    driver and included in a share type definition include:
+   The list of default capabilities that may be reported by a Manila
+   driver and included in a share type definition include:
 
-    -  ``share_backend_name``: The name of the backend as defined in
-       ``manila.conf``
+   -  ``share_backend_name``: The name of the backend as defined in
+      ``manila.conf``
 
-    -  ``vendor_name``: The name of the vendor who has implemented the
-       driver (e.g. ``NetApp``)
+   -  ``vendor_name``: The name of the vendor who has implemented the
+      driver (e.g. ``NetApp``)
 
-    -  ``driver_version``: The version of the driver (e.g. ``1.0``)
+   -  ``driver_version``: The version of the driver (e.g. ``1.0``)
 
-    -  ``storage_protocol``: The protocol used by the backend to export
-       block storage to clients (e.g. ``NFS_CIFS``)
+   -  ``storage_protocol``: The protocol used by the backend to export
+      block storage to clients (e.g. ``NFS_CIFS``)
 
-    For a table of NetApp supported extra specs, refer to
-    `??? <#manila.netapp.extra_specs>`__.
+   For a table of NetApp supported extra specs, refer to Table 6.10,
+   ":ref:`NetApp supported Extra Specs for use with Manila Share Types<table-6.10>`".
+
+Snapshot
+--------
 
 A Manila snapshot is a point-in-time, read-only copy of a Manila share.
 Snapshots can be created from an existing Manila share that is
@@ -124,32 +139,35 @@ A Manila snapshot can serve as the content source for a new Manila share
 when the Manila share is created with the *create from snapshot* option
 specified.
 
-    **Important**
+.. important::
 
-    In the Mitaka and Newton release of OpenStack, snapshot support is
-    enabled by default for a newly created share type. Starting with the
-    Ocata release, the ``snapshot_support`` extra spec must be set to
-    ``True`` in order to allow snapshots for a share type. If the
-    'snapshot\_support' extra\_spec is omitted or if it is set to False,
-    users would not be able to create snapshots on shares of this share
-    type.
+   In the Mitaka and Newton release of OpenStack, snapshot support is
+   enabled by default for a newly created share type. Starting with the
+   Ocata release, the ``snapshot_support`` extra spec must be set to
+   ``True`` in order to allow snapshots for a share type. If the
+   'snapshot\_support' extra\_spec is omitted or if it is set to False,
+   users would not be able to create snapshots on shares of this share
+   type.
 
-    Other snapshot-related extra specs in the Ocata release (and later)
-    include:
+   Other snapshot-related extra specs in the Ocata release (and later)
+   include:
 
-    -  ``create_share_from_snapshot_support``: Allow the creation of a
-       new share from a snapshot
+   -  ``create_share_from_snapshot_support``: Allow the creation of a
+      new share from a snapshot
 
-    -  ``revert_to_snapshot_support``: Allow a share to be reverted to
-       the most recent snapshot
+   -  ``revert_to_snapshot_support``: Allow a share to be reverted to
+      the most recent snapshot
 
-    If an extra-spec is left unset, it will default to 'False', but a
-    newly created share may or may not end up on a backend with the
-    associated capability. Set the extra spec explicitly to ``False``,
-    if you would like your shares to be created only on backends that do
-    not support the associated capabilities. For a table of NetApp
-    supported extra specs, refer to
-    `??? <#manila.netapp.extra_specs>`__.
+   If an extra-spec is left unset, it will default to 'False', but a
+   newly created share may or may not end up on a backend with the
+   associated capability. Set the extra spec explicitly to ``False``,
+   if you would like your shares to be created only on backends that do
+   not support the associated capabilities. For a table of NetApp
+   supported extra specs, refer to Table 6.10,
+   ":ref:`NetApp supported Extra Specs for use with Manila Share Types<table-6.10>`".
+
+Consistency Group
+-----------------
 
 A Manila consistency group is a mechanism to group shares so that
 consistent, point-in-time snapshots can be taken of all the shares
@@ -157,10 +175,15 @@ simultaneously. CGSnapshots can be created from an existing Manila
 consistency group. All shares stored in a CGSnapshot can be restored by
 creating a CG from a CGSnapshot.
 
-    **Note**
+.. note::
 
-    All shares in a consistency group must be on the same share network
-    and share server.
+   All shares in a consistency group must be on the same share network
+   and share server.
+
+.. _share-access-rules:
+
+Share Access Rules
+------------------
 
 Share access rules define which clients can access a particular Manila
 share. Access rules can be declared for NFS shares by listing the valid
@@ -168,25 +191,28 @@ IP networks (using CIDR notation) which should have access to the share.
 In the case of CIFS shares, the Windows security identifier (SID) can be
 specified.
 
-    **Important**
+.. important::
 
-    For NetApp's Manila drivers, share access is enforced through the
-    use of export policies configured within the NetApp storage
-    controller.
+   For NetApp's Manila drivers, share access is enforced through the
+   use of export policies configured within the NetApp storage
+   controller.
 
-    **Warning**
+.. warning::
 
-    There is an outstanding issue when attempting to add several access
-    rules in close succession. There is the possibility that the share
-    instance access-rules-status will get changed to a status of
-    "updating multiple" on the API after the manager has already checked
-    if the status is "updating multiple". This error will cause the
-    allow/deny APIs to become stuck for this particular share instance.
-    If this behavior is encountered, there are two potential
-    workarounds. The least disruptive solution is to deny any already
-    applied rule and then add back that same rule as was just deleted.
-    The second solution is to restart the Manila driver in order to
-    invoke a resync of access rules on the backend driver.
+   There is an outstanding issue when attempting to add several access
+   rules in close succession. There is the possibility that the share
+   instance access-rules-status will get changed to a status of
+   "updating multiple" on the API after the manager has already checked
+   if the status is "updating multiple". This error will cause the
+   allow/deny APIs to become stuck for this particular share instance.
+   If this behavior is encountered, there are two potential
+   workarounds. The least disruptive solution is to deny any already
+   applied rule and then add back that same rule as was just deleted.
+   The second solution is to restart the Manila driver in order to
+   invoke a resync of access rules on the backend driver.
+
+Security Services
+-----------------
 
 Security services are the concept in Manila that allow Finer-grained
 client access rules to be declared for authentication or authorization
@@ -195,12 +221,15 @@ Directory, Kerberos can be declared as resources that should be
 consulted when making an access decision to a particular share. Shares
 can be associated to multiple security services.
 
-    **Important**
+.. important::
 
-    When creating a CIFS share, the user will need to create a Security
-    Service with any of the 3 options (LDAP, Active Directory or
-    Kerberos) and then add this Security Service to the already created
-    Share Network.
+   When creating a CIFS share, the user will need to create a Security
+   Service with any of the 3 options (LDAP, Active Directory or
+   Kerberos) and then add this Security Service to the already created
+   Share Network.
+
+Share Networks
+--------------
 
 A share network is an object that defines a relationship between a
 tenant's network/subnet (as defined in an OpenStack network service
@@ -209,10 +238,13 @@ tenant; that is, a tenant may find it desirable to provision shares such
 that only instances connected to a particular OpenStack-defined network
 have access to the share.
 
-    **Note**
+.. note::
 
-    As of Kilo, share networks are no longer required arguments when
-    creating shares.
+   As of Kilo, share networks are no longer required arguments when
+   creating shares.
+
+Share Servers
+-------------
 
 A share server is a logical entity that manages the shares that are
 created on a specific share network. Depending on the implementation of
@@ -229,26 +261,25 @@ Nova-Network or Neutron deployed. In addition, Manila contains an
 implementation of a standalone network plugin which manages a pool of IP
 addresses for shares that are defined in the ``manila.conf`` file. For
 more details on how share servers interact with the various network
-services, please refer to
-`??? <#manila.create_share_workflow.share_servers>`__ and
-`??? <#manila.create_share_workflow.without_share_servers>`__.
+services, please refer to :ref:`figure-6.2` and :ref:`figure-6.3`.
 
-    **Important**
+.. important::
 
-    Within the NetApp Manila driver, a share server is defined to be a
-    storage virtual machine (also known as a Vserver) within the
-    clustered Data ONTAP system that is associated with a particular
-    backend. The NetApp Manila driver has two operating "modes":
+   Within the NetApp Manila driver, a share server is defined to be a
+   storage virtual machine (also known as a Vserver) within the
+   clustered Data ONTAP system that is associated with a particular
+   backend. The NetApp Manila driver has two operating "modes":
 
-    1. One that supports the dynamic creation of share servers (SVMs)
-       for each share network - this is referred to as the `NetApp
-       Manila driver with share server
-       management. <#manila.cdot.multi_svm.configuration>`__
+   1. One that supports the dynamic creation of share servers (SVMs)
+      for each share network - this is referred to as the :ref:`NetApp
+      Manila driver with share server management<with-share>`.
 
-    2. One that supports the reuse of a single share server (SVM) for
-       all shares hosted from a backend - this is referred to as the
-       `NetApp Manila driver without share server
-       management. <#manila.cdot.single_svm.configuration>`__
+   2. One that supports the reuse of a single share server (SVM) for
+      all shares hosted from a backend - this is referred to as the
+      :ref:`NetApp Manila driver without share server management<without-share>`.
+
+Share Replicas
+--------------
 
 Share replicas are a way to mirror share data to another storage pool so
 that the data is stored in multiple locations to allow failover in a
@@ -262,16 +293,19 @@ writable, readable, and DR.
    and one or more secondary (read-only) copies which can become
    writable after a promotion of the secondary.
 
--  DR (for Disaster Recovery)- Generalized replication with secondary
+-  DR (for Disaster Recovery) - Generalized replication with secondary
    copies that are inaccessible. A secondary replica will become the
    primary replica, and accessable, after a promotion.
 
-    **Important**
+.. important::
 
-    The NetApp Unified Driver for Clustered Data ONTAP *without* Share
-    Server management currently supports DR style replication. The
-    NetApp Unified Driver for Clustered Data ONTAP *with* Share Server
-    management does not support replication.
+   The NetApp Unified Driver for Clustered Data ONTAP *without* Share
+   Server management currently supports DR style replication. The
+   NetApp Unified Driver for Clustered Data ONTAP *with* Share Server
+   management does not support replication.
+
+Share Migration
+---------------
 
 Starting with the Ocata release, NetApp's Manila driver supports
 non-disruptive migration of Manila shares - along with the filesystem
@@ -282,4 +316,4 @@ Share migration is a 2-step process which includes starting the
 migration process using the ``manila migration-start`` command, and then
 completing the process using the ``manila migration-complete`` command.
 For the list of migration commands, refer to
-`??? <#manila.api.migration_table>`__.
+":ref:`Table 6.9, “Manila API Overview - Share Migration<table-6.9>`".

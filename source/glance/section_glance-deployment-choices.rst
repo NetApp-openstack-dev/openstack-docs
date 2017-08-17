@@ -1,7 +1,11 @@
 Theory of Operation & Deployment Choices
 ========================================
 
-**Image Formats - ``raw`` vs. ``QCOW2``.**
+Glance and Clustered Data ONTAP
+-------------------------------
+
+Image Formats - ``raw`` vs. ``QCOW2``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 As previously mentioned, Glance supports a variety of image formats;
 however ``raw`` and ``QCOW2`` are the most common. While ``QCOW2`` does
@@ -10,18 +14,19 @@ expansion) over the ``raw`` format, it should be noted that when images
 are copied into Cinder volumes, they are converted into the ``raw``
 format once stored on a NetApp backend.
 
-    **Note**
+.. note::
 
-    Use of the ``QCOW2`` image format is recommended for ephemeral disks
-    due to its inherent benefits when taking instance snapshots. Use of
-    the ``raw`` image format can be advantageous when Cinder volumes are
-    used as persistent boot disks as a conversion from an alternate
-    format to ``raw`` that would be performed by Cinder can be avoided.
-    Both ``raw`` and ``QCOW2`` formats respond well to NetApp
-    deduplication technology which is often utilized with Glance
-    deployments.
+   Use of the ``QCOW2`` image format is recommended for ephemeral disks
+   due to its inherent benefits when taking instance snapshots. Use of
+   the ``raw`` image format can be advantageous when Cinder volumes are
+   used as persistent boot disks as a conversion from an alternate
+   format to ``raw`` that would be performed by Cinder can be avoided.
+   Both ``raw`` and ``QCOW2`` formats respond well to NetApp
+   deduplication technology which is often utilized with Glance
+   deployments.
 
-**NFS with Deduplication.**
+NFS with Deduplication
+^^^^^^^^^^^^^^^^^^^^^^
 
 Since there is a high probability of duplicate blocks in a repository of
 virtual machine images, NetApp highly recommends to enable deduplication
@@ -72,6 +77,9 @@ status of deduplication for a particular FlexVol volume by issuing the
     "volume efficiency start -vserver demo-vserver -volume vol2
     -scan-old-data true".
 
+Enhanced Instance Creation
+--------------------------
+
 NetApp contributed a capability to enhance instance creation which
 focuses on booting tenant-requested VM instances by OpenStack Compute
 Service (Nova) using persistent disk images in the shortest possible
@@ -100,56 +108,56 @@ volumes from cached image-volumes. For maximum Enhanced Instance
 Creation performance though, it is recommended to use the NetApp Copy
 Offload tool with NFS.
 
-    **Tip**
+.. tip::
 
-    The NetApp Copy Offload tool requires that:
+   The NetApp Copy Offload tool requires that:
 
-    -  The storage system must have Data ONTAP v8.2 or greater
-       installed.
+   -  The storage system must have Data ONTAP v8.2 or greater
+      installed.
 
-    -  To configure the copy offload workflow, enable NFS and export it
-       from the SVM.
+   -  To configure the copy offload workflow, enable NFS and export it
+      from the SVM.
 
-    -  The vStorage feature must be enabled on each storage virtual
-       machine (SVM, also known as a Vserver) that is permitted to
-       interact with the copy offload client. To set this feature, you
-       can use the
-       ``nfs modify -vserver openstack_vs1 -vstorage enabled`` CLI
-       command.
+   -  The vStorage feature must be enabled on each storage virtual
+      machine (SVM, also known as a Vserver) that is permitted to
+      interact with the copy offload client. To set this feature, you
+      can use the
+      ``nfs modify -vserver openstack_vs1 -vstorage enabled`` CLI
+      command.
 
-`figure\_title <#glance.rapid_cloning_flowchart>`__ describes the
-workflow associated with the Enhanced Instance Cloning capability of the
-NetApp NFS driver when using the NetApp Copy Offload tool.
+Figure 5.1, “Enhanced Instance Creation with NetApp Copy Offload Tool
+Flowchart” below describes the workflow associated with the Enhanced
+Instance Cloning capability of the NetApp NFS driver when using the
+NetApp Copy Offload tool.
 
 .. figure:: ../images/rapid_cloning_flowchart.png
    :alt: Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
    :width: 5.75000in
 
-Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
+   Figure 5.1. Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
 
-**Note**
+.. note::
 
- In the second decision point in the flowchart described in
- `figure\_title <#glance.rapid_cloning_flowchart>`__, Cinder
- determines if the source image from Glance and the destination
- volume would reside in the same FlexVol volume. This can be achieved
- by creating a directory structure within the NFS export to segment
- the Glance images from Cinder volumes, and appropriately setting the
- ``filesystem_datastore_dir`` and ``nfs_shares_config``.
+   In the second decision point in the flowchart described in
+   the figure above, Cinder determines if the source image from Glance
+   and the destination volume would reside in the same FlexVol volume.
+   This can be achieved by creating a directory structure within the
+   NFS export to segment the Glance images from Cinder volumes, and
+   appropriately setting the ``filesystem_datastore_dir`` and ``nfs_shares_config``.
 
-**Note**
+.. note::
 
- Refer to `??? <#glance.eic.configuration>`__ for a complete list of
- configuration changes needed for Enhanced Instance Creation and Copy
- Offload tool.
+   Refer to :ref:`eic-fas-nfs` for a complete list of
+   configuration changes needed for Enhanced Instance Creation and Copy
+   Offload tool.
 
 In order to take advantage of the Enhanced Instance Creation feature,
 there are several configuration options that must be appropriately set
 in both Cinder and Glance. A summary of these steps is provided below.
-The comprehensive checklist is available in
-`??? <#glance.eic.configuration>`__.
+The comprehensive checklist is available in the section :ref:`eic-fas-nfs`.
 
-**Glance.**
+Glance
+^^^^^^
 
 Modify the glance configuration file ``/etc/glance/glance-api.conf`` as
 follows:
@@ -187,7 +195,8 @@ follows:
            "type": "nfs"
        }
 
-**Cinder Configuration for NFS.**
+Cinder Configuration for NFS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Modify the cinder configuration file ``/etc/cinder/cinder.conf`` as
 follows:
@@ -205,9 +214,10 @@ by the NFS image cache managed by the NetApp unified driver is reclaimed
 for other uses: namely, ``thres_avl_size_perc_start``,
 ``thres_avl_size_perc_stop``, and ``expiry_thres_minutes``. For more
 information on these parameters, refer to
-`??? <#cinder.cdot.nfs.options>`__.
+":ref:`Table 4.14, “Configuration options for clustered Data ONTAP with NFS”<table-4.14>`".
 
-**Cinder Configuration for iSCSI or Fibre Channel.**
+Cinder Configuration for iSCSI or Fibre Channel
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For iSCSI and Fibre Channel the generic Image-Volume cache feature,
 available in Cinder, is utilized. This feature does not have a Copy
@@ -235,17 +245,17 @@ Image-Volume cache configuration can be found in the `OpenStack
 Image-Volume Cache
 Reference. <http://docs.openstack.org/admin-guide/blockstorage-image-volume-cache.html>`__
 
-    **Tip**
+.. tip::
 
-    Leveraging the “boot from image (creates a new volume)” option in
-    Nova, you can leverage the enhanced instance creation capabilities
-    described previously. Normally volumes created as a result of this
-    option are persistent beyond the life of the instance. However, you
-    can select the “delete on terminate” option in combination with the
-    “boot from image (creates a new volume)” option to create an
-    ephemeral volume while still leveraging the enhanced instance
-    creation capabilities described previously. This can provide a
-    significantly faster provisioning and boot sequence than the normal
-    way that ephemeral disks are provisioned, where a copy of the disk
-    image is made from Glance to local storage on the hypervisor node
-    where the instance resides.
+   Leveraging the “boot from image (creates a new volume)” option in
+   Nova, you can leverage the enhanced instance creation capabilities
+   described previously. Normally volumes created as a result of this
+   option are persistent beyond the life of the instance. However, you
+   can select the “delete on terminate” option in combination with the
+   “boot from image (creates a new volume)” option to create an
+   ephemeral volume while still leveraging the enhanced instance
+   creation capabilities described previously. This can provide a
+   significantly faster provisioning and boot sequence than the normal
+   way that ephemeral disks are provisioned, where a copy of the disk
+   image is made from Glance to local storage on the hypervisor node
+   where the instance resides.

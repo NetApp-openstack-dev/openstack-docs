@@ -1,7 +1,10 @@
 Theory of Operation & Deployment Choices
 ========================================
 
-**Manila backends and Clustered Data ONTAP.**
+Construct Mappings between Manila and Clustered Data ONTAP
+----------------------------------------------------------
+
+**Manila backends and Clustered Data ONTAP**
 
 Storage Virtual Machines (SVMs, formerly known as Vservers) contain one
 or more FlexVol volumes and one or more LIFs through which they serve
@@ -19,7 +22,7 @@ SVMs can coexist in a single cluster without being bound to any node in
 a cluster. However, they are bound to the physical cluster on which they
 exist.
 
-**Manila shares and FlexVol volumes.**
+**Manila shares and FlexVol volumes**
 
 Data ONTAP FlexVol volumes (commonly referred to as volumes) and
 OpenStack File Share Storage shares (commonly referred to as Manila
@@ -28,7 +31,7 @@ logical data elements (for example: files, Snapshot copies, clones,
 LUNs, et cetera) that is abstracted from physical elements (for example:
 individual disks, and RAID groups).
 
-**Manila snapshots versus NetApp Snapshots.**
+**Manila snapshots versus NetApp Snapshots**
 
 A NetApp Snapshot copy is a point-in-time file system image.
 Low-overhead NetApp Snapshot copies are made possible by the unique
@@ -44,11 +47,14 @@ NetApp Snapshot incurs no performance overhead; users can comfortably
 store up to 255 NetApp Snapshot copies per FlexVol volume, all of which
 are accessible as read-only and online versions of the data.
 
-    **Important**
+.. important::
 
-    Since NetApp Snapshots are taken at the FlexVol level, they can and
-    are directly leveraged within an Manila context, as a user of Manila
-    requests a snapshot be taken of a particular Manila share.
+   Since NetApp Snapshots are taken at the FlexVol level, they can and
+   are directly leveraged within an Manila context, as a user of Manila
+   requests a snapshot be taken of a particular Manila share.
+
+Deployment Choice: Utilizing Share Servers
+------------------------------------------
 
 Manila offers the capability for shares to be accessible through
 tenant-defined networks (defined within Neutron). This is achieved by
@@ -68,19 +74,19 @@ storage volumes. In the case of the Manila driver for NetApp clustered
 Data ONTAP, a share server corresponds to a storage virtual machine
 (SVM), also referred to as a Vserver.
 
-    **Note**
+.. note::
 
-    One share server is created by Manila for each share network that
-    has shares associated with it.
+   One share server is created by Manila for each share network that
+   has shares associated with it.
 
-    **Important**
+.. important::
 
-    When deploying Manila with NetApp clustered Data ONTAP without share
-    server management, NetApp requires that each Manila backend refer to
-    a single SVM within a cluster through the use of the
-    ``netapp_vserver`` configuration option.
+   When deploying Manila with NetApp clustered Data ONTAP without share
+   server management, NetApp requires that each Manila backend refer to
+   a single SVM within a cluster through the use of the
+   ``netapp_vserver`` configuration option.
 
-**With Share Servers.**
+**With Share Servers**
 
 Within the clustered Data ONTAP driver with share server support, a
 storage virtual machine will be created for each share server. While
@@ -91,11 +97,14 @@ Manila quotas. It is a documented best practice to not exceed 200 SVMs
 running on a single cluster at any given time to ensure consistent
 performance and responsive management operations.
 
-**Without Share Servers.**
+**Without Share Servers**
 
 With the clustered Data ONTAP driver without share server support, data
 LIFs are reused and the provisioning of new Manila shares (i.e. FlexVol
 volumes) is limited to the scope of a single SVM.
+
+Using Manila Share Types to Create a Storage Service Catalog
+------------------------------------------------------------
 
 The Storage Service Catalog (SSC) is a concept that describes a set of
 capabilities that enables efficient, repeated, and consistent use and
@@ -123,8 +132,11 @@ Extra specs are associated with Manila share types, so that when users
 request shares of a particular share type, they are created on storage
 backends that meet the list of requirements (e.g. available space, extra
 specs, etc). You can use the specs in
-`table\_title <#manila.netapp.extra_specs>`__ later in this section when
-defining Manila share types with the ``manila type-key`` command.
+:ref:`Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”<table-6.10>`
+later in this section when defining Manila share types with the
+``manila type-key`` command.
+
+.. _table-6.10:
 
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Extra spec                               | Type      | Description                                                                                                                                                                                                                                                                                                                                                                      |
@@ -164,15 +176,15 @@ defining Manila share types with the ``manila type-key`` command.
 | ``revert_to_snapshot_support``           | Boolean   | Allow a share to be reverted to the most recent snapshot.                                                                                                                                                                                                                                                                                                                        |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: NetApp supported Extra Specs for use with Manila Share Types
+Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
 
-    **Caution**
+.. caution::
 
-    When using the Manila driver without share server management, you
-    can specify a value for the ``netapp_login`` option that only has
-    SVM administration privileges (rather than cluster administration
-    privileges); you should note some advanced features of the driver
-    may not work and you may see warnings in the Manila logs, unless
-    appropriate permissions are set. See
-    `??? <#manila.cdot.account_permissions>`__ for more details on the
-    required access level permissions for an SVM admin account.
+   When using the Manila driver without share server management, you
+   can specify a value for the ``netapp_login`` option that only has
+   SVM administration privileges (rather than cluster administration
+   privileges); you should note some advanced features of the driver
+   may not work and you may see warnings in the Manila logs, unless
+   appropriate permissions are set. See the section called
+   ":ref:`account-perm`" for more details on the required access level
+   permissions for an SVM admin account.

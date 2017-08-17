@@ -21,19 +21,26 @@ There are three processes that make up the Manila service:
 
 .. figure:: ../images/manila_process_layout.png
    :alt: Manila Processes Concept Diagram
-   :width: 5.75000in
+   :scale: 90
 
-   Manila Processes Concept Diagram
+   Figure 6.1. Manila Processes Concept Diagram
+
+Share Creation Workflow - With Share Servers
+--------------------------------------------
 
 The following section walks through the steps that occur when a user
 requests the creation of a new share from Manila, and a backend is
 selected that uses share servers.
 
+.. _figure-6.2:
+
 .. figure:: ../images/manila_workflow_with_share_servers.png
    :alt: Manila Workflow - Share Creation with Share Servers
-   :width: 5.75000in
+   :scale: 90
 
-   Manila Workflow - Share Creation with Share Servers
+   Figure 6.2. Manila Workflow - Share Creation with Share Servers
+
+|
 
 1. Client issues request to create share through invoking REST API
    (client may use ``python-manilaclient`` CLI utility).
@@ -81,15 +88,22 @@ selected that uses share servers.
    information from response to mount share (using protocol-specific
    commands).
 
+Share Creation Workflow - Without Share Servers
+-----------------------------------------------
+
 The following section walks through the steps that occur when a user
 requests the creation of a new share from Manila and a backend is
 selected that does not use share servers.
 
+.. _figure-6.3:
+
 .. figure:: ../images/manila_workflow_without_share_servers.png
    :alt: Manila Workflow - Share Creation without Share Servers
-   :width: 5.75000in
+   :scale: 90
 
-   Manila Workflow - Share Creation without Share Servers
+   Figure 6.3. Manila Workflow - Share Creation without Share Servers
+
+|
 
 1. Client issues request to create share through invoking REST API
    (client may use ``python-manilaclient`` CLI utility).
@@ -132,6 +146,9 @@ selected that does not use share servers.
    information to request updated share details and uses export
    information from response to mount share (using protocol-specific
    commands).
+
+Share Access Workflow
+---------------------
 
 The following section walks through the steps that are required in order
 for any client to access a shared filesystem.

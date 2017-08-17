@@ -26,18 +26,21 @@ There are four processes that make up the Cinder service:
 
 .. figure:: ../images/cinder_process_layout.png
    :alt: Cinder Processes Concept Diagram
-   :width: 5.75000in
+   :scale: 80
 
-   Cinder Processes Concept Diagram
+   Figure 4.2. Cinder Processes Concept Diagram
+
+Volume Creation Workflow
+------------------------
 
 The following section walks through the steps that occur when a user
 requests the creation of a new volume from Cinder.
 
 .. figure:: ../images/cinder_create_volume_process.png
    :alt: Cinder Workflow - Volume Creation
-   :width: 5.75000in
+   :scale: 80
 
-   Cinder Workflow - Volume Creation
+   Figure 4.3. Cinder Workflow - Volume Creation
 
 1. Client issues request to create volume through invoking REST API
    (client may use ``python-cinderclient`` CLI utility).
@@ -69,14 +72,17 @@ requests the creation of a new volume from Cinder.
 9. Client receives information including status of creation request,
    volume UUID, etc.
 
+Volume Attach Workflow
+----------------------
+
 The following section walks through the steps that occur when a user
 requests that a Cinder volume be attached to a Nova compute instance.
 
 .. figure:: ../images/nova_volume_attach_process.png
    :alt: Cinder & Nova Workflow - Volume Attach
-   :width: 5.75000in
+   :scale: 80
 
-   Cinder & Nova Workflow - Volume Attach
+   Figure 4.4. Cinder & Nova Workflow - Volume Attach
 
 1. Client issues request to attach volume through invoking Nova REST API
    (client may use ``python-novaclient`` CLI utility).
@@ -108,14 +114,17 @@ requests that a Cinder volume be attached to a Nova compute instance.
    attaches the volume device/file to the guest VM as an actual or
    virtualized block device (dependent on storage protocol).
 
+Volume Backup Workflow
+----------------------
+
 The following section walks through the steps that occur when a user
 requests that a Cinder volume be backed up.
 
 .. figure:: ../images/cinder_backup_process.png
    :alt: Cinder Backup Workflow
-   :width: 5.75000in
+   :scale: 80
 
-   Cinder Backup Workflow
+   Figure 4.5. Cinder Backup Workflow
 
 1. Client issues request to backup a Cinder volume by invoking REST API
    (client may use ``python-cinderclient`` CLI utility).
@@ -148,14 +157,17 @@ requests that a Cinder volume be backed up.
 9. ``cinder-api`` process reads response message from queue and passes
    results in RESTful response to the client.
 
+Volume Restore Workflow
+-----------------------
+
 The following section walks through the steps that occur when a user
 requests that a Cinder backup be restored.
 
 .. figure:: ../images/cinder_backup_process.png
    :alt: Cinder Restore Workflow
-   :width: 5.75000in
+   :scale: 80
 
-   Cinder Restore Workflow
+   Figure 4.6. Cinder Restore Workflow
 
 1. Client issues request to restore a Cinder volume by invoking REST API
    (client may use ``python-cinderclient`` CLI utility).
