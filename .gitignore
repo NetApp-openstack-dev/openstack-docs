@@ -7,3 +7,4 @@
 *.pyc*
 *.egg*
 build/*
+update_html
