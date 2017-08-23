@@ -2,3 +2,4 @@
 host=review.openstack.netapp.com
 port=29418
 project=NetApp-openstack-dev/openstack-docs
+defaultbranch=gh-pages
