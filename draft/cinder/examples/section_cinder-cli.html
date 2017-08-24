@@ -1,0 +1,1188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Cinder Command Line Interface (CLI)</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/netapp/openstack-deploy-ops-guide/cinder/examples/section_cinder-cli.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/software/" class="drop" id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/">Project Navigator</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/security/">Security</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/start/">Get Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/roadmap/">Roadmap</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/latest-release/">Latest Release</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sourcecode/">Source Code</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/user-stories/" class="drop" id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUsers">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/user-stories/">Overview</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/telecoms-and-nfv/">Telecoms and NFV</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/enterprise/">OpenStack in the Enterprise</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/appdev/">Application Developers & ISVs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://superuser.openstack.org/">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/community/" class="drop" id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCommunity">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/">OpenStack Foundation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://groups.openstack.org">User Groups</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/">Join The Community</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/marketplace/">Marketplace</a>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/events/" class="drop" id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/summit/">The OpenStack Summit</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More OpenStack Events</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/events/#openstack_days">OpenStack Days</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/learn/" class="drop" id="dropdownMenuLearn">Learn <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/coa/">Get Certified</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//ask.openstack.org">Ask a Technical Question</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//superuser.openstack.org">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/analysts/">Analyst Reports</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/news/">News</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/blog/">Blog</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://docs.openstack.org/">Docs</a>
+        </li>
+        <li>
+
+</li>
+
+
+            <li>
+
+                <li class="join-nav-section">
+                    <a href="https://www.openstack.org/join/" id="dropdownMenuJoin">Join <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuJoin" style="display: none;">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/register/?membership-type=foundation">Sign up for Foundation Membership</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/#sponsor">Sponsor the Foundation</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation">More about the Foundation</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+                </li>
+
+            </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Cinder Command Line Interface (CLI)</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_cinder-cdot.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Clustered Data ONTAP"></i></a>
+    
+    
+    <a href="../../ch_glance-image-service.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: OpenStack Image Service (Glance)"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-08-24 13:26</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Cinder Command Line Interface (CLI)</a><ul>
+<li><a class="reference internal" href="#cinder-service-verification">Cinder Service Verification</a></li>
+<li><a class="reference internal" href="#creating-and-defining-cinder-volume-types">Creating and Defining Cinder Volume Types</a></li>
+<li><a class="reference internal" href="#creating-cinder-volumes-with-volume-types">Creating Cinder Volumes with Volume Types</a></li>
+<li><a class="reference internal" href="#cinder-manage-usage">Cinder Manage Usage</a></li>
+<li><a class="reference internal" href="#cinder-unmanage-usage">Cinder Unmanage Usage</a></li>
+<li><a class="reference internal" href="#applying-cinder-qos-via-the-command-line">Applying Cinder QoS via the Command Line</a></li>
+<li><a class="reference internal" href="#manipulating-cinder-consistency-groups-via-the-command-line">Manipulating Cinder Consistency Groups via the Command Line</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="cinder-command-line-interface-cli">
+<span id="cinder-cli"></span><h1>Cinder Command Line Interface (CLI)<a class="headerlink" href="#cinder-command-line-interface-cli" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cinder-service-verification">
+<h2>Cinder Service Verification<a class="headerlink" href="#cinder-service-verification" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we use the Cinder CLI to verify that the configuration
+presented in the section called “<a class="reference internal" href="section_cinder-conf.html#cinder-conf"><span class="std std-ref">cinder.conf</span></a>”
+has been properly initialized by Cinder.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vagrant@precise64:~/devstack$ cinder service-list
++------------------+--------------------------+------+---------+-------+------------------------+-----------------+
+|      Binary      |            Host          | Zone |  Status | State |         Updated_at     | Disabled Reason |
++------------------+--------------------------+------+---------+-------+------------------------+-----------------+
+| cinder-scheduler |         precise64        | nova | enabled |   up  | 2014-05-20T17:14:12.00 |       None      |
+|  cinder-volume   |   precise64@cdot-iscsi   | nova | enabled |   up  | 2014-05-20T17:14:10.00 |       None      |
+|  cinder-volume   |    precise64@cdot-nfs    | nova | enabled |   up  | 2014-05-20T17:14:11.00 |       None      |
+|  cinder-volume   | precise64@eseries-iscsi  | nova | enabled |   up  | 2014-05-20T17:14:06.00 |       None      |
++------------------+--------------------------+------+---------+-------+------------------------+-----------------+
+</pre></div>
+</div>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">precise64&#64;cdot-iscsi</span></code> is the backend defined by the configuration
+stanza <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">precise64&#64;cdot-nfs</span></code> is the backend defined by the configuration
+stanza <code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">precise64&#64;eseries-iscsi</span></code> is the backend defined by the
+configuration stanza <code class="docutils literal"><span class="pre">[eseries-iscsi]</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="creating-and-defining-cinder-volume-types">
+<span id="create-volume"></span><h2>Creating and Defining Cinder Volume Types<a class="headerlink" href="#creating-and-defining-cinder-volume-types" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we create a variety of Cinder Volume Types that
+leverage both the default capabilities of each driver, as well as the
+NetApp specific extra specs described in
+<a class="reference internal" href="../deployment_choice/section_service-catalog.html#table-4-11"><span class="std std-ref">Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”</span></a></p>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">iscsi</span></code> type provisions Cinder volumes onto any backend that
+uses the iSCSI storage protocol (in this example, that would be
+<code class="docutils literal"><span class="pre">[cdot-iscsi]</span></code> and <code class="docutils literal"><span class="pre">[eseries-iscsi]</span></code>).</li>
+<li>The <code class="docutils literal"><span class="pre">nfs</span></code> type provisions Cinder volumes onto any backend that uses
+the NFS storage protocol (in this example, that would be
+<code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>).</li>
+<li>The <code class="docutils literal"><span class="pre">gold</span></code> type provisions Cinder volumes onto any pure-SSD pool on
+any backend that has a SnapMirror relationship (in this example, that
+would be <code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports
+defined in <code class="docutils literal"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
+<li>The <code class="docutils literal"><span class="pre">silver</span></code> type provisions Cinder volumes onto any backend that
+has deduplication enabled (in this example, that would be
+<code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports defined in
+<code class="docutils literal"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
+<li>The <code class="docutils literal"><span class="pre">bronze</span></code> type provisions Cinder volumes onto any backend that
+has compression enabled (in this example, that would be
+<code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports defined in
+<code class="docutils literal"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
+<li>The <code class="docutils literal"><span class="pre">analytics</span></code> type provisions Cinder volumes onto the
+<code class="docutils literal"><span class="pre">[eseries-iscsi]</span></code> backend.</li>
+<li>The <code class="docutils literal"><span class="pre">encrypted</span></code> type provisions Cinder volumes onto any backend
+that has Flexvol encryption enabled (NVE) (in this example, that
+would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></code>).</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vagrant@precise64:~/devstack$ cinder type-create iscsi
++--------------------------------------+-------+
+|                  ID                  |  Name |
++--------------------------------------+-------+
+| 46cecec0-a040-476c-9475-036ca5577e6a | iscsi |
++--------------------------------------+-------+
+
+vagrant@precise64:~/devstack$ cinder type-create nfs
++--------------------------------------+------+
+|                  ID                  | Name |
++--------------------------------------+------+
+| 7564ec5c-a81b-4c62-8376-fdcab62037a2 | nfs  |
++--------------------------------------+------+
+
+vagrant@precise64:~/devstack$ cinder type-create gold
++--------------------------------------+------+
+|                  ID                  | Name |
++--------------------------------------+------+
+| 0ac5c001-d5fa-4fce-a9e3-e2cce7460027 | gold |
++--------------------------------------+------+
+
+vagrant@precise64:~/devstack$ cinder type-create silver
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| f820211a-ee1c-47ff-8f70-2be45112826d | silver |
++--------------------------------------+--------+
+
+vagrant@precise64:~/devstack$ cinder type-create bronze
++--------------------------------------+--------+
+|                  ID                  |  Name  |
++--------------------------------------+--------+
+| ae110bfc-0f5a-4e93-abe1-1a31856c0ec7 | bronze |
++--------------------------------------+--------+
+
+vagrant@precise64:~/devstack$ cinder type-create analytics
++--------------------------------------+-----------+
+|                  ID                  |    Name   |
++--------------------------------------+-----------+
+| 66459c78-5cb5-4a15-a476-f1138a4022bc | analytics |
++--------------------------------------+-----------+
+
+vagrant@precise64:~/devstack$ cinder type-create encrypted
++--------------------------------------+-----------+
+|                  ID                  |    Name   |
++--------------------------------------+-----------+
+| a564a421-55aa-238a-a4d3-e1438b4002d1 | encrypted |
++--------------------------------------+-----------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vagrant@precise64:~/devstack$ cinder type-key iscsi set storage_protocol=iSCSI
+vagrant@precise64:~/devstack$ cinder type-key nfs set storage_protocol=nfs
+vagrant@precise64:~/devstack$ cinder type-key gold set netapp_mirrored=true
+vagrant@precise64:~/devstack$ cinder type-key gold set netapp_disk_type=SSD
+vagrant@precise64:~/devstack$ cinder type-key gold set netapp_hybrid_aggregate=&quot;&lt;is&gt; False&quot;
+vagrant@precise64:~/devstack$ cinder type-key silver set netapp_dedup=true
+vagrant@precise64:~/devstack$ cinder type-key bronze set netapp_compression=true
+vagrant@precise64:~/devstack$ cinder type-key analytics set volume_backend_name=eseries-iscsi
+vagrant@precise64:~/devstack$ cinder type-key encrypted set netapp_flexvol_encryption=true
+vagrant@precise64:~/devstack$ cinder extra-specs-list
++--------------------------------------+-----------+--------------------------------------------+
+|                  ID                  |    Name   |                extra_specs                 |
++--------------------------------------+-----------+--------------------------------------------+
+| 0ac5c001-d5fa-4fce-a9e3-e2cce7460027 |    gold   | {&#39;netapp_hybrid_aggregate&#39;: &#39;&lt;is&gt; False&#39;,  |
+|                                      |           |         &#39;netapp_mirrored&#39;: &#39;true&#39;,         |
+|                                      |           |           &#39;netapp_disk_type&#39;: &#39;SSD&#39;}       |
+| 46cecec0-a040-476c-9475-036ca5577e6a |   iscsi   |      {u&#39;storage_protocol&#39;: u&#39;iSCSI&#39;}       |
+| 66459c78-5cb5-4a15-a476-f1138a4022bc | analytics | {u&#39;volume_backend_name&#39;: u&#39;eseries-iscsi&#39;} |
+| a564a421-55aa-238a-a4d3-e1438b4002d1 | encrypted | {u&#39;netapp_flexvol_encryption&#39;: u&#39;true&#39;}    |
+| 7564ec5c-a81b-4c62-8376-fdcab62037a2 |    nfs    |       {u&#39;storage_protocol&#39;: u&#39;nfs&#39;}        |
+| ae110bfc-0f5a-4e93-abe1-1a31856c0ec7 |   bronze  |      {u&#39;netapp_compression&#39;: u&#39;true&#39;}      |
+| f820211a-ee1c-47ff-8f70-2be45112826d |   silver  |         {u&#39;netapp_dedup&#39;: u&#39;true&#39;}         |
++--------------------------------------+-----------+--------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-cinder-volumes-with-volume-types">
+<h2>Creating Cinder Volumes with Volume Types<a class="headerlink" href="#creating-cinder-volumes-with-volume-types" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we create volumes with no type, as well as each of the
+previously defined volume types.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vagrant@precise64:~/devstack$ cinder create --display-name myGold --volume-type gold 1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-05-20T17:23:57.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 3678281e-3924-4512-952a-5b89713fac4d |
+|            metadata            |                  {}                  |
+|              name              |                myGold                |
+|     os-vol-host-attr:host      |                 None                 |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
+|          volume_type           |                 gold                 |
++--------------------------------+--------------------------------------+
+
+vagrant@precise64:~/devstack$ cinder create --display-name mySilver --volume-type silver 1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-05-20T17:24:12.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 6dd3e64d-ca02-4156-8532-24294db89329 |
+|            metadata            |                  {}                  |
+|              name              |               mySilver               |
+|     os-vol-host-attr:host      |                 None                 |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
+|          volume_type           |                silver                |
++--------------------------------+--------------------------------------+
+
+vagrant@precise64:~/devstack$ cinder create --display-name myBronze --volume-type bronze 1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-05-20T17:24:28.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 459b388f-ae1d-49bf-9c1d-3fe3b18afad3 |
+|            metadata            |                  {}                  |
+|              name              |               myBronze               |
+|     os-vol-host-attr:host      |                 None                 |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
+|          volume_type           |                bronze                |
++--------------------------------+--------------------------------------+
+
+vagrant@precise64:~/devstack$ cinder create --display-name myISCSI --volume-type iscsi 1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-05-20T17:25:42.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 93ef9627-ac75-46ae-820b-f722765d7828 |
+|            metadata            |                  {}                  |
+|              name              |               myISCSI                |
+|     os-vol-host-attr:host      |                 None                 |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
+|          volume_type           |                iscsi                 |
++--------------------------------+--------------------------------------+
+
+vagrant@precise64:~/devstack$ cinder create --display-name myNFS --volume-type nfs 1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-05-20T17:26:03.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 4ccf1a4c-cfe0-4b35-8435-400547cabcdd |
+|            metadata            |                  {}                  |
+|              name              |                myNFS                 |
+|     os-vol-host-attr:host      |                 None                 |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
+|          volume_type           |                 nfs                  |
++--------------------------------+--------------------------------------+
+
+vagrant@precise64:~/devstack$ cinder create --display-name myAnalytics --volume-type analytics 1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-05-20T17:26:17.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 55d0bbfa-6792-406d-8dc8-2bf1fb94b0dc |
+|            metadata            |                  {}                  |
+|              name              |             myAnalytics              |
+|     os-vol-host-attr:host      |                 None                 |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
+|          volume_type           |              analytics               |
++--------------------------------+--------------------------------------+
+
+vagrant@precise64:/opt/stack/data/cinder$ cinder create --display-name myGenericVol 1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-05-20T18:01:02.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 12938589-3ca9-49a7-bcd7-003bbcd62895 |
+|            metadata            |                  {}                  |
+|              name              |             myGenericVol             |
+|     os-vol-host-attr:host      |                 None                 |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
+|              size              |                  1                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
+|          volume_type           |                 None                 |
++--------------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vagrant@precise64:/opt/stack/data/cinder$ cinder list
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+|                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+| 12938589-3ca9-49a7-bcd7-003bbcd62895 | available | myGenericVol |  1   |     None    |  false   |             |
+| 1f71ccef-781b-4628-b0f7-44030acd8181 | available |   myISCSI    |  1   |    iscsi    |  false   |             |
+| 3678281e-3924-4512-952a-5b89713fac4d | available |    myGold    |  1   |     gold    |  false   |             |
+| 459b388f-ae1d-49bf-9c1d-3fe3b18afad3 | available |   myBronze   |  1   |    bronze   |  false   |             |
+| 4ccf1a4c-cfe0-4b35-8435-400547cabcdd | available |    myNFS     |  1   |     nfs     |  false   |             |
+| 55d0bbfa-6792-406d-8dc8-2bf1fb94b0dc | available | myAnalytics  |  1   |  analytics  |  false   |             |
+| 6dd3e64d-ca02-4156-8532-24294db89329 | available |   mySilver   |  1   |    silver   |  false   |             |
+| 93ef9627-ac75-46ae-820b-f722765d7828 | available |   myISCSI    |  1   |    iscsi    |  false   |             |
++--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
+</pre></div>
+</div>
+<p>We’ll now look at the local NFS mounts that are present on the node that
+is running <code class="docutils literal"><span class="pre">cinder-volume</span></code> and look for the volumes that were created
+on NFS backends. By mapping the mountpoints to the directories where the
+volume files exist, we are able to associate that the volumes were
+created in the appropriate FlexVol volume that had the NetApp specific
+features enabled that matched the Cinder volume type definitions.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>vagrant@precise64:~/devstack$ mount |grep cinder
+10.63.40.153:/vol2_dedup on /opt/stack/data/cinder/mnt/6fbcc46d69a86a6be25f3df3e6ae55ba type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
+10.63.40.153:/vol3_compressed on /opt/stack/data/cinder/mnt/aac4e6312b50b1fd6ddaf25d8dec8aaa type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
+10.63.40.153:/vol4_mirrored on /opt/stack/data/cinder/mnt/89af08204a543dd0985fa11b16f3d22f type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
+10.63.40.153:/vol5_plain on /opt/stack/data/cinder/mnt/e15a92dcf98a7b3fdb3963e39ed0796f type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
+vagrant@precise64:~/devstack$ cd /opt/stack/data/cinder/
+vagrant@precise64:/opt/stack/data/cinder$ find . -name volume-\*
+./mnt/89af08204a543dd0985fa11b16f3d22f/volume-3678281e-3924-4512-952a-5b89713fac4d [1]
+./mnt/aac4e6312b50b1fd6ddaf25d8dec8aaa/volume-459b388f-ae1d-49bf-9c1d-3fe3b18afad3 [2]
+./mnt/6fbcc46d69a86a6be25f3df3e6ae55ba/volume-6dd3e64d-ca02-4156-8532-24294db89329 [3]
+./mnt/6fbcc46d69a86a6be25f3df3e6ae55ba/volume-4ccf1a4c-cfe0-4b35-8435-400547cabcdd [4]
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li>This is the volume of type <code class="docutils literal"><span class="pre">gold</span></code> which was placed on
+<code class="docutils literal"><span class="pre">10.63.40.153:/vol4_mirrored</span></code>.</li>
+<li>This is the volume of type <code class="docutils literal"><span class="pre">bronze</span></code> which was placed on
+<code class="docutils literal"><span class="pre">10.63.40.153:/vol3_compressed</span></code>.</li>
+<li>This is the volume of type <code class="docutils literal"><span class="pre">silver</span></code> which was placed on
+<code class="docutils literal"><span class="pre">10.63.40.153:/vol2_dedup</span></code>.</li>
+<li>This is the volume of type <code class="docutils literal"><span class="pre">nfs</span></code> which was placed on
+<code class="docutils literal"><span class="pre">10.63.40.153:/vol2_dedup</span></code>. It could have been placed on
+<code class="docutils literal"><span class="pre">10.63.40.153:/vol3_compressed</span></code>, <code class="docutils literal"><span class="pre">10.63.40.153:/vol4_mirrored</span></code>,
+or <code class="docutils literal"><span class="pre">10.63.40.153:/vol5_plain</span></code> as any of those destinations would
+have fulfilled the volume type criteria of <code class="docutils literal"><span class="pre">storage_protocol=nfs</span></code>.</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that the volumes of type <code class="docutils literal"><span class="pre">analytics</span></code> and <code class="docutils literal"><span class="pre">iscsi</span></code>, as well
+as the volume created without a type did not appear under the NFS
+mount points because they were created as iSCSI LUNs within the
+E-Series and CDOT systems, respectively.</p>
+</div>
+</div>
+<div class="section" id="cinder-manage-usage">
+<span id="cinder-manage"></span><h2>Cinder Manage Usage<a class="headerlink" href="#cinder-manage-usage" title="Permalink to this headline">¶</a></h2>
+<p>In this section we import a Data ONTAP iSCSI LUN by specifying it by
+name or UUID.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder get-pools
++----------+-----------------------+
+| Property |         Value         |
++----------+-----------------------+
+|   name   | openstack9@iscsi#pool |
++----------+-----------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@iscsi#pool /vol/vol1/lun1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-08-25T15:11:18.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 9a62ce5f-b125-48e8-8c94-79356b27f2a9 |
+|            metadata            |                  {}                  |
+|              name              |                 None                 |
+|     os-vol-host-attr:host      |        openstack9@iscsi#pool         |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   8b4ef3cd82f145738ad8195e6bd3942c   |
+|              size              |                  0                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
+|          volume_type           |                 None                 |
++--------------------------------+--------------------------------------+
+
+$ cinder manage --id-type source-id openstack9@iscsi#pool 013a7fe0-039b-459e-8cc2-7b59c693139d
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-08-25T15:13:18.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | f2c94f4d-adb3-4c3c-a6aa-cb4c52bd2e39 |
+|            metadata            |                  {}                  |
+|              name              |                 None                 |
+|     os-vol-host-attr:host      |        openstack9@iscsi#pool         |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   8b4ef3cd82f145738ad8195e6bd3942c   |
+|              size              |                  0                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
+|          volume_type           |                 None                 |
++--------------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+|                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| 9a62ce5f-b125-48e8-8c94-79356b27f2a9 |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| f2c94f4d-adb3-4c3c-a6aa-cb4c52bd2e39 |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+</pre></div>
+</div>
+<p>In this section we import an E-Series volume by specifying its label or
+world-wide identifier.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder get-pools
++----------+-------------------------+
+| Property |          Value          |
++----------+-------------------------+
+|   name   | openstack9@eseries#pool |
++----------+-------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@eseries#pool WCAABGUIYJBAHKOYTNWKH5Y2NU
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-08-25T15:21:18.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | 206a6731-f23b-419d-8131-8bccbbd83647 |
+|            metadata            |                  {}                  |
+|              name              |                 None                 |
+|     os-vol-host-attr:host      |        openstack9@eseries#pool       |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   8b4ef3cd82f145738ad8195e6bd3942c   |
+|              size              |                  0                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
+|          volume_type           |                 None                 |
++--------------------------------+--------------------------------------+
+
+$ cinder manage --id-type source-id openstack9@eseries#pool 60:08:0e:50:00:23:c7:34:00:00:47:33:54:03:7f:b9
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-08-25T15:25:18.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |
+|            metadata            |                  {}                  |
+|              name              |                 None                 |
+|     os-vol-host-attr:host      |        openstack9@eseries#pool       |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   8b4ef3cd82f145738ad8195e6bd3942c   |
+|              size              |                  0                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
+|          volume_type           |                 None                 |
++--------------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+|                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| 206a6731-f23b-419d-8131-8bccbbd83647 |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+</pre></div>
+</div>
+<p>In this section we import a Data ONTAP NFS file by specifying its path.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder get-pools
++----------+------------------------------+
+| Property |            Value             |
++----------+------------------------------+
+|   name   | openstack9@nfs#10.0.0.2:/nfs |
++----------+------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@nfs#10.0.0.2:/nfs 10.0.0.2:/nfs/file1
++--------------------------------+--------------------------------------+
+|            Property            |                Value                 |
++--------------------------------+--------------------------------------+
+|          attachments           |                  []                  |
+|       availability_zone        |                 nova                 |
+|            bootable            |                false                 |
+|           created_at           |      2014-08-25T15:11:18.000000      |
+|          description           |                 None                 |
+|           encrypted            |                False                 |
+|               id               | f068e1f7-f008-4eb3-8a74-bacb24afb49a |
+|            metadata            |                  {}                  |
+|              name              |                 None                 |
+|     os-vol-host-attr:host      |     openstack9@nfs#10.0.0.2:/nfs     |
+| os-vol-mig-status-attr:migstat |                 None                 |
+| os-vol-mig-status-attr:name_id |                 None                 |
+|  os-vol-tenant-attr:tenant_id  |   8b4ef3cd82f145738ad8195e6bd3942c   |
+|              size              |                  0                   |
+|          snapshot_id           |                 None                 |
+|          source_volid          |                 None                 |
+|             status             |               creating               |
+|            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
+|          volume_type           |                 None                 |
++--------------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+|                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| f068e1f7-f008-4eb3-8a74-bacb24afb49a |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="cinder-unmanage-usage">
+<span id="cinder-unmanage"></span><h2>Cinder Unmanage Usage<a class="headerlink" href="#cinder-unmanage-usage" title="Permalink to this headline">¶</a></h2>
+<p>In this section we unmanage a Cinder volume by specifying its ID.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+|                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| 206a6731-f23b-419d-8131-8bccbbd83647 |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+
+$ cinder unmanage 206a6731-f23b-419d-8131-8bccbbd83647
+
+$ cinder list
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+|                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+| ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
++--------------------------------------+----------------+------+------+-------------+----------+-------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="applying-cinder-qos-via-the-command-line">
+<h2>Applying Cinder QoS via the Command Line<a class="headerlink" href="#applying-cinder-qos-via-the-command-line" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will configure a Cinder volume type, a Cinder QoS
+spec, and lastly associate the QoS spec with the volume type.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create vol_type_qos_demo
++--------------------------------------+-------------------+
+|                  ID                  |        Name       |
++--------------------------------------+-------------------+
+| 7b060008-632c-412d-8fdc-a12351f7dfe4 | vol_type_qos_demo |
++--------------------------------------+-------------------+
+
+$ cinder qos-create qos_demo maxIOPS=100
++----------+--------------------------------------+
+| Property |                Value                 |
++----------+--------------------------------------+
+| consumer |               back-end               |
+|    id    | db081cde-1a9a-41bd-a8a3-a0259db7409b |
+|   name   |               qos_demo               |
+|  specs   |         {u&#39;maxIOPS&#39;: u&#39;100&#39;}         |
++----------+--------------------------------------+
+
+$ cinder qos-associate db081cde-1a9a-41bd-a8a3-a0259db7409b 7b060008-632c-412d-8fdc-a12351f7dfe4
+
+$ cinder qos-list
++--------------------------------------+----------+----------+----------------------+
+|                  ID                  |   Name   | Consumer |        specs         |
++--------------------------------------+----------+----------+----------------------+
+| db081cde-1a9a-41bd-a8a3-a0259db7409b | qos_demo | back-end | {u&#39;maxIOPS&#39;: u&#39;100&#39;} |
++--------------------------------------+----------+----------+----------------------+
+
+$ cinder create 1 --volume-type vol_type_qos_demo
++---------------------------------------+--------------------------------------+
+|                Property               |                Value                 |
++---------------------------------------+--------------------------------------+
+|              attachments              |                  []                  |
+|           availability_zone           |                 nova                 |
+|                bootable               |                false                 |
+|          consistencygroup_id          |                 None                 |
+|               created_at              |      2015-04-22T13:39:50.000000      |
+|              description              |                 None                 |
+|               encrypted               |                False                 |
+|                   id                  | 66027b97-11d1-4399-b8c6-031ad8e38da0 |
+|                metadata               |                  {}                  |
+|              multiattach              |                False                 |
+|                  name                 |                 None                 |
+|         os-vol-host-attr:host         |                 None                 |
+|     os-vol-mig-status-attr:migstat    |                 None                 |
+|     os-vol-mig-status-attr:name_id    |                 None                 |
+|      os-vol-tenant-attr:tenant_id     |   3149a10c07bd42569bd5094b83aefdfa   |
+|   os-volume-replication:driver_data   |                 None                 |
+| os-volume-replication:extended_status |                 None                 |
+|           replication_status          |               disabled               |
+|                  size                 |                  1                   |
+|              snapshot_id              |                 None                 |
+|              source_volid             |                 None                 |
+|                 status                |               creating               |
+|                user_id                |   322aff449dac4503b7cab8f38440597e   |
+|              volume_type              |          vol_type_qos_demo           |
++---------------------------------------+--------------------------------------+
+</pre></div>
+</div>
+<p>After we associate the QoS spec with the volume type, we can use the
+volume type just as we did in the section called
+<a class="reference internal" href="#create-volume"><span class="std std-ref">“Creating and Defining Cinder Volume Types”</span></a>.
+The example below shows how to verify that the QoS policy group has
+been created on the NetApp storage controller.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">qos</span> <span class="n">policy</span><span class="o">-</span><span class="n">group</span> <span class="n">show</span> <span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">group</span> <span class="o">*</span><span class="mi">66027</span><span class="n">b97</span><span class="o">-</span><span class="mi">11</span><span class="n">d1</span><span class="o">-</span><span class="mi">4399</span><span class="o">-</span><span class="n">b8c6</span><span class="o">-</span><span class="mi">031</span><span class="n">ad8e38da0</span><span class="o">*</span>
+<span class="n">Name</span>             <span class="n">Vserver</span>     <span class="n">Class</span>        <span class="n">Wklds</span> <span class="n">Throughput</span>
+<span class="o">----------------</span> <span class="o">-----------</span> <span class="o">------------</span> <span class="o">-----</span> <span class="o">------------</span>
+<span class="n">openstack</span><span class="o">-</span><span class="mi">66027</span><span class="n">b97</span><span class="o">-</span><span class="mi">11</span><span class="n">d1</span><span class="o">-</span><span class="mi">4399</span><span class="o">-</span><span class="n">b8c6</span><span class="o">-</span><span class="mi">031</span><span class="n">ad8e38da0</span>
+                 <span class="n">dustins01</span>   <span class="n">user</span><span class="o">-</span><span class="n">defined</span> <span class="mi">1</span>     <span class="mi">0</span><span class="o">-</span><span class="mi">100</span><span class="n">IOPS</span>
+</pre></div>
+</div>
+<p>The name of the QoS policy group created on the storage controller
+contains the UUID of the Cinder volume that was created previously. This
+QoS policy group has been assigned to the file or LUN on the storage
+controller to ensure an isolated, independent limit is enforced on a
+per-Cinder-volume basis.</p>
+</div>
+<div class="section" id="manipulating-cinder-consistency-groups-via-the-command-line">
+<h2>Manipulating Cinder Consistency Groups via the Command Line<a class="headerlink" href="#manipulating-cinder-consistency-groups-via-the-command-line" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will configure a Cinder volume type, associate the
+volume type with a backend capable of supporting consistency groups,
+create a Cinder consistency group, create a Cinder volume within the
+consistency group, take a snapshot of the consistency group, and then
+finally create a second consistency group from the snapshot of the first
+consistency group.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create consistency-group-support
++--------------------------------------+---------------------------+-----------+
+|                  ID                  |            Name           | Is_Public |
++--------------------------------------+---------------------------+-----------+
+| 313da739-b629-47f6-ba5d-0d5e4ead0635 | consistency-group-support |    True   |
++--------------------------------------+---------------------------+-----------+
+
+$ cinder type-key consistency-group-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
+
+$ cinder consisgroup-create consistency-group-support --name cg1
++-------------------+-------------------------------------------+
+|      Property     |                   Value                   |
++-------------------+-------------------------------------------+
+| availability_zone |                    nova                   |
+|     created_at    |         2016-02-29T15:57:11.000000        |
+|    description    |                    None                   |
+|         id        |    2cc3d172-af05-421b-babd-01d4cd91078d   |
+|        name       |                    cg1                    |
+|       status      |                 available                 |
+|    volume_types   | [u&#39;313da739-b629-47f6-ba5d-0d5e4ead0635&#39;] |
++-------------------+-------------------------------------------+
+
+$ cinder create --name vol-in-cg1 --consisgroup-id 2cc3d172-af05-421b-babd-01d4cd91078d --volume-type consistency-group-support 1
++---------------------------------------+-------------------------------------------+
+|                Property               |                   Value                   |
++---------------------------------------+-------------------------------------------+
+|              attachments              |                     []                    |
+|           availability_zone           |                    nova                   |
+|                bootable               |                   false                   |
+|          consistencygroup_id          |    2cc3d172-af05-421b-babd-01d4cd91078d   |
+|               created_at              |         2016-02-29T15:59:36.000000        |
+|              description              |                    None                   |
+|               encrypted               |                   False                   |
+|                   id                  |    959e5f9f-67b9-4011-bd60-5dad2ee43200   |
+|                metadata               |                     {}                    |
+|            migration_status           |                    None                   |
+|              multiattach              |                   False                   |
+|                  name                 |                 vol-in-cg1                |
+|         os-vol-host-attr:host         | openstack1@cmodeiSCSI#vol_21082015_132031 |
+|     os-vol-mig-status-attr:migstat    |                    None                   |
+|     os-vol-mig-status-attr:name_id    |                    None                   |
+|      os-vol-tenant-attr:tenant_id     |      b2b6110ec5c3411089e60e928aafbba6     |
+|   os-volume-replication:driver_data   |                    None                   |
+| os-volume-replication:extended_status |                    None                   |
+|           replication_status          |                  disabled                 |
+|                  size                 |                     1                     |
+|              snapshot_id              |                    None                   |
+|              source_volid             |                    None                   |
+|                 status                |                  creating                 |
+|               updated_at              |         2016-02-29T15:59:37.000000        |
+|                user_id                |      12364c2f57ee4d459ae535af100fdf63     |
+|              volume_type              |         consistency-group-support         |
++---------------------------------------+-------------------------------------------+
+
+$ cinder cgsnapshot-create 2cc3d172-af05-421b-babd-01d4cd91078d --name snap-of-cg1
++---------------------+--------------------------------------+
+|       Property      |                Value                 |
++---------------------+--------------------------------------+
+| consistencygroup_id | 2cc3d172-af05-421b-babd-01d4cd91078d |
+|      created_at     |      2016-02-29T16:01:30.000000      |
+|     description     |                 None                 |
+|          id         | cd3770e1-fa59-48a6-ba48-2f3581f2b03b |
+|         name        |             snap-of-cg1              |
+|        status       |               creating               |
++---------------------+--------------------------------------+
+
+$ cinder consisgroup-create-from-src --name cg2 --cgsnapshot cd3770e1-fa59-48a6-ba48-2f3581f2b03b
++----------+--------------------------------------+
+| Property |                Value                 |
++----------+--------------------------------------+
+|    id    | f84529af-e639-477e-a6e7-53dd401ab909 |
+|   name   |                 cg2                  |
++----------+--------------------------------------+
+</pre></div>
+</div>
+<p>To delete a consistency group, first make sure that any snapshots of the
+consistency group have first been deleted, and that any volumes in the
+consistency group have been removed via an update command on the
+consistency group.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-update cg2 --remove-volumes ddb31a53-6550-410c-ba48-a0a912c8ae95
+
+$ cinder delete ddb31a53-6550-410c-ba48-a0a912c8ae95
+Request to delete volume ddb31a53-6550-410c-ba48-a0a912c8ae95 has been accepted.
+
+$ cinder consisgroup-delete cg2
+
+$ cinder cgsnapshot-delete snap-of-cg1
+
+$ cinder consisgroup-update cg1 --remove-volumes 959e5f9f-67b9-4011-bd60-5dad2ee43200
+
+$ cinder delete 959e5f9f-67b9-4011-bd60-5dad2ee43200
+Request to delete volume 959e5f9f-67b9-4011-bd60-5dad2ee43200 has been accepted.
+
+$ cinder consisgroup-delete cg1
+</pre></div>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_cinder-cdot.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Clustered Data ONTAP"></i></a>
+          
+          
+            <a href="../../ch_glance-image-service.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: OpenStack Image Service (Glance)"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-08-24 13:26</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">OpenStack Documentation<i class="fa fa-caret-down"></i></button>
+    <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+      <li role="presentation" class="dropdown-header">Guides</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+      <li role="presentation" class="dropdown-header">Languages</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/de/">Deutsch (German)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/fr/">Français (French)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+    </ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>OpenStack Deployment and Operations Guide 0.1</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_netapp-storage.html">About NetApp Storage Systems and Software</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../ch_cinder.html">OpenStack Block Storage Service (Cinder)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../section_cinder-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_glance-image-service.html">OpenStack Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_manila.html">OpenStack Shared File System Service (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">OpenStack Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">OpenStack Object Storage Service (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Operational Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_debug.html">Troubleshooting</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="http://openstack.org/projects/">Projects</a></li>
+          <li><a href="http://openstack.org/projects/openstack-security/">OpenStack Security</a></li>
+          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="http://openstack.org/blog/">Blog</a></li>
+          <li><a href="http://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="http://openstack.org/community/">User Groups</a></li>
+          <li><a href="http://openstack.org/community/events/">Events</a></li>
+          <li><a href="http://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="http://openstack.org/foundation/companies/">Companies</a></li>
+          <li><a href="http://docs.openstack.org/infra/manual/developers.html">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding & Legal</h3>
+        <ul>
+          <li><a href="http://openstack.org/brand/">Logos & Guidelines</a></li>
+          <li><a href="http://openstack.org/brand/openstack-trademark-policy/">Trademark Policy</a></li>
+          <li><a href="http://openstack.org/privacy/">Privacy Policy</a></li>
+          <li><a href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributor_License_Agreement">OpenStack CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openstack" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/openstack" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Openstack.org is powered by
+          <a href="http://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "cinder/examples/section_cinder-cli" + ".rst";
+        gitURL = "Source: https://github.com/netapp/openstack-deploy-ops-guide" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 108c2493ea67a8318f4069bf5d04c6a47b4849ab";
+        var bugProject = "manila";
+        var bugTitle = "Cinder Command Line Interface (CLI) in OpenStack Deployment and Operations Guide";
+    var fieldTags = "";
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 0.1 on 2017-08-24 13:26";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags);
+</script>
+
+  </body>
+</html>

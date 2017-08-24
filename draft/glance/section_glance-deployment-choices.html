@@ -1,0 +1,670 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Theory of Operation &amp; Deployment Choices</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/netapp/openstack-deploy-ops-guide/glance/section_glance-deployment-choices.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/software/" class="drop" id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/">Project Navigator</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/security/">Security</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/start/">Get Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/roadmap/">Roadmap</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/latest-release/">Latest Release</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sourcecode/">Source Code</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/user-stories/" class="drop" id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUsers">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/user-stories/">Overview</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/telecoms-and-nfv/">Telecoms and NFV</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/enterprise/">OpenStack in the Enterprise</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/appdev/">Application Developers & ISVs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://superuser.openstack.org/">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/community/" class="drop" id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCommunity">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/">OpenStack Foundation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://groups.openstack.org">User Groups</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/">Join The Community</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/marketplace/">Marketplace</a>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/events/" class="drop" id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/summit/">The OpenStack Summit</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More OpenStack Events</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/events/#openstack_days">OpenStack Days</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/learn/" class="drop" id="dropdownMenuLearn">Learn <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/coa/">Get Certified</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//ask.openstack.org">Ask a Technical Question</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//superuser.openstack.org">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/analysts/">Analyst Reports</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/news/">News</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/blog/">Blog</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://docs.openstack.org/">Docs</a>
+        </li>
+        <li>
+
+</li>
+
+
+            <li>
+
+                <li class="join-nav-section">
+                    <a href="https://www.openstack.org/join/" id="dropdownMenuJoin">Join <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuJoin" style="display: none;">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/register/?membership-type=foundation">Sign up for Foundation Membership</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/#sponsor">Sponsor the Foundation</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation">More about the Foundation</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+                </li>
+
+            </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Theory of Operation &amp; Deployment Choices</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_glance-key-concepts.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Key Concepts"></i></a>
+    
+    
+    <a href="section_glance-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-08-24 13:26</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Theory of Operation &amp; Deployment Choices</a><ul>
+<li><a class="reference internal" href="#glance-and-clustered-data-ontap">Glance and Clustered Data ONTAP</a><ul>
+<li><a class="reference internal" href="#image-formats-raw-vs-qcow2">Image Formats - <code class="docutils literal"><span class="pre">raw</span></code> vs. <code class="docutils literal"><span class="pre">QCOW2</span></code></a></li>
+<li><a class="reference internal" href="#nfs-with-deduplication">NFS with Deduplication</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#enhanced-instance-creation">Enhanced Instance Creation</a><ul>
+<li><a class="reference internal" href="#glance">Glance</a></li>
+<li><a class="reference internal" href="#cinder-configuration-for-nfs">Cinder Configuration for NFS</a></li>
+<li><a class="reference internal" href="#cinder-configuration-for-iscsi-or-fibre-channel">Cinder Configuration for iSCSI or Fibre Channel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="theory-of-operation-deployment-choices">
+<h1>Theory of Operation &amp; Deployment Choices<a class="headerlink" href="#theory-of-operation-deployment-choices" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="glance-and-clustered-data-ontap">
+<h2>Glance and Clustered Data ONTAP<a class="headerlink" href="#glance-and-clustered-data-ontap" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="image-formats-raw-vs-qcow2">
+<h3>Image Formats - <code class="docutils literal"><span class="pre">raw</span></code> vs. <code class="docutils literal"><span class="pre">QCOW2</span></code><a class="headerlink" href="#image-formats-raw-vs-qcow2" title="Permalink to this headline">¶</a></h3>
+<p>As previously mentioned, Glance supports a variety of image formats;
+however <code class="docutils literal"><span class="pre">raw</span></code> and <code class="docutils literal"><span class="pre">QCOW2</span></code> are the most common. While <code class="docutils literal"><span class="pre">QCOW2</span></code> does
+provide some benefits (supports copy-on-write, snapshots, dynamic
+expansion) over the <code class="docutils literal"><span class="pre">raw</span></code> format, it should be noted that when images
+are copied into Cinder volumes, they are converted into the <code class="docutils literal"><span class="pre">raw</span></code>
+format once stored on a NetApp backend.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Use of the <code class="docutils literal"><span class="pre">QCOW2</span></code> image format is recommended for ephemeral disks
+due to its inherent benefits when taking instance snapshots. Use of
+the <code class="docutils literal"><span class="pre">raw</span></code> image format can be advantageous when Cinder volumes are
+used as persistent boot disks as a conversion from an alternate
+format to <code class="docutils literal"><span class="pre">raw</span></code> that would be performed by Cinder can be avoided.
+Both <code class="docutils literal"><span class="pre">raw</span></code> and <code class="docutils literal"><span class="pre">QCOW2</span></code> formats respond well to NetApp
+deduplication technology which is often utilized with Glance
+deployments.</p>
+</div>
+</div>
+<div class="section" id="nfs-with-deduplication">
+<h3>NFS with Deduplication<a class="headerlink" href="#nfs-with-deduplication" title="Permalink to this headline">¶</a></h3>
+<p>Since there is a high probability of duplicate blocks in a repository of
+virtual machine images, NetApp highly recommends to enable deduplication
+on the FlexVol volume(s) where the images are stored. You can check the
+status of deduplication for a particular FlexVol volume by issuing the
+<code class="docutils literal"><span class="pre">volume</span> <span class="pre">efficiency</span> <span class="pre">show</span></code> command as seen below.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">::</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">efficiency</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">demo</span><span class="o">-</span><span class="n">vserver</span> <span class="o">-</span><span class="n">volume</span> <span class="n">vol2</span>
+
+<span class="n">Vserver</span> <span class="n">Name</span><span class="p">:</span> <span class="n">demo</span><span class="o">-</span><span class="n">vserver</span>
+<span class="n">Volume</span> <span class="n">Name</span><span class="p">:</span> <span class="n">vol2</span>
+<span class="n">Volume</span> <span class="n">Path</span><span class="p">:</span> <span class="o">/</span><span class="n">vol</span><span class="o">/</span><span class="n">vol2</span>
+<span class="n">State</span><span class="p">:</span> <span class="n">Disabled</span>
+<span class="n">Status</span><span class="p">:</span> <span class="n">Idle</span>
+<span class="n">Progress</span><span class="p">:</span> <span class="n">Idle</span> <span class="k">for</span> <span class="mi">00</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">53</span>
+<span class="n">Type</span><span class="p">:</span> <span class="n">Regular</span>
+<span class="n">Schedule</span><span class="p">:</span> <span class="n">sun</span><span class="o">-</span><span class="n">sat</span><span class="nd">@0</span>
+<span class="n">Efficiency</span> <span class="n">Policy</span> <span class="n">Name</span><span class="p">:</span> <span class="o">-</span>
+<span class="n">Blocks</span> <span class="n">Skipped</span> <span class="n">Sharing</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Last</span> <span class="n">Operation</span> <span class="n">State</span><span class="p">:</span> <span class="n">Success</span>
+<span class="n">Last</span> <span class="n">Success</span> <span class="n">Operation</span> <span class="n">Begin</span><span class="p">:</span>
+<span class="n">Thu</span> <span class="n">Nov</span> <span class="mi">21</span> <span class="mi">14</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">23</span> <span class="n">UTC</span> <span class="mi">2013</span>
+<span class="n">Last</span> <span class="n">Success</span> <span class="n">Operation</span> <span class="n">End</span><span class="p">:</span>
+<span class="n">Thu</span> <span class="n">Nov</span> <span class="mi">21</span> <span class="mi">14</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">40</span> <span class="n">UTC</span> <span class="mi">2013</span>
+<span class="n">Last</span> <span class="n">Operation</span> <span class="n">Begin</span><span class="p">:</span>
+<span class="n">Thu</span> <span class="n">Nov</span> <span class="mi">21</span> <span class="mi">14</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mi">23</span> <span class="n">UTC</span> <span class="mi">2013</span>
+<span class="n">Last</span> <span class="n">Operation</span> <span class="n">End</span><span class="p">:</span>
+<span class="n">Thu</span> <span class="n">Nov</span> <span class="mi">21</span> <span class="mi">14</span><span class="p">:</span><span class="mi">20</span><span class="p">:</span><span class="mi">40</span> <span class="n">UTC</span> <span class="mi">2013</span>
+<span class="n">Last</span> <span class="n">Operation</span> <span class="n">Size</span><span class="p">:</span> <span class="mi">0</span><span class="n">B</span>
+<span class="n">Last</span> <span class="n">Operation</span> <span class="n">Error</span><span class="p">:</span> <span class="o">-</span>
+<span class="n">Changelog</span> <span class="n">Usage</span><span class="p">:</span> <span class="mi">0</span><span class="o">%</span>
+<span class="n">Logical</span> <span class="n">Data</span> <span class="n">Size</span><span class="p">:</span> <span class="mi">224</span><span class="n">KB</span>
+<span class="n">Logical</span> <span class="n">Data</span> <span class="n">Limit</span><span class="p">:</span> <span class="mi">640</span><span class="n">TB</span>
+<span class="n">Logical</span> <span class="n">Data</span> <span class="n">Percent</span><span class="p">:</span> <span class="mi">0</span><span class="o">%</span>
+<span class="n">Queued</span> <span class="n">Job</span><span class="p">:</span> <span class="o">-</span>
+<span class="n">Stale</span> <span class="n">Fingerprint</span> <span class="n">Percentage</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Compression</span><span class="p">:</span> <span class="n">false</span>
+<span class="n">Inline</span> <span class="n">Compression</span><span class="p">:</span> <span class="n">false</span>
+<span class="n">Incompressible</span> <span class="n">Data</span> <span class="n">Detection</span><span class="p">:</span> <span class="n">false</span>
+<span class="n">Constituent</span> <span class="n">Volume</span><span class="p">:</span> <span class="n">false</span>
+<span class="n">Compression</span> <span class="n">Quick</span> <span class="n">Check</span> <span class="n">File</span> <span class="n">Size</span><span class="p">:</span> <span class="mi">524288000</span>
+
+<span class="p">::</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">efficiency</span> <span class="n">on</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">demo</span><span class="o">-</span><span class="n">vserver</span> <span class="o">-</span><span class="n">volume</span> <span class="n">vol2</span>
+<span class="n">Efficiency</span> <span class="k">for</span> <span class="n">volume</span> <span class="s2">&quot;vol2&quot;</span> <span class="n">of</span> <span class="n">Vserver</span> <span class="s2">&quot;demo-vserver&quot;</span> <span class="ow">is</span> <span class="n">enabled</span><span class="o">.</span>
+<span class="n">Already</span> <span class="n">existing</span> <span class="n">data</span> <span class="n">could</span> <span class="n">be</span> <span class="n">processed</span> <span class="n">by</span> <span class="n">running</span>
+<span class="s2">&quot;volume efficiency start -vserver demo-vserver -volume vol2</span>
+<span class="o">-</span><span class="n">scan</span><span class="o">-</span><span class="n">old</span><span class="o">-</span><span class="n">data</span> <span class="n">true</span><span class="s2">&quot;.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="enhanced-instance-creation">
+<h2>Enhanced Instance Creation<a class="headerlink" href="#enhanced-instance-creation" title="Permalink to this headline">¶</a></h2>
+<p>NetApp contributed a capability to enhance instance creation which
+focuses on booting tenant-requested VM instances by OpenStack Compute
+Service (Nova) using persistent disk images in the shortest possible
+time and in the most storage capacity efficient manner possible. This
+Enhanced Instance Creation feature (sometimes referred to as Rapid
+Cloning) is achieved by leveraging NetApp FlexClone technology, as well
+as the NetApp Copy Offload tool. The Enhanced Instance Creation feature
+can significantly decrease the time elapsed when the Nova service is
+fulfilling image provisioning and boot requests.</p>
+<p>The NetApp Copy Offload tool was added in the Icehouse release to enable
+Glance images to be efficiently copied to a destination Cinder volume.
+When Cinder and Glance are configured to use the NetApp Copy Offload
+tool, a controller-side copy is attempted before reverting to
+downloading the image from Glance. This improves image provisioning
+times while reducing the consumption of bandwidth and CPU cycles on the
+host(s) running Glance and Cinder. This is due to the copy operation
+being performed completely within the storage cluster.</p>
+<p>In addition to NFS, Enhanced Instance Creation is supported for iSCSI
+and Fibre Channel by utilizing Cinder’s Image-Volume cache feature.
+Using Cinder’s Image-Volume cache feature provides performance gains by
+caching persistent disk image-volumes, in a storage efficient manner,
+and utilizing NetApp FlexClone technology to rapidly clone Cinder
+volumes from cached image-volumes. For maximum Enhanced Instance
+Creation performance though, it is recommended to use the NetApp Copy
+Offload tool with NFS.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>The NetApp Copy Offload tool requires that:</p>
+<ul class="last simple">
+<li>The storage system must have Data ONTAP v8.2 or greater
+installed.</li>
+<li>To configure the copy offload workflow, enable NFS and export it
+from the SVM.</li>
+<li>The vStorage feature must be enabled on each storage virtual
+machine (SVM, also known as a Vserver) that is permitted to
+interact with the copy offload client. To set this feature, you
+can use the
+<code class="docutils literal"><span class="pre">nfs</span> <span class="pre">modify</span> <span class="pre">-vserver</span> <span class="pre">openstack_vs1</span> <span class="pre">-vstorage</span> <span class="pre">enabled</span></code> CLI
+command.</li>
+</ul>
+</div>
+<p>Figure 5.1, “Enhanced Instance Creation with NetApp Copy Offload Tool
+Flowchart” below describes the workflow associated with the Enhanced
+Instance Cloning capability of the NetApp NFS driver when using the
+NetApp Copy Offload tool.</p>
+<div class="figure" id="id1">
+<a class="reference internal image-reference" href="../_images/rapid_cloning_flowchart.png"><img alt="Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart" src="../_images/rapid_cloning_flowchart.png" style="width: 5.75000in;" /></a>
+<p class="caption"><span class="caption-text">Figure 5.1. Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart</span></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the second decision point in the flowchart described in
+the figure above, Cinder determines if the source image from Glance
+and the destination volume would reside in the same FlexVol volume.
+This can be achieved by creating a directory structure within the
+NFS export to segment the Glance images from Cinder volumes, and
+appropriately setting the <code class="docutils literal"><span class="pre">filesystem_datastore_dir</span></code> and <code class="docutils literal"><span class="pre">nfs_shares_config</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Refer to <a class="reference internal" href="configuration/section_enhanced-instance.html#eic-fas-nfs"><span class="std std-ref">Configuration of Enhanced Instance Creation and Copy Offload with NetApp FAS for NFS</span></a> for a complete list of
+configuration changes needed for Enhanced Instance Creation and Copy
+Offload tool.</p>
+</div>
+<p>In order to take advantage of the Enhanced Instance Creation feature,
+there are several configuration options that must be appropriately set
+in both Cinder and Glance. A summary of these steps is provided below.
+The comprehensive checklist is available in the section <a class="reference internal" href="configuration/section_enhanced-instance.html#eic-fas-nfs"><span class="std std-ref">Configuration of Enhanced Instance Creation and Copy Offload with NetApp FAS for NFS</span></a>.</p>
+<div class="section" id="glance">
+<h3>Glance<a class="headerlink" href="#glance" title="Permalink to this headline">¶</a></h3>
+<p>Modify the glance configuration file <code class="docutils literal"><span class="pre">/etc/glance/glance-api.conf</span></code> as
+follows:</p>
+<ul>
+<li><p class="first">Set the <code class="docutils literal"><span class="pre">default_store</span></code> configuration option to <code class="docutils literal"><span class="pre">file</span></code>.</p>
+</li>
+<li><p class="first">Set the <code class="docutils literal"><span class="pre">filesystem_store_datadir</span></code> configuration option in the
+<code class="docutils literal"><span class="pre">[glance_store]</span></code> stanza to the path to the NFS export from the
+desired FlexVol volume.</p>
+</li>
+<li><p class="first">Set the <code class="docutils literal"><span class="pre">filesystem_store_file_perm</span></code> configuration option in the
+<code class="docutils literal"><span class="pre">[glance_store]</span></code> stanza to be the file permissions to be assigned
+to new Glance images; alternatively, make sure that the effective
+user of the <code class="docutils literal"><span class="pre">cinder-volume</span></code> process has access to read Glance
+images from the NFS export (e.g. add the <code class="docutils literal"><span class="pre">cinder</span></code> user into the
+<code class="docutils literal"><span class="pre">glance</span></code> group).</p>
+</li>
+<li><p class="first">Set the <code class="docutils literal"><span class="pre">show_image_direct_url</span></code> configuration option to <code class="docutils literal"><span class="pre">True</span></code> in
+the <code class="docutils literal"><span class="pre">[default]</span></code> stanza.</p>
+</li>
+<li><p class="first">Set the <code class="docutils literal"><span class="pre">show_multiple_locations</span></code> configuration option to <code class="docutils literal"><span class="pre">True</span></code>
+in the <code class="docutils literal"><span class="pre">[default]</span></code> stanza.</p>
+</li>
+<li><p class="first">Set the <code class="docutils literal"><span class="pre">filesystem_store_metadata_file</span></code> configuration option in
+the <code class="docutils literal"><span class="pre">[glance_store]</span></code> stanza to point to a metadata file. The
+metadata file should contain a JSON object that contains the correct
+information about the NFS export used by Glance, similar to:</p>
+<div class="code ini highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;NetApp1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;share_location&quot;</span><span class="p">:</span> <span class="s2">&quot;nfs://192.168.0.1/myGlanceExport&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mountpoint&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/lib/glance/images&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;nfs&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="cinder-configuration-for-nfs">
+<h3>Cinder Configuration for NFS<a class="headerlink" href="#cinder-configuration-for-nfs" title="Permalink to this headline">¶</a></h3>
+<p>Modify the cinder configuration file <code class="docutils literal"><span class="pre">/etc/cinder/cinder.conf</span></code> as
+follows:</p>
+<ul class="simple">
+<li>Set the <code class="docutils literal"><span class="pre">netapp_copyoffload_tool_path</span></code> configuration option in
+Cinder (under the appropriate backend stanza) to the path to the
+NetApp Copy Offload binary as installed on the system running
+<code class="docutils literal"><span class="pre">cinder-volume</span></code>.</li>
+<li>Set the <code class="docutils literal"><span class="pre">glance_api_version</span></code> configuration option to <code class="docutils literal"><span class="pre">2</span></code>.</li>
+</ul>
+<p>There are three tunable parameters within the Cinder driver
+configuration that can affect the behavior of how often space utilized
+by the NFS image cache managed by the NetApp unified driver is reclaimed
+for other uses: namely, <code class="docutils literal"><span class="pre">thres_avl_size_perc_start</span></code>,
+<code class="docutils literal"><span class="pre">thres_avl_size_perc_stop</span></code>, and <code class="docutils literal"><span class="pre">expiry_thres_minutes</span></code>. For more
+information on these parameters, refer to
+“<a class="reference internal" href="../cinder/configuration/section_driver-cdot.html#table-4-14"><span class="std std-ref">Table 4.14, “Configuration options for clustered Data ONTAP with NFS”</span></a>”.</p>
+</div>
+<div class="section" id="cinder-configuration-for-iscsi-or-fibre-channel">
+<h3>Cinder Configuration for iSCSI or Fibre Channel<a class="headerlink" href="#cinder-configuration-for-iscsi-or-fibre-channel" title="Permalink to this headline">¶</a></h3>
+<p>For iSCSI and Fibre Channel the generic Image-Volume cache feature,
+available in Cinder, is utilized. This feature does not have a Copy
+Offload tool option.</p>
+<ul class="simple">
+<li>Set the <code class="docutils literal"><span class="pre">cinder_internal_tenant_project_id</span></code> configuration option in
+cinder.conf under the DEFAULT or the appropriate backend stanza.</li>
+<li>Set the <code class="docutils literal"><span class="pre">cinder_internal_tenant_user_id</span></code> configuration option in
+cinder.conf under the DEFAULT or the appropriate backend stanza.</li>
+<li>Set the <code class="docutils literal"><span class="pre">image_volume_cache_enabled</span></code> configuration option in
+cinder.conf under either the DEFAULT or the appropriate backend
+stanza.</li>
+</ul>
+<p>The first time a Cinder volume is created from a Glance image, the image
+is downloaded from Glance by the Cinder Volume service to a temporary
+location. Next a Cinder volume is created from the downloaded image by
+the Cinder Volume service. NetApp FlexClone technology is then used to
+create an image-volume of the Glance image in the same NetApp FlexVol.
+When the next volume is created, using the same Glance image ID, the
+Cinder volume is created by cloning the existing cached image-volume
+using using NetApp’s FlexClone technology. More information regarding
+Image-Volume cache configuration can be found in the <a class="reference external" href="http://docs.openstack.org/admin-guide/blockstorage-image-volume-cache.html">OpenStack
+Image-Volume Cache
+Reference.</a></p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Leveraging the “boot from image (creates a new volume)” option in
+Nova, you can leverage the enhanced instance creation capabilities
+described previously. Normally volumes created as a result of this
+option are persistent beyond the life of the instance. However, you
+can select the “delete on terminate” option in combination with the
+“boot from image (creates a new volume)” option to create an
+ephemeral volume while still leveraging the enhanced instance
+creation capabilities described previously. This can provide a
+significantly faster provisioning and boot sequence than the normal
+way that ephemeral disks are provisioned, where a copy of the disk
+image is made from Glance to local storage on the hypervisor node
+where the instance resides.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_glance-key-concepts.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Key Concepts"></i></a>
+          
+          
+            <a href="section_glance-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-08-24 13:26</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">OpenStack Documentation<i class="fa fa-caret-down"></i></button>
+    <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+      <li role="presentation" class="dropdown-header">Guides</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+      <li role="presentation" class="dropdown-header">Languages</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/de/">Deutsch (German)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/fr/">Français (French)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+    </ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>OpenStack Deployment and Operations Guide 0.1</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">About NetApp Storage Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">OpenStack Block Storage Service (Cinder)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_glance-image-service.html">OpenStack Image Service (Glance)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="section_glance-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_glance-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_glance-configuration.html">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">OpenStack Shared File System Service (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">OpenStack Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_swift.html">OpenStack Object Storage Service (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Operational Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_debug.html">Troubleshooting</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="http://openstack.org/projects/">Projects</a></li>
+          <li><a href="http://openstack.org/projects/openstack-security/">OpenStack Security</a></li>
+          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="http://openstack.org/blog/">Blog</a></li>
+          <li><a href="http://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="http://openstack.org/community/">User Groups</a></li>
+          <li><a href="http://openstack.org/community/events/">Events</a></li>
+          <li><a href="http://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="http://openstack.org/foundation/companies/">Companies</a></li>
+          <li><a href="http://docs.openstack.org/infra/manual/developers.html">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding & Legal</h3>
+        <ul>
+          <li><a href="http://openstack.org/brand/">Logos & Guidelines</a></li>
+          <li><a href="http://openstack.org/brand/openstack-trademark-policy/">Trademark Policy</a></li>
+          <li><a href="http://openstack.org/privacy/">Privacy Policy</a></li>
+          <li><a href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributor_License_Agreement">OpenStack CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openstack" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/openstack" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Openstack.org is powered by
+          <a href="http://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "glance/section_glance-deployment-choices" + ".rst";
+        gitURL = "Source: https://github.com/netapp/openstack-deploy-ops-guide" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 108c2493ea67a8318f4069bf5d04c6a47b4849ab";
+        var bugProject = "manila";
+        var bugTitle = "Theory of Operation &amp; Deployment Choices in OpenStack Deployment and Operations Guide";
+    var fieldTags = "";
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 0.1 on 2017-08-24 13:26";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags);
+</script>
+
+  </body>
+</html>

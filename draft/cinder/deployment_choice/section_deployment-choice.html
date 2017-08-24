@@ -1,0 +1,714 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Deployment Choices</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/netapp/openstack-deploy-ops-guide/cinder/deployment_choice/section_deployment-choice.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/software/" class="drop" id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/">Project Navigator</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/security/">Security</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/start/">Get Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/roadmap/">Roadmap</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/latest-release/">Latest Release</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sourcecode/">Source Code</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/user-stories/" class="drop" id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUsers">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/user-stories/">Overview</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/telecoms-and-nfv/">Telecoms and NFV</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/enterprise/">OpenStack in the Enterprise</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/appdev/">Application Developers & ISVs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://superuser.openstack.org/">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/community/" class="drop" id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCommunity">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/">OpenStack Foundation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://groups.openstack.org">User Groups</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/">Join The Community</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/marketplace/">Marketplace</a>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/events/" class="drop" id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/summit/">The OpenStack Summit</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More OpenStack Events</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/events/#openstack_days">OpenStack Days</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/learn/" class="drop" id="dropdownMenuLearn">Learn <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/coa/">Get Certified</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//ask.openstack.org">Ask a Technical Question</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//superuser.openstack.org">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/analysts/">Analyst Reports</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/news/">News</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/blog/">Blog</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://docs.openstack.org/">Docs</a>
+        </li>
+        <li>
+
+</li>
+
+
+            <li>
+
+                <li class="join-nav-section">
+                    <a href="https://www.openstack.org/join/" id="dropdownMenuJoin">Join <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuJoin" style="display: none;">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/register/?membership-type=foundation">Sign up for Foundation Membership</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/#sponsor">Sponsor the Foundation</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation">More about the Foundation</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+                </li>
+
+            </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Deployment Choices</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_santricity.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: SANtricity Web Services Proxy"></i></a>
+    
+    
+    <a href="section_fibre-channel.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Fibre Channel Switch Fabric with Cinder"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-08-24 13:26</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Deployment Choices</a><ul>
+<li><a class="reference internal" href="#fas-vs-e-series">FAS vs. E-Series</a></li>
+<li><a class="reference internal" href="#clustered-data-ontap-vs-data-ontap-operating-in-7-mode">Clustered Data ONTAP vs. Data ONTAP Operating in 7-Mode</a></li>
+<li><a class="reference internal" href="#nfs-vs-iscsi">NFS vs. iSCSI</a></li>
+<li><a class="reference internal" href="#volume-groups-vs-dynamic-disk-pools-e-series">Volume Groups vs. Dynamic Disk Pools (E-Series)</a></li>
+<li><a class="reference internal" href="#nfs-security">NFS Security</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="deployment-choices">
+<h1>Deployment Choices<a class="headerlink" href="#deployment-choices" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fas-vs-e-series">
+<h2>FAS vs. E-Series<a class="headerlink" href="#fas-vs-e-series" title="Permalink to this headline">¶</a></h2>
+<p><strong>FAS</strong></p>
+<p>If rich data management, deep data protection, and storage efficiency
+are desired and should be availed directly by the storage, the NetApp
+FAS product line is a natural fit for use within Cinder deployments.
+Massive scalability, nondisruptive operations, proven storage
+efficiencies, and a unified architecture (NAS and SAN) are key features
+offered by the Data ONTAP storage operating system. These capabilities
+are frequently leveraged in existing virtualization deployments and thus
+align naturally to OpenStack use cases.</p>
+<p><strong>E-Series</strong></p>
+<p>For cloud environments where higher performance is critical, or where
+higher-value data management features are not needed or are implemented
+within an application, the NetApp E-Series product line can provide a
+cost-effective underpinning for a Cinder deployment. NetApp E-Series
+storage offers a feature called Dynamic Disk Pools, which simplifies
+data protection by removing the complexity of configuring RAID groups
+and allocating hot spares. Utilization is improved by dynamically
+spreading data, parity, and spare capacity across all drives in a pool,
+reducing performance bottlenecks due to hot-spots. Additionally, should
+a drive failure occur, DDP enables the pool to return to an optimal
+state significantly faster than RAID6, while reducing the performance
+impact during the reconstruction of a failed drive.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As of the Icehouse release, NetApp has integrations with Cinder for
+both FAS and E-Series, and either storage solution can be included
+as part of a Cinder deployment to leverage the native benefits that
+either platform has to offer.</p>
+</div>
+</div>
+<div class="section" id="clustered-data-ontap-vs-data-ontap-operating-in-7-mode">
+<h2>Clustered Data ONTAP vs. Data ONTAP Operating in 7-Mode<a class="headerlink" href="#clustered-data-ontap-vs-data-ontap-operating-in-7-mode" title="Permalink to this headline">¶</a></h2>
+<p>Clustered Data ONTAP represents NetApp’s platform for delivering future
+innovation in the FAS product line. Its inherent qualities of
+virtualization of network interfaces, disk subsystem, and administrative
+storage controller map well to OpenStack constructs. The Storage Virtual
+Machine storage server (SVM, historically referred to as Vserver) can
+span across all nodes of a given clustered Data ONTAP deployment, for
+example. The elasticity provided to expand or contract a Storage Virtual
+Machine across horizontally scalable resources are capabilities critical
+to cloud deployment unique to the clustered Data ONTAP mode of
+operation.</p>
+<p>The Data ONTAP 7-Mode drivers are primarily provided to allow rapid use
+of prior deployed FAS systems for OpenStack block storage requirements.
+There is no current intention to enhance the 7-Mode driver’s
+capabilities beyond providing basic bug fixes.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">NetApp strongly recommends that all OpenStack deployments built upon
+the NetApp FAS product set leverage clustered Data ONTAP.</p>
+</div>
+</div>
+<div class="section" id="nfs-vs-iscsi">
+<h2>NFS vs. iSCSI<a class="headerlink" href="#nfs-vs-iscsi" title="Permalink to this headline">¶</a></h2>
+<p>A frequent question from customers and partners is whether to utilize
+NFS or iSCSI as the storage protocol with a Cinder deployment on top of
+the NetApp FAS product line. Both protocol options are TCP/IP-based,
+deliver similar throughputs and latencies, support Cinder features,
+snapshot copies and cloning are supported to similar degrees, as well as
+advertisement of other storage efficienty, data protection, and high
+availability features.</p>
+<p><strong>iSCSI</strong></p>
+<ul class="simple">
+<li>At the time of publishing, the maximum number of iSCSI LUNs per
+NetApp cluster is either 8,192 or 49,152 - dependent on the FAS model
+number (refer to <a class="reference external" href="http://hwu.netapp.com">Hardware Universe</a> for
+detailed information for a particular model). Cinder can be
+configured to operate with multiple NetApp clusters via multi-backend
+support to increase this number for an OpenStack deployment.</li>
+<li>LUNs consume more management resources and some management tools also
+have limitations on the number of LUNs.</li>
+<li>When Cinder is used independently of OpenStack Compute, use of iSCSI
+is essential to provide direct access to block devices. The Cinder
+driver used in conjunction with NFS relies on libvirt and the
+hypervisor to represent files on NFS as virtual block devices. When
+Cinder is utilized in bare-metal or non-virtualized environments, the
+NFS storage protocol is not an option.</li>
+<li>The number of volumes on E-Series varies based on platform. The E5x00
+series supports 2048 volume per system while the E2x00 series
+supports 512. In both cases, the number of cinder volumes is limited
+to 256 per physical server. If live migration is enabled, E-Series is
+limited to 256 volumes. See the netapp_enable_multiattach option
+for more information.</li>
+</ul>
+<p><strong>NFS</strong></p>
+<ul class="simple">
+<li>The maximum number of files in a single FlexVol volume exported
+through NFS is dependent on the size of the FlexVol volume; a 1TB
+FlexVol can have 33,554,432 files (assuming 32k inodes). The
+theoretical maximum of files is roughly two billion.</li>
+<li>NFS drivers require support from the hypervisor to virtualize files
+and present them as block devices to an instance.</li>
+<li>As of the Icehouse release, the use of parallel NFS (pNFS) is
+supported with the NetApp unified driver, providing enhanced
+performance and scalability characteristics.</li>
+<li>You cannot apply Cinder QoS specs to NFS backends on cDOT through an
+SVM-Scoped admin user. In order to do so, you must use a
+Cluster-Scoped admin user.</li>
+<li>There is no difference in the maximum size of a Cinder volume
+regardless of the storage protocol chosen (a file on NFS or an iSCSI
+LUN are both 16TB).</li>
+<li>Performance differences between iSCSI and NFS are normally negligible
+in virtualized environments; for a detailed investigation, please
+refer to <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?m=tr-3808.pdf&amp;cc=us">NetApp TR3808: VMware vSphere and ESX 3.5 Multiprotocol
+Performance Comparison using FC, iSCSI, and
+NFS</a>.</li>
+</ul>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Deploying the NetApp Cinder driver with clustered Data ONTAP
+utilizing the NFS storage protocol yields a more scalable OpenStack
+deployment than iSCSI with negligible performance differences. If
+Cinder is being used to provide block storage services independent
+of other OpenStack services, the iSCSI protocol must be utilized.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The NFS client cache refresh interval can vary depending on how the
+NFS client’s default mounting options are configured. In order to
+prevent the issue of being confronted with a stale negative cache
+entry, an additional option must be passed to the NFS mount command
+invoked by the Cinder using an NFS driver. This can be configured by
+adding the line “nfs_mount_options = lookupcache=pos” to your
+driver configuration stanza in your cinder.conf file. Alternatively,
+if you are already setting other NFS mount options, then you can
+just add “lookupcache=pos&lt;200b&gt;” to the end of your current
+“nfs_mount_options”. The effect of this additional option is to
+force the NFS client to ignore any negative entries in its cache and
+always check the NFS host when attempting to confirm the existence
+of a file.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>A related use case for the use of iSCSI with OpenStack deployments
+involves creating a FlexVol volume to serve as the storage for
+OpenStack compute nodes. As more hypervisor nodes are added, a
+master boot LUN can simply be cloned for each node, and compute
+nodes can become completely stateless. Since the configuration of
+hypervisor nodes are usually nearly identical (except for
+node-specific data like configuration files, logs, etc), the boot
+disk lends well to optimizations like deduplication and compression.</p>
+<p class="last">Currently this configuration must be done outside of the management
+scope of Cinder, but it serves as another example of how the
+differentiated capabilities of NetApp storage can be leveraged to
+ease the deployment and ongoing operation of an OpenStack cloud
+deployment.</p>
+</div>
+</div>
+<div class="section" id="volume-groups-vs-dynamic-disk-pools-e-series">
+<h2>Volume Groups vs. Dynamic Disk Pools (E-Series)<a class="headerlink" href="#volume-groups-vs-dynamic-disk-pools-e-series" title="Permalink to this headline">¶</a></h2>
+<p>There are two options for defining storage pools on an E-Series storage
+array; each have different performance characteristics and features.</p>
+<p><strong>Volume Groups</strong></p>
+<ul class="simple">
+<li>Disk count will vary depending on the RAID Level selected.</li>
+<li>Expand/extend options are expensive and cannot be performed
+concurrently or while a volume on the pool is initializing.</li>
+<li>Higher raw performance compared to DDP.</li>
+<li>Adding new disks will require an expensive reconstruction operation.</li>
+</ul>
+<p><strong>Dynamic Disk Pools (DDP)</strong></p>
+<ul class="simple">
+<li>DDP’s require a minimum of 11 disks.</li>
+<li>RAID reconstruction speed upon drive failures is greatly increased
+over Volume Groups.</li>
+<li>Thin provisioned volumes are supported.</li>
+<li>Volume expand/extend operations can run concurrently and while
+volumes are initializing.</li>
+<li>Additional disks can be added with no additional reconstruction
+overhead.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">DDP should be used for provisioning storage if many volume extend
+operations are expected, or if thin provisioning is desired. If raw
+performance is the most important requirement, then properly
+provisioned volume groups are the best choice.</p>
+</div>
+</div>
+<div class="section" id="nfs-security">
+<h2>NFS Security<a class="headerlink" href="#nfs-security" title="Permalink to this headline">¶</a></h2>
+<p><strong>Options</strong></p>
+<p>Starting with the Kilo release of OpenStack, deployers of NFS backends
+for Cinder have a choice: to enable <em>NAS security</em> options, or not.</p>
+<p>Cinder traditionally worked on the assumption that the connections from
+OpenStack nodes to NFS backends used trusted physical networks and that
+OpenStack services run on dedicated nodes whose users and processes were
+trusted. Exposure of storage resources to tenants was always mediated by
+the hypervisor under control of Cinder and Nova. Operations on the
+backing files for Cinder volumes ran as <em>root</em> and the files themselves
+were readable and writable by any user or process on OpenStack nodes
+that mounted the NFS backend shares.</p>
+<p>Starting with Kilo, two NAS security options were introduced that enable
+the OpenStack operator, in concert with the NAS storage administrator,
+to reduce the potential attack surface created by allowing such liberal
+access to users and processes running on OpenStack storage and compute
+nodes.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="3%" />
+<col width="5%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option</th>
+<th class="head">Type</th>
+<th class="head">Default Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code></td>
+<td>Optional</td>
+<td>“auto”</td>
+<td>Run operations on backing files for Cinder volumes as <em>cinder</em> user rather than <em>root</em> if ‘true’; as <em>root</em> if ‘false’. If ‘auto’, run as ‘true’ if in a “greenfield” environment and run as ‘false’ if existing volumes are found on startup.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code></td>
+<td>Optional</td>
+<td>“auto”</td>
+<td>Create backing files for Cinder volumes to only be readable and writable by owner and group if ‘true’; as readable and writable by owner, group, and world if ‘false’. If ‘auto’, run as ‘true’ if in a “greenfield” environment and run as ‘false’ if existing volumes are found on startup.</td>
+</tr>
+</tbody>
+</table>
+<p>Tablei 4.10. Configuration options for NFS Security</p>
+<p>When <code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> is set to ‘true’, Cinder operations
+on the backing files for Cinder volumes run as the dedicated <em>cinder</em>
+user rather than as <em>root</em>. With this option enabled, the NFS storage
+administrator can export shares with <em>root</em> “squashed”, i.e. mapped to
+an anonymous user without privileges. When the
+<code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code> is set to ‘true’, backing files for
+Cinder volumes are only readable and writable by owner and group - mode
+0660 rather than 0666. Since Cinder creates these files with both owner
+and group <em>cinder</em>, only system processes running with uid or gid
+<em>cinder</em> are allowed to read or write these files, assuming that <em>root</em>
+has been squashed in the share export.</p>
+<p>The default value of both of these options is ‘auto’. For backwards
+compatibility, if there already exist cinder volumes when Cinder starts
+up and the value of one of these options is ‘auto’, it is set to ‘false’
+internally, whereas if there is a green field environment, the option is
+set to ‘true’ and a marker file <em>.cinderSecureEnvIndicator</em> is created
+under the mount directory. On startup, the marker file is checked so
+that this automatic green field environment choice will be persisted for
+subsequent startups after volumes have been created.</p>
+<p><strong>Setup</strong></p>
+<p>When NAS security options are deployed, OpenStack Cinder and Nova nodes
+must be configured appropriately, as well as Data ONTAP, for Cinder
+volume operations and Nova attaches to succeed. For example, if <em>root</em>
+root is “squashed” and “set uid” is disabled but the NAS security
+options are set to ‘false’, the driver will attempt to run “chown” as
+root, read and write backing files as root, and the like and these
+operations will fail.</p>
+<p><strong>Filer Side Setup</strong></p>
+<ul class="simple">
+<li>Ensure that the filer has <em>cinder</em> and <em>nova</em> user and group
+identities with <em>uid</em> and <em>gid</em> that match the corresponding users on
+the OpenStack Cinder and Nova nodes.</li>
+<li>On the filer, put both the <em>cinder</em> and the <em>nova</em> users in the
+<em>cinder</em> group.</li>
+<li>Ensure that the exported ONTAP volume has owner <em>cinder</em> and group
+<em>cinder</em>.</li>
+<li>Set permissions on the exported share to 0755.</li>
+<li>“Squash” access on the share for <em>root</em> and disable “set uid”.</li>
+<li>See <a class="reference external" href="http://www.netapp.com/us/media/tr-3580.pdf">NetApp TR3850: NFSv4 Enhancements and Best Practices Guide: Data
+ONTAP Implementation</a>
+and <a class="reference external" href="http://www.netapp.com/us/media/tr-4067.pdf">NetApp TR4067: Clustered Data ONTAP NFS Best Practice and
+Implementation Guide</a>,
+as well as the File Access and Protocols Management Guides available
+from the NetApp NOW site for setup information.</li>
+</ul>
+<p><strong>OpenStack Setup</strong></p>
+<ul class="simple">
+<li>On Cinder and Nova nodes, for NFSv4, set the <em>Domain</em> in
+<em>/etc/idmapd.conf</em> on both storage and compute nodes to match that of
+the NFS server. Restart idmapd service.</li>
+<li>On Nova nodes, add the <em>nova</em> user to the <em>cinder</em> group.</li>
+<li>On Nova nodes, set “user = ‘nova’”, “group = ‘cinder’”, and
+“dynamic_ownership = 0” in <em>/etc/libvirt/qemu.conf</em>.</li>
+<li>On Nova nodes, restart libvirt-bin, qemu-kvm, and nova services (or
+reboot).</li>
+</ul>
+<p>The overall objective here is to set up the exported share so that only
+OpenStack processes with <em>cinder</em> user identity or group identity have
+permission to read and write the backing files for cinder volumes, and
+set up Cinder and Nova nodes in OpenStack such that Cinder operations on
+the backing files run with <em>cinder</em> user identity and that Nova/libvirt
+operations run with <em>cinder</em> group identity.</p>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_santricity.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: SANtricity Web Services Proxy"></i></a>
+          
+          
+            <a href="section_fibre-channel.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Fibre Channel Switch Fabric with Cinder"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-08-24 13:26</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">OpenStack Documentation<i class="fa fa-caret-down"></i></button>
+    <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+      <li role="presentation" class="dropdown-header">Guides</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+      <li role="presentation" class="dropdown-header">Languages</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/de/">Deutsch (German)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/fr/">Français (French)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+    </ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>OpenStack Deployment and Operations Guide 0.1</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_netapp-storage.html">About NetApp Storage Systems and Software</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../ch_cinder.html">OpenStack Block Storage Service (Cinder)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../section_cinder-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_cinder-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_glance-image-service.html">OpenStack Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_manila.html">OpenStack Shared File System Service (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">OpenStack Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">OpenStack Object Storage Service (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Operational Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_debug.html">Troubleshooting</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="http://openstack.org/projects/">Projects</a></li>
+          <li><a href="http://openstack.org/projects/openstack-security/">OpenStack Security</a></li>
+          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="http://openstack.org/blog/">Blog</a></li>
+          <li><a href="http://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="http://openstack.org/community/">User Groups</a></li>
+          <li><a href="http://openstack.org/community/events/">Events</a></li>
+          <li><a href="http://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="http://openstack.org/foundation/companies/">Companies</a></li>
+          <li><a href="http://docs.openstack.org/infra/manual/developers.html">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding & Legal</h3>
+        <ul>
+          <li><a href="http://openstack.org/brand/">Logos & Guidelines</a></li>
+          <li><a href="http://openstack.org/brand/openstack-trademark-policy/">Trademark Policy</a></li>
+          <li><a href="http://openstack.org/privacy/">Privacy Policy</a></li>
+          <li><a href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributor_License_Agreement">OpenStack CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openstack" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/openstack" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Openstack.org is powered by
+          <a href="http://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "cinder/deployment_choice/section_deployment-choice" + ".rst";
+        gitURL = "Source: https://github.com/netapp/openstack-deploy-ops-guide" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 108c2493ea67a8318f4069bf5d04c6a47b4849ab";
+        var bugProject = "manila";
+        var bugTitle = "Deployment Choices in OpenStack Deployment and Operations Guide";
+    var fieldTags = "";
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 0.1 on 2017-08-24 13:26";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags);
+</script>
+
+  </body>
+</html>
