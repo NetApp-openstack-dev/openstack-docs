@@ -1,0 +1,641 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Operational Concerns with Data ONTAP</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/operations/section_cdot-ops.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/software/" class="drop" id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/">Project Navigator</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/security/">Security</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/start/">Get Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/roadmap/">Roadmap</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/latest-release/">Latest Release</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sourcecode/">Source Code</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/user-stories/" class="drop" id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUsers">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/user-stories/">Overview</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/telecoms-and-nfv/">Telecoms and NFV</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/enterprise/">OpenStack in the Enterprise</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/appdev/">Application Developers & ISVs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://superuser.openstack.org/">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/community/" class="drop" id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCommunity">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/">OpenStack Foundation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://groups.openstack.org">User Groups</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/">Join The Community</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/marketplace/">Marketplace</a>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/events/" class="drop" id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/summit/">The OpenStack Summit</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More OpenStack Events</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/events/#openstack_days">OpenStack Days</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/learn/" class="drop" id="dropdownMenuLearn">Learn <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/coa/">Get Certified</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//ask.openstack.org">Ask a Technical Question</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//superuser.openstack.org">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/analysts/">Analyst Reports</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/news/">News</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/blog/">Blog</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://docs.openstack.org/">Docs</a>
+        </li>
+        <li>
+
+</li>
+
+
+            <li>
+
+                <li class="join-nav-section">
+                    <a href="https://www.openstack.org/join/" id="dropdownMenuJoin">Join <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuJoin" style="display: none;">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/register/?membership-type=foundation">Sign up for Foundation Membership</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/#sponsor">Sponsor the Foundation</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation">More about the Foundation</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+                </li>
+
+            </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Operational Concerns with Data ONTAP</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_non-disruptive-ops.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Non-Disruptive Operations"></i></a>
+    
+    
+    <a href="../appendices/appendix_packaging.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Packaging"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-08-25 01:54</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="operational-concerns-with-data-ontap">
+<h1>Operational Concerns with Data ONTAP<a class="headerlink" href="#operational-concerns-with-data-ontap" title="Permalink to this headline">¶</a></h1>
+<p>Using thin provisioning, FlexVol volumes can be configured to appear to
+provide more storage than available. If FlexVol volumes associated with
+an aggregate show more storage as available than the physical resources
+available to the aggregates (disk pools) backing the FlexVol, the
+aggregate is over committed. When an aggregate is over committed, it is
+possible for writes to LUNs or files in FlexVols contained by that
+aggregate to fail if there is insufficient free space available to
+accommodate those writes.</p>
+<p>Consider the following scenarios:</p>
+<blockquote>
+<div><p><strong>Note</strong></p>
+<p>For the following scenarios, assume that the reserved_percentage is
+set to 0, and max_over_subscription_ratio is set to 1.0.</p>
+</div></blockquote>
+<p>Before we begin, note the cinder syntax to create a volume type that
+supports thin provisioning:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder type-create thin
+[admin@openstack ~(keystonerc_admin)]$ cinder type-key thin set thin_provisioning_support=&quot;&lt;is&gt; True&quot;
+</pre></div>
+</div>
+<p>Scenario A: Creating a Cinder Volume with Sufficient Available Space in
+Aggregate Aggregate Capacity: 10 TB FlexVol Size: 100 TB (Thin
+Provisioned) Cinder Volume 1 Size: 10TB (Thin Provisioned Extra Spec),
+1TB used (volume is already provisioned). Available Space: ~9TB Cinder
+Volume 2 Requirement: 5TB (Thin Provisioned)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-a --volume-type thin 5000
+</pre></div>
+</div>
+<p>The above command to create a new 5TB thin provisioned Cinder volume
+will succeed. Note that the underlying aggregate (disk pool) only has
+10TB of usable capacity, whereas each of the total of Cinder volume
+capacities is 15TB. Both volumes will be usable, but if the aggregate
+runs out of free space, it will not be possible to write to either of
+these Cinder volumes, or other volumes that are backed by this
+aggregate.</p>
+<p>Scenario B: Insufficient Available Space in Aggregate Aggregate
+Capacity: 10 TB FlexVol Size: 100 TB (Thin Provisioned) Cinder Volume 1
+Size: 10TB (Thin Provisioned Extra Spec), 10TB used for a database
+(volume is already provisioned). Available Space: ~0 Cinder Volume 2
+Requirement: 10TB (Thin Provisioned)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-b --volume-type thin 10000
+</pre></div>
+</div>
+<p>The above command to create a new thin provisioned Cinder volume will
+fail since there is no space available in the aggregate to satisfy the
+provisioning request.</p>
+<p>Scenario C: Resizing Thin Provisioned FlexVol Volume for Cinder
+Volume(s) Aggregate Capacity: 500 TB FlexVol Size: 50 TB (Thin
+Provisioned) Cinder Volume 1 Size: 10TB (Thin Provisioned Extra Spec),
+10TB used (volume is already provisioned). Available: 40 TB Cinder
+Volume 2 Requirement: 100TB (Thin Provisioned)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-c --volume-type thin 100000
+</pre></div>
+</div>
+<p>The above command to create a new thin provisioned Cinder volume will
+fail since the FlexVol size is smaller than the requirement for
+cinder-vol-c. In order to provision this 100TB Cinder volume, resize the
+FlexVol and try the provisioning request again. As an alternative,
+please adjust the max_over_subscription_ratio from 1.0 to a higher
+value. Details on this <code class="docutils literal"><span class="pre">cinder.conf</span></code> parameter are available below.</p>
+<p>If you have over committed your aggregate, you must monitor your
+available space and add storage to the aggregate as needed to avoid
+write errors due to insufficient space. Aggregates can provide storage
+to FlexVol volumes associated with more than one Storage Virtual Machine
+(SVM). When sharing aggregates for thin-provisioned volumes in a
+multi-tenancy environment, be aware that one tenant’s aggregate space
+availability can be adversely affected by the growth of another tenant’s
+volumes.</p>
+<p>For more information about thin provisioning, see the following
+technical reports:</p>
+<ul>
+<li><p class="first"><a class="reference external" href="http://media.netapp.com/DOCUMENTS/TR-3965.PDF">TR 3965: NetApp Thin Provisioning Deployment and Implementation
+Guide</a></p>
+</li>
+<li><p class="first"><a class="reference external" href="http://media.netapp.com/DOCUMENTS/TR3483.PDF">TR 3483: Thin Provisioning in a NetApp SAN or IP SAN Enterprise
+Environment</a></p>
+<blockquote>
+<div><p><strong>Note</strong></p>
+<p>Thin provisioning helps maximize storage utilization. However, if
+aggregates are over committed through thin provisioning, usage must
+be monitored, and capacity must be increased as usage nears
+predefined thresholds.</p>
+</div></blockquote>
+</li>
+</ul>
+<p>In order to provision a larger capacities than allowed, use the
+<code class="docutils literal"><span class="pre">max_over_subscription_ratio</span></code> parameter in the <code class="docutils literal"><span class="pre">cinder.conf</span></code> file.
+For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span># /etc/cinder/cinder.conf
+
+[DEFAULT]
+…
+…
+[NetAppBackend]
+…
+…
+max_over_subscription_ratio = 2.0
+</pre></div>
+</div>
+<p>In this case, the max_over_subscription_ratio will permit the
+creation of volumes that that are oversubscribed by a factor of 2.
+Consider the following scenarios:</p>
+<p>Scenario X: FlexVol Volume Size: 10GB max_over_subscription_ratio =
+1.0 Total Perceived Free Capacity for Provisioning: 1.0 * 10 = 10GB</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 10 # success</span>
+<span class="c1"># cinder create 11 # failure, since no oversubscription is allowed</span>
+</pre></div>
+</div>
+<p>Scenario Y: FlexVol Volume Size: 10GB max_over_subscription_ratio =
+2.0 Total Perceived Free Capacity for Provisioning: 2.0 * 10 = 20GB</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 10 # success</span>
+<span class="c1"># cinder create 20 # success, since up to 10GB of capacity can be oversubscribed</span>
+<span class="c1"># cinder create 21 # failure</span>
+</pre></div>
+</div>
+<p>Scenario Z: FlexVol Volume Size: 10GB max_over_subscription_ratio = 4
+Total Perceived Free Capacity for Provisioning: 4.0 * 10 = 40GB</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 40 # success, since up to 40GB of capacity can be oversubscribed</span>
+<span class="c1"># cinder create 41 # failure</span>
+
+
+<span class="o">**</span><span class="n">Note</span><span class="o">**</span>
+
+<span class="n">After</span> <span class="n">adjusting</span> <span class="n">the</span> <span class="nb">max</span>\<span class="n">_over</span>\<span class="n">_subscription</span>\<span class="n">_ratio</span><span class="p">,</span> <span class="n">restart</span> <span class="n">the</span>
+<span class="n">cinder</span> <span class="n">scheduler</span> <span class="ow">and</span> <span class="n">volume</span> <span class="n">services</span><span class="o">.</span> <span class="n">ex</span><span class="p">:</span>
+
+<span class="p">::</span>
+
+                        <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">openstack</span><span class="o">-</span><span class="n">cinder</span><span class="o">-</span><span class="p">{</span><span class="n">scheduler</span><span class="p">,</span><span class="n">volume</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This represents a part of the FlexVol that is reserved and cannot be
+used for provisioning. This can be useful, for example, if a FlexVol is
+used for multiple applications, some of them using storage that is not
+managed by OpenStack Cinder. Specify this parameter in <code class="docutils literal"><span class="pre">cinder.conf</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#/etc/cinder/cinder.conf
+
+[DEFAULT]
+…
+…
+[NetAppBackend]
+…
+…
+reserved_percentage=50
+</pre></div>
+</div>
+<p>Consider another example:</p>
+<p>FlexVol Size: 100GB Snapshot reserve: 10% Effective FlexVol Size: 90GB
+max_over_subscription_ratio = 1.5 reserved_percentage = 50
+#specified in <code class="docutils literal"><span class="pre">cinder.conf</span></code> Total Perceived Free Capacity for
+Provisioning: 1.5 * 50%*90 = 67.5GB</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 67 # succeeds since that much free space is perceived to be available</span>
+<span class="c1"># cinder create 68 # fails</span>
+</pre></div>
+</div>
+<p>Be sure to refer to the <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&amp;m=tr-4067.pdf">Clustered Data ONTAP NFS Best Practices and
+Implementation
+Guide</a>
+for information on how to optimally set up NFS exports for use with
+OpenStack storage services such as Cinder, Manila, and Glance.</p>
+<blockquote>
+<div><p><strong>Note</strong></p>
+<p>In order to use NFS v4 and NFS v4.1 please modify the Export Rule’s
+Access Details to Read-Only access using UNIX using System Manager
+or via command line.</p>
+</div></blockquote>
+<div class="figure" id="id1">
+<a class="reference internal image-reference" href="../_images/create_export_rule_screenshot.png"><img alt="Creating Export Rule" src="../_images/create_export_rule_screenshot.png" style="width: 5.75000in;" /></a>
+<p class="caption"><span class="caption-text">Creating Export Rule</span></p>
+</div>
+<p>Volume migration for Cinder has been available since the Havana release
+for clustered Data ONTAP and the Icehouse release for E-Series.</p>
+<p>The volume migration feature of Cinder can be used to aid in the
+transition from Data ONTAP operating in 7-Mode to clustered Data ONTAP
+with minimal disruption. If you have volumes managed by Cinder on a Data
+ONTAP operating in 7-Mode storage system, you can configure the
+clustered Data ONTAP instance as a new backend in the Cinder
+configuration and leverage the migration feature to move existing
+volumes to the new backend and then retire the Data ONTAP operating in
+7-Mode system.</p>
+<p>Once the two storage systems to operate with Cinder, please verify that
+both backends have been enabled successfully and are ready to support
+the migration process.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder service list
++------------------+-------------------+------+---------+-------+--------------------------+
+|      Binary      |       Host        | Zone |  Status | State |        Updated_at        |
++------------------+-------------------+------+---------+-------+--------------------------+
+| cinder-scheduler |     openstack1    | nova | enabled |   up  | 2013-1-1T19:01:26.000000 |
+|  cinder-volume   |  openstack1@7mode | nova | enabled |   up  | 2013-1-1T19:01:18.000000 |
+|  cinder-volume   |  openstack1@cDOT  | nova | enabled |   up  | 2013-1-1T19:01:27.000000 |
++------------------+-------------------+------+---------+-------+--------------------------+
+</pre></div>
+</div>
+<p>The host <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;7mode">openstack1<span>&#64;</span>7mode</a> represents the backend representing the Data
+ONTAP operating in 7-Mode system, and <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;cDOT">openstack1<span>&#64;</span>cDOT</a> represents the
+backend representing the clustered Data ONTAP system. Volumes can be
+migrated individually to the new backend, through the use of the cinder
+migrate CLI command. For example, consider a Cidner volume with ID
+781501e1-af79-4d3e-be90-f332a5841f5e on the <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;7mode">openstack1<span>&#64;</span>7mode</a> storage
+backend. In order to migrate it to the <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;cDOT">openstack1<span>&#64;</span>cDOT</a> backend, please
+execute:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder migrate 781501e1-af79-4d3e-be90-f332a5841f5e openstack1@cDOT</span>
+</pre></div>
+</div>
+<p>The command is asynchronous and completes in the background. In order to
+check the status of the migration, use the cinder show command, and
+ensure that migration_status indicates success:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder show 781501e1-af79-4d3e-be90-f332a5841f5e</span>
+<span class="o">...</span>
+<span class="o">|</span>        <span class="n">migration_status</span>        <span class="o">|</span>         <span class="n">success</span>      <span class="o">|</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>While a volume migration is in progress, Cinder commands from tenants
+that involve operations on the volume (such as attach/detach, snapshot,
+clone, etc) will fail. If using a hypervisor that does not support live
+migration of volumes and the volume is currently attached, it is
+necessary to detach the volume from the Nova instance before performing
+the migration. If the volume is the boot volume or otherwise critical to
+the operation of the instance, please shutdown the Nova instance before
+using cinder migrate.</p>
+<p>Current support for live migration, a Nova feature, is available in the
+Nova Feature Support Matrix. Details on using live migration for Nova
+instances are available in the OpenStack Admin Guide and the Instance
+Storage Options at the Hypervisor section.</p>
+<blockquote>
+<div><p><strong>Note</strong></p>
+<p>In order to use live migration with E-Series it is necessary to set
+netapp_enable_multiattach in <code class="docutils literal"><span class="pre">cinder.conf</span></code>. Please refer to Nova
+Live Migration of Instances with Attached E-Series Volumes.</p>
+</div></blockquote>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_non-disruptive-ops.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Non-Disruptive Operations"></i></a>
+          
+          
+            <a href="../appendices/appendix_packaging.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Packaging"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-08-25 01:54</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="http://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://ask.openstack.org" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">OpenStack Documentation<i class="fa fa-caret-down"></i></button>
+    <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+      <li role="presentation" class="dropdown-header">Guides</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+      <li role="presentation" class="dropdown-header">Languages</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/de/">Deutsch (German)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/fr/">Français (French)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+    </ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>NetApp OpenStack Docs 0.1</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">About NetApp Storage Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">OpenStack Block Storage Service (Cinder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">OpenStack Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">OpenStack Shared File System Service (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">OpenStack Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_swift.html">OpenStack Object Storage Service (Swift)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_operations.html">Operational Considerations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="section_non-disruptive-ops.html">Non-Disruptive Operations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Operational Concerns with Data ONTAP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_debug.html">Troubleshooting</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="http://openstack.org/projects/">Projects</a></li>
+          <li><a href="http://openstack.org/projects/openstack-security/">OpenStack Security</a></li>
+          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="http://openstack.org/blog/">Blog</a></li>
+          <li><a href="http://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="http://openstack.org/community/">User Groups</a></li>
+          <li><a href="http://openstack.org/community/events/">Events</a></li>
+          <li><a href="http://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="http://openstack.org/foundation/companies/">Companies</a></li>
+          <li><a href="http://docs.openstack.org/infra/manual/developers.html">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding & Legal</h3>
+        <ul>
+          <li><a href="http://openstack.org/brand/">Logos & Guidelines</a></li>
+          <li><a href="http://openstack.org/brand/openstack-trademark-policy/">Trademark Policy</a></li>
+          <li><a href="http://openstack.org/privacy/">Privacy Policy</a></li>
+          <li><a href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributor_License_Agreement">OpenStack CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openstack" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/openstack" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Openstack.org is powered by
+          <a href="http://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "operations/section_cdot-ops" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2f9e12d46128dd8d84f23bfab55c9b4f032de64a";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Operational Concerns with Data ONTAP in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 0.1 on 2017-08-25 01:54";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags);
+</script>
+
+  </body>
+</html>

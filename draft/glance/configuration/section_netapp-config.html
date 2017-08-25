@@ -1,0 +1,560 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Configuration of Glance with NetApp Storage Systems and Software</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/glance/configuration/section_netapp-config.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/software/" class="drop" id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/">Project Navigator</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/security/">Security</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/start/">Get Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/roadmap/">Roadmap</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/latest-release/">Latest Release</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sourcecode/">Source Code</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/user-stories/" class="drop" id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUsers">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/user-stories/">Overview</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/telecoms-and-nfv/">Telecoms and NFV</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/enterprise/">OpenStack in the Enterprise</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/appdev/">Application Developers & ISVs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://superuser.openstack.org/">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/community/" class="drop" id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCommunity">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/">OpenStack Foundation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://groups.openstack.org">User Groups</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/">Join The Community</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/marketplace/">Marketplace</a>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/events/" class="drop" id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/summit/">The OpenStack Summit</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More OpenStack Events</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/events/#openstack_days">OpenStack Days</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/learn/" class="drop" id="dropdownMenuLearn">Learn <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/coa/">Get Certified</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//ask.openstack.org">Ask a Technical Question</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//superuser.openstack.org">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/analysts/">Analyst Reports</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/news/">News</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/blog/">Blog</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://docs.openstack.org/">Docs</a>
+        </li>
+        <li>
+
+</li>
+
+
+            <li>
+
+                <li class="join-nav-section">
+                    <a href="https://www.openstack.org/join/" id="dropdownMenuJoin">Join <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuJoin" style="display: none;">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/register/?membership-type=foundation">Sign up for Foundation Membership</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/#sponsor">Sponsor the Foundation</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation">More about the Foundation</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+                </li>
+
+            </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Configuration of Glance with NetApp Storage Systems and Software</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="../section_glance-configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuration"></i></a>
+    
+    
+    <a href="section_enhanced-instance.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration of Enhanced Instance Creation"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-08-25 01:54</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Configuration of Glance with NetApp Storage Systems and Software</a><ul>
+<li><a class="reference internal" href="#configuration-of-glance-with-netapp-fas">Configuration of Glance with NetApp FAS</a></li>
+<li><a class="reference internal" href="#configuration-of-glance-with-netapp-e-series-and-ef-series">Configuration of Glance with NetApp E-Series and EF-Series</a></li>
+<li><a class="reference internal" href="#configuration-of-glance-with-netapp-storagegrid-webscale">Configuration of Glance with NetApp StorageGRID Webscale</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="configuration-of-glance-with-netapp-storage-systems-and-software">
+<h1>Configuration of Glance with NetApp Storage Systems and Software<a class="headerlink" href="#configuration-of-glance-with-netapp-storage-systems-and-software" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="configuration-of-glance-with-netapp-fas">
+<span id="glance-fas-config"></span><h2>Configuration of Glance with NetApp FAS<a class="headerlink" href="#configuration-of-glance-with-netapp-fas" title="Permalink to this headline">¶</a></h2>
+<p>By specifying the value of <code class="docutils literal"><span class="pre">filesystem_store_datadir</span></code> to be a
+directory that is the mount point for an NFS share that is served from a
+NetApp FlexVol volume, you can have a single filesystem that can be
+mounted from one or more <code class="docutils literal"><span class="pre">glance-registry</span></code> servers.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The NFS mount for the <code class="docutils literal"><span class="pre">filesystem_store_datadir</span></code> is not managed by
+Glance; therefore, you must use the standard Linux mechanisms (e.g.
+<code class="docutils literal"><span class="pre">/etc/fstab</span></code> or NFS automounter) to ensure that the NFS mount
+exists before Glance starts.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Be sure to refer to the <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&amp;m=tr-4067.pdf">Clustered Data ONTAP NFS Best Practices and
+Implementation
+Guide</a>
+for information on how to optimally set up the NFS export for use
+with Glance, and <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-60107-16&amp;m=tr-3958.pdf">NetApp Data Compression and Deduplication
+Deployment and Implementation
+Guide</a>.</p>
+</div>
+</div>
+<div class="section" id="configuration-of-glance-with-netapp-e-series-and-ef-series">
+<span id="glance-eseries-config"></span><h2>Configuration of Glance with NetApp E-Series and EF-Series<a class="headerlink" href="#configuration-of-glance-with-netapp-e-series-and-ef-series" title="Permalink to this headline">¶</a></h2>
+<p>E-Series and EF-Series storage systems can alternatively be used as the
+backing store for Glance images. An E-Series volume should be created
+(with SANtricity specifying the desired RAID level and capacity) and
+then mapped to the Glance node. After the volume is visible to the host
+it is formatted with a file system, mounted, and a directory structure
+created on it. This directory path can be specified as the
+<code class="docutils literal"><span class="pre">filesystem_store_datadir</span></code> in the Glance configuration file
+<code class="docutils literal"><span class="pre">glance-api.conf</span></code>.</p>
+<p><strong>Steps:</strong></p>
+<ol class="arabic">
+<li><p class="first">Create the LUN from a disk pool or volume group using SANtricity and
+map it to the host. Assuming that the volume has been mapped to
+<code class="docutils literal"><span class="pre">/dev/sdc</span></code> on the host, create a partition on the volume and then
+create a filesystem on the partition (e.g. ext4):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">fdisk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdc</span>
+<span class="n">mkfs</span><span class="o">.</span><span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdc1</span>
+<span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdc1</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">sdc1</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">sdc1</span><span class="o">/</span><span class="n">glanceImageStore</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Edit the Glance configuration file <code class="docutils literal"><span class="pre">glance-api.conf</span></code> so that it
+contains the <code class="docutils literal"><span class="pre">filesystem_store_datadir</span></code> option, and ensure the
+value refers to the Glance image store directory created in the
+previous step:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">filesystem_store_datadir</span><span class="o">=/</span><span class="n">mnt</span><span class="o">/</span><span class="n">sdc1</span><span class="o">/</span><span class="n">glanceImageStore</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="configuration-of-glance-with-netapp-storagegrid-webscale">
+<h2>Configuration of Glance with NetApp StorageGRID Webscale<a class="headerlink" href="#configuration-of-glance-with-netapp-storagegrid-webscale" title="Permalink to this headline">¶</a></h2>
+<p>StorageGRID Webscale can be used as a backing store for Glance images
+using the Amazon S3 API.</p>
+<p><strong>Configure the following in StorageGRID Webscale:</strong></p>
+<ol class="arabic">
+<li><p class="first">Port redirect: Glance will only talk to port 443. Redirect port on
+gateway or storage node (8082 for CLB and 18082 for LDR):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">PREROUTING</span> <span class="o">-</span><span class="n">t</span> <span class="n">nat</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth0</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">--</span><span class="n">dport</span> <span class="mi">443</span> <span class="o">-</span><span class="n">j</span> <span class="n">REDIRECT</span> <span class="o">--</span><span class="n">to</span><span class="o">-</span><span class="n">port</span> <span class="mi">8082</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Set domain root:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Grid</span> <span class="n">Management</span> <span class="o">&gt;</span> <span class="n">Grid</span> <span class="n">Configuration</span> <span class="o">&gt;</span> <span class="n">Root</span> <span class="n">Domain</span> <span class="n">Name</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p><strong>Configure Openstack:</strong></p>
+<ol class="arabic">
+<li><p class="first">Edit /etc/glance/glance-api.conf. Make the following changes. Account
+information and bucket names are examples and will be different for
+your installation.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Which backend scheme should Glance use by default is not specified</span>
+<span class="c1"># in a request to add a new image to Glance? Known schemes are determined</span>
+<span class="c1"># by the known_stores option below.</span>
+<span class="c1"># Default: &#39;file&#39;</span>
+<span class="c1">#default_store=file</span>
+<span class="n">default_store</span><span class="o">=</span><span class="n">s3</span>
+<span class="p">[</span><span class="n">glance_store</span><span class="p">]</span>
+<span class="c1"># List of which store classes and store class locations are</span>
+<span class="c1"># currently known to glance at startup.</span>
+<span class="c1"># Existing but disabled stores:</span>
+<span class="c1">#      glance.store.rbd.Store,</span>
+<span class="n">glance</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">Store</span><span class="p">,</span>
+<span class="c1">#      glance.store.swift.Store,</span>
+<span class="c1">#      glance.store.sheepdog.Store,</span>
+<span class="c1">#      glance.store.cinder.Store,</span>
+<span class="c1">#      glance.store.gridfs.Store,</span>
+<span class="c1">#      glance.store.vmware_datastore.Store,</span>
+<span class="c1">#stores=glance.store.filesystem.Store,</span>
+<span class="c1">#         glance.store.http.Store</span>
+
+<span class="c1"># ============ S3 Store Options =============================</span>
+<span class="c1"># Address where the S3 authentication service lives</span>
+<span class="c1"># Valid schemes are &#39;http://&#39; and &#39;https://&#39;</span>
+<span class="c1"># If no scheme specified,  default to &#39;http://&#39;</span>
+<span class="n">s3_store_host</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">webscalertp</span><span class="o">.</span><span class="n">stl</span><span class="o">.</span><span class="n">netapp</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="mi">8082</span>
+<span class="c1"># User to authenticate against the S3 authentication service</span>
+<span class="n">s3_store_access_key</span><span class="o">=</span><span class="n">VXVJ0GKKP90XINQTJQUH</span>
+<span class="c1"># Auth key for the user authenticating against the</span>
+<span class="c1"># S3 authentication service</span>
+<span class="n">s3_store_secret_key</span><span class="o">=</span><span class="mi">5</span><span class="n">mi1M8bIybnNF21OvRKOd7TgCbk</span><span class="o">/</span><span class="n">JjPB7dw0Aioc</span>
+<span class="c1"># Container within the account that the account should use</span>
+<span class="c1"># for storing images in S3. Note that S3 has a flat namespace,</span>
+<span class="c1"># so you need a unique bucket name for your glance images. An</span>
+<span class="c1"># easy way to do this is append your AWS access key to &quot;glance&quot;.</span>
+<span class="c1"># S3 buckets in AWS *must* be lowercased, so remember to lowercase</span>
+<span class="c1"># your AWS access key if you use it in your bucket name below!</span>
+<span class="n">s3_store_bucket</span><span class="o">=</span><span class="n">glance55</span>
+<span class="c1"># Do we create the bucket if it does not exist?</span>
+<span class="n">s3_store_create_bucket_on_put</span><span class="o">=</span><span class="kc">True</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Restart Glance service: <code class="docutils literal"><span class="pre">openstack-service</span> <span class="pre">restart</span> <span class="pre">glance</span></code></p>
+</li>
+<li><p class="first">Edit DNS or Hosts file: Create entry for bucket.hostname example:
+glance55.webscalertp.stl.netapp.com</p>
+</li>
+<li><p class="first">Test:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Grab an image file to test – cirros is a very small image used for testing.
+
+source /root/keystonerc_admin
+
+glance image-create --name cirros --disk-format qcow2 --container-format bare --file /root/cirros.img
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="../section_glance-configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuration"></i></a>
+          
+          
+            <a href="section_enhanced-instance.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration of Enhanced Instance Creation"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-08-25 01:54</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="http://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://ask.openstack.org" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">OpenStack Documentation<i class="fa fa-caret-down"></i></button>
+    <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+      <li role="presentation" class="dropdown-header">Guides</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+      <li role="presentation" class="dropdown-header">Languages</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/de/">Deutsch (German)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/fr/">Français (French)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+    </ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../../index.html" class="docs-sidebar-section-title"><h4>NetApp OpenStack Docs 0.1</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_netapp-storage.html">About NetApp Storage Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_cinder.html">OpenStack Block Storage Service (Cinder)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../ch_glance-image-service.html">OpenStack Image Service (Glance)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../section_glance-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_glance-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../section_glance-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../section_glance-configuration.html">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_manila.html">OpenStack Shared File System Service (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">OpenStack Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">OpenStack Object Storage Service (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Operational Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_debug.html">Troubleshooting</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="http://openstack.org/projects/">Projects</a></li>
+          <li><a href="http://openstack.org/projects/openstack-security/">OpenStack Security</a></li>
+          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="http://openstack.org/blog/">Blog</a></li>
+          <li><a href="http://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="http://openstack.org/community/">User Groups</a></li>
+          <li><a href="http://openstack.org/community/events/">Events</a></li>
+          <li><a href="http://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="http://openstack.org/foundation/companies/">Companies</a></li>
+          <li><a href="http://docs.openstack.org/infra/manual/developers.html">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding & Legal</h3>
+        <ul>
+          <li><a href="http://openstack.org/brand/">Logos & Guidelines</a></li>
+          <li><a href="http://openstack.org/brand/openstack-trademark-policy/">Trademark Policy</a></li>
+          <li><a href="http://openstack.org/privacy/">Privacy Policy</a></li>
+          <li><a href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributor_License_Agreement">OpenStack CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openstack" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/openstack" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Openstack.org is powered by
+          <a href="http://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "glance/configuration/section_netapp-config" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2f9e12d46128dd8d84f23bfab55c9b4f032de64a";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Configuration of Glance with NetApp Storage Systems and Software in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 0.1 on 2017-08-25 01:54";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags);
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,758 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Key Concepts</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-17511903-1', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/section_cinder-key-concepts.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="https://www.openstack.org/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/software/" class="drop" id="dropdownMenuSoftware">Software <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/project-navigator/">Project Navigator</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sample-configs/">Sample Configs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/security/">Security</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/start/">Get Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/roadmap/">Roadmap</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/latest-release/">Latest Release</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/software/sourcecode/">Source Code</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/user-stories/" class="drop" id="dropdownMenuUsers">Users <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuUsers">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/user-stories/">Overview</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/telecoms-and-nfv/">Telecoms and NFV</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/enterprise/">OpenStack in the Enterprise</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/appdev/">Application Developers & ISVs</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://superuser.openstack.org/">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/surveys/landing">User Survey</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/community/" class="drop" id="dropdownMenuCommunity">Community <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuCommunity">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/">Welcome! Start Here</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/">OpenStack Foundation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://wiki.openstack.org">OpenStack Wiki</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://groups.openstack.org">User Groups</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/speakers/">Speakers Bureau</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation/companies/">Supporting Companies</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/jobs/">Jobs</a></li>
+            <li role="presentation" class="divider"></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/">Join The Community</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/marketplace/">Marketplace</a>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/events/" class="drop" id="dropdownMenuEvents">Events <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">Overview</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/summit/">The OpenStack Summit</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//www.openstack.org/community/events/">More OpenStack Events</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/community/events/#openstack_days">OpenStack Days</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://www.openstack.org/learn/" class="drop" id="dropdownMenuLearn">Learn <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuEvents">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/training/">Training</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/marketplace/coa/">Get Certified</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//ask.openstack.org">Ask a Technical Question</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="//superuser.openstack.org">Superuser Magazine</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/videos/">Summit Videos</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/analysts/">Analyst Reports</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/news/">News</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/blog/">Blog</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="https://docs.openstack.org/">Docs</a>
+        </li>
+        <li>
+
+</li>
+
+
+            <li>
+
+                <li class="join-nav-section">
+                    <a href="https://www.openstack.org/join/" id="dropdownMenuJoin">Join <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-hover" role="menu" aria-labelledby="dropdownMenuJoin" style="display: none;">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/register/?membership-type=foundation">Sign up for Foundation Membership</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/join/#sponsor">Sponsor the Foundation</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.openstack.org/foundation">More about the Foundation</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://www.openstack.org/Security/login/?BackURL=/home/" class="sign-in-btn">Log In</a>
+                </li>
+
+            </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Key Concepts</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_cinder-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Overview"></i></a>
+    
+    
+    <a href="section_cinder-processes.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Process Structure"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-08-25 01:54</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Key Concepts</a><ul>
+<li><a class="reference internal" href="#volume">Volume</a></li>
+<li><a class="reference internal" href="#snapshot">Snapshot</a></li>
+<li><a class="reference internal" href="#backend">Backend</a></li>
+<li><a class="reference internal" href="#driver">Driver</a></li>
+<li><a class="reference internal" href="#volume-type">Volume Type</a></li>
+<li><a class="reference internal" href="#extra-spec">Extra Spec</a></li>
+<li><a class="reference internal" href="#quality-of-service">Quality of Service</a></li>
+<li><a class="reference internal" href="#storage-pools">Storage Pools</a></li>
+<li><a class="reference internal" href="#consistency-groups">Consistency Groups</a></li>
+<li><a class="reference internal" href="#backup-and-restore">Backup and Restore</a></li>
+<li><a class="reference internal" href="#disaster-recovery">Disaster Recovery</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="key-concepts">
+<h1>Key Concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="volume">
+<h2>Volume<a class="headerlink" href="#volume" title="Permalink to this headline">¶</a></h2>
+<p>A Cinder volume is the fundamental resource unit allocated by the Block
+Storage service. It represents an allocation of persistent, readable,
+and writable block storage that could be utilized as the root disk for a
+compute instance, or as secondary storage that could be attached and/or
+detached from a compute instance. The underlying connection between the
+consumer of the volume and the Cinder service providing the volume can
+be achieved with the iSCSI, NFS, or Fibre Channel storage protocols
+(dependent on the support of the Cinder driver deployed).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">A Cinder volume is an abstract storage object that may or may not
+directly map to a “volume” concept from the underlying backend
+provider of storage. It is critically important to understand this
+distinction, particularly in context of a Cinder deployment that
+leverages NetApp storage solutions.</p>
+</div>
+<p>Cinder volumes can be identified uniquely through a UUID assigned by the
+Cinder service at the time of volume creation. A Cinder volume may also
+be optionally referred to by a human-readable name, though this string
+is not guaranteed to be unique within a single tenant or deployment of
+Cinder.</p>
+<p>The actual blocks provisioned in support of a Cinder volume reside on a
+single Cinder backend. Starting in the Havana release, a Cinder volume
+can be migrated from one storage backend to another within a deployment
+of the Cinder service; refer to the section called “<a class="reference internal" href="examples/section_cinder-cli.html#cinder-cli"><span class="std std-ref">Cinder Command Line Interface (CLI)</span></a>”
+for an example of volume migration.</p>
+<p>The <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">manage</span></code> command allows importing existing storage objects
+that are not managed by Cinder into new Cinder volumes. The operation
+will attempt to locate an object within a specified Cinder backend and
+create the necessary metadata within the Cinder database to allow it to
+be managed like any other Cinder volume. The operation will also rename
+the volume to a name appropriate to the particular Cinder driver in use.
+The imported storage object could be a file, LUN, or a volume depending
+on the protocol (iSCSI/FC/NFS) and driver (Data ONTAP operating in
+7-mode, clustered Data ONTAP, or E-Series) in use. This feature is
+useful in migration scenarios where virtual machines or other data need
+to be managed by Cinder; refer to the section called
+“<a class="reference internal" href="examples/section_cinder-cli.html#cinder-manage"><span class="std std-ref">Cinder Manage Usage</span></a>” for an example of the <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">manage</span></code> command.</p>
+<p>The <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">unmanage</span></code> command allows Cinder to cease management of a
+particular Cinder volume. All data stored in the Cinder database related
+to the volume is removed, but the volume’s backing file, LUN, or
+appropriate storage object is not deleted. This allows the volume to be
+transferred to another environment for other use cases; refer to the
+section called “<a class="reference internal" href="examples/section_cinder-cli.html#cinder-unmanage"><span class="std std-ref">Cinder Unmanage Usage</span></a>” for an example of the
+<code class="docutils literal"><span class="pre">cinder</span> <span class="pre">unmanage</span></code> command.</p>
+</div>
+<div class="section" id="snapshot">
+<h2>Snapshot<a class="headerlink" href="#snapshot" title="Permalink to this headline">¶</a></h2>
+<p>A Cinder snapshot is a point-in-time, read-only copy of a Cinder volume.
+Snapshots can be created from an existing Cinder volume that is
+operational and either attached to an instance or in a detached state. A
+Cinder snapshot can serve as the content source for a new Cinder volume
+when the Cinder volume is created with the <em>create from snapshot</em> option
+specified.</p>
+</div>
+<div class="section" id="backend">
+<h2>Backend<a class="headerlink" href="#backend" title="Permalink to this headline">¶</a></h2>
+<p>A Cinder backend is the configuration object that represents a single
+provider of block storage upon which provisioning requests may be
+fulfilled. A Cinder backend communicates with the storage system through
+a Cinder driver. Cinder supports multiple backends to be simultaneously
+configured and managed (even with the same Cinder driver) as of the
+Grizzly release.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A single Cinder backend may be defined in the <code class="docutils literal"><span class="pre">[DEFAULT]</span></code> stanza
+of <code class="docutils literal"><span class="pre">cinder.conf</span></code>; however, NetApp recommends that the
+<code class="docutils literal"><span class="pre">enabled_backends</span></code> configuration option be set to a
+comma-separated list of backend names, and each backend name have
+its own configuration stanza with the same name as listed in the
+<code class="docutils literal"><span class="pre">enabled_backends</span></code> option. Refer to the section called
+“<a class="reference internal" href="configuration/section_cinder.html#cinder"><span class="std std-ref">Cinder</span></a>” for an example of the use of this option.</p>
+</div>
+</div>
+<div class="section" id="driver">
+<h2>Driver<a class="headerlink" href="#driver" title="Permalink to this headline">¶</a></h2>
+<p>A Cinder driver is a particular implementation of a Cinder backend that
+maps the abstract APIs and primitives of Cinder to appropriate
+constructs within the particular storage solution underpinning the
+Cinder backend.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">The use of the term “driver” often creates confusion given common
+understanding of the behavior of “device drivers” in operating
+systems. The term can connote software that provides a data I/O
+path. In the case of Cinder driver implementations, the software
+provides provisioning and other manipulation of storage devices but
+does not lay in the path of data I/O. For this reason, the term
+“driver” is often used interchangeably with the alternative (and
+perhaps more appropriate) term “provider”.</p>
+</div>
+</div>
+<div class="section" id="volume-type">
+<h2>Volume Type<a class="headerlink" href="#volume-type" title="Permalink to this headline">¶</a></h2>
+<p>A Cinder volume type is an abstract collection of criteria used to
+characterize Cinder volumes. They are most commonly used to create a
+hierarchy of functional capabilities that represent a tiered level of
+storage services; for example, a cloud administrator might define a
+<code class="docutils literal"><span class="pre">premium</span></code> volume type that indicates a greater level of performance
+than a <code class="docutils literal"><span class="pre">basic</span></code> volume type, which would represent a best-effort level
+of performance.</p>
+<p>The collection of criteria is specified as a list of key/value pairs,
+which are inspected by the Cinder scheduler when determining which
+Cinder backend(s) are able to fulfill a provisioning request. Individual
+Cinder drivers (and subsequently Cinder backends) may advertise
+arbitrary key/value pairs (also referred to as capabilities) to the
+Cinder scheduler, which are then compared against volume type
+definitions when determining which backend will fulfill a provisioning
+request.</p>
+</div>
+<div class="section" id="extra-spec">
+<h2>Extra Spec<a class="headerlink" href="#extra-spec" title="Permalink to this headline">¶</a></h2>
+<p>An extra spec is a key/value pair, expressed in the style of
+<code class="docutils literal"><span class="pre">key=value</span></code>. Extra specs are associated with Cinder volume types, so
+that when users request volumes of a particular volume type, the volumes
+are created on storage backends that meet the specified criteria.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The list of default capabilities that may be reported by a Cinder
+driver and included in a volume type definition include:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">volume_backend_name</span></code>: The name of the backend as defined in
+<code class="docutils literal"><span class="pre">cinder.conf</span></code></li>
+<li><code class="docutils literal"><span class="pre">vendor_name</span></code>: The name of the vendor who has implemented the
+driver (e.g. <code class="docutils literal"><span class="pre">NetApp</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">driver_version</span></code>: The version of the driver (e.g. <code class="docutils literal"><span class="pre">1.0</span></code>)</li>
+<li><code class="docutils literal"><span class="pre">storage_protocol</span></code>: The protocol used by the backend to export
+block storage to clients (e.g. <code class="docutils literal"><span class="pre">iSCSI</span></code>, <code class="docutils literal"><span class="pre">fc</span></code>, or <code class="docutils literal"><span class="pre">nfs</span></code>)</li>
+</ul>
+<p class="last">For a table of NetApp supported extra specs, refer to
+<a class="reference internal" href="deployment_choice/section_service-catalog.html#table-4-11"><span class="std std-ref">Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”</span></a>.</p>
+</div>
+</div>
+<div class="section" id="quality-of-service">
+<h2>Quality of Service<a class="headerlink" href="#quality-of-service" title="Permalink to this headline">¶</a></h2>
+<p>The Cinder Quality of Service (QoS) support for volumes can be enforced
+either at the hypervisor or at the storage subsystem (<code class="docutils literal"><span class="pre">backend</span></code>), or
+both. The NetApp clustered Data ONTAP Cinder driver currently supports
+QoS by backend QoS specs or via netapp:qos_policy_group assignment
+using Cinder Extra-Specs. The NetApp Cinder driver accomplishes this by
+using NetApp QoS policy groups, introduced with clustered Data ONTAP
+8.2, and applying these policy groups to Cinder volumes.</p>
+<ul class="simple">
+<li><em>netapp:qos_policy_group</em>: A Cinder extra-spec, which references an
+externally provisioned QoS policy group, provides a means to assign a
+Netapp QoS policy group for a set of Cinder volumes. All Cinder
+volumes associated with a single QoS policy group share the
+throughput value restrictions as a group. The clustered Data ONTAP
+QoS policy group must be created by the storage administrator on the
+backend prior to specifying the netapp:qos_policy_group option in a
+Cinder extra-spec. Use the netapp:qos_policy_group option when a
+Service Level Objective (SLO) needs to be applied to a set of Cinder
+volumes. For more information on this, see
+<a class="reference internal" href="deployment_choice/section_service-catalog.html#table-4-11"><span class="std std-ref">Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”</span></a>.</li>
+<li><em>QoS Spec</em>: QoS specifications are added as standalone objects that
+can then be associated with Cinder volume types. A Cinder QoS Spec
+will create a new NetApp QoS policy group for each Cinder volume. A
+Cinder QoS spec can specify the maximum bytes per second or IOPS
+throughput value. This throughput value is the maximum for a single
+Cinder volume created with this QoS spec. When deleting a Cinder
+volume that has a QoS Spec applied, the NetApp QoS policies
+associated with that Cinder volume will not immediately be deleted.
+The driver marks the QoS policies for deletion by the NetApp QoS
+policy reaping job. The NetApp QoS policy reaping job runs every 60
+seconds. Refer to NetApp ONTAP documentation for your version of
+clustered Data ONTAP to determine NetApp QoS policy group limits. Use
+the QoS Spec feature when a SLO needs to be applied to a single
+Cinder volume.</li>
+</ul>
+<table border="1" class="docutils" id="qos-spec">
+<colgroup>
+<col width="18%" />
+<col width="82%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Option</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>maxBPS</td>
+<td>The maximum bytes per second allowed.</td>
+</tr>
+<tr class="row-odd"><td>maxBPSperGiB</td>
+<td>The maximum bytes per second allowed per GiB of Cinder volume capacity.</td>
+</tr>
+<tr class="row-even"><td>maxIOPS</td>
+<td>The maximum IOPS allowed.</td>
+</tr>
+<tr class="row-odd"><td>maxIOPSperGiB</td>
+<td>The maximum IOPS allowed per GiB of Cinder volume capacity.</td>
+</tr>
+</tbody>
+</table>
+<p>Table 4.1. NetApp Supported Backend QoS Spec Options</p>
+</div>
+<div class="section" id="storage-pools">
+<span id="id1"></span><h2>Storage Pools<a class="headerlink" href="#storage-pools" title="Permalink to this headline">¶</a></h2>
+<p>With the Juno release of OpenStack, Cinder has introduced the concept of
+“storage pools”. The backend storage may present one or more logical
+storage resource pools from which Cinder will select as a storage
+location when provisioning volumes. In releases prior to Juno, NetApp’s
+Cinder drivers contained some logic that determined which FlexVol
+volume, volume group, or DDP a Cinder volume would be placed into; with
+the introduction of pools, all scheduling logic is performed completely
+within the Cinder scheduler.</p>
+<p>For NetApp’s Cinder drivers, a Cinder pool is a single container. The
+container that is mapped to a Cinder pool is dependent on the storage
+protocol used:</p>
+<ul class="simple">
+<li><em>iSCSI and Fibre Channel</em>: a Cinder pool is created for every FlexVol
+volume within the SVM specified by the configuration option
+<code class="docutils literal"><span class="pre">netapp_vserver</span></code>, or for Data ONTAP operating in c/7-mode, all
+FlexVol volumes within the system unless limited by the configuration
+option <code class="docutils literal"><span class="pre">netapp_pool_name_search_pattern</span></code>.</li>
+<li><em>NFS</em>: a Cinder pool is created for each junction path from FlexVol
+volumes that are listed in the configuration option
+<code class="docutils literal"><span class="pre">nfs_shares_config</span></code>.</li>
+<li><em>E-Series</em>: a Cinder pool is created for each pool matched by the
+configuration option <code class="docutils literal"><span class="pre">netapp_pool_name_search_pattern</span></code>.</li>
+</ul>
+<p>For additonal information, refer to
+<a class="reference internal" href="deployment_choice/section_construct-mappings.html#cinder-schedule-resource-pool"><span class="std std-ref">Cinder Scheduling and Resource Pool Selection</span></a>.</p>
+</div>
+<div class="section" id="consistency-groups">
+<h2>Consistency Groups<a class="headerlink" href="#consistency-groups" title="Permalink to this headline">¶</a></h2>
+<p>With the Mitaka release of OpenStack, NetApp supports Cinder Consistency
+Groups when using E-series or 7-Mode/Clustered Data ONTAP iSCSI/Fibre
+Channel drivers. With the Newton release of OpenStack, NetApp supports
+Cinder Consistency Groups when using 7-Mode/Clustered Data ONTAP NFS
+drivers. Consistency group support allows snapshots of multiple volumes
+in the same consistency group to be taken at the same point-in-time to
+ensure data consistency. To illustrate the usefulness of consistency
+groups, consider a bank account database where a transaction log is
+written to Cinder volume V1 and the account table itself is written to
+Cinder volume V2. Suppose that $100 is to be transferred from account A
+to account B via the following sequence of writes:</p>
+<ol class="arabic simple">
+<li>Log start of transaction.</li>
+<li>Log remove $100 from account A.</li>
+<li>Log add $100 to account B.</li>
+<li>Log commit transaction.</li>
+<li>Update table A to reflect -$100.</li>
+<li>Update table B to reflect +$100.</li>
+</ol>
+<p>Writes 1-4 go to Cinder volume V1 whereas writes 5-6 go to Cinder volume
+V2. To see that we need to keep write order fidelity in both snapshots
+of V1 and V2, suppose a snapshot is in progress during writes 1-6, and
+suppose that the snapshot completes at a point where writes 1-3 and 5
+have completed, but not 4 and 6. Because write 4 (log of commit
+transaction) did not complete, the transaction will be discarded. But
+write 5 has completed anyways, so a restore from snapshot of the
+secondary will result in a corrupt account database, one where account A
+has been debited $100 without account B getting the corresponding
+credit.</p>
+<p>Before using consistency groups, you must change policies for the
+consistency group APIs in the <code class="docutils literal"><span class="pre">/etc/cinder/policy.json</span></code> file. By
+default, the consistency group APIs are disabled. Enable them before
+running consistency group operations. Here are existing policy entries
+for consistency groups:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;consistencygroup:create&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:delete&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:update&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get_all&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:create_cgsnapshot&quot;</span> <span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:delete_cgsnapshot&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get_cgsnapshot&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get_all_cgsnapshots&quot;</span><span class="p">:</span> <span class="s2">&quot;group:nobody&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Remove <code class="docutils literal"><span class="pre">group:nobody</span></code> to enable these APIs:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="s2">&quot;consistencygroup:create&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:delete&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:update&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get_all&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:create_cgsnapshot&quot;</span> <span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:delete_cgsnapshot&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get_cgsnapshot&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="s2">&quot;consistencygroup:get_all_cgsnapshots&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Remember to restart the Block Storage API service after changing
+policies.</p>
+</div>
+<div class="section" id="backup-and-restore">
+<h2>Backup and Restore<a class="headerlink" href="#backup-and-restore" title="Permalink to this headline">¶</a></h2>
+<p>Cinder offers OpenStack tenants self-service backup and restore
+operations for their Cinder volumes. These operations are performed on
+individual volumes. A Cinder backup operation creates a point-in-time,
+read-only set of data and metadata that can be used to restore the
+contents of a single Cinder volume either to a new Cinder volume (the
+default) or to an existing Cinder volume. In contrast to snapshots,
+backups are stored in a dedicated repository, independent of the storage
+pool containing the original volume or the storage backend providing its
+block storage.</p>
+<p>Cinder backup repositories may be implemented either using an object
+store (such as Swift) or by using an NFS shared filesystem. The Cinder
+backup service uses a single repository, irrespective of the backends
+used to provide storage pools for the volumes themselves. For example, a
+FlexVol volume exported from a Data ONTAP storage system using NFS can
+serve as a backup repository for multi-backend, heterogeneous Cinder
+deployments.</p>
+<p>Tenant-controlled, per-volume backup service is complementary to, but
+not a replacement for, administrative backups of the storage pools
+themselves that hold Cinder volumes. See
+<a class="reference external" href="http://netapp.github.io/openstack/2015/03/12/cinder-backup-restore/">http://netapp.github.io/openstack/2015/03/12/cinder-backup-restore/</a> for
+a valuable approach to administrative backups when clustered Data ONTAP
+storage pools are used to host Cinder volumes.</p>
+</div>
+<div class="section" id="disaster-recovery">
+<h2>Disaster Recovery<a class="headerlink" href="#disaster-recovery" title="Permalink to this headline">¶</a></h2>
+<p>In the Newton release of OpenStack, NetApp’s Cinder driver for clustered
+Data ONTAP (for FC, NFS, iSCSI) was updated to match Cinder’s v2.1 spec
+for replication. This makes it possible to replicate an entire backend,
+and allow all replicated volumes across different pools to fail over
+together. Intended to be a disaster recovery mechanism, it provides a
+way to configure one or more disaster recovery partner storage systems
+for your Cinder backend. For more details on the configuration and
+failover process, refer to <a class="reference external" href="http://netapp.io/2016/10/14/cinder-replication-netapp-perfect-cheesecake-recipe/">Cinder Replication with
+NetApp</a></p>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_cinder-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Overview"></i></a>
+          
+          
+            <a href="section_cinder-processes.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Process Structure"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-08-25 01:54</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>. See all <a href="http://www.openstack.org/legal">
+ OpenStack Legal Documents</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://ask.openstack.org" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+    <button onclick="location.href='/'" class="btn docs-sidebar-home" data-toggle="tooltip" data-placement="top" title="Docs Home"><i class="fa fa-arrow-circle-o-left"></i></button>
+<button href="#" type="button" data-toggle="dropdown" class="btn docs-sidebar-release-select">OpenStack Documentation<i class="fa fa-caret-down"></i></button>
+    <ul class="dropdown-menu docs-sidebar-dropdown" role="menu" aria-labelledby="dLabel">
+      <li role="presentation" class="dropdown-header">Guides</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#install-guides">Install Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#user-guides">User Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#configuration-guides">Configuration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#ops-and-admin-guides">Operations and Administration Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#api-guides">API Guides</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/index.html#contributor-guides">Contributor Guides</a></li>
+      <li role="presentation" class="dropdown-header">Languages</li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ja/">日本語 (Japanese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/de/">Deutsch (German)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/fr/">Français (French)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/pt_BR/">Português (Portuguese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/zh_CN/">简体中文 (Simplified Chinese)</a></li>
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="http://docs.openstack.org/ko_KR/">한국어 (Korean)</a></li>
+    </ul>
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <a href="../index.html" class="docs-sidebar-section-title"><h4>NetApp OpenStack Docs 0.1</h4></a>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">About NetApp Storage Systems and Software</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_cinder.html">OpenStack Block Storage Service (Cinder)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_cinder-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_cinder-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">OpenStack Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">OpenStack Shared File System Service (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">OpenStack Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_swift.html">OpenStack Object Storage Service (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Operational Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Packaging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_debug.html">Troubleshooting</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>OpenStack</h3>
+        <ul>
+          <li><a href="http://openstack.org/projects/">Projects</a></li>
+          <li><a href="http://openstack.org/projects/openstack-security/">OpenStack Security</a></li>
+          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="http://openstack.org/blog/">Blog</a></li>
+          <li><a href="http://openstack.org/news/">News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Community</h3>
+        <ul>
+          <li><a href="http://openstack.org/community/">User Groups</a></li>
+          <li><a href="http://openstack.org/community/events/">Events</a></li>
+          <li><a href="http://openstack.org/community/jobs/">Jobs</a></li>
+          <li><a href="http://openstack.org/foundation/companies/">Companies</a></li>
+          <li><a href="http://docs.openstack.org/infra/manual/developers.html">Contribute</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Documentation</h3>
+        <ul>
+          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://wiki.openstack.org">Wiki</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Branding & Legal</h3>
+        <ul>
+          <li><a href="http://openstack.org/brand/">Logos & Guidelines</a></li>
+          <li><a href="http://openstack.org/brand/openstack-trademark-policy/">Trademark Policy</a></li>
+          <li><a href="http://openstack.org/privacy/">Privacy Policy</a></li>
+          <li><a href="https://wiki.openstack.org/wiki/How_To_Contribute#Contributor_License_Agreement">OpenStack CLA</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Stay In Touch</h3>
+        <a href="https://twitter.com/OpenStack" target="_blank" class="social-icons footer-twitter"></a>
+        <a href="https://www.facebook.com/openstack" target="_blank" class="social-icons footer-facebook"></a>
+        <a href="https://www.linkedin.com/company/openstack" target="_blank" class="social-icons footer-linkedin"></a>
+        <a href="https://www.youtube.com/user/OpenStackFoundation" target="_blank" class="social-icons footer-youtube"></a>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>. Openstack.org is powered by
+          <a href="http://rackspace.com" target="_blank">Rackspace Cloud Computing</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "cinder/section_cinder-key-concepts" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project and bug_tag rely on variables in conf.py */
+    var gitSha = "SHA: 2f9e12d46128dd8d84f23bfab55c9b4f032de64a";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Key Concepts in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 0.1 on 2017-08-25 01:54";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags);
+</script>
+
+  </body>
+</html>
