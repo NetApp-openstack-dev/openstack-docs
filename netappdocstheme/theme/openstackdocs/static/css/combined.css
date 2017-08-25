@@ -3853,8 +3853,9 @@ a.overview-btn.contribute-btn i {
   line-height: 1; }
 
 .docs-sidebar-releases button.docs-sidebar-release-select {
-  font-size: 11px;
-  width: 75%;
+  font-size: 14px;
+  font-weight: 1.5em;
+  width: 100%;
   border-left: 1px solid #496e8a; }
 
 .docs-sidebar-releases button.docs-sidebar-release-select i {
