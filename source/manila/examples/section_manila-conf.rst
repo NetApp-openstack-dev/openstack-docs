@@ -1,3 +1,5 @@
+.. _manila-conf-ex:
+
 ``manila.conf``
 ===============
 
@@ -84,17 +86,17 @@ management.
 --------------------------------
 
 This section provides an example Manila configuration file
-(``manila.conf``) that contains one backend, 'cdotSingleSVM1', that is
-in the same replication domain as 'cdotSingleSVM02'. Therefore, both
+(``manila.conf``) that contains one backend, ``cdotSingleSVM1``, that is
+in the same replication domain as ``cdotSingleSVM02``. Therefore, both
 backends must include their configuration stanzas so that
-'cdotSingleSVM01' can communicate with 'cdotSingleSVM02' in order to
+``cdotSingleSVM01`` can communicate with ``cdotSingleSVM02`` in order to
 manage replication on ONTAP as needed; even though the only enabled
-backend for this Manila share service instance is 'cdotSingleSVM01'.
+backend for this Manila share service instance is ``cdotSingleSVM01``.
 
-    **Important**
+.. important::
 
-    Vserver names must be unique, even accross clusters, in order to
-    support replication between them.
+   SVM names must be unique, even accross clusters, in order to
+   support replication between them.
 
 ::
 

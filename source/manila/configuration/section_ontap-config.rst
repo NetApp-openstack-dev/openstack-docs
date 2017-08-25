@@ -1,4 +1,7 @@
 Data ONTAP Configuration
+========================
+
+Data ONTAP Prerequisites
 ------------------------
 
 The prerequisites for Data ONTAP are:
@@ -17,6 +20,9 @@ The prerequisites for Data ONTAP are:
    -  SnapMirror (if share replication is to be enabled)
 
    -  FlexClone
+
+Storage Virtual Machine Considerations
+--------------------------------------
 
 When using the NetApp Manila driver in the mode where it does not manage
 share servers, it is important to pay attention to the following
@@ -72,9 +78,14 @@ granted to it. In order to use an SVM-scoped account with the Manila
 driver and clustered Data ONTAP and have access to the full set of
 features (including Manila Share Type Extra Specs support) availed by
 the Manila driver, be sure to add the access levels for the commands
-shown in `table\_title <#manila.cdot.permissions.common>`__,
-`table\_title <#manila.cdot.permissions.with_share_server>`__, and
-`table\_title <#manila.cdot.permissions.without_share_server.cluster_scoped>`__.
+shown in :ref:`Table 6.17, “Common Access Level Permissions Required with Any
+Manila Driver”<table-6.17>`, :ref:`Table 6.18, “Access Level Permissions Required For
+Manila Driver for clustered Data ONTAP with share server management - with
+Cluster-wide Administrative Account”<table-6.18>`, and :ref:`Table 6.19, “Access Level
+Permissions Required For Manila Driver for clustered Data ONTAP without
+share server management - with Cluster-wide Administrative Account”<table-6.19>`.
+
+.. _table-6.17:
 
 +-----------------------------+----------------+
 | Command                     | Access Level   |
@@ -102,7 +113,9 @@ shown in `table\_title <#manila.cdot.permissions.common>`__,
 | ``security``                | ``readonly``   |
 +-----------------------------+----------------+
 
-Table: Common Access Level Permissions Required with Any Manila Driver
+Table 6.17. Common Access Level Permissions Required with Any Manila Driver
+
+.. _table-6.18:
 
 +-------------------------+----------------+
 | Command                 | Access Level   |
@@ -132,9 +145,11 @@ Table: Common Access Level Permissions Required with Any Manila Driver
 | ``vserver``             | ``all``        |
 +-------------------------+----------------+
 
-Table: Access Level Permissions Required For Manila Driver for clustered
+Table 6.18. Access Level Permissions Required For Manila Driver for clustered
 Data ONTAP with share server management - with Cluster-wide
 Administrative Account
+
+.. _table-6.19:
 
 +-------------------------+----------------+
 | Command                 | Access Level   |
@@ -146,11 +161,12 @@ Administrative Account
 | ``storage disk``        | ``readonly``   |
 +-------------------------+----------------+
 
-Table: Access Level Permissions Required For Manila Driver for clustered
+Table 6.19. Access Level Permissions Required For Manila Driver for clustered
 Data ONTAP without share server management - with Cluster-wide
 Administrative Account
 
-**Creating Role for Cluster-Scoped Account.**
+Creating Role for Cluster-Scoped Account
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To create a role with the necessary privileges required, with access via
 ONTAP API only, use the following command syntax to create the role and
@@ -163,16 +179,15 @@ the cDOT ONTAP user:
    ::
 
        security login role create –role openstack –cmddirname [required command from earlier tables] -access [Required Access Level]
-                               
 
 2. Command to create user with appropriate role
 
    ::
 
        security login create –username openstack –application ontapi –authmethod password –role openstack
-                               
 
-**Creating Role for SVM-Scoped Account.**
+Creating Role for SVM-Scoped Account
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To create a role with the necessary privileges required, with access via
 ONTAP API only, use the following command syntax to create the role and
@@ -185,22 +200,23 @@ the cDOT ONTAP user:
    ::
 
        security login role create –role openstack -vserver [vserver_name] –cmddirname [required command from earlier tables] -access [Required Access Level]
-                               
 
 2. Command to create user with appropriate role
 
    ::
 
        security login create –username openstack –application ontapi –authmethod password –role openstack -vserver [vserver_name]
-                               
 
-    **Tip**
+.. tip::
 
-    For more information on how to grant access level permissions to a
-    role, and then assign the role to an administrative account, please
-    refer to the `System Administration Guide for Cluster
-    Administrators <http://support.netapp.com>`__ document in the
-    Clustered DATA ONTAP documentation.
+   For more information on how to grant access level permissions to a
+   role, and then assign the role to an administrative account, please
+   refer to the `System Administration Guide for Cluster
+   Administrators <http://support.netapp.com>`__ document in the
+   Clustered DATA ONTAP documentation.
+
+Storage Networking Considerations
+---------------------------------
 
 1. Ensure there is segmented network connectivity between the hypervisor
    nodes and the Data LIF interfaces from Data ONTAP.

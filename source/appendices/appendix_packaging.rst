@@ -36,6 +36,9 @@ release’s versioning and release system.
 Deprecated Drivers
 ==================
 
+OpenStack Havana
+----------------
+
 In the OpenStack Havana release, NetApp deprecated a variety of
 management-integrated drivers that had been available in previous
 OpenStack releases. The driver names include:
@@ -46,7 +49,6 @@ OpenStack releases. The driver names include:
     cinder.volume.drivers.netapp.nfs.NetAppCmodeNfsDriver
     cinder.volume.drivers.netapp.iscsi.NetAppISCSIDriver
     cinder.volume.drivers.netapp.nfs.NetAppNfsDriver
-                    
 
 The direct (and now unified) driver available in the Havana release
 provides equivalent functionality to these drivers for the various
@@ -60,13 +62,16 @@ NetApp has ported the drivers to the Havana code base and made them
 available for download from a separate git repository located at
 https://github.com/NetApp/cinder/tree/stable/havana.
 
+OpenStack Ocata
+---------------
+
 The NetApp unified driver in Cinder currently provides integration for
 two major generations of the ONTAP operating system: the current
 “clustered” ONTAP and the legacy 7-mode. NetApp’s “full support” for
 7-mode ended in August of 2015 and the current “limited support” period
-will end in February of 2017 [1].
+will end in February of 2017 [1]_.
 
-In accordance with community policy [2], we are initiating the
+In accordance with community policy [2]_, we are initiating the
 deprecation process for the 7-mode components of the Cinder NetApp
 unified driver set to conclude with their removal in the Queens release.
 This will apply to all three protocols currently supported in this
@@ -80,14 +85,17 @@ driver: iSCSI, FC and NFS.
    release (All milestones of this release)
 
 -  ``What should users/operators do:`` Follow the recommended migration
-   path to upgrade to Clustered Data ONTAP [3] or get in touch with your
+   path to upgrade to Clustered Data ONTAP [3]_ or get in touch with your
    NetApp support representative.
 
-1. `Transition Fundamentals and
+.. [1] 
+   `Transition Fundamentals and
    Guidance <https://transition.netapp.com/>`__
 
-2. `OpenStack deprecation
+.. [2]
+   `OpenStack deprecation
    policy <https://governance.openstack.org/tc/reference/tags/assert_follows-standard-deprecation.html>`__
 
-3. `Clustered Data ONTAP for 7-Mode
+.. [3]
+   `Clustered Data ONTAP for 7-Mode
    Administrators <https://mysupport.netapp.com/info/web/ECMP1658253.html>`__

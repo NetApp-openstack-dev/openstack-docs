@@ -19,9 +19,7 @@ possible with volumes residing on Compute nodes:
 -  The ability to migrate Cinder volumes from one backend to another.
    The source and destination backend can be in the same cluster or in
    different clusters. The following is an example of migrating a Cinder
-   volume that is in-use across two clustered Data ONTAP hosts:
-
-::
+   volume that is in-use across two clustered Data ONTAP hosts::
 
     #nova instance with an attached cinder volume
     [root@stlrx300s7-107 ~(keystone_admin)]# nova show ubuntu-instance
@@ -64,13 +62,12 @@ possible with volumes residing on Compute nodes:
     +--------------------------------+--------------------------------------------------------------+
 
     +--------------------------------------+--------------------------------------------------------+
-            
 
-    **Note**
+.. note::
 
-    Cinder migration has a dependency on the hypervisor. Please verify
-    that updating the following packages will not affect your
-    environment before proceeding. These packages are for Red
-    Hat/CentOS. For other distributions, please update your hypervisor
-    accordingly.
-    ``yum install -y qemu-kvm libvirt libvirt-python libguestfs-tools virt–install``
+   Cinder migration has a dependency on the hypervisor. Please verify
+   that updating the following packages will not affect your
+   environment before proceeding. These packages are for Red
+   Hat/CentOS. For other distributions, please update your hypervisor
+   accordingly.
+   ``yum install -y qemu-kvm libvirt libvirt-python libguestfs-tools virt–install``

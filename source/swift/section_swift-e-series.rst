@@ -29,30 +29,32 @@ eliminates the requirement of Swift data replication within a single
 storage array. Zoning based on E-Series storage can be done on a storage
 subsystem, individual controller, or drive tray basis.
 
-**Controller-subsystem based zoning.**
+Controller-subsystem Based Zoning
+---------------------------------
 
 In a cluster that contains several E-Series storage subsystems zoning
 may be done through the use of 1 or more E-Series subsystems as a zone.
 An example of this is shown in
-`figure\_title <#swift.controller_subsystem_zoning>`__.
+Figure 8.2, “Controller-subsystem based zoning”.
 
 .. figure:: ../images/swift_controller_subsystem_zoning.png
    :alt: Controller-subsystem based zoning
 
-   Controller-subsystem based zoning
+   Figure 8.2. Controller-subsystem based zoning
 
-**Controller based zoning.**
+Controller Based Zoning
+-----------------------
 
 E-Series storage subsystems contain two independently configurable
 controller modules (shown in
-`figure\_title <#swift.controller_layout>`__) which in turn communicate
+Figure 8.3, “E-Series Controller Layout”) which in turn communicate
 with drives contained within the storage subsystem and optionally other
 externally attached E-Series drive enclosures.
 
 .. figure:: ../images/swift_controller_layout.png
    :alt: E-Series Controller Layout
 
-   E-Series Controller Layout
+   Figure 8.3. E-Series Controller Layout
 
 For controller based zoning, each E-Series storage controller supports 2
 Swift object storage nodes. Each node is connected to a single
@@ -61,7 +63,8 @@ separately on drives located within the enclosure. Additional drive
 enclosures may also be attached to the controller module for added
 storage capacity.
 
-**Drive-tray or enclosure-based zoning.**
+Drive-tray or Enclosure-based Zoning
+------------------------------------
 
 If Swift cluster requirements require unique zones for each object node
 E-Series storage arrays can effectively provide storage capacity for

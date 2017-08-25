@@ -4,6 +4,8 @@ NetApp Data ONTAP Drivers for OpenStack File Share Storage (Manila)
 NetApp's Manila drivers for clustered Data ONTAP (with or without the
 management of share servers) are offered in a single, unified driver.
 
+**Where to Obtain the Drivers**
+
 NetApp’s contribution strategy involves adding all new capabilities
 directly into the upstream OpenStack Shared File System service
 repositories, so all the features are available regardless of which
@@ -22,6 +24,8 @@ deploying with. There will be a ``README`` file in the root of the
 repository that describes the specific changes that are merged into that
 repository beyond what is available in the upstream repository.
 
+**Multiple Deployment Options**
+
 A variety of OpenStack file share storage deployment options for NetApp
 clustered Data ONTAP based systems are available in the Kilo OpenStack
 release and involve making deployment choices between the presence or
@@ -29,13 +33,7 @@ absence of management of share servers (SVM or Vservers) by the driver.
 
 The following lists all of the individual options and subsequent
 sections are intended to offer guidance on which configuration options
-ought to be employed given varying use cases:
-
--  `NetApp clustered Data ONTAP without share server
-   management <#manila.cdot.single_svm.configuration>`__
-
--  `NetApp clustered Data ONTAP with share server
-   management <#manila.cdot.multi_svm.configuration>`__
+ought to be employed given varying use cases.
 
 .. _without-share:
 
@@ -48,11 +46,12 @@ clustered Data ONTAP storage controllers to accomplish provisioning and
 management of shared file systems within the scope of a single SVM
 (Vserver).
 
+Configuration Options
+^^^^^^^^^^^^^^^^^^^^^
+
 To set up the NetApp clustered Data ONTAP driver without Share Server
 management, the following stanza should be added to the Manila
-configuration file (``manila.conf``):
-
-::
+configuration file (``manila.conf``)::
 
     [cdotSingleSVM] 
     share_backend_name=cdotSingleSVM
@@ -66,7 +65,6 @@ configuration file (``manila.conf``):
     netapp_vserver=svm_name
     netapp_transport_type=https
     netapp_aggregate_name_search_pattern=^((?!aggr0).)*$
-                
 
 -  Be sure that the value of the ``enabled_share_backends`` option in
    the ``[DEFAULT]`` stanza includes the name of the stanza you chose
@@ -76,8 +74,8 @@ configuration file (``manila.conf``):
    ``False`` if you want the driver to operate without managing share
    servers.
 
-`table\_title <#manila.cdot.single_svm.options>`__ lists the
-configuration options available for the unified driver for a clustered
+Table 6.15, “Configuration options for clustered Data ONTAP without Share Server management”
+lists the configuration options available for the unified driver for a clustered
 Data ONTAP deployment that does not manage share servers.
 
 +----------------------------------------------+------------+---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -113,21 +111,21 @@ Data ONTAP deployment that does not manage share servers.
 +----------------------------------------------+------------+---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp_trace_flags``                       | Optional   |                                                   | This option is a comma-separated list of options (valid values include ``method`` and ``api``) that controls which trace info is written to the Manila logs when the debug level is set to ``True``.                                                                                                                                                                                                                                                                                                                                                                                                                                |
 +----------------------------------------------+------------+---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``migration_driver_continue_interval``       | Optional   | 60                                                | This option specifies the time interval in seconds at which Manila polls the backend for the progress and health of an ongoing migration.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ``migration_driver_continue_interval``       | Optional   | ``60``                                            | This option specifies the time interval in seconds at which Manila polls the backend for the progress and health of an ongoing migration.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 +----------------------------------------------+------------+---------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Configuration options for clustered Data ONTAP without Share
+Table 6.15. Configuration options for clustered Data ONTAP without Share
 Server management
 
-    **Caution**
+.. caution::
 
-    If you specify an account in the ``netapp_login`` option that only
-    has SVM administration privileges (rather than cluster
-    administration privileges), some advanced features of the NetApp
-    unified driver will not work and you may see warnings in the Manila
-    logs. See `simplesect\_title <#manila.cdot.account_permissions>`__
-    for more details on the required access level permissions for an SVM
-    admin account.
+   If you specify an account in the ``netapp_login`` option that only
+   has SVM administration privileges (rather than cluster
+   administration privileges), some advanced features of the NetApp
+   unified driver will not work and you may see warnings in the Manila
+   logs. See :ref:`account-perm`
+   for more details on the required access level permissions for an SVM
+   admin account.
 
 .. _with-share:
 
@@ -144,18 +142,19 @@ also creates new data logical interfaces (LIFs) that provide access for
 clients on a specific share network to access shared file systems
 exported from the share server.
 
-    **Caution**
+.. caution::
 
-    An account with cluster administrator privileges must be used with
-    the ``netapp_login`` option when using Share Server management.
-    Share Server management creates SVMs, thus SVM administrator
-    privileges are insufficient.
+   An account with cluster administrator privileges must be used with
+   the ``netapp_login`` option when using Share Server management.
+   Share Server management creates SVMs, thus SVM administrator
+   privileges are insufficient.
+
+Configuration Options
+^^^^^^^^^^^^^^^^^^^^^
 
 To set up the NetApp clustered Data ONTAP driver with Share Server
 management, the following stanza should be added to the Manila
-configuration file (``manila.conf``):
-
-::
+configuration file (``manila.conf``)::
 
     [cdotMultipleSVM] 
     share_backend_name=cdotMultipleSVM
@@ -169,7 +168,6 @@ configuration file (``manila.conf``):
     netapp_transport_type=https
     netapp_root_volume_aggregate=aggr1
     netapp_aggregate_name_search_pattern=^((?!aggr0).)*$
-                
 
 -  Be sure that the value of the ``enabled_share_backends`` option in
    the ``[DEFAULT]`` stanza includes the name of the stanza you chose
@@ -178,8 +176,8 @@ configuration file (``manila.conf``):
 -  The value of ``driver_handles_share_servers`` **MUST** be set to
    ``True`` if you want the driver to manage share servers.
 
-`table\_title <#manila.cdot.multi_svm.options>`__ lists the
-configuration options available for the unified driver for a clustered
+Table 6.16, “Configuration options for clustered Data ONTAP with Share Server management”
+lists the configuration options available for the unified driver for a clustered
 Data ONTAP deployment that manages share servers.
 
 +----------------------------------------------+------------+---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -223,15 +221,15 @@ Data ONTAP deployment that manages share servers.
 +----------------------------------------------+------------+---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp_trace_flags``                       | Optional   |                                                   | This option is a comma-separated list of options (valid values include ``method`` and ``api``) that controls which trace info is written to the Manila logs when the debug level is set to ``True``.   |
 +----------------------------------------------+------------+---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``migration_driver_continue_interval``       | Optional   | 60                                                | This option specifies the time interval in seconds at which Manila polls the backend for the progress and health of an ongoing migration.                                                              |
+| ``migration_driver_continue_interval``       | Optional   | ``60``                                            | This option specifies the time interval in seconds at which Manila polls the backend for the progress and health of an ongoing migration.                                                              |
 +----------------------------------------------+------------+---------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Configuration options for clustered Data ONTAP with Share Server
+Table 6.16. Configuration options for clustered Data ONTAP with Share Server
 management
 
-    **Caution**
+.. caution::
 
-    When defining Neutron subnets (Liberty or prior) with Clustered Data
-    ONTAP, overlapping IP ranges should not be allowed. Using
-    overlapping IP ranges in Neutron can cause a failure when a new
-    Share Server is created.
+   When defining Neutron subnets (Liberty or prior) with Clustered Data
+   ONTAP, overlapping IP ranges should not be allowed. Using
+   overlapping IP ranges in Neutron can cause a failure when a new
+   Share Server is created.

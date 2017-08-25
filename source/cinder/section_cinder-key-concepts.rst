@@ -1,3 +1,5 @@
+.. _cinder-key-concepts:
+
 Key Concepts
 ============
 

@@ -1,5 +1,5 @@
 Manila Network Plugins
-----------------------
+======================
 
 .. warning::
 
@@ -75,7 +75,7 @@ Manila Network Plugins
    VLAN-only provider networks or VLAN-only tenant networks if using
    Neutron.
 
-As described in `??? <#manila.create_share_workflow.share_servers>`__,
+As described in :ref:`Figure 6.2, “Manila Workflow - Share Creation with Share Servers”<figure-6.2>`,
 there are a set of network plugins that provide for a variety of
 integration approaches with Neutron and Standalone networks. These
 plugins should only be used with the NetApp clustered Data ONTAP driver
@@ -83,7 +83,7 @@ when using share server management.
 
 These are the valid network plugins:
 
--  *Standalone Network Plugin*: Use this plugin in stand-alone
+-  **Standalone Network Plugin:** Use this plugin in stand-alone
    deployments of OpenStack Manila, and in deployments where you don't
    desire to manage the storage network with Neutron. IP settings
    (address range, subnet mask, gateway, version) are all defined
@@ -97,7 +97,7 @@ These are the valid network plugins:
    netmask and gateway are obtained from ``manila.conf`` when creating a
    new share server.
 
--  *Simple Neutron Network Plugin*: This is like the Standalone Network
+-  **Simple Neutron Network Plugin:** This is like the Standalone Network
    Plugin, except that the network is managed by Neutron. Typically,
    data center administrators that own a dedicated storage network would
    want to manage such a network via Neutron so that virtual machines
@@ -112,7 +112,7 @@ These are the valid network plugins:
    protocol, IP address, netmask and gateway from Neutron when creating
    a new share server.
 
--  *Configurable Neutron Network Plugin*: This is like the Simple
+-  **Configurable Neutron Network Plugin:** This is like the Simple
    Network Neutron Plugin except that except that each share network
    object will use a tenant or provider network of the tenant's choice.
    Please keep in mind that provider networks are created by OpenStack
@@ -127,7 +127,7 @@ These are the valid network plugins:
    protocol, IP address, netmask and gateway from Neutron when creating
    a new share server.
 
--  *Simple Neutron Port Binding Network Plugin*: This plugin is very
+-  **Simple Neutron Port Binding Network Plugin:** This plugin is very
    similar to the simple Neutron network plugin, the only difference is
    that this plugin can enforce port-binding. Port binding profiles from
    the manila configuration file are sent to Neutron at the time of
@@ -145,7 +145,7 @@ These are the valid network plugins:
    protocol, IP address, netmask and gateway from Neutron when creating
    a new share server.
 
--  *Configurable Neutron Port Binding Network Plugin*: This plugin is
+-  **Configurable Neutron Port Binding Network Plugin:** This plugin is
    very similar to the configurable neutron network plugin, the only
    difference is that this plugin can enforce port-binding. Port binding
    profiles from the manila configuration file are sent to Neutron at
@@ -163,17 +163,20 @@ These are the valid network plugins:
    Tenants *must* specify Neutron network information when creating
    share network objects. Manila will derive values for segmentation
    protocol, IP address, netmask and gateway from Neutron when creating
-   a new share server..
+   a new share server.
 
 .. figure:: ../../images/manila_hierarchical_port_binding.png
    :alt: Hierarchical Network Topology
-   :width: 2.75000in
+   :scale: 65
 
-   Hierarchical Network Topology
+   Figure 6.4. Hierarchical Network Topology
 
 The network plugin is chosen by setting the value of the network_api_class 
 configuration option within the driver-specific stanza of the manila.conf 
 configuration file.
+
+Standalone Network Plugin
+=========================
 
 To set up the standalone network plugin, the following options should be
 added to the driver-specific stanza within the Manila configuration file
@@ -187,7 +190,7 @@ added to the driver-specific stanza within the Manila configuration file
    standalone_network_plugin_mask = 255.255.255.0
    standalone_network_plugin_gateway = 10.0.0.1
 
-`table\_title <#manila.configuration.network.standalone.options>`__
+Table 6.11, “Configuration options for Standalone Network Plugin” 
 lists the configuration options available for the standalone network
 plugin:
 
@@ -209,7 +212,10 @@ plugin:
 | ``standalone_network_plugin_network_type``                                    | Optional   | flat            | Specify the network type as one of ``flat`` or ``vlan``. If unspecified, the driver assumes the network is non-segmented. If using ``vlan``, specify the ``standalone_network_plugin_segmentation_id`` option as well.                                                                                                                             |
 +-------------------------------------------------------------------------------+------------+-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Configuration options for Standalone Network Plugin
+Table 6.11. Configuration options for Standalone Network Plugin
+
+Simple Neutron Network Plugin
+-----------------------------
 
 In this configuration, administrators set up a single neutron network
 and specify the network information in ``manila.conf``. Manila will create 
@@ -220,16 +226,13 @@ created. In this configuration, tenants need to create "empty" share network
 objects, without specifying any network information. To set up the
 simple Neutron network plugin, the following options should be added to
 the driver-specific stanza within the Manila configuration file
-(``manila.conf``):
+(``manila.conf``)::
 
-::
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlugin
+    neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
+    neutron_subnet_id= 447732be-4cf2-42b0-83dc-4b6f4ed5368c
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlugin
-                        neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
-                        neutron_subnet_id= 447732be-4cf2-42b0-83dc-4b6f4ed5368c
-                    
-
-`table\_title <#manila.configuration.network.neutron.options>`__ lists
+Table 6.12, “Configuration options for Neutron Network Plugin” lists
 the configuration options available for the Neutron network plugin:
 
 +-------------------------+------------+-----------------+---------------------------------------------------------------------------+
@@ -240,19 +243,22 @@ the configuration options available for the Neutron network plugin:
 | ``neutron_subnet_id``   | Required   |                 | Specify the ID of a Neutron subnet from which ports should be created.    |
 +-------------------------+------------+-----------------+---------------------------------------------------------------------------+
 
-Table: Configuration options for Neutron Network Plugin
+Table 6.12. Configuration options for Neutron Network Plugin
+
+Configurable Neutron Network Plugin
+-----------------------------------
 
 In this configuration, tenants can specify network details in their own
 share network objects. These network details can be from administrator
 created Neutron provider networks or tenant created Neutron networks. To
 set up the configurable Neutron network plugin, the following options
 should be added to the driver-specific stanza within the Manila
-configuration file (``manila.conf``):
+configuration file (``manila.conf``)::
 
-::
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin
-                    
+Simple Neutron Port Binding Network Plugin
+------------------------------------------
 
 In this configuration, administrators set up a single neutron network,
 and Manila will send any binding profiles configured in ``manila.conf``
@@ -272,24 +278,20 @@ core switches). To set up the simple Neutron port binding network
 plugin, the following options should be added to the driver-specific
 stanza within the Manila configuration file (``manila.conf``). The
 Neutron binding profile in this example is for a Cisco Nexus 9000
-switch:
+switch::
 
-::
+    neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
+    neutron_subnet_id = 447732be-4cf2-42b0-83dc-4b6f4ed5368c
+    neutron_host_id = netapp_lab42
+    neutron_vnic_type = baremetal
+    neutron_binding_profiles = phys1
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronBindSingleNetworkPlugin
-                        neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
-                        neutron_subnet_id = 447732be-4cf2-42b0-83dc-4b6f4ed5368c
-                        neutron_host_id = netapp_lab42
-                        neutron_vnic_type = baremetal
-                        neutron_binding_profiles = phys1
+    [phys1]
+    neutron_switch_id = 10.63.152.254
+    neutron_port_id = 1/1-4
+    neutron_switch_info = switch_ip:10.63.152.254
 
-                        [phys1]
-                        neutron_switch_id = 10.63.152.254
-                        neutron_port_id = 1/1-4
-                        neutron_switch_info = switch_ip:10.63.152.254
-                    
-
-`table\_title <#manila.configuration.network.simple_neutron_bind.options>`__
+Table 6.13, “Configuration options for Simple Neutron Port Binding Network Plugin”
 lists the configuration options available for the Simple Neutron Port
 Binding network plugin:
 
@@ -307,8 +309,11 @@ Binding network plugin:
 | ``neutron_binding_profiles``   | Optional   |                             | Comma separated list of binding profile sections. Each of these sections can contain specific switch information and they can be shared amongst different backends.   |
 +--------------------------------+------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Configuration options for Simple Neutron Port Binding Network
+Table 6.13. Configuration options for Simple Neutron Port Binding Network
 Plugin
+
+Configurable Neutron Port Binding Network Plugin
+------------------------------------------------
 
 In spirit this plugin works exactly like the Simple Neutron Port Binding
 Network Plugin that is mentioned above. The only difference being that
@@ -317,22 +322,19 @@ administrator. Use of this plugin allows Manila to derive network information
 from the Share Network objects created by the tenants. To set up the configurable 
 Neutron port binding network plugin, the following options should be added to 
 the driver-specific stanza within the Manila configuration file (``manila.conf``). 
-The Neutron binding profile in this example is for a Cisco Nexus 9000 switch:
+The Neutron binding profile in this example is for a Cisco Nexus 9000 switch::
 
-::
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronBindNetworkPlugin
+    neutron_host_id = netapp_lab42
+    neutron_vnic_type = baremetal
+    neutron_binding_profiles = phys1
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronBindNetworkPlugin
-                        neutron_host_id = netapp_lab42
-                        neutron_vnic_type = baremetal
-                        neutron_binding_profiles = phys1
+    [phys1]
+    neutron_switch_id = 10.63.152.254
+    neutron_port_id = 1/1-4
+    neutron_switch_info = switch_ip:10.63.152.254
 
-                        [phys1]
-                        neutron_switch_id = 10.63.152.254
-                        neutron_port_id = 1/1-4
-                        neutron_switch_info = switch_ip:10.63.152.254
-                    
-
-`table\_title <#manila.configuration.network.neutron_bind.options>`__
+Table 6.14, “Configuration options for the tenant configurable Neutron Port Binding Network Plugin”
 lists the configuration options available for the configurable Neutron
 Port Binding network plugin:
 
@@ -346,5 +348,5 @@ Port Binding network plugin:
 | ``neutron_binding_profiles``   | Optional   |                             | Comma separated list of binding profile sections. Each of these sections can contain specific switch information and they can be shared amongst different backends.   |
 +--------------------------------+------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table: Configuration options for the tenant configurable Neutron Port
+Table 6.14. Configuration options for the tenant configurable Neutron Port
 Binding Network Plugin

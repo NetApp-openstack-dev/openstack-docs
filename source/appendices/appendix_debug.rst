@@ -1,6 +1,8 @@
 Troubleshooting
 ***************
 
+.. _common-probs:
+
 Common Problems
 ===============
 
@@ -8,12 +10,12 @@ Common problems listed below are followed by the ``cinder``, ``manila``,
 or ``nova`` CLI command and possible reasons for the occurrence of the
 problem.
 
-**1. Create volume operation fails with an error status.**
+1. Create volume operation fails with an error status
+-----------------------------------------------------
 
 ::
 
     cinder create size_gb
-                        
 
 -  No space left on the NetApp volume or NetApp volume does not have
    sufficient free space to host the specified OpenStack volume. Here
@@ -69,12 +71,12 @@ problem.
 -  NetApp volumes are shared between OpenStack Cinder and other client
    side applications.
 
-**2. Create volume with volume-type operation fails with error status.**
+2. Create volume with volume-type operation fails with error status
+-------------------------------------------------------------------
 
 ::
 
     cinder create --volume-type volume_type size_gb
-                        
 
 -  All the reasons mentioned under Item 1 in this appendix.
 
@@ -95,12 +97,12 @@ problem.
    -  The configured IP address/host name is on a SVM network interface
       but the volume-type support requires cluster wide API access.
 
-**3. Create volume from image-id operation fails with an error status.**
+3. Create volume from image-id operation fails with an error status
+-------------------------------------------------------------------
 
 ::
 
     cinder create --image-id image-id size_gb
-                        
 
 -  All the reasons mentioned under Item 1 in this appendix.
 
@@ -119,22 +121,21 @@ problem.
    files are files with prefix img-cache, and are periodically cleaned
    by the driver.
 
-**4. Create volume from image-id with volume-type operation fails with
-an error status.**
+4. Create volume from image-id with volume-type operation fails with an error status
+------------------------------------------------------------------------------------
 
 ::
 
     cinder create --image-id image-id --volume-type volume_type size_gb
-                        
 
 -  All the reasons mentioned under Items 1, 2, and 3 in this appendix.
 
-**5. Create snapshot operation fails with an error status.**
+5. Create snapshot operation fails with an error status
+-------------------------------------------------------
 
 ::
 
     cinder snapshot-create volume-id
-                        
 
 -  The FlexClone license is not installed.
 
@@ -144,30 +145,30 @@ an error status.**
 -  Any maintenance operation by a storage admin directly at the storage
    backend causing LUN or file unavailability.
 
-**6. Create volume from snapshot operation fails with an error status.**
+6. Create volume from snapshot operation fails with an error status
+-------------------------------------------------------------------
 
 ::
 
     cinder create --snapshot-id snapshot-id size_gb
-                        
 
 -  All reason mentioned under Items 1 & 5 in this appendix.
 
-**7. Create cloned volume operation fails with an error status.**
+7. Create cloned volume operation fails with an error status
+------------------------------------------------------------
 
 ::
 
     cinder create --source-volid volume-id size_gb
-                        
 
 -  All reason mentioned under Items 1 & 5 in this appendix.
 
-**8. Volume attach operation in nova fails.**
+8. Volume attach operation in nova fails
+----------------------------------------
 
 ::
 
     nova volume-attach instance-id volume-id path size_gb
-                        
 
 -  iSCSI drivers:
 
@@ -181,12 +182,12 @@ an error status.**
    -  The network is not reachable due to firewall, configuration, or
       transient issues.
 
-**9. Volume extend operation fails for Havana based drivers.**
+9. Volume extend operation fails for Havana based drivers
+---------------------------------------------------------
 
 ::
 
     cinder extend volume-id new_size_gb size_gb
-                        
 
 -  The NetApp volume hosting the OpenStack volume has insufficient
    space.
@@ -200,44 +201,44 @@ an error status.**
    -  The disk image format of the Cinder volume is not ``raw`` or
       ``qcow2``.
 
-**10. Volume upload to image operation fails.**
+10. Volume upload to image operation fails
+------------------------------------------
 
 ::
 
     cinder upload-to-image volume-id image size_gb
-                        
 
 -  The Glance service is down.
 
 -  All reasons mentioned under Item 8 in this appendix.
 
-**11. Volume backup and restore operation fails.**
+11. Volume backup and restore operation fails
+---------------------------------------------
 
 ::
 
     cinder backup-create volume-id size_gb
     cinder backup-restore volume-id size_gb
-                        
 
 -  The Cinder backup service is not running.
 
 -  All reasons mentioned under Item 8 in this appendix.
 
-**12. Volume migration operation fails.**
+12. Volume migration operation fails
+------------------------------------
 
 ::
 
     cinder migrate volume-id host
-                        
 
 -  All reasons mentioned under Item 8 in this appendix.
 
-**13. Volume extend operation fails with E-Series driver.**
+13. Volume extend operation fails with E-Series driver
+------------------------------------------------------
 
 ::
 
     cinder extend volume-id new_size_gb size_gb
-                        
 
 The volume extend operation will fail on a Cinder volume that is defined
 on a Volume Group (as opposed to a DDP), if any of the following
@@ -256,12 +257,12 @@ utilized operation in your environment, in order to avoid the previously
 ascribed limitations. See `??? <#cinder.config.eseries.pools>`__ for a
 comparison of storage pool options.
 
-**14. Share replica fails to reach in-sync status..**
+14. Share replica fails to reach in-sync status
+-----------------------------------------------
 
 ::
 
     manila share-replica-list --share-id id
-                        
 
 -  The ONTAP controller and the Manila host system times may not be
    synchronized.
@@ -286,16 +287,16 @@ the service up status is sufficient.
 
 -  ``cinder-volume``
 
-    **Note**
+.. note::
 
-    You can add the following line to your NetApp backend stanza(s) in
-    cinder.conf to capture much more detail about the driver’s
-    interaction with Data ONTAP in the cinder-volume log:
+   You can add the following line to your NetApp backend stanza(s) in
+   cinder.conf to capture much more detail about the driver’s
+   interaction with Data ONTAP in the cinder-volume log:
 
-    -  ``trace_flags``\ = method,api
+   -  ``trace_flags``\ = method,api
 
-    Please note that this tends to bloat up the log files and hence you
-    should only do this for problem resolution.
+   Please note that this tends to bloat up the log files and hence you
+   should only do this for problem resolution.
 
 -  ``manila-api``
 

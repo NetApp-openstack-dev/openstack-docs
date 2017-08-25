@@ -1,9 +1,11 @@
 Manila Command Line Interface (CLI)
------------------------------------
+===================================
+
+Manila Service Verification
+---------------------------
 
 In this section, we use the Manila CLI to verify that the configuration
-presented in
-`section\_title <#manila.examples.manila_conf.single_svm>`__ has been
+presented in the section called ":ref:`manila-conf-ex`" has been
 properly initialized by Manila.
 
 ::
@@ -15,11 +17,14 @@ properly initialized by Manila.
     | 1  | manila-scheduler | scspr0030615001               | nova | enabled | up    | 2015-03-25T12:25:12.000000 |
     | 2  | manila-share     | scspr0030615001@cdotSingleSVM | nova | enabled | up    | 2015-03-25T12:25:15.000000 |
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
-                    
+
+Creating and Defining Manila Share Types
+----------------------------------------
 
 In this section, we create a variety of Manila Share Types that leverage
 both the default capabilities of each driver, as well as the NetApp
-specific extra specs described in `??? <#manila.netapp.extra_specs>`__.
+specific extra specs described in
+:ref:`Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”<table-6.10>`.
 
 -  The ``general`` type provisions Manila shares onto the cDOT backend
    using all the default settings, including snapshot support.
@@ -55,35 +60,34 @@ specific extra specs described in `??? <#manila.netapp.extra_specs>`__.
     | 20e4b58d-aab6-42ae-8e9b-8f9d44f17276 | archive | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
 
-    **Important**
+.. important::
 
-    In the Mitaka and Newton release of OpenStack, snapshot support is
-    enabled by default for a newly created share type. Starting with the
-    Ocata release, the ``snapshot_support`` extra spec must be set to
-    ``True`` in order to allow snapshots for a share type. If the
-    'snapshot\_support' extra\_spec is omitted or if it is set to False,
-    users would not be able to create snapshots on shares of this share
-    type.
+   In the Mitaka and Newton release of OpenStack, snapshot support is
+   enabled by default for a newly created share type. Starting with the
+   Ocata release, the ``snapshot_support`` extra spec must be set to
+   ``True`` in order to allow snapshots for a share type. If the
+   'snapshot\_support' extra\_spec is omitted or if it is set to False,
+   users would not be able to create snapshots on shares of this share
+   type.
 
-    Other snapshot-related extra specs in the Ocata release (and later)
-    include:
+   Other snapshot-related extra specs in the Ocata release (and later)
+   include:
 
-    -  ``create_share_from_snapshot_support``: Allow the creation of a
-       new share from a snapshot
+   -  ``create_share_from_snapshot_support``: Allow the creation of a
+      new share from a snapshot
 
-    -  ``revert_to_snapshot_support``: Allow a share to be reverted to
-       the most recent snapshot
+   -  ``revert_to_snapshot_support``: Allow a share to be reverted to
+      the most recent snapshot
 
-    If an extra-spec is left unset, it will default to 'False', but a
-    newly created share may or may not end up on a backend with the
-    associated capability. Set the extra spec explicitly to ``False``,
-    if you would like your shares to be created only on backends that do
-    not support the associated capabilities. For a table of NetApp
-    supported extra specs, refer to
-    `??? <#manila.netapp.extra_specs>`__.
+   If an extra-spec is left unset, it will default to 'False', but a
+   newly created share may or may not end up on a backend with the
+   associated capability. Set the extra spec explicitly to ``False``,
+   if you would like your shares to be created only on backends that do
+   not support the associated capabilities. For a table of NetApp
+   supported extra specs, refer to
+   :ref:`Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”<table-6.10>`.
 
 ::
-
 
     [stack@scspr0030615001 devstack]$ manila type-key general set share_backend_name=cdotSingleSVM
     [stack@scspr0030615001 devstack]$ manila type-key general set snapshot_support=True
@@ -103,9 +107,9 @@ specific extra specs described in `??? <#manila.netapp.extra_specs>`__.
     +--------------------------------------+---------+--------------------------------------------+
     | 20e4b58d-aab6-42ae-8e9b-8f9d44f17276 | archive | driver_handles_share_servers : False       |
     |                                      |         | netapp_disk_type : SAS                     |
-    |                                      |         | thin_provisioning : <is> True        |
+    |                                      |         | thin_provisioning : <is> True              |
     | 37fb9f7e-4ffe-4900-8dba-c6d4251e588f | flash   | netapp_disk_type : SSD                     |
-    |                                      |         | netapp_hybrid_aggregate : <is> False |
+    |                                      |         | netapp_hybrid_aggregate : <is> False       |
     |                                      |         | driver_handles_share_servers : False       |
     | 447732be-4cf2-42b0-83dc-4b6f4ed5368d | default | driver_handles_share_servers : False       |
     |                                      |         | snapshot_support : False                   |
@@ -115,7 +119,9 @@ specific extra specs described in `??? <#manila.netapp.extra_specs>`__.
     |                                      |         | revert_to_snapshot_support : True          |
     |                                      |         | create_share_from_snapshot_support : True  |
     +--------------------------------------+---------+--------------------------------------------+
-                    
+
+Creating Manila Shares with Share Types
+---------------------------------------
 
 In this section, we create shares with the default type, as well as each
 of the previously defined share types.
@@ -280,7 +286,6 @@ aggregates with SSD drives, as seen in the command output below.
 
     cluster-1::> disk show -type SSD
     There are no entries matching your query.
-                    
 
 We'll now add access rules for any IP-connected client to mount these
 NFS shares with full read/write privileges.
@@ -347,6 +352,9 @@ should use the preferred path for optimum performance.
     | 192.168.228.110:/share_6fae2eb7_9eea_4a0f_b215_1f405dbcc4d4 | True      |
     +-------------------------------------------------------------+-----------+
 
+Creating a Manila CIFS share with security service
+--------------------------------------------------
+
 As previously noted, creation of a CIFS share requires the co-deployment
 of one of three security services (LDAP, Active Directory, or Kerberos).
 This section demonstrates the share network and security service setup
@@ -406,6 +414,9 @@ necessary before creating the CIFS share.
     | metadata                    | {}                                   |
     +-----------------------------+--------------------------------------+
 
+Importing and Exporting Manila Shares
+-------------------------------------
+
 In this section, we use the admin-only ``manage`` command to bring
 storage resources under Manila management. A share is a Data ONTAP
 FlexVol, and we must tell Manila which host, backend and pool contain
@@ -426,7 +437,6 @@ the FlexVol.
     +-------------------------------------+---------+----------------------+--------+
     | liberty@cmode_single_svm_nfs#manila | liberty | cmode_single_svm_nfs | manila |
     +-------------------------------------+---------+----------------------+--------+
-                    
 
 ::
 
@@ -453,7 +463,6 @@ the FlexVol.
     | project_id        | 75dbed01579f4a7e8df2878de25fbc49     |
     | metadata          | {}                                   |
     +-------------------+--------------------------------------+
-                    
 
 ::
 
@@ -481,13 +490,12 @@ the FlexVol.
     | project_id        | 75dbed01579f4a7e8df2878de25fbc49                            |
     | metadata          | {}                                                          |
     +-------------------+-------------------------------------------------------------+
-                    
 
-    **Important**
+.. important::
 
-    FlexVols that are part of a snapmirror relationship cannot be
-    brought under Manila's management. Snapmirror relationships must be
-    removed before attempting to ``manage`` the FlexVol.
+   FlexVols that are part of a snapmirror relationship cannot be
+   brought under Manila's management. Snapmirror relationships must be
+   removed before attempting to ``manage`` the FlexVol.
 
 We'll now remove a share from Manila management using the admin-only
 ``unmanage`` CLI command.
@@ -495,7 +503,9 @@ We'll now remove a share from Manila management using the admin-only
 ::
 
     [stack@scspr0030615001 devstack]$ manila unmanage 6e42c910-67a8-47fd-885f-b03d1756675f
-                
+
+Creating Manila Consistency Groups
+----------------------------------
 
 In this section, we'll create and work with consistency groups and
 consistency group (CG) snapshots. First we'll list the share types and
@@ -685,6 +695,9 @@ above.
     | name                 | cg_3                                 |
     +----------------------+--------------------------------------+
 
+Creating Manila Share Replicas
+------------------------------
+
 In this section, we'll create and work with share replicas. First we'll
 create a share type that supports replication.
 
@@ -842,7 +855,7 @@ which is one hour for the cDOT driver.
 Manila checks the status of a replica based on the
 ``replica_state_update_interval`` configuration option. If we wait a
 short while, the replica will become in sync. If the replica does not
-become in-sync, refer to `??? <#appendix.debug.common_problems>`__.
+become in-sync, refer to the section called :ref:`common-probs`.
 
 ::
 
@@ -876,12 +889,14 @@ Finally, let us failover to our other replica.
     | b3191744-cee9-478b-b906-c5a7a3934adb | available | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS2#aggr4      | nova              | 2016-03-23T18:31:35.000000 |
     +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
 
+Migrating Manila Shares
+-----------------------
+
 In this section, we'll migrate a share from one pool to another.
 
 ::
 
             $ manila migration-start myFlash ocata@cmode_multi_svm_nfs#manila --writable False --preserve-snapshots True --preserve-metadata True --nondisruptive True
-            
 
 We can check the migration progress by using the
 ``migration-get-progress`` command.
@@ -895,7 +910,6 @@ We can check the migration progress by using the
             | task_state     | migration_driver_in_progress  |
             | total_progress | 99                            |
             +----------------+-------------------------------+
-            
 
 Once the task state has transitioned to
 ``migration_driver_phase1_done``, we can complete the migration process

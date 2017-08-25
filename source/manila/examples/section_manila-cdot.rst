@@ -3,8 +3,8 @@ Clustered Data ONTAP
 
 This section provides an example configuration script to be executed
 within Data ONTAP that enables one SVM appropriately configured for the
-Manila configuration referenced in
-`section\_title <#manila.examples.manila_conf.single_svm>`__. Note that
+Manila configuration referenced in the section called 
+":ref:`manila-conf-ex`". Note that
 you may have to edit IP addresses and feature lists based on the
 environment and licenses present.
 

@@ -77,6 +77,8 @@ status of deduplication for a particular FlexVol volume by issuing the
     "volume efficiency start -vserver demo-vserver -volume vol2
     -scan-old-data true".
 
+.. _enhanced-instance:
+
 Enhanced Instance Creation
 --------------------------
 
