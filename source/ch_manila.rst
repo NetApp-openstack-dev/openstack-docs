@@ -1,6 +1,6 @@
 .. _manila:
 
-OpenStack Shared File System Service (Manila)
+Shared File System Service (Manila)
 =============================================
 
 .. toctree::

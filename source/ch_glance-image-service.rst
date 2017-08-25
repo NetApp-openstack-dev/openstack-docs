@@ -1,4 +1,4 @@
-OpenStack Image Service (Glance)
+Image Service (Glance)
 ================================
 
 .. toctree::

@@ -1,4 +1,4 @@
-OpenStack Object Storage Service (Swift)
+Object Storage Service (Swift)
 ========================================
 
 .. toctree::

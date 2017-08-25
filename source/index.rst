@@ -1,5 +1,5 @@
 =========================================
-OpenStack Deployment and Operations Guide
+Deployment and Operations Guide
 =========================================
 
 .. toctree::
