@@ -102,8 +102,7 @@ $('div.deprecated > p').prepend('<div class="fa fa-fw fa-minus-circle">&nbsp;</d
    the index of the HTML element that we are modifying)                 */
 
 // Gives the log a bug icon the information it needs to generate the bug in
-// Launchpad with pre-filled information such as git SHA, git.openstack.org
-// source URL, published document URL and tag.
+// the specified github project.
 function logABug(bugTitle, bugProject, fieldComment, fieldTags) {
 
     var lineFeed = "%0A";
@@ -112,28 +111,30 @@ function logABug(bugTitle, bugProject, fieldComment, fieldTags) {
         "use the following as a template and remove or add fields as " +
         "you see fit. Convert [ ] into [x] to check boxes:" + lineFeed + lineFeed +
         "- [ ] This doc is inaccurate in this way: ______" + lineFeed +
-        "- [ ] This is a doc addition request." + lineFeed +
+        "- [ ] This is a doc enhancement request." + lineFeed +
         "- [ ] I have a fix to the document that I can paste below including example: " +
         "input and output. " + lineFeed + lineFeed +
         "If you have a troubleshooting or support issue, use the following " +
         " resources:" + lineFeed + lineFeed +
-        " - Ask OpenStack: http://ask.openstack.org" + lineFeed +
-        " - The mailing list: http://lists.openstack.org" + lineFeed +
-        " - IRC: 'openstack' channel on Freenode"+ lineFeed;
+        " - thePub NetApp Developer Forum: http://netapp.io/" + lineFeed +
+        " - Slack: http://netapp.io/slack/" + lineFeed +
+        " - IRC: 'openstack-netapp' channel on Freenode"+ lineFeed;
 
-    var urlBase = "https://bugs.launchpad.net/" + bugProject + "/+filebug?field.title=";
-    var currentURL = "URL: " + window.location.href;
-    var bugLink = "";
-    if (useStoryboard) {
-        var urlBase = "https://storyboard.openstack.org/#!/project/";
-        bugLink = urlBase + bugProject;
-    } else {
-        bugLink = urlBase  + encodeURIComponent(bugTitle) +
-        "&field.comment=" + lineFeed + lineFeed +  lineFeed +
-        bugChecklist + lineFeed + "-----------------------------------" + lineFeed + fieldComment +
-        lineFeed + currentURL +
-        "&field.tags=" + fieldTags;
+    var labels = '';
+    var tags = fieldTags.split(',');
+    for(var i=0; i < tags.length; i++){
+        labels += "&labels[]=" + tags[i].trim();
     }
+
+    // Example:
+    // https://github.com/NetApp-openstack-dev/openstack-docs/issues/new?title=xyzzy&body=bar
+    var urlBase = "https://github.com/" + bugProject + "/issues/new?title=";
+    var currentURL = "URL: " + window.location.href;
+    var bugLink = urlBase  + encodeURIComponent(bugTitle) +
+        "&body=" + lineFeed + lineFeed +  lineFeed +
+        bugChecklist + lineFeed + "-----------------------------------" +
+        lineFeed + fieldComment +
+        lineFeed + currentURL + labels;
     document.getElementById("logABugLink1").href=bugLink;
     document.getElementById("logABugLink2").href=bugLink;
     document.getElementById("logABugLink3").href=bugLink;

@@ -54,8 +54,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'OpenStack Deployment and Operations Guide'
-bug_tag = u''
+project = u'NetApp OpenStack Docs'
+bug_tag = u'docs, dog'
 copyright = u'2017, NetApp'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -83,7 +83,7 @@ html_context = {
     "gitsha": gitsha,
     "bug_tag": bug_tag,
     "giturl": giturl,
-    "bug_project": "",
+    "bug_project": "NetApp-openstack-dev/openstack-docs",
     'css_files': [
         '_static/bespoke.css',  # custom CSS styling
         '_static/sphinxmark.css',  # watermark styling
