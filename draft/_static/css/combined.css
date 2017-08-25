@@ -3932,14 +3932,14 @@ a.docs-sidebar-section-title:hover {
 
 .docs-sidebar-section ol lh {
   font-weight: 700;
-  font-size: 12px;
+  font-size: 9px;
   padding-bottom: 10px;
   width: 100%; }
 
 .docs-sidebar-section ol > li {
   max-height: 0;
   margin-left: 0;
-  font-size: 12px;
+  font-size: 9px;
   line-height: 2;
   width: 97%;
   list-style-position: inside;
