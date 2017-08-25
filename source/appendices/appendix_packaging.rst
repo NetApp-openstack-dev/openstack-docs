@@ -1,12 +1,6 @@
 Packaging
 *********
 
-Packaging and Downloading Requirements
-======================================
-
-Refer to the following link for packaging and downloading requirements:
-http://wiki.openstack.org/Getopenstack
-
 Installation and Uninstallation
 ===============================
 

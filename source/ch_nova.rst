@@ -1,4 +1,4 @@
-OpenStack Compute Service (Nova)
+Compute Service (Nova)
 ================================
 
 .. toctree::

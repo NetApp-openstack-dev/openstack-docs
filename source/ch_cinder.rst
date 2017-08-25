@@ -1,4 +1,4 @@
-OpenStack Block Storage Service (Cinder)
+Block Storage Service (Cinder)
 ========================================
 
 .. toctree::
