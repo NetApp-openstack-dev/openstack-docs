@@ -1,7 +1,7 @@
 .. _cinder-conf:
 
-``cinder.conf``
-===============
+Sample cinder.conf
+----------------------
 
 This section provides an example Cinder configuration file
 (``cinder.conf``) that contains three backends - one for clustered Data
@@ -72,10 +72,3 @@ the iSCSI storage protocol, and one for an E-Series deployment
     netapp_sa_password=password
     netapp_controller_ips=10.63.215.225,10.63.215.226
     netapp_pool_name_search_pattern=(cinder_pool_[\d]+)
-
-- The content of ``/etc/cinder/nfs.shares`` is::
-
-    10.63.40.153:/vol2_dedup
-    10.63.40.153:/vol3_compressed
-    10.63.40.153:/vol4_mirrored
-    10.63.40.153:/vol5_plain
