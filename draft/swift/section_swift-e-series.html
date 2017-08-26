@@ -130,11 +130,21 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-08-25 19:40</div>
+            <div class="docs-updated">updated: 2017-08-26 01:04</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="docs-top-contents">
+
+<h5><a href="../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Swift Zones and NetApp E-Series Storage</a><ul>
+<li><a class="reference internal" href="#controller-subsystem-based-zoning">Controller-subsystem Based Zoning</a></li>
+<li><a class="reference internal" href="#controller-based-zoning">Controller Based Zoning</a></li>
+<li><a class="reference internal" href="#drive-tray-or-enclosure-based-zoning">Drive-tray or Enclosure-based Zoning</a></li>
+</ul>
+</li>
+</ul>
 
               </div>
               <div class="docs-body">
@@ -165,24 +175,27 @@ practically all Swift zoning requirements. DDP reconstruction also
 eliminates the requirement of Swift data replication within a single
 storage array. Zoning based on E-Series storage can be done on a storage
 subsystem, individual controller, or drive tray basis.</p>
-<p><strong>Controller-subsystem based zoning.</strong></p>
+<div class="section" id="controller-subsystem-based-zoning">
+<h2>Controller-subsystem Based Zoning<a class="headerlink" href="#controller-subsystem-based-zoning" title="Permalink to this headline">¶</a></h2>
 <p>In a cluster that contains several E-Series storage subsystems zoning
 may be done through the use of 1 or more E-Series subsystems as a zone.
 An example of this is shown in
-<a class="reference external" href="#swift.controller_subsystem_zoning">figure_title</a>.</p>
+Figure 8.2, “Controller-subsystem based zoning”.</p>
 <div class="figure" id="id1">
 <img alt="Controller-subsystem based zoning" src="../_images/swift_controller_subsystem_zoning.png" />
-<p class="caption"><span class="caption-text">Controller-subsystem based zoning</span></p>
+<p class="caption"><span class="caption-text">Figure 8.2. Controller-subsystem based zoning</span></p>
 </div>
-<p><strong>Controller based zoning.</strong></p>
+</div>
+<div class="section" id="controller-based-zoning">
+<h2>Controller Based Zoning<a class="headerlink" href="#controller-based-zoning" title="Permalink to this headline">¶</a></h2>
 <p>E-Series storage subsystems contain two independently configurable
 controller modules (shown in
-<a class="reference external" href="#swift.controller_layout">figure_title</a>) which in turn communicate
+Figure 8.3, “E-Series Controller Layout”) which in turn communicate
 with drives contained within the storage subsystem and optionally other
 externally attached E-Series drive enclosures.</p>
 <div class="figure" id="id2">
 <img alt="E-Series Controller Layout" src="../_images/swift_controller_layout.png" />
-<p class="caption"><span class="caption-text">E-Series Controller Layout</span></p>
+<p class="caption"><span class="caption-text">Figure 8.3. E-Series Controller Layout</span></p>
 </div>
 <p>For controller based zoning, each E-Series storage controller supports 2
 Swift object storage nodes. Each node is connected to a single
@@ -190,7 +203,9 @@ controller in the storage array. LUNs for each Swift node are configured
 separately on drives located within the enclosure. Additional drive
 enclosures may also be attached to the controller module for added
 storage capacity.</p>
-<p><strong>Drive-tray or enclosure-based zoning.</strong></p>
+</div>
+<div class="section" id="drive-tray-or-enclosure-based-zoning">
+<h2>Drive-tray or Enclosure-based Zoning<a class="headerlink" href="#drive-tray-or-enclosure-based-zoning" title="Permalink to this headline">¶</a></h2>
 <p>If Swift cluster requirements require unique zones for each object node
 E-Series storage arrays can effectively provide storage capacity for
 multiple Swift object nodes. Disk pools are created according to desired
@@ -206,6 +221,7 @@ all the drive channels in the subsystem.</li>
 <p>If unique zoning is not required, node connectivity is only limited by
 the host connectivity capacity of the E-Series storage subsystem being
 used.</p>
+</div>
 </div>
 
 
@@ -223,7 +239,7 @@ used.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-08-25 19:40</div>
+            <div class="docs-updated">updated: 2017-08-26 01:04</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -355,7 +371,7 @@ used.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project and bug_tag rely on variables in conf.py */
-    var gitSha = "SHA: 27eb67acafe8c3b3e0851748e01da8b56e923d6f";
+    var gitSha = "SHA: 89035049e303466577d4d7ce7262d30c1ea082a9";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Swift Zones and NetApp E-Series Storage in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -365,7 +381,7 @@ used.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 0.1 on 2017-08-25 19:40";
+    var buildstring = "Release: 0.1 on 2017-08-26 01:04";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

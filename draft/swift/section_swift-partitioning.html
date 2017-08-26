@@ -130,11 +130,19 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-08-25 19:40</div>
+            <div class="docs-updated">updated: 2017-08-26 01:04</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="docs-top-contents">
+
+<h5><a href="../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Partitioning and File System Considerations</a><ul>
+<li><a class="reference internal" href="#partitioning-with-multipath">Partitioning with Multipath</a></li>
+</ul>
+</li>
+</ul>
 
               </div>
               <div class="docs-body">
@@ -150,10 +158,12 @@ redundant paths between an object storage node and the E-Series storage
 controller. For details on how to configure <code class="docutils literal"><span class="pre">dm-multipath</span></code>, refer to
 the NetApp E-Series Storage Systems Failover Drivers Guide, located at
 <a class="reference external" href="https://library.netapp.com/ecm/ecm_get_file/ECMP1394845">https://library.netapp.com/ecm/ecm_get_file/ECMP1394845</a>.</p>
+<div class="section" id="partitioning-with-multipath">
+<h2>Partitioning with Multipath<a class="headerlink" href="#partitioning-with-multipath" title="Permalink to this headline">¶</a></h2>
 <p>Assuming that three volumes were created from the disk pool, and if
 multipath is enabled, you should see a total of 6 mapped devices, as in
 the following example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rroot</span><span class="nd">@stlrx300s7</span><span class="o">-</span><span class="mi">102</span><span class="p">:</span><span class="o">~</span><span class="c1"># ls -l /dev/mapper</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@stlrx300s7</span><span class="o">-</span><span class="mi">102</span><span class="p">:</span><span class="o">~</span><span class="c1"># ls -l /dev/mapper</span>
 <span class="n">total</span> <span class="mi">0</span>
 <span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>       <span class="mi">7</span> <span class="n">May</span>  <span class="mi">5</span> <span class="mi">15</span><span class="p">:</span><span class="mi">20</span> <span class="mf">360080e50003220</span><span class="n">a80000017353450e3f</span> <span class="o">-&gt;</span> <span class="o">../</span><span class="n">dm</span><span class="o">-</span><span class="mi">0</span>
 <span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>       <span class="mi">7</span> <span class="n">May</span>  <span class="mi">5</span> <span class="mi">15</span><span class="p">:</span><span class="mi">20</span> <span class="mf">360080e50003222300000019153450</span><span class="n">e18</span> <span class="o">-&gt;</span> <span class="o">../</span><span class="n">dm</span><span class="o">-</span><span class="mi">1</span>
@@ -209,18 +219,16 @@ example:</p>
 &gt; do
 &gt; mkfs.xfs -d su=131072,sw=8 -i size=1024 $i
 &gt; done
-
-
-**Tip**
-
-You can verify that the partition was successfully created and is
-properly aligned by using the ``parted`` command:
-
-::
-
-    # parted /dev/mapper/360a9800043346852563444717a513571 align-check optimal 1
-    1 aligned
 </pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can verify that the partition was successfully created and is
+properly aligned by using the <code class="docutils literal"><span class="pre">parted</span></code> command:</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="c1"># parted /dev/mapper/360a9800043346852563444717a513571 align-check optimal 1</span>
+<span class="mi">1</span> <span class="n">aligned</span>
+</pre></div>
+</div>
 </div>
 <p>You can verify that the underlying filesystem has the correct values for
 stripe unit and stripe width by using the <code class="docutils literal"><span class="pre">xfs_info</span></code> command:</p>
@@ -255,15 +263,15 @@ affected on each boot of the system:</p>
 the E-Series storage, be sure to use the following mount options:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>mount –t xfs –o “nobarrier,noatime,nodiratime,inode64” \
 /dev/mapper/nodeX /srv/node/sdb1
-
-
-**Warning**
-
-The mount points for the account, container, and object storage are
-not managed by Swift; therefore, you must use the standard Linux
-mechanisms (e.g. ``/etc/fstab``) to ensure that the mount points
-exist and are mounted before Swift starts.
 </pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The mount points for the account, container, and object storage are
+not managed by Swift; therefore, you must use the standard Linux
+mechanisms (e.g. <code class="docutils literal"><span class="pre">/etc/fstab</span></code>) to ensure that the mount points
+exist and are mounted before Swift starts.</p>
+</div>
 </div>
 </div>
 
@@ -282,7 +290,7 @@ exist and are mounted before Swift starts.
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-08-25 19:40</div>
+            <div class="docs-updated">updated: 2017-08-26 01:04</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -414,7 +422,7 @@ exist and are mounted before Swift starts.
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project and bug_tag rely on variables in conf.py */
-    var gitSha = "SHA: 27eb67acafe8c3b3e0851748e01da8b56e923d6f";
+    var gitSha = "SHA: 89035049e303466577d4d7ce7262d30c1ea082a9";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Partitioning and File System Considerations in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -424,7 +432,7 @@ exist and are mounted before Swift starts.
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 0.1 on 2017-08-25 19:40";
+    var buildstring = "Release: 0.1 on 2017-08-26 01:04";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

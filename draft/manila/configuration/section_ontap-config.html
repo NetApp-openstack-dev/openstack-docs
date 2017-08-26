@@ -130,7 +130,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-08-25 19:40</div>
+            <div class="docs-updated">updated: 2017-08-26 01:04</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -138,8 +138,17 @@ ga('send', 'pageview');
 
 <h5><a href="../../index.html">Contents</a></h5>
 <ul>
-<li><a class="reference internal" href="#">Data ONTAP Configuration</a></li>
-<li><a class="reference internal" href="#account-permission-considerations">Account Permission Considerations</a></li>
+<li><a class="reference internal" href="#">Data ONTAP Configuration</a><ul>
+<li><a class="reference internal" href="#data-ontap-prerequisites">Data ONTAP Prerequisites</a></li>
+<li><a class="reference internal" href="#storage-virtual-machine-considerations">Storage Virtual Machine Considerations</a></li>
+<li><a class="reference internal" href="#account-permission-considerations">Account Permission Considerations</a><ul>
+<li><a class="reference internal" href="#creating-role-for-cluster-scoped-account">Creating Role for Cluster-Scoped Account</a></li>
+<li><a class="reference internal" href="#creating-role-for-svm-scoped-account">Creating Role for SVM-Scoped Account</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#storage-networking-considerations">Storage Networking Considerations</a></li>
+</ul>
+</li>
 </ul>
 
               </div>
@@ -147,6 +156,8 @@ ga('send', 'pageview');
 
   <div class="section" id="data-ontap-configuration">
 <h1>Data ONTAP Configuration<a class="headerlink" href="#data-ontap-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="data-ontap-prerequisites">
+<h2>Data ONTAP Prerequisites<a class="headerlink" href="#data-ontap-prerequisites" title="Permalink to this headline">¶</a></h2>
 <p>The prerequisites for Data ONTAP are:</p>
 <ul class="simple">
 <li>The driver requires a storage controller running Clustered Data ONTAP
@@ -160,6 +171,9 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
+</div>
+<div class="section" id="storage-virtual-machine-considerations">
+<h2>Storage Virtual Machine Considerations<a class="headerlink" href="#storage-virtual-machine-considerations" title="Permalink to this headline">¶</a></h2>
 <p>When using the NetApp Manila driver in the mode where it does not manage
 share servers, it is important to pay attention to the following
 considerations:</p>
@@ -196,7 +210,7 @@ Documentation</a>.</li>
 </ol>
 </div>
 <div class="section" id="account-permission-considerations">
-<span id="account-perm"></span><h1>Account Permission Considerations<a class="headerlink" href="#account-permission-considerations" title="Permalink to this headline">¶</a></h1>
+<span id="account-perm"></span><h2>Account Permission Considerations<a class="headerlink" href="#account-permission-considerations" title="Permalink to this headline">¶</a></h2>
 <p>When configuring NetApp’s Manila drivers to interact with a clustered
 Data ONTAP instance, it is important to choose the correct
 administrative credentials to use. While an account with cluster-level
@@ -206,10 +220,13 @@ granted to it. In order to use an SVM-scoped account with the Manila
 driver and clustered Data ONTAP and have access to the full set of
 features (including Manila Share Type Extra Specs support) availed by
 the Manila driver, be sure to add the access levels for the commands
-shown in <a class="reference external" href="#manila.cdot.permissions.common">table_title</a>,
-<a class="reference external" href="#manila.cdot.permissions.with_share_server">table_title</a>, and
-<a class="reference external" href="#manila.cdot.permissions.without_share_server.cluster_scoped">table_title</a>.</p>
-<table border="1" class="docutils">
+shown in <a class="reference internal" href="#table-6-17"><span class="std std-ref">Table 6.17, “Common Access Level Permissions Required with Any
+Manila Driver”</span></a>, <a class="reference internal" href="#table-6-18"><span class="std std-ref">Table 6.18, “Access Level Permissions Required For
+Manila Driver for clustered Data ONTAP with share server management - with
+Cluster-wide Administrative Account”</span></a>, and <a class="reference internal" href="#table-6-19"><span class="std std-ref">Table 6.19, “Access Level
+Permissions Required For Manila Driver for clustered Data ONTAP without
+share server management - with Cluster-wide Administrative Account”</span></a>.</p>
+<table border="1" class="docutils" id="table-6-17">
 <colgroup>
 <col width="64%" />
 <col width="36%" />
@@ -255,8 +272,8 @@ shown in <a class="reference external" href="#manila.cdot.permissions.common">ta
 </tr>
 </tbody>
 </table>
-<p>Table: Common Access Level Permissions Required with Any Manila Driver</p>
-<table border="1" class="docutils">
+<p>Table 6.17. Common Access Level Permissions Required with Any Manila Driver</p>
+<table border="1" class="docutils" id="table-6-18">
 <colgroup>
 <col width="61%" />
 <col width="39%" />
@@ -305,10 +322,10 @@ shown in <a class="reference external" href="#manila.cdot.permissions.common">ta
 </tr>
 </tbody>
 </table>
-<p>Table: Access Level Permissions Required For Manila Driver for clustered
+<p>Table 6.18. Access Level Permissions Required For Manila Driver for clustered
 Data ONTAP with share server management - with Cluster-wide
 Administrative Account</p>
-<table border="1" class="docutils">
+<table border="1" class="docutils" id="table-6-19">
 <colgroup>
 <col width="61%" />
 <col width="39%" />
@@ -330,10 +347,11 @@ Administrative Account</p>
 </tr>
 </tbody>
 </table>
-<p>Table: Access Level Permissions Required For Manila Driver for clustered
+<p>Table 6.19. Access Level Permissions Required For Manila Driver for clustered
 Data ONTAP without share server management - with Cluster-wide
 Administrative Account</p>
-<p><strong>Creating Role for Cluster-Scoped Account.</strong></p>
+<div class="section" id="creating-role-for-cluster-scoped-account">
+<h3>Creating Role for Cluster-Scoped Account<a class="headerlink" href="#creating-role-for-cluster-scoped-account" title="Permalink to this headline">¶</a></h3>
 <p>To create a role with the necessary privileges required, with access via
 ONTAP API only, use the following command syntax to create the role and
 the cDOT ONTAP user:</p>
@@ -351,7 +369,9 @@ levels as described in the earlier tables).</p>
 </div>
 </li>
 </ol>
-<p><strong>Creating Role for SVM-Scoped Account.</strong></p>
+</div>
+<div class="section" id="creating-role-for-svm-scoped-account">
+<h3>Creating Role for SVM-Scoped Account<a class="headerlink" href="#creating-role-for-svm-scoped-account" title="Permalink to this headline">¶</a></h3>
 <p>To create a role with the necessary privileges required, with access via
 ONTAP API only, use the following command syntax to create the role and
 the cDOT ONTAP user:</p>
@@ -364,25 +384,29 @@ levels as described in the earlier tables).</p>
 </div>
 </li>
 <li><p class="first">Command to create user with appropriate role</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>   security login create –username openstack –application ontapi –authmethod password –role openstack -vserver [vserver_name]
-
-
-**Tip**
-
-For more information on how to grant access level permissions to a
-role, and then assign the role to an administrative account, please
-refer to the `System Administration Guide for Cluster
-Administrators &lt;http://support.netapp.com&gt;`__ document in the
-Clustered DATA ONTAP documentation.
+<div class="highlight-default"><div class="highlight"><pre><span></span>security login create –username openstack –application ontapi –authmethod password –role openstack -vserver [vserver_name]
 </pre></div>
 </div>
 </li>
 </ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For more information on how to grant access level permissions to a
+role, and then assign the role to an administrative account, please
+refer to the <a class="reference external" href="http://support.netapp.com">System Administration Guide for Cluster
+Administrators</a> document in the
+Clustered DATA ONTAP documentation.</p>
+</div>
+</div>
+</div>
+<div class="section" id="storage-networking-considerations">
+<h2>Storage Networking Considerations<a class="headerlink" href="#storage-networking-considerations" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>Ensure there is segmented network connectivity between the hypervisor
 nodes and the Data LIF interfaces from Data ONTAP.</li>
 <li>LIF assignment</li>
 </ol>
+</div>
 </div>
 
 
@@ -400,7 +424,7 @@ nodes and the Data LIF interfaces from Data ONTAP.</li>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-08-25 19:40</div>
+            <div class="docs-updated">updated: 2017-08-26 01:04</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -534,7 +558,7 @@ nodes and the Data LIF interfaces from Data ONTAP.</li>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project and bug_tag rely on variables in conf.py */
-    var gitSha = "SHA: 27eb67acafe8c3b3e0851748e01da8b56e923d6f";
+    var gitSha = "SHA: 89035049e303466577d4d7ce7262d30c1ea082a9";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Data ONTAP Configuration in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -544,7 +568,7 @@ nodes and the Data LIF interfaces from Data ONTAP.</li>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 0.1 on 2017-08-25 19:40";
+    var buildstring = "Release: 0.1 on 2017-08-26 01:04";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
