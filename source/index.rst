@@ -1,19 +1,19 @@
-=========================================
+===============================
 Deployment and Operations Guide
-=========================================
+===============================
 
 .. toctree::
    :maxdepth: 1
 
-   ch_executive-summary.rst
+   Executive Summary <ch_executive-summary.rst>
    ch_openstack-overview.rst
    ch_netapp-storage.rst
 
-   ch_cinder.rst
-   ch_glance-image-service.rst
-   ch_manila.rst
-   ch_nova.rst
-   ch_swift.rst
+   Block Storage (Cinder) <ch_cinder.rst>
+   Image Service (Glance) <ch_glance-image-service.rst>
+   Shared Filesystems (Manila) <ch_manila.rst>
+   Compute Service (Nova) <ch_nova.rst>
+   Object Storage (Swift) <ch_swift.rst>
    ch_operations.rst
 
    appendices/appendix_packaging.rst
