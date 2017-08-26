@@ -1,7 +1,7 @@
 .. _manila:
 
-File Shares Service (Manila)
-=============================================
+Shared Filesystems Service (Manila)
+===================================
 
 .. toctree::
    :maxdepth: 1
