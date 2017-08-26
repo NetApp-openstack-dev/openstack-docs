@@ -34,7 +34,7 @@
         gitURL = "Source: {{ giturl }}" + "/" + sourceFile;
     {%- endif %}
 
-    /* gitsha, project and bug_tag rely on variables in conf.py */
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: {{ gitsha }}";
     {%- if bug_project %}
         var bugProject = "{{ bug_project }}";
@@ -45,6 +45,7 @@
         var bugTitle = "{{ title }} in {{ project }}";
     {%- endif %}
     var fieldTags = "{{ bug_tag }}";
+    var watermark = "{{ watermark }}"
     {%- if use_storyboard %}
         var useStoryboard = "{{ use_storyboard }}";
     {%- else %}
@@ -61,5 +62,5 @@
                        lineFeed + encodeURI(gitSha) +
                        lineFeed + encodeURI(gitURL) ;
 
-    logABug(bugTitle, bugProject, fieldComment, fieldTags);
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
 </script>
