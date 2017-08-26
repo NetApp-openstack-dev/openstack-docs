@@ -1,5 +1,5 @@
-NetApp Driver for E-Series
-==========================
+Netapp E-Series Driver (Cinder): Overview
+=========================================
 
 NetApp Driver for E-Series with iSCSI
 -------------------------------------

@@ -1,7 +1,7 @@
 .. _manila-conf:
 
-Manila
-------
+Manila & manila.conf
+====================
 
 Manila is configured by changing the contents of the ``manila.conf``
 file and restarting all of the Manila processes. Depending on the

@@ -1,5 +1,7 @@
-NetApp Data ONTAP Drivers for OpenStack Block Storage (Cinder)
-==============================================================
+.. _netapp_ontap_unified_driver_overview:
+
+NetApp ONTAP Unified Driver (Cinder): Overview
+==================================================================
 
 NetApp drivers for clustered Data ONTAP and Data ONTAP operating in
 7-Mode are now offered in a single, unified driver. The unified driver
@@ -42,7 +44,7 @@ configured to achieve any of the desired deployments. In Grizzly and
 prior releases, there were multiple drivers segmented by storage family,
 protocol, and integration with additional NetApp management software.
 The previous drivers have all been deprecated since the Havana release;
-see `??? <#appendix.packaging.deprecation>`__ for more information on
+see :ref:`deprecated_drivers` for more information on
 the deprecated capabilities.
 
 The following lists all of the individual options and subsequent

@@ -33,6 +33,8 @@ Presently, there is no separate versioning system for NetApp’s Cinder
 drivers, but are instead distinguished by the enclosing OpenStack
 release’s versioning and release system.
 
+.. _deprecated_drivers:
+
 Deprecated Drivers
 ==================
 

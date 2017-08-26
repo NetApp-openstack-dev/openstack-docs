@@ -1,13 +1,13 @@
 .. _cinder:
 
-Cinder
-======
+Cinder & cinder.conf
+====================
 
 Cinder is configured by changing the contents of the ``cinder.conf``
 file and restarting all of the Cinder processes. Depending on the
 OpenStack distribution used, this may require issuing commands such as
-``service openstack-cinder-api restart`` or
-``service cinder-api restart``.
+``systemctl openstack-cinder-api restart`` or
+``systemctl cinder-api restart``.
 
 The ``cinder.conf`` file contains a set of configuration options (one
 per line), specified as ``option_name``\ =value. Configuration options
@@ -28,6 +28,7 @@ a particular Cinder backend should be placed in a separate stanza.
    ``enabled_backends``; for example::
 
        enabled_backends=myNfsBackend,myIscsiBackend,myFCBackend,myESeriesBackend
-                        
+
    The ``enabled_backends`` option should be specified within the
    ``[DEFAULT]`` configuration stanza.
+
