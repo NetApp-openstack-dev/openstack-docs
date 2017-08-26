@@ -50,7 +50,7 @@ OpenStack.
 
 Rushi Agrawal, Sajid Akhtar, Tom Barron, Jon Benedict, Bob Callaway,
 Robert Esker, Chuck Fouts, Jim Holl, Eric Johannes, Andrew Kerr, Clinton
-Knight, Yogesh Kshirsagar, Sumit Kumar, Alex Meade, Jon Olby, Goutham
-Pacha Ravi, Akshai Parthasarathy, Jose Porrua, Michael Price, Mike
+Knight, Yogesh Kshirsagar, Sumit Kumar, Alex Meade, Chad Morgenstern, Jon Olby,
+Goutham Pacha Ravi, Akshai Parthasarathy, Jose Porrua, Michael Price, Mike
 Rooney, Dustin Schoenbrun, Navneet Singh, Stan Skelton, Tim Snider, Ben
-Swartzlander, Marty Turner, Chad Morgenstern, Jennifer Yang
+Swartzlander, Marty Turner, Jennifer Yang
