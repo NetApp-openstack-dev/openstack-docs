@@ -55,6 +55,49 @@ source_suffix = '.rst'
 # The master toctree document.
 master_doc = 'index'
 
+# -- Release watermark -----------------------------------------------
+
+releases = [
+    'austin', 'bexar', 'cactus', 'diablo', 'essex', 'folsom', 'grizzly',
+    'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
+    'ocata', 'pike', 'queens', 'rocky',
+]
+unnamed = list(string.ascii_lowercase[len(releases):])
+releases += unnamed
+
+watermark = os.popen("git branch --contains $(git rev-parse HEAD)\
+| awk -F/ '/stable/ {print $2}'").read().strip(' \n\t').capitalize()
+if watermark == "":
+    stable_branches = sorted(os.popen(
+        "git branch | awk -F/ '/stable/ {print $2}'").read().strip(
+        ' \n\t').lower().split('\n'))
+    if len(stable_branches) == 0 or '' in stable_branches:
+        # Can be removed as soon as we have stable branches
+        watermark = "PIKE DRAFT"
+    else:
+        last_stable_release = stable_branches[-1]
+        try:
+            rel_index = releases.index(last_stable_release)
+        except ValueError:
+            rel_index = -1
+
+        if rel_index == (len(releases) - 1) or rel_index == -1:
+            watermark = "DRAFT"
+        else:
+            watermark = "%s DRAFT" % releases[rel_index + 1].upper()
+
+# -- Options for sphinxmark -----------------------------------------------
+sphinxmark_enable = True
+sphinxmark_div = 'docs-body'
+sphinxmark_image = 'text'
+sphinxmark_text = watermark
+sphinxmark_text_rotation = 0
+sphinxmark_text_spacing = 300
+sphinxmark_text_color = (255, 0, 0)
+sphinxmark_text_size = 120
+
+# -- Building the html context -----------------------------------------------
+
 # General information about the project.
 project = u'NetApp OpenStack Docs'
 bug_tag = u'docs, dog'
@@ -86,6 +129,7 @@ html_context = {
     "bug_tag": bug_tag,
     "giturl": giturl,
     "bug_project": "NetApp-openstack-dev/openstack-docs",
+    "watermark": watermark,
     'css_files': [
         '_static/bespoke.css',  # custom CSS styling
         '_static/sphinxmark.css',  # watermark styling
@@ -313,43 +357,3 @@ pdf_documents = [
     ('index', u'DeployOpsGuide', u'OpenStack Deployment and Operations Guide',
      u'NetApp Inc.')
 ]
-
-# Determine release watermark
-releases = [
-    'austin', 'bexar', 'cactus', 'diablo', 'essex', 'folsom', 'grizzly',
-    'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
-    'ocata', 'pike', 'queens', 'rocky',
-]
-unnamed = list(string.ascii_lowercase[len(releases):])
-releases += unnamed
-
-watermark = os.popen("git branch --contains $(git rev-parse HEAD)\
-| awk -F/ '/stable/ {print $2}'").read().strip(' \n\t').capitalize()
-if watermark == "":
-    stable_branches = sorted(os.popen(
-        "git branch | awk -F/ '/stable/ {print $2}'").read().strip(
-        ' \n\t').lower().split('\n'))
-    if len(stable_branches) == 0 or '' in stable_branches:
-        # Can be removed as soon as we have stable branches
-        watermark = "PIKE DRAFT"
-    else:
-        last_stable_release = stable_branches[-1]
-        try:
-            rel_index = releases.index(last_stable_release)
-        except ValueError:
-            rel_index = -1
-
-        if rel_index == (len(releases) - 1) or rel_index == -1:
-            watermark = "DRAFT"
-        else:
-            watermark = "%s DRAFT" % releases[rel_index + 1].upper()
-
-# -- Options for sphinxmark -----------------------------------------------
-sphinxmark_enable = True
-sphinxmark_div = 'docs-body'
-sphinxmark_image = 'text'
-sphinxmark_text = watermark
-sphinxmark_text_rotation = 0
-sphinxmark_text_spacing = 300
-sphinxmark_text_color = (255, 0, 0)
-sphinxmark_text_size = 120

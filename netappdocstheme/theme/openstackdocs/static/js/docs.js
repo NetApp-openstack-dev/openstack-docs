@@ -103,7 +103,7 @@ $('div.deprecated > p').prepend('<div class="fa fa-fw fa-minus-circle">&nbsp;</d
 
 // Gives the log a bug icon the information it needs to generate the bug in
 // the specified github project.
-function logABug(bugTitle, bugProject, fieldComment, fieldTags) {
+function logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark) {
 
     var lineFeed = "%0A";
 
@@ -129,12 +129,14 @@ function logABug(bugTitle, bugProject, fieldComment, fieldTags) {
     // Example:
     // https://github.com/NetApp-openstack-dev/openstack-docs/issues/new?title=xyzzy&body=bar
     var urlBase = "https://github.com/" + bugProject + "/issues/new?title=";
-    var currentURL = "URL: " + window.location.href;
+    var currentRelease = "Filed against: " + watermark;
+    var currentURL = "Current URL: " + window.location.href;
     var bugLink = urlBase  + encodeURIComponent(bugTitle) +
         "&body=" + lineFeed + lineFeed +  lineFeed +
         bugChecklist + lineFeed + "-----------------------------------" +
         lineFeed + fieldComment +
-        lineFeed + currentURL + labels;
+        lineFeed + currentURL +
+        lineFeed + currentRelease + labels;
     document.getElementById("logABugLink1").href=bugLink;
     document.getElementById("logABugLink2").href=bugLink;
     document.getElementById("logABugLink3").href=bugLink;
