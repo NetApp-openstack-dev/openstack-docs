@@ -10,6 +10,6 @@ Shared Filesystems Service (Manila)
    manila/section_manila-key-concepts.rst
    manila/section_manila-processes.rst
    manila/section_manila-api-overview.rst
-   manila/section_manila-deployment-choices.rst
-   manila/section_manila-configuration.rst
-   manila/section_manila-examples.rst
+   manila/ch_manila-deployment-choices.rst
+   manila/ch_manila-configuration.rst
+   manila/ch_manila-examples.rst

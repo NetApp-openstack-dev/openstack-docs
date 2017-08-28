@@ -2,7 +2,7 @@ Configuration
 =============
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    configuration/section_manila-conf.rst
    configuration/section_network-plugins.rst

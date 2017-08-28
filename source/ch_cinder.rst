@@ -8,6 +8,6 @@ Block Storage Service (Cinder)
    cinder/section_cinder-key-concepts.rst
    cinder/section_cinder-processes.rst
    cinder/section_cinder-api-overview.rst
-   cinder/section_cinder-deployment-choices.rst
-   cinder/section_cinder-configuration.rst
-   cinder/section_cinder-examples.rst
+   cinder/ch_cinder-deployment-choices.rst
+   cinder/ch_cinder-configuration.rst
+   cinder/ch_cinder-examples.rst

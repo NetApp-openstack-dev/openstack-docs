@@ -1,7 +1,7 @@
 .. _shares-conf:
 
 Sample nfs.shares file
-----------------------
+======================
 
 This section provides an example Cinder configuration file
 (``nfs.shares``) that contains four pools (known as flexvols within ONTAP)

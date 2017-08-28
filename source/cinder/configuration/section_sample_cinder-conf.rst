@@ -1,7 +1,7 @@
 .. _cinder-conf:
 
 Sample cinder.conf
-----------------------
+==================
 
 This section provides an example Cinder configuration file
 (``cinder.conf``) that contains three backends - one for clustered Data
