@@ -65,9 +65,9 @@ copyright = u'2017, NetApp'
 # built documents.
 #
 # The short X.Y version.
-version = '0.1'
+version = '2017.2'
 # The full version, including alpha/beta/rc tags.
-release = '0.1'
+release = '2017.2'
 
 # A few variables have to be set for the log-a-bug feature.
 #   giturl: The location of conf.py on Git. Must be set manually.
