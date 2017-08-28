@@ -9,12 +9,13 @@ Deployment and Operations Guide
    ch_openstack-overview.rst
    ch_netapp-storage.rst
 
-   Block Storage (Cinder) <ch_cinder.rst>
+   Installing OpenStack <appendices/appendix_packaging.rst>
    Image Service (Glance) <ch_glance-image-service.rst>
-   Shared Filesystems (Manila) <ch_manila.rst>
    Compute Service (Nova) <ch_nova.rst>
+   Block Storage (Cinder) <ch_cinder.rst>
+   Shared Filesystems (Manila) <ch_manila.rst>
    Object Storage (Swift) <ch_swift.rst>
-   ch_operations.rst
 
-   appendices/appendix_packaging.rst
-   appendices/appendix_debug.rst
+   Day two operations <ch_operations.rst>
+   Troubleshooting OpenStack <appendices/appendix_debug.rst>
+
