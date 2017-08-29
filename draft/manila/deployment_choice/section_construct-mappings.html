@@ -128,18 +128,30 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-08-29 18:16</div>
+            <div class="docs-updated">updated: 2017-08-29 18:18</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="docs-top-contents">
+
+<h5><a href="../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Construct Mappings between Manila and Clustered Data ONTAP</a><ul>
+<li><a class="reference internal" href="#manila-backends-and-clustered-data-ontap">Manila backends and Clustered Data ONTAP</a></li>
+<li><a class="reference internal" href="#manila-shares-and-flexvol-volumes">Manila shares and FlexVol volumes</a></li>
+<li><a class="reference internal" href="#manila-scheduling-and-resource-pool-selection">Manila scheduling and resource pool selection</a></li>
+<li><a class="reference internal" href="#manila-snapshots-versus-netapp-snapshots">Manila snapshots versus NetApp Snapshots</a></li>
+</ul>
+</li>
+</ul>
 
               </div>
               <div class="docs-body">
 
   <div class="section" id="construct-mappings-between-manila-and-clustered-data-ontap">
 <h1>Construct Mappings between Manila and Clustered Data ONTAP<a class="headerlink" href="#construct-mappings-between-manila-and-clustered-data-ontap" title="Permalink to this headline">¶</a></h1>
-<p><strong>Manila backends and Clustered Data ONTAP</strong></p>
+<div class="section" id="manila-backends-and-clustered-data-ontap">
+<h2>Manila backends and Clustered Data ONTAP<a class="headerlink" href="#manila-backends-and-clustered-data-ontap" title="Permalink to this headline">¶</a></h2>
 <p>Storage Virtual Machines (SVMs, formerly known as Vservers) contain one
 or more FlexVol volumes and one or more LIFs through which they serve
 data to clients.</p>
@@ -153,14 +165,58 @@ cluster. However, the shares and LIFs are exclusive to the SVM. Multiple
 SVMs can coexist in a single cluster without being bound to any node in
 a cluster. However, they are bound to the physical cluster on which they
 exist.</p>
-<p><strong>Manila shares and FlexVol volumes</strong></p>
+</div>
+<div class="section" id="manila-shares-and-flexvol-volumes">
+<h2>Manila shares and FlexVol volumes<a class="headerlink" href="#manila-shares-and-flexvol-volumes" title="Permalink to this headline">¶</a></h2>
 <p>Data ONTAP FlexVol volumes (commonly referred to as volumes) and
 OpenStack File Share Storage shares (commonly referred to as Manila
 shares) are semantically analogous. A FlexVol volume is a container of
 logical data elements (for example: files, Snapshot copies, clones,
 LUNs, et cetera) that is abstracted from physical elements (for example:
 individual disks, and RAID groups).</p>
-<p><strong>Manila snapshots versus NetApp Snapshots</strong></p>
+</div>
+<div class="section" id="manila-scheduling-and-resource-pool-selection">
+<span id="manila-scheduling-and-resource-selection"></span><h2>Manila scheduling and resource pool selection<a class="headerlink" href="#manila-scheduling-and-resource-pool-selection" title="Permalink to this headline">¶</a></h2>
+<p>When Manila shares are created, the Manila scheduler selects a resource
+pool from the available storage pools: see “<a class="reference internal" href="../section_manila-key-concepts.html#manila-storage-pools"><span class="std std-ref">Storage Pools</span></a>”
+for an overview.</p>
+<p>Beginning with Kilo, each of NetApp’s Manila drivers report per-pool
+capacity to the scheduler.  When a new share is provisioned, the scheduler
+capacity filter eliminates too-small pools from consideration.  Similarly,
+the scheduler’s capability, availability zone and other filters narrow down
+the list of potential backends that may receive a new share based on the share
+type and other share characteristics.</p>
+<p>The scheduler also has an evaluator filter that evaluates an optional arithmetic
+expression to determine whether a pool may contain a new share.  Beginning
+with Ocata, the Data ONTAP drivers report per-pool controller utilization values
+to the scheduler, along with a “filter function” that prevents new shares from
+being created on pools that are overutilized.  Controller utilization is computed
+by the drivers as a function of CPU utilization and other internal I/O metrics.
+The default filter function supplied by the Data ONTAP drivers is
+“capabilities.utilization &lt; 70” A utilization of 70% utilization is a good starting
+point beyond which I/O throughput and latency may be adversely affected by
+additional Manila shares.  The filter function may be overridden on a per-backend
+basis in the Manila configuration file.</p>
+<p>Each candidate pool that passes the filters is then considered by the scheduler’s
+weighers so that the optimum one is chosen for a new share.  As stated above, as
+of Kilo, the Manila scheduler has per-pool capacity information, and the scheduler
+capacity weigher may be configured to spread new shares among backends uniformly
+or to fill one backend before using another.</p>
+<p>Beginning with Ocata, the Data ONTAP drivers report per-pool controller utilization values
+to the scheduler, along with a “goodness function” that allows the scheduler to prioritize
+backends that are less utilized.  Controller utilization is reported as a percentage,
+and the goodness function is expected to yield a value between 0 and 100, with 100
+representing maximum “goodness”.  The default goodness function supplied by the Data ONTAP
+drivers is “100 - capabilities.utilization”, and it may be overridden on a per-backend
+basis in the Manila configuration file.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The controller utilization values used by the filter and goodness functions are only
+available when cluster-scoped credentials are supplied in the Manila configuration file.</p>
+</div>
+</div>
+<div class="section" id="manila-snapshots-versus-netapp-snapshots">
+<h2>Manila snapshots versus NetApp Snapshots<a class="headerlink" href="#manila-snapshots-versus-netapp-snapshots" title="Permalink to this headline">¶</a></h2>
 <p>A NetApp Snapshot copy is a point-in-time file system image.
 Low-overhead NetApp Snapshot copies are made possible by the unique
 features of the WAFL storage technology that is part of Data ONTAP. The
@@ -181,6 +237,7 @@ are directly leveraged within an Manila context, as a user of Manila
 requests a snapshot be taken of a particular Manila share.</p>
 </div>
 </div>
+</div>
 
 
               </div>
@@ -197,7 +254,7 @@ requests a snapshot be taken of a particular Manila share.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-08-29 18:16</div>
+            <div class="docs-updated">updated: 2017-08-29 18:18</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -331,7 +388,7 @@ requests a snapshot be taken of a particular Manila share.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 515cde6af1753aac0e22814a083bba47ed6bb058";
+    var gitSha = "SHA: 9d781bf9b377ad55161c2a77fa254fe6f13164eb";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Construct Mappings between Manila and Clustered Data ONTAP in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -342,7 +399,7 @@ requests a snapshot be taken of a particular Manila share.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-08-29 18:16";
+    var buildstring = "Release: 2017.2 on 2017-08-29 18:18";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
