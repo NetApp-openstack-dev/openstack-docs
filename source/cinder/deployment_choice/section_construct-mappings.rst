@@ -77,9 +77,9 @@ Cinder Scheduling and Resource Pool Selection
 When Cinder volumes are created, the Cinder scheduler selects a resource
 pool from the available storage pools: see
 :ref:`storage-pools` for an overview.
-:ref:`Table 4.9, “Behavioral Differences in Cinder Volume Placement”<cinder-theory-table-4.9>` details the behavioral
-changes in NetApp's Cinder drivers when scheduling the provisioning of
-new Cinder volumes.
+:ref:`Table 4.9, “Behavioral Differences in Cinder Volume Placement”<cinder-theory-table-4.9>`
+details the behavioral changes in NetApp's Cinder drivers when scheduling
+the provisioning of new Cinder volumes.
 
 Beginning with Juno, each of NetApp's Cinder drivers report per-pool
 capacity to the scheduler. When a new volume is provisioned, the
