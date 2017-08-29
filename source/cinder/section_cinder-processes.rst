@@ -200,4 +200,4 @@ requests that a Cinder backup be restored.
    process via AMQP queue.
 
 9. ``cinder-api`` process reads response message from ``cinder-backup``
-   from queue and passes results in RESTful response to the client.
+   from queue and passes results in RESTfuL response to the client.
