@@ -49,6 +49,9 @@ Manila driver).
    ``enabled_share_backends`` option. Refer to the section called
    ":ref:`manila-conf`" for an example of the use of this option.
 
+
+.. _manila_storage_pools:
+
 Storage Pools
 -------------
 
@@ -64,6 +67,8 @@ scheduling logic is performed completely within the Manila scheduler.
 
    For NetApp's Manila drivers, a Manila storage pool is an aggregate
    defined within Data ONTAP.
+
+.. _manila_driver:
 
 Driver
 ------

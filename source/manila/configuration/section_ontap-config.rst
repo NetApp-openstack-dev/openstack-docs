@@ -1,6 +1,8 @@
 Data ONTAP Configuration
 ========================
 
+.. _manila_data_ontap_prerequisites:
+
 Data ONTAP Prerequisites
 ------------------------
 
@@ -20,6 +22,8 @@ The prerequisites for Data ONTAP are:
    -  SnapMirror (if share replication is to be enabled)
 
    -  FlexClone
+
+.. _storage_virtual_machine_considerations:
 
 Storage Virtual Machine Considerations
 --------------------------------------
