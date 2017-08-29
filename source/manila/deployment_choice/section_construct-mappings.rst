@@ -51,12 +51,11 @@ expression to determine whether a pool may contain a new share.  Beginning
 with Ocata, the Data ONTAP drivers report per-pool controller utilization values
 to the scheduler, along with a "filter function" that prevents new shares from
 being created on pools that are overutilized.  Controller utilization is computed
-by the drivers as a function of CPU utilization and other internal I/O metrics. 
-The default filter function supplied by the Data ONTAP drivers is 
-"capabilities.utilization < 70" A utilization of 70% utilization is a good starting
-point beyond which I/O throughput and latency may be adversely affected by 
-additional Manila shares.  The filter function may be overridden on a per-backend 
-basis in the Manila configuration file.
+by the drivers as a function of CPU utilization and other internal I/O metrics.
+The default filter function supplied by the Data ONTAP drivers is
+"capabilities.utilization < 70", beyond which point latency may be adversely
+affected by additional Manila shares.  The filter function may be overridden
+on a per-backend basis in the Manila configuration file.
 
 Each candidate pool that passes the filters is then considered by the scheduler's
 weighers so that the optimum one is chosen for a new share.  As stated above, as
