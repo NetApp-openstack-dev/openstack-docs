@@ -9,7 +9,7 @@ Manila Network Plugins: Configurable Neutron Network Plugin
    Please keep in mind that provider networks are created by OpenStack
    administrators. For each tenant created share network, the NetApp
    driver will create a new Vserver with the segmentation protocol, IP
-   address, netmask, protocol, and gateway obtained from Neutron. The
+   address, netmask, protocol, MTU and gateway obtained from Neutron. The
    NetApp driver only supports provisioning Vservers on non-segmented
    (FLAT) networks and VLAN networks.
 
