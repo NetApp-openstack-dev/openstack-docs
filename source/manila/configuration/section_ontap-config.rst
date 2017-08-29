@@ -33,7 +33,10 @@ considerations:
 
 2. The SVM referenced in the ``netapp_vserver`` option must be created
    (and associated with aggregates) before it can be utilized as a
-   provisioning target for Manila.
+   provisioning target for Manila.  If cluster-level credentials have 
+   not been specified in the configuration file, ensure that no root 
+   aggregates are associated with the SVM, since the driver will not 
+   be able to guarantee that automatically.
 
 3. Data LIFs must be created and assigned to SVMs before configuring
    Manila.
