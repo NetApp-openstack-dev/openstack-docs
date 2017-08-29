@@ -77,9 +77,9 @@ Cinder Scheduling and Resource Pool Selection
 When Cinder volumes are created, the Cinder scheduler selects a resource
 pool from the available storage pools: see
 :ref:`storage-pools` for an overview.
-:ref:`Table 4.9, “Behavioral Differences in Cinder Volume Placement”<cinder-theory-table-4.9>` details the behavioral
-changes in NetApp's Cinder drivers when scheduling the provisioning of
-new Cinder volumes.
+:ref:`Table 4.9, “Behavioral Differences in Cinder Volume Placement”
+<cinder-theory-table-4.9>` details the behavioral changes in NetApp's
+Cinder drivers when scheduling the provisioning of new Cinder volumes.
 
 Beginning with Juno, each of NetApp's Cinder drivers report per-pool
 capacity to the scheduler. When a new volume is provisioned, the
@@ -96,7 +96,7 @@ function" that prevents new volumes from being created on pools that are
 overutilized. Controller utilization is computed by the drivers as a
 function of CPU utilization and other internal I/O metrics. The default
 filter function supplied by the Data ONTAP drivers is
-"capabilities.utilization < 70"; 70% utilization is a good starting
+"capabilities.utilization < 70". A utilization of 70% is a good starting
 point beyond which I/O throughput and latency may be adversely affected
 by additional Cinder volumes. The filter function may be overridden on a
 per-backend basis in the Cinder configuration file. See `Configure and
@@ -130,8 +130,15 @@ Beginning with Newton, additional information such as aggregate name and
 aggregate space utilization is reported to the scheduler and may be used
 in filter and weigher expressions. For example, to keep from filling an
 aggregate completely, a filter expression of
-"capabilities.aggregate\_used\_percent < 80" might be used.
+"capabilities.aggregate_used_percent < 80" might be used.
 
+Beginning with Ocata, additional information such as per-pool
+consumption of the Data ONTAP shared block limit is reported to the
+scheduler and may be used in filter and weigher expressions.  For
+example, to steer new Cinder volumes away from a FlexVol nearing its
+shared block limit, a filter expression of
+"capabilities.netapp_dedupe_used_percent < 90" might be used.
+ 
 .. _cinder-theory-table-4.9:
 
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
