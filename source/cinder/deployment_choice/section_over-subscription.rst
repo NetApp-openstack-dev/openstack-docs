@@ -1,5 +1,5 @@
-Over-Subscription and Thin-Provisioning
-=======================================
+Deployment Choices: Over-Subscription and Thin-Provisioning
+===========================================================
 
 When a thick-provisioned Cinder volume is created, an amount of space is
 reserved from the backend storage system equal to the size of the
@@ -26,7 +26,7 @@ planning and reduces waste of storage capacity. The storage
 administrator is able to simply grow storage pools as needed to fill
 capacity requirements.
 
-As of the Liberty release, all NetApp drivers conform to the standard
+All NetApp drivers conform to the standard
 Cinder scheduler-based over-subscription framework as described
 `here <http://docs.openstack.org/admin-guide-cloud/blockstorage_over_subscription.html>`__,
 in which the ``max_over_subscription_ratio`` and ``reserved_percentage``
@@ -36,7 +36,7 @@ Cinder scheduler only allows over-subscription of a storage pool if the
 pool reports the *thin-provisioning-support* capability, as described
 for each type of NetApp platform below.
 
-The default ``max_over_subscription_ratio`` for all drivers is 20.0, and
+The default ``max_over_subscription_ratio`` for all drivers is 20 and
 the default ``reserved_percentage`` is 0. With these values and
 *thin-provisioning-support* capability on (see below), if there is 5TB
 of actual free space currently available in the backing store for a

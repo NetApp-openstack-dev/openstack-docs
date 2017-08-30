@@ -23,7 +23,7 @@ solution for block storage provisioning and lifecycle management.
    the I/O (data) path between the hypervisor and the storage
    controller, as depicted in Figure 4.1 below.
 
-.. figure:: ../images/cinder_nova_architecture.png
+.. figure:: ../../images/cinder_nova_architecture.png
    :alt: Cinder and Nova Logical Architecture
    :scale: 100
 

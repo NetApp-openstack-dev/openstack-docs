@@ -1,5 +1,5 @@
-Using Cinder Volume Types to Create a Storage Service Catalog
--------------------------------------------------------------
+Theory of Operation: Storage Service Catalog and Cinder Volume Types
+====================================================================
 
 The Storage Service Catalog (SSC) is a concept that describes a set of
 capabilities that enables efficient, repeated, and consistent use and
