@@ -1,3 +1,5 @@
+.. _santricity_web_services_proxy:
+
 SANtricity Web Services Proxy
 =============================
 

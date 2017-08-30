@@ -7,4 +7,5 @@ NetApp Systems and Software
    netapp-storage/section_data-ontap.rst
    netapp-storage/section_fas-systems.rst
    netapp-storage/section_e-ef-series.rst
+   netapp-storage/section_solidfire-series.rst
    netapp-storage/section_storage-grid.rst
