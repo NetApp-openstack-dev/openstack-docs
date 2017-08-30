@@ -20,7 +20,7 @@ E-Series storage system. A common deployment topology with Cinder, Nova,
 and an E-Series controller with the SANtricity Web Services Proxy can be
 seen below in Figure 4.7, “Cinder & E-Series Deployment Topology”.
 
-.. figure:: ../../images/cinder_eseries_deployment_topology.png
+.. figure:: ../../../../images/cinder_eseries_deployment_topology.png
    :alt: Cinder & E-Series Deployment Topology
    :scale: 50
 
@@ -184,7 +184,7 @@ E-Series storage system. A common deployment topology with Cinder, Nova,
 and an E-Series controller with the SANtricity Web Services Proxy can be
 seen below in Figure 4.8, “Cinder & E-Series Deployment Topology”.
 
-.. figure:: ../../images/cinder_eseries_fc_deployment_topology.png
+.. figure:: ../../../../images/cinder_eseries_fc_deployment_topology.png
    :alt: Cinder & E-Series Deployment Topology
    :scale: 100
 
@@ -244,9 +244,8 @@ should be added to the Cinder configuration file (``cinder.conf``)::
 .. important::
 
    In order for Fibre Channel to be set up correctly, you also need to
-   set up Fibre Channel zoning for your backends. See
-   `??? <#cinder.fc_zoning>`__ for more details on configuring Fibre
-   Channel zoning.
+   set up Fibre Channel zoning for your backends. See ":ref:`fc-switch`"
+   for more details on configuring Fibre Channel zoning.
 
 .. important::
 

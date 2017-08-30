@@ -1,5 +1,23 @@
+E-Series Configuration
+======================
+
+E-Series Prerequisites
+----------------------
+
+The prerequisites for NetApp E-Series are:
+
+-  The driver requires the use of the NetApp SANtricity Web Services.
+   Please refer to the table below for the required Web Services Proxy
+   version.
+
+-  The storage controller should have a firmware version installed that
+   is supported by the NetApp SANtricity Web Services Proxy. Refer to
+   the proxy documentation for the most recent list of firmware versions
+   that are supported.
+
+
 SANtricity Web Services Proxy
-=============================
+-----------------------------
 
 The NetApp SANtricity Web Services Proxy provides access through
 standard HTTPS mechanisms to configuring management services for
@@ -43,3 +61,32 @@ intermediated mode.
    Web Services Proxy in the *intermediated* mode is currently
    required. The SANtricity Web Services Proxy may be deployed in a
    highly-available topology using an active/passive strategy.
+
+Storage Networking Considerations
+---------------------------------
+
+1. Ensure there is segmented network connectivity between the hypervisor
+   nodes and the network interfaces present on the E-Series controller.
+
+2. Ensure there is network connectivity between the ``cinder-volume``
+   nodes and the interfaces present on the node running the NetApp
+   SANtricity Web Services Proxy software.
+
+.. _nova-live:
+
+Nova Live Migration of Instances with Attached E-Series Volumes
+---------------------------------------------------------------
+
+Live migration of Nova instances with attached volumes hosted on
+E-Series are disabled by default. Setting ``netapp_enable_multiattach``
+to true will allow this operation, however, it is facilitated by mapping
+to a host group on the E-Series array, and comes with some limitations:
+
+-  There is a maximum of 256 Cinder volumes for this backend.
+
+-  E-Series hosts representing Nova Compute nodes must not be assigned
+   to a foreign E-Series host group.
+
+Irrespective of this option, live migrations between hosts may fail due
+to 'LUN id' collisions where the immutable attachment identifier of the
+attached volume is already in use on the destination host.

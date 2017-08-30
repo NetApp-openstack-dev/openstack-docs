@@ -1,5 +1,5 @@
-Construct Mappings between Cinder and Data ONTAP
-================================================
+Theory of Operations: Mapping NetApp to OpenStack terminology
+=============================================================
 
 Cinder Backends and Storage Virtual Machines
 --------------------------------------------

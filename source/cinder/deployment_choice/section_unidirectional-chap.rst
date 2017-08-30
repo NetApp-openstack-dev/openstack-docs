@@ -1,5 +1,5 @@
-Unidirectional CHAP Authentication
-==================================
+Deployment Choices: Unidirectional CHAP Authentication
+======================================================
 
 The Challenge Handshake Authentication Protocol (CHAP) enables
 authenticated communication between iSCSI initiators and targets. During
