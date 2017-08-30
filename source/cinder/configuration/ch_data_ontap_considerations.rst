@@ -1,5 +1,5 @@
-Data ONTAP Configuration
-==========================
+ONTAP Configuration
+===================
 
 .. toctree::
    :maxdepth: 1
