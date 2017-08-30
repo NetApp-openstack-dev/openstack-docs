@@ -1,7 +1,7 @@
 .. _fc-switch:
 
-Fibre Channel Switch Fabric with Cinder
-=======================================
+Fibre Channel & cinder.conf
+===========================
 
 Cinder includes a Fibre Channel zone manager facility for configuring
 zoning in Fibre Channel fabrics, specifically supporting Cisco and

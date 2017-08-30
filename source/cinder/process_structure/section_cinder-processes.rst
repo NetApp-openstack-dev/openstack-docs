@@ -24,7 +24,7 @@ There are four processes that make up the Cinder service:
    Storage Service (Swift)) when a client requests a volume backup or
    restore operation.
 
-.. figure:: ../images/cinder_process_layout.png
+.. figure:: ../../images/cinder_process_layout.png
    :alt: Cinder Processes Concept Diagram
    :scale: 80
 
@@ -36,7 +36,7 @@ Volume Creation Workflow
 The following section walks through the steps that occur when a user
 requests the creation of a new volume from Cinder.
 
-.. figure:: ../images/cinder_create_volume_process.png
+.. figure:: ../../images/cinder_create_volume_process.png
    :alt: Cinder Workflow - Volume Creation
    :scale: 80
 
@@ -78,7 +78,7 @@ Volume Attach Workflow
 The following section walks through the steps that occur when a user
 requests that a Cinder volume be attached to a Nova compute instance.
 
-.. figure:: ../images/nova_volume_attach_process.png
+.. figure:: ../../images/nova_volume_attach_process.png
    :alt: Cinder & Nova Workflow - Volume Attach
    :scale: 80
 
@@ -120,7 +120,7 @@ Volume Backup Workflow
 The following section walks through the steps that occur when a user
 requests that a Cinder volume be backed up.
 
-.. figure:: ../images/cinder_backup_process.png
+.. figure:: ../../images/cinder_backup_process.png
    :alt: Cinder Backup Workflow
    :scale: 80
 
@@ -163,7 +163,7 @@ Volume Restore Workflow
 The following section walks through the steps that occur when a user
 requests that a Cinder backup be restored.
 
-.. figure:: ../images/cinder_backup_process.png
+.. figure:: ../../images/cinder_backup_process.png
    :alt: Cinder Restore Workflow
    :scale: 80
 
