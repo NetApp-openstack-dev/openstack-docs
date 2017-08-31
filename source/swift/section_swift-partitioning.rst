@@ -21,25 +21,25 @@ the following example:
 
 ::
 
-    root@stlrx300s7-102:~# ls -l /dev/mapper
+    # ls -l /dev/mapper
     total 0
     lrwxrwxrwx 1 root root       7 May  5 15:20 360080e50003220a80000017353450e3f -> ../dm-0
     lrwxrwxrwx 1 root root       7 May  5 15:20 360080e50003222300000019153450e18 -> ../dm-1
     lrwxrwxrwx 1 root root       7 May  5 15:20 360080e50003222300000019053450e18 -> ../dm-2
     crw------- 1 root root 10, 236 May  5 15:20 control
 
-Now we use the ``parted`` command to partition the mapped devices:
+Get into the /dev/mapper folder and use the ``parted`` command to partition the mapped devices:
 
 ::
 
-    root@stlrx300s7-102:/dev/mapper# luns=`ls|grep -v control`
-    root@stlrx300s7-102:/dev/mapper# for i in $luns
+    # luns=`ls|grep -v control`
+    # for i in $luns
     > do
     > parted -a optimal -s --  /dev/mapper/$i mklabel gpt mkpart primary xfs 0% 100%
     > done
-    root@stlrx300s7-102:/dev/mapper# ls -l /dev/dm-
+    # ls -l /dev/dm-
     dm-0  dm-1  dm-2  dm-3  dm-4  dm-5  dm-6  dm-7  dm-8
-    root@stlrx300s7-102:/dev/mapper# ls -l /dev/mapper
+    # ls -l /dev/mapper
     total 0
     lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003220a80000017353450e3f -> ../dm-0
     lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003220a80000017353450e3f1 -> ../dm-3

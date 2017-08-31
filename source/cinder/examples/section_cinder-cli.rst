@@ -12,23 +12,23 @@ has been properly initialized by Cinder.
 
 ::
 
-    vagrant@precise64:~/devstack$ cinder service-list
-    +------------------+--------------------------+------+---------+-------+------------------------+-----------------+
-    |      Binary      |            Host          | Zone |  Status | State |         Updated_at     | Disabled Reason |
-    +------------------+--------------------------+------+---------+-------+------------------------+-----------------+
-    | cinder-scheduler |         precise64        | nova | enabled |   up  | 2014-05-20T17:14:12.00 |       None      |
-    |  cinder-volume   |   precise64@cdot-iscsi   | nova | enabled |   up  | 2014-05-20T17:14:10.00 |       None      |
-    |  cinder-volume   |    precise64@cdot-nfs    | nova | enabled |   up  | 2014-05-20T17:14:11.00 |       None      |
-    |  cinder-volume   | precise64@eseries-iscsi  | nova | enabled |   up  | 2014-05-20T17:14:06.00 |       None      |
-    +------------------+--------------------------+------+---------+-------+------------------------+-----------------+
+    stack@ostk-controller:~/$ cinder service-list
+    +------------------+--------------------------------+------+---------+-------+------------------------+-----------------+
+    |      Binary      |            Host                | Zone |  Status | State |         Updated_at     | Disabled Reason |
+    +------------------+--------------------------------+------+---------+-------+------------------------+-----------------+
+    | cinder-scheduler |         ostk-controller        | nova | enabled |   up  | 2014-05-20T17:14:12.00 |       None      |
+    |  cinder-volume   |   ostk-controller@cdot-iscsi   | nova | enabled |   up  | 2014-05-20T17:14:10.00 |       None      |
+    |  cinder-volume   |    ostk-controller@cdot-nfs    | nova | enabled |   up  | 2014-05-20T17:14:11.00 |       None      |
+    |  cinder-volume   | ostk-controller@eseries-iscsi  | nova | enabled |   up  | 2014-05-20T17:14:06.00 |       None      |
+    +------------------+--------------------------------+------+---------+-------+------------------------+-----------------+
 
--  ``precise64@cdot-iscsi`` is the backend defined by the configuration
+-  ``ostk-controller@cdot-iscsi`` is the backend defined by the configuration
    stanza ``[cdot-iscsi]``.
 
--  ``precise64@cdot-nfs`` is the backend defined by the configuration
+-  ``ostk-controller@cdot-nfs`` is the backend defined by the configuration
    stanza ``[cdot-nfs]``.
 
--  ``precise64@eseries-iscsi`` is the backend defined by the
+-  ``ostk-controller@eseries-iscsi`` is the backend defined by the
    configuration stanza ``[eseries-iscsi]``.
 
 .. _create-volume:
@@ -73,49 +73,49 @@ NetApp specific extra specs described in
 
 ::
 
-    vagrant@precise64:~/devstack$ cinder type-create iscsi
+    $ cinder type-create iscsi
     +--------------------------------------+-------+
     |                  ID                  |  Name |
     +--------------------------------------+-------+
     | 46cecec0-a040-476c-9475-036ca5577e6a | iscsi |
     +--------------------------------------+-------+
 
-    vagrant@precise64:~/devstack$ cinder type-create nfs
+    $ cinder type-create nfs
     +--------------------------------------+------+
     |                  ID                  | Name |
     +--------------------------------------+------+
     | 7564ec5c-a81b-4c62-8376-fdcab62037a2 | nfs  |
     +--------------------------------------+------+
 
-    vagrant@precise64:~/devstack$ cinder type-create gold
+    $ cinder type-create gold
     +--------------------------------------+------+
     |                  ID                  | Name |
     +--------------------------------------+------+
     | 0ac5c001-d5fa-4fce-a9e3-e2cce7460027 | gold |
     +--------------------------------------+------+
 
-    vagrant@precise64:~/devstack$ cinder type-create silver
+    $ cinder type-create silver
     +--------------------------------------+--------+
     |                  ID                  |  Name  |
     +--------------------------------------+--------+
     | f820211a-ee1c-47ff-8f70-2be45112826d | silver |
     +--------------------------------------+--------+
 
-    vagrant@precise64:~/devstack$ cinder type-create bronze
+    $ cinder type-create bronze
     +--------------------------------------+--------+
     |                  ID                  |  Name  |
     +--------------------------------------+--------+
     | ae110bfc-0f5a-4e93-abe1-1a31856c0ec7 | bronze |
     +--------------------------------------+--------+
 
-    vagrant@precise64:~/devstack$ cinder type-create analytics
+    $ cinder type-create analytics
     +--------------------------------------+-----------+
     |                  ID                  |    Name   |
     +--------------------------------------+-----------+
     | 66459c78-5cb5-4a15-a476-f1138a4022bc | analytics |
     +--------------------------------------+-----------+
 
-    vagrant@precise64:~/devstack$ cinder type-create encrypted
+    $ cinder type-create encrypted
     +--------------------------------------+-----------+
     |                  ID                  |    Name   |
     +--------------------------------------+-----------+
@@ -124,16 +124,16 @@ NetApp specific extra specs described in
 
 ::
 
-    vagrant@precise64:~/devstack$ cinder type-key iscsi set storage_protocol=iSCSI
-    vagrant@precise64:~/devstack$ cinder type-key nfs set storage_protocol=nfs
-    vagrant@precise64:~/devstack$ cinder type-key gold set netapp_mirrored=true
-    vagrant@precise64:~/devstack$ cinder type-key gold set netapp_disk_type=SSD
-    vagrant@precise64:~/devstack$ cinder type-key gold set netapp_hybrid_aggregate="<is> False"
-    vagrant@precise64:~/devstack$ cinder type-key silver set netapp_dedup=true
-    vagrant@precise64:~/devstack$ cinder type-key bronze set netapp_compression=true
-    vagrant@precise64:~/devstack$ cinder type-key analytics set volume_backend_name=eseries-iscsi
-    vagrant@precise64:~/devstack$ cinder type-key encrypted set netapp_flexvol_encryption=true
-    vagrant@precise64:~/devstack$ cinder extra-specs-list
+    $ cinder type-key iscsi set storage_protocol=iSCSI
+    $ cinder type-key nfs set storage_protocol=nfs
+    $ cinder type-key gold set netapp_mirrored=true
+    $ cinder type-key gold set netapp_disk_type=SSD
+    $ cinder type-key gold set netapp_hybrid_aggregate="<is> False"
+    $ cinder type-key silver set netapp_dedup=true
+    $ cinder type-key bronze set netapp_compression=true
+    $ cinder type-key analytics set volume_backend_name=eseries-iscsi
+    $ cinder type-key encrypted set netapp_flexvol_encryption=true
+    $ cinder extra-specs-list
     +--------------------------------------+-----------+--------------------------------------------+
     |                  ID                  |    Name   |                extra_specs                 |
     +--------------------------------------+-----------+--------------------------------------------+
@@ -156,7 +156,7 @@ previously defined volume types.
 
 ::
 
-    vagrant@precise64:~/devstack$ cinder create --display-name myGold --volume-type gold 1
+    $ cinder create --display-name myGold --volume-type gold 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
     +--------------------------------+--------------------------------------+
@@ -181,7 +181,7 @@ previously defined volume types.
     |          volume_type           |                 gold                 |
     +--------------------------------+--------------------------------------+
 
-    vagrant@precise64:~/devstack$ cinder create --display-name mySilver --volume-type silver 1
+    $ cinder create --display-name mySilver --volume-type silver 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
     +--------------------------------+--------------------------------------+
@@ -206,7 +206,7 @@ previously defined volume types.
     |          volume_type           |                silver                |
     +--------------------------------+--------------------------------------+
 
-    vagrant@precise64:~/devstack$ cinder create --display-name myBronze --volume-type bronze 1
+    $ cinder create --display-name myBronze --volume-type bronze 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
     +--------------------------------+--------------------------------------+
@@ -231,7 +231,7 @@ previously defined volume types.
     |          volume_type           |                bronze                |
     +--------------------------------+--------------------------------------+
 
-    vagrant@precise64:~/devstack$ cinder create --display-name myISCSI --volume-type iscsi 1
+    $ cinder create --display-name myISCSI --volume-type iscsi 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
     +--------------------------------+--------------------------------------+
@@ -256,7 +256,7 @@ previously defined volume types.
     |          volume_type           |                iscsi                 |
     +--------------------------------+--------------------------------------+
 
-    vagrant@precise64:~/devstack$ cinder create --display-name myNFS --volume-type nfs 1
+    $ cinder create --display-name myNFS --volume-type nfs 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
     +--------------------------------+--------------------------------------+
@@ -281,7 +281,7 @@ previously defined volume types.
     |          volume_type           |                 nfs                  |
     +--------------------------------+--------------------------------------+
 
-    vagrant@precise64:~/devstack$ cinder create --display-name myAnalytics --volume-type analytics 1
+    $ cinder create --display-name myAnalytics --volume-type analytics 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
     +--------------------------------+--------------------------------------+
@@ -306,7 +306,7 @@ previously defined volume types.
     |          volume_type           |              analytics               |
     +--------------------------------+--------------------------------------+
 
-    vagrant@precise64:/opt/stack/data/cinder$ cinder create --display-name myGenericVol 1
+    $ cinder create --display-name myGenericVol 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
     +--------------------------------+--------------------------------------+
@@ -333,7 +333,7 @@ previously defined volume types.
 
 ::
 
-    vagrant@precise64:/opt/stack/data/cinder$ cinder list
+    $ cinder list
     +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
     |                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
     +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
@@ -356,13 +356,13 @@ features enabled that matched the Cinder volume type definitions.
 
 ::
 
-    vagrant@precise64:~/devstack$ mount |grep cinder
+    $ mount |grep cinder
     10.63.40.153:/vol2_dedup on /opt/stack/data/cinder/mnt/6fbcc46d69a86a6be25f3df3e6ae55ba type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
     10.63.40.153:/vol3_compressed on /opt/stack/data/cinder/mnt/aac4e6312b50b1fd6ddaf25d8dec8aaa type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
     10.63.40.153:/vol4_mirrored on /opt/stack/data/cinder/mnt/89af08204a543dd0985fa11b16f3d22f type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
     10.63.40.153:/vol5_plain on /opt/stack/data/cinder/mnt/e15a92dcf98a7b3fdb3963e39ed0796f type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
-    vagrant@precise64:~/devstack$ cd /opt/stack/data/cinder/
-    vagrant@precise64:/opt/stack/data/cinder$ find . -name volume-\*
+    $ cd /opt/stack/data/cinder/
+    $ find . -name volume-\*
     ./mnt/89af08204a543dd0985fa11b16f3d22f/volume-3678281e-3924-4512-952a-5b89713fac4d [1]
     ./mnt/aac4e6312b50b1fd6ddaf25d8dec8aaa/volume-459b388f-ae1d-49bf-9c1d-3fe3b18afad3 [2]
     ./mnt/6fbcc46d69a86a6be25f3df3e6ae55ba/volume-6dd3e64d-ca02-4156-8532-24294db89329 [3]
