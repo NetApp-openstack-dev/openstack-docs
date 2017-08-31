@@ -10,12 +10,12 @@ properly initialized by Manila.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila service-list
+    stack@ostk-controller:~/$ manila service-list
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
     | Id | Binary           | Host                          | Zone | Status  | State | Updated_at                 |
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
-    | 1  | manila-scheduler | scspr0030615001               | nova | enabled | up    | 2015-03-25T12:25:12.000000 |
-    | 2  | manila-share     | scspr0030615001@cdotSingleSVM | nova | enabled | up    | 2015-03-25T12:25:15.000000 |
+    | 1  | manila-scheduler | ostk-controller               | nova | enabled | up    | 2015-03-25T12:25:12.000000 |
+    | 2  | manila-share     | ostk-controller@cdotSingleSVM | nova | enabled | up    | 2015-03-25T12:25:15.000000 |
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
 
 Creating and Defining Manila Share Types
@@ -41,19 +41,19 @@ specific extra specs described in
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila type-create general False
+    $ manila type-create general False
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | deadeebf-19a2-47b1-9d7f-1c3806cfcb72 | general | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
-    [stack@scspr0030615001 devstack]$ manila type-create flash False
+    $ manila type-create flash False
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | 37fb9f7e-4ffe-4900-8dba-c6d4251e588f | flash   | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
-    [stack@scspr0030615001 devstack]$ manila type-create archive False
+    $ manila type-create archive False
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
@@ -89,19 +89,19 @@ specific extra specs described in
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila type-key general set share_backend_name=cdotSingleSVM
-    [stack@scspr0030615001 devstack]$ manila type-key general set snapshot_support=True
-    [stack@scspr0030615001 devstack]$ manila type-key general set revert_to_snapshot_support=True
-    [stack@scspr0030615001 devstack]$ manila type-key general set create_share_from_snapshot_support=True
+    $ manila type-key general set share_backend_name=cdotSingleSVM
+    $ manila type-key general set snapshot_support=True
+    $ manila type-key general set revert_to_snapshot_support=True
+    $ manila type-key general set create_share_from_snapshot_support=True
 
-    [stack@scspr0030615001 devstack]$ manila type-key default set snapshot_support=False
+    $ manila type-key default set snapshot_support=False
 
-    [stack@scspr0030615001 devstack]$ manila type-key flash set netapp_disk_type=SSD
-    [stack@scspr0030615001 devstack]$ manila type-key flash set netapp_hybrid_aggregate="<is> False"
+    $ manila type-key flash set netapp_disk_type=SSD
+    $ manila type-key flash set netapp_hybrid_aggregate="<is> False"
 
-    [stack@scspr0030615001 devstack]$ manila type-key archive set thin_provisioning="<is> True" netapp_disk_type=SAS
+    $ manila type-key archive set thin_provisioning="<is> True" netapp_disk_type=SAS
 
-    [stack@scspr0030615001 devstack]$ manila extra-specs-list
+    $ manila extra-specs-list
     +--------------------------------------+---------+--------------------------------------------+
     | ID                                   | Name    | all_extra_specs                            |
     +--------------------------------------+---------+--------------------------------------------+
@@ -128,7 +128,7 @@ of the previously defined share types.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila create --name myDefault NFS 1
+    $ manila create --name myDefault NFS 1
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
@@ -151,7 +151,7 @@ of the previously defined share types.
     | metadata          | {}                                   |
     +-------------------+--------------------------------------+
 
-    [stack@scspr0030615001 devstack]$ manila create --name myGeneral --share-type general NFS 1
+    $ manila create --name myGeneral --share-type general NFS 1
     +-------------------+--------------------------------------------------------+
     | Property          | Value                                                  |
     +-------------------+--------------------------------------------------------+
@@ -176,7 +176,7 @@ of the previously defined share types.
     | metadata                            | {}                                   |
     +-------------------+--------------------------------------------------------+
 
-    [stack@scspr0030615001 devstack]$ manila create --name myFlash --share-type flash NFS 1
+    $ manila create --name myFlash --share-type flash NFS 1
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
@@ -198,7 +198,7 @@ of the previously defined share types.
     | metadata          | {}                                   |
     +-------------------+--------------------------------------+
 
-    [stack@scspr0030615001 devstack]$ manila create --name myArchive --share-type archive NFS 1
+    $ manila create --name myArchive --share-type archive NFS 1
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
@@ -222,7 +222,7 @@ of the previously defined share types.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila list
+    $ manila list
     +--------------------------------------+-----------+------+-------------+-----------+-----------+-----------------+-------------------------------------+-------------------+
     | ID                                   | Name      | Size | Share Proto | Status    | Is Public | Share Type Name | Host                                | Availability Zone |
     +--------------------------------------+-----------+------+-------------+-----------+-----------+-----------------+-------------------------------------+-------------------+
@@ -292,7 +292,7 @@ NFS shares with full read/write privileges.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila access-allow 63bd5bef-298d-4e49-bea0-49a4cfb143f9 ip 0.0.0.0/0
+    $ manila access-allow 63bd5bef-298d-4e49-bea0-49a4cfb143f9 ip 0.0.0.0/0
     +--------------+--------------------------------------+
     | Property     | Value                                |
     +--------------+--------------------------------------+
@@ -307,7 +307,7 @@ NFS shares with full read/write privileges.
     | deleted_at   | None                                 |
     | id           | c400bdd7-7e4f-49a4-b73d-5aa417af95c3 |
     +--------------+--------------------------------------+
-    [stack@scspr0030615001 devstack]$ manila access-allow 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 ip 0.0.0.0/0
+    $ manila access-allow 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 ip 0.0.0.0/0
     +--------------+--------------------------------------+
     | Property     | Value                                |
     +--------------+--------------------------------------+
@@ -322,7 +322,7 @@ NFS shares with full read/write privileges.
     | deleted_at   | None                                 |
     | id           | 09f8f699-1cec-4519-8aaa-a30d346ad54c |
     +--------------+--------------------------------------+
-    [stack@scspr0030615001 devstack]$ manila access-allow e4774a70-3e70-4a7c-ab76-886f010efe0a ip 0.0.0.0/0
+    $ manila access-allow e4774a70-3e70-4a7c-ab76-886f010efe0a ip 0.0.0.0/0
     +--------------+--------------------------------------+
     | Property     | Value                                |
     +--------------+--------------------------------------+
@@ -345,7 +345,7 @@ should use the preferred path for optimum performance.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila share-export-location-list 63bd5bef-298d-4e49-bea0-49a4cfb143f9 --columns Path,Preferred
+    $ manila share-export-location-list 63bd5bef-298d-4e49-bea0-49a4cfb143f9 --columns Path,Preferred
     +-------------------------------------------------------------+-----------+
     | Path                                                        | Preferred |
     +-------------------------------------------------------------+-----------+
@@ -431,7 +431,7 @@ the FlexVol.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila pool-list
+    $ manila pool-list
     +-------------------------------------+---------+----------------------+--------+
     | Name                                | Host    | Backend              | Pool   |
     +-------------------------------------+---------+----------------------+--------+
@@ -440,7 +440,7 @@ the FlexVol.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila manage liberty@cmode_single_svm_nfs#manila NFS 192.168.228.102:/myvol
+    $ manila manage liberty@cmode_single_svm_nfs#manila NFS 192.168.228.102:/myvol
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
@@ -466,7 +466,7 @@ the FlexVol.
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila show 6e42c910-67a8-47fd-885f-b03d1756675f
+    $ manila show 6e42c910-67a8-47fd-885f-b03d1756675f
     +-------------------+-------------------------------------------------------------+
     | Property          | Value                                                       |
     +-------------------+-------------------------------------------------------------+
@@ -502,7 +502,7 @@ We'll now remove a share from Manila management using the admin-only
 
 ::
 
-    [stack@scspr0030615001 devstack]$ manila unmanage 6e42c910-67a8-47fd-885f-b03d1756675f
+    $ manila unmanage 6e42c910-67a8-47fd-885f-b03d1756675f
 
 Creating Manila Consistency Groups
 ----------------------------------
