@@ -3,23 +3,23 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Overview</title>
+    <title>OpenStack Docs: Appendix</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Bootstrap CSS -->
-<link href="../_static/css/bootstrap.css" rel="stylesheet">
+<link href="_static/css/bootstrap.css" rel="stylesheet">
 
 <!-- Pygments CSS -->
-<link href="../_static/css/native.css" rel="stylesheet">
+<link href="_static/css/native.css" rel="stylesheet">
 
 <!-- Fonts -->
-<link href="../_static/css/font-awesome.css" rel="stylesheet">
+<link href="_static/css/font-awesome.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
 <!-- Custom CSS -->
-<link href="../_static/css/combined.css" rel="stylesheet">
+<link href="_static/css/combined.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,8 +27,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
-<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
+<link rel="stylesheet" href="_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="_static/sphinxmark.css" type="text/css" />
   
 
 
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/swift/section_swift-overview.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/ch_appendix.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -113,15 +113,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Overview</h2>
+      <h2>Appendix</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="../ch_swift.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Object Storage Service (Swift)"></i></a>
+    <a href="operations/section_cdot-ops.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Operational Concerns with Data ONTAP"></i></a>
     
     
-    <a href="section_swift-e-series.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Swift Zones and NetApp E-Series Storage"></i></a>
+    <a href="appendices/appendix_configure-ontap-for-cinder.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Setup Clustered ONTAP for Cinder"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -137,80 +137,14 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
-<p>There are several major advantages of using E-Series storage for Swift
-object storage nodes. These include:</p>
-<ul class="simple">
-<li>A dramatic reduction in the storage capacity and physical hardware
-required to facilitate data protection through Swift’s consistent
-hashing ring. The unique characteristics of E-series’ Dynamic Disk
-Pools (DDP) enable the use of a parity protection scheme for data
-protection as an alternative to the default approach involving
-creating 3 or more copies of data. Within a single site, the capacity
-required for object storage along with the parity overhead is an
-approximate 1.3 multiple of the object(s) stored. The default Swift
-behavior involves storing a multiple of 3.</li>
-<li>The reduction of replicas made possible by the use of DDP has the
-effect of significantly reducing a typically major inhibitor to the
-scale a given Swift cluster can achieve. It has been observed that
-the weight of replication traffic can become a limitation to scale in
-certain use cases.</li>
-<li>The associated storage capacity efficiency associated with employing
-DDP</li>
-<li>Reduced Swift node hardware requirements: Internal drive requirements
-for storage nodes are reduced, only operating system storage is
-required. Disk space for Swift object data, and optionally the
-operating system itself, is supplied by the E-Series storage array.</li>
-<li>Reduced rack space, power, cooling and footprint requirements: Since
-a single storage subsystem provides storage space for multiple Swift
-nodes, smaller and possibly lower power 1U nodes can be used in the
-cluster.</li>
+  <div class="section" id="appendix">
+<h1>Appendix<a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_configure-ontap-for-cinder.html">Setting up ONTAP for OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_debug.html">Troubleshooting OpenStack</a></li>
 </ul>
-<div class="figure" id="id1">
-<img alt="Traditional and E-Series Swift Stack Comparison" src="../_images/swift_compare.png" />
-<p class="caption"><span class="caption-text">Traditional and E-Series Swift Stack Comparison</span></p>
 </div>
-<p>On the left of <a class="reference external" href="#swift.swift_compare">figure_title</a> is a traditional
-Swift cluster, which has a total storage capacity of 240TB. This
-requires 10 Swift object storage nodes with 12 2TB drives per system,
-which results in approximately 80 TB of effective storage capacity
-assuming that Swift uses the default replica count of 3.</p>
-<p>Compare this traditional system to the E-Series based cluster, shown on
-the right in <a class="reference external" href="#swift.swift_compare">figure_title</a>. The E-Series
-cluster has identical controller and compute nodes as the traditional
-system. In the E-Series cluster the effective 80TB storage capacity of
-the traditional system can be obtained by using a single 4U storage
-subsystem. The dynamic disk pools (DDP) data reconstruction feature on
-E-Series replaces the data replication implementation of Swift. As
-mentioned above, this enables a 1U server (with similar memory and CPU
-resources as the traditional cluster object nodes) to be used in the
-E-Series stack. This results in 42% less rack footprint and
-approximately 55% in drive savings (120 drives vs. ~54 drives for an
-E-Series based cluster). Additionally the number of attached Swift
-object storage nodes attached to the E-Series can be increased if
-additional object storage processing capacity is required.</p>
-<blockquote>
-<div><p><strong>Tip</strong></p>
-<p>Swift may also be deployed in conjunction with the NetApp FAS
-product line, as an iSCSI LUN could be used as a block device to
-provide storage for object, container, or account data. This
-deployment may be used in situations where the scale of an object
-storage deployment is small, or if it is desirable to reuse existing
-FAS systems.</p>
-</div></blockquote>
-<p>E-Series storage can effectively serve as the storage medium for
-OpenStack Object Storage. The data reconstruction capabilities
-associated with DDP eliminate the need for data replication within
-zones. DDP reconstruction provides RAID-6 data protection against
-multiple simultaneous drive failures within the storage subsystem. Data
-that resides on multiple failed drives is given top priority during
-reconstruction. This data has the highest potential for being lost if a
-3rd drive failure occurs is reconstructed first on the remaining optimal
-drives in the storage subsystem. After this critical data is
-reconstructed all other data on the failed drives is reconstructed. This
-prioritized data reconstruction dramatically reduces the possibility of
-data loss due to drive failure.</p>
 </div>
 
 
@@ -219,10 +153,10 @@ data loss due to drive failure.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="../ch_swift.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Object Storage Service (Swift)"></i></a>
+            <a href="operations/section_cdot-ops.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Operational Concerns with Data ONTAP"></i></a>
           
           
-            <a href="section_swift-e-series.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Swift Zones and NetApp E-Series Storage"></i></a>
+            <a href="appendices/appendix_configure-ontap-for-cinder.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Setup Clustered ONTAP for Cinder"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -233,7 +167,7 @@ data loss due to drive failure.</p>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
 <a href="https://creativecommons.org/licenses/by/3.0/">
- <img src="../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+ <img src="_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
 </a>
 <p>
  Except where otherwise noted, this document is licensed under
@@ -252,7 +186,7 @@ data loss due to drive failure.</p>
         </div>
 <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
   <div class="btn-group docs-sidebar-releases">
-<a href="../index.html">
+<a href="index.html">
   <button href="#" type="button"
           class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
 </a>
@@ -262,24 +196,21 @@ data loss due to drive failure.</p>
     <div class="docs-sidebar-section" id="table-of-contents">
       <h4></h4>
       <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="section_swift-e-series.html">Swift Zones and NetApp E-Series Storage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="section_swift-disk-pools.html">Disk Pools, Volumes, and Mapping</a></li>
-<li class="toctree-l2"><a class="reference internal" href="section_swift-partitioning.html">Partitioning and File System Considerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="section_swift-ring-considerations.html">Swift Ring Considerations with DDP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendices/appendix_configure-ontap-for-cinder.html">Setting up ONTAP for OpenStack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendices/appendix_debug.html">Troubleshooting OpenStack</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
 </ul>
 
     </div>
@@ -326,19 +257,19 @@ data loss due to drive failure.</p>
   </div>
 </footer>
 <!-- jQuery -->
-<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="_static/js/jquery-3.1.1.js"></script>
 
 <!-- Bootstrap JavaScript -->
-<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+<script type="text/javascript" src="_static/js/bootstrap.js"></script>
 
 <!-- The rest of the JS -->
-<script type="text/javascript" src="../_static/js/navigation.js"></script>
+<script type="text/javascript" src="_static/js/navigation.js"></script>
 
 <!-- Docs JS -->
-<script type="text/javascript" src="../_static/js/docs.js"></script>
+<script type="text/javascript" src="_static/js/docs.js"></script>
 
 <!-- Popovers -->
-<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+<script type="text/javascript" src="_static/js/webui-popover.js"></script>
 
 <!-- Javascript for page -->
 <script language="JavaScript">
@@ -356,13 +287,13 @@ data loss due to drive failure.</p>
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "swift/section_swift-overview" + ".rst";
+        var sourceFile = "ch_appendix" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 347e01f93b4086aa07de56169e18b48f43b88f34";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Overview in NetApp OpenStack Docs";
+        var bugTitle = "Appendix in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";
