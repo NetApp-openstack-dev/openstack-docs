@@ -1,0 +1,9 @@
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Code-Review+2: chad morgenstern <mchad@netapp.com>
+QA-Review+2: chad morgenstern <mchad@netapp.com>
+Release+1: chad morgenstern <mchad@netapp.com>
+Submitted-by: chad morgenstern <mchad@netapp.com>
+Submitted-at: Thu, 31 Aug 2017 11:38:39 -0400
+Reviewed-on: https://review.openstack.netapp.com/214
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
