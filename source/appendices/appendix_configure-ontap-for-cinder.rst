@@ -5,7 +5,7 @@ Setup Clustered ONTAP for Cinder
 
 This section provides an example set of configuration commands to be executed
 within Data ONTAP that enables two SVMs, appropriately configured for
-the Cinder configuration referenced in the section called ":ref:`cinder-conf`". 
+the Cinder configuration referenced in the section called ":ref:`cinder-conf`".
 Note that you may have to edit IP addresses and feature lists based on the environment and
 licenses present.
 
@@ -38,7 +38,7 @@ Storage Virtual Machines
         -aggregate aggr2 -ns-switch file -rootvolume-security-style unix
 
 
-Configure iSCSI 
+Configure iSCSI
 ---------------
     iSCSI setup::
 
@@ -92,7 +92,7 @@ Configure iSCSI
         volume create -vserver demo-iscsi-svm -volume vol8 \
         -aggregate aggr2 -size 1024g
 
-Configure NFS 
+Configure NFS
 -------------
     NFS Setup::
 
