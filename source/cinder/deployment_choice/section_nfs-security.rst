@@ -22,6 +22,15 @@ to reduce the potential attack surface created by allowing such liberal
 access to users and processes running on OpenStack storage and compute
 nodes.
 
+.. note::
+
+   Consult with the OpenStack distribution documentation to determine
+   supportability of this feature.
+
+.. note::
+
+   NFS v4.X is required for these features to have effect.
+
 +-----------------------------------+------------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Option                            | Type       | Default Value   | Description                                                                                                                                                                                                                                                                                     |
 +===================================+============+=================+=================================================================================================================================================================================================================================================================================================+
@@ -30,7 +39,7 @@ nodes.
 | ``nas_secure_file_permissions``   | Optional   | "auto"          | Create backing files for Cinder volumes to only be readable and writable by owner and group if 'true'; as readable and writable by owner, group, and world if 'false'. If 'auto', run as 'true' if in a "greenfield" environment and run as 'false' if existing volumes are found on startup.   |
 +-----------------------------------+------------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Tablei 4.10. Configuration options for NFS Security
+Table 4.10. Configuration options for NFS Security
 
 When ``nas_secure_file_operations`` is set to 'true', Cinder operations
 on the backing files for Cinder volumes run as the dedicated *cinder*
@@ -45,7 +54,7 @@ and group *cinder*, only system processes running with uid or gid
 has been squashed in the share export.
 
 The default value of both of these options is 'auto'. For backwards
-compatibility, if there already exist cinder volumes when Cinder starts
+compatibility, if cinder volumes already exist when Cinder starts
 up and the value of one of these options is 'auto', it is set to 'false'
 internally, whereas if there is a green field environment, the option is
 set to 'true' and a marker file *.cinderSecureEnvIndicator* is created
