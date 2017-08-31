@@ -223,6 +223,7 @@ virtualized
 vmware
 VMware
 vnic
+Vsadmin
 vserver
 Vserver
 Vservers
