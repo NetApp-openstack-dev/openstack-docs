@@ -86,7 +86,7 @@ specific extra specs described in
    enabled by default for a newly created share type. Starting with the
    Ocata release, the ``snapshot_support`` extra spec must be set to
    ``True`` in order to allow snapshots for a share type. If the
-   'snapshot\_support' extra\_spec is omitted or if it is set to False,
+   ``snapshot_support`` extra_spec is omitted or if it is set to False,
    users would not be able to create snapshots on shares of this share
    type.
 
@@ -744,6 +744,132 @@ should use the preferred path for optimum performance.
     +-------------------------------------------------------------+-----------+
     | 192.168.228.110:/share_6fae2eb7_9eea_4a0f_b215_1f405dbcc4d4 | True      |
     +-------------------------------------------------------------+-----------+
+
+
+Manila Quality of Service
+-------------------------
+Manila Administrators have the ability to create share types with throughput
+limits specified for each share that users create. The following examples
+demonstrate creating two share types with two different QoS specs. For all
+supported specs refer to
+":ref:`Table 6.11, “NetApp specific QoS Extra Specs<table-6.11>`"
+
+::
+
+    $ manila type-create platinum True --extra-specs qos_support=True netapp:maxiopspergib=100 snapshot_support=True create_share_from_snapshot_support=True
+    +----------------------+-------------------------------------------+
+    | Property             | Value                                     |
+    +----------------------+-------------------------------------------+
+    | required_extra_specs | driver_handles_share_servers : True       |
+    | Name                 | platinum                                  |
+    | Visibility           | public                                    |
+    | is_default           | -                                         |
+    | ID                   | c6e8d62f-f827-4fc8-af94-789d370abac7      |
+    | optional_extra_specs | netapp:maxiopspergib : 100                |
+    |                      | qos_support : True                        |
+    |                      | create_share_from_snapshot_support : True |
+    |                      | snapshot_support : True                   |
+    +----------------------+-------------------------------------------+
+
+
+    $ manila type-create gold False --extra-specs qos_support=True netapp:maxbps=5000 snapshot_support=True create_share_from_snapshot_support=True
+    +----------------------+-------------------------------------------+
+    | Property             | Value                                     |
+    +----------------------+-------------------------------------------+
+    | required_extra_specs | driver_handles_share_servers : False      |
+    | Name                 | gold                                      |
+    | Visibility           | public                                    |
+    | is_default           | -                                         |
+    | ID                   | 96b45147-ab7c-4f85-8b8e-bdb7e849689e      |
+    | optional_extra_specs | create_share_from_snapshot_support : True |
+    |                      | snapshot_support : True                   |
+    |                      | qos_support : True                        |
+    |                      | netapp:maxbps : 5000                      |
+    +----------------------+-------------------------------------------+
+
+::
+
+    $ manila create cifs 50 --share-network project-network-1 --share-type platinum --name myshare1
+    +---------------------------------------+--------------------------------------+
+    | Property                              | Value                                |
+    +---------------------------------------+--------------------------------------+
+    | status                                | creating                             |
+    | share_type_name                       | platinum                             |
+    | description                           | None                                 |
+    | availability_zone                     | None                                 |
+    | share_network_id                      | 75b18431-6832-4161-964f-e79ce693276b |
+    | share_server_id                       | None                                 |
+    | share_group_id                        | None                                 |
+    | host                                  |                                      |
+    | revert_to_snapshot_support            | True                                 |
+    | access_rules_status                   | active                               |
+    | snapshot_id                           | None                                 |
+    | create_share_from_snapshot_support    | True                                 |
+    | is_public                             | False                                |
+    | task_state                            | None                                 |
+    | snapshot_support                      | True                                 |
+    | id                                    | dfae168f-ac70-42e0-9779-b1aebc98d0ce |
+    | size                                  | 50                                   |
+    | source_share_group_snapshot_member_id | None                                 |
+    | user_id                               | 75a6db01ffda4ba59637e307e6c768e0     |
+    | name                                  | myshare1                             |
+    | share_type                            | 2e3734eb-54fe-4e5c-a5ca-6ef9de4c3524 |
+    | has_replicas                          | False                                |
+    | replication_type                      | None                                 |
+    | created_at                            | 2017-08-31T00:17:05.000000           |
+    | share_proto                           | CIFS                                 |
+    | mount_snapshot_support                | False                                |
+    | project_id                            | 4aaa76d5ab2341b6bb84a9a911c1550b     |
+    | metadata                              | {}                                   |
+    +---------------------------------------+--------------------------------------+
+
+::
+
+    $ manila create nfs 50 --share-type gold --name myshare2
+    +---------------------------------------+--------------------------------------+
+    | Property                              | Value                                |
+    +---------------------------------------+--------------------------------------+
+    | status                                | creating                             |
+    | share_type_name                       | gold                                 |
+    | description                           | None                                 |
+    | availability_zone                     | None                                 |
+    | share_network_id                      | None                                 |
+    | share_server_id                       | None                                 |
+    | share_group_id                        | None                                 |
+    | host                                  |                                      |
+    | revert_to_snapshot_support            | True                                 |
+    | access_rules_status                   | active                               |
+    | snapshot_id                           | None                                 |
+    | create_share_from_snapshot_support    | True                                 |
+    | is_public                             | False                                |
+    | task_state                            | None                                 |
+    | snapshot_support                      | True                                 |
+    | id                                    | e423a08d-efbb-4c93-8027-7f22b91946da |
+    | size                                  | 50                                   |
+    | source_share_group_snapshot_member_id | None                                 |
+    | user_id                               | 75a6db01ffda4ba59637e307e6c768e0     |
+    | name                                  | myshare2                             |
+    | share_type                            | 9ce01f95-122b-4a50-b582-aa8ef0cdb4f0 |
+    | has_replicas                          | False                                |
+    | replication_type                      | dr                                   |
+    | created_at                            | 2017-08-31T00:17:44.000000           |
+    | share_proto                           | NFS                                  |
+    | mount_snapshot_support                | False                                |
+    | project_id                            | 4aaa76d5ab2341b6bb84a9a911c1550b     |
+    | metadata                              | {}                                   |
+    +---------------------------------------+--------------------------------------+
+
+::
+
+    $ manila list
+    +--------------------------------------+----------+------+-------------+-----------+-----------+-----------------+-----------------------------------+-------------------+
+    | ID                                   | Name     | Size | Share Proto | Status    | Is Public | Share Type Name | Host                              | Availability Zone |
+    +--------------------------------------+----------+------+-------------+-----------+-----------+-----------------+-----------------------------------+-------------------+
+    | dfae168f-ac70-42e0-9779-b1aebc98d0ce | myshare1 | 50   | CIFS        | available | False     | platinum        | openstack2@cmodeMSVMNFS#aggr_2    | az_1              |
+    | e423a08d-efbb-4c93-8027-7f22b91946da | myshare2 | 50   | NFS         | available | False     | gold            | openstack2@cmodeSSVMNFS_02#aggr_2 | az_2              |
+    +--------------------------------------+----------+------+-------------+-----------+-----------+-----------------+-----------------------------------+-------------------+
+
+
 
 Creating a Manila CIFS share with security service
 --------------------------------------------------
