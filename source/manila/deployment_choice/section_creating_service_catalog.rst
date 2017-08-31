@@ -20,7 +20,7 @@ support together with the filter scheduler.
 When the NetApp unified driver is used with a clustered Data ONTAP
 storage system, you can leverage extra specs with Manila share types to
 ensure that Manila shares are created on storage backends that have
-certain properties (e.g. thin provisioning, disk type, RAID type)
+certain properties (e.g. thin provisioning, disk type, RAID type, QoS Support)
 configured.
 
 Extra specs are associated with Manila share types, so that when users
@@ -70,8 +70,28 @@ later in this section when defining Manila share types with the
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``revert_to_snapshot_support``           | Boolean   | Allow a share to be reverted to the most recent snapshot.                                                                                                                                                                                                                                                                                                                        |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``qos_support``                          | Boolean   | Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in [#f1]_. See the NetApp driver specific QoS extra-specs in :ref:`Table 6.11, “NetApp QoS Specs for use with Manila Share Types”<table-6.11>`.                                                                                                                     |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
+
+
+
+.. _table-6.11:
+
++------------------------------------------+-----------+-----------------------------------------------------------------------+
+| QoS Extra spec                           | Type      | Description                                                           |
++==========================================+===========+=======================================================================+
+| ``netapp:maxiops``                       | String    | The maximum IOPS allowed.                                             |
++------------------------------------------+-----------+-----------------------------------------------------------------------+
+| ``netapp:maxbps``                        | String    | The maximum bytes per second allowed.                                 |
++------------------------------------------+-----------+-----------------------------------------------------------------------+
+| ``netapp:maxiopspergib``                 | String    | The maximum IOPS allowed per GiB of the Manila share size.            |
++------------------------------------------+-----------+-----------------------------------------------------------------------+
+| ``netapp:maxbpspergib``                  | String    | The maximum bytes per second allowed per GiB of the Manila share size.|
++------------------------------------------+-----------+-----------------------------------------------------------------------+
+
+Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that have ``qos_support = True``.
 
 .. caution::
 
@@ -83,3 +103,20 @@ Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
    appropriate permissions are set. See the section called
    ":ref:`account-perm`" for more details on the required access level
    permissions for an SVM admin account.
+
+.. rubric:: Footnotes
+
+.. [#f1] ``qos_support`` is reported as a capability by the Manila driver to
+         the Manila scheduler for each ONTAP aggregate (Manila storage pool).
+         This value will either be True (QoS is supported) or
+         False (QoS is not supported) for all aggregates belonging
+         to a backend.
+
+         Defining QoS throughput limits is supported by all platforms
+         running ONTAP > 8.2 with no additional license.
+         However, you must configure the Manila ONTAP driver with an ONTAP user
+         that has permissions to create and modify ONTAP QoS policy groups if
+         you want the driver to support Manila QoS.
+         (See ":ref:`account-perm`"). Be aware that ONTAP Users with Vsadmin
+         (SVM administrator) role do not have permission to create or
+         modify QoS policy groups.
