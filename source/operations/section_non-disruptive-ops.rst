@@ -19,11 +19,14 @@ possible with volumes residing on Compute nodes:
 -  The ability to migrate Cinder volumes from one backend to another.
    The source and destination backend can be in the same cluster or in
    different clusters. The following is an example of migrating a Cinder
-   volume that is in-use across two clustered Data ONTAP hosts::
+   volume that is in-use across two clustered Data ONTAP hosts
 
-    nova instance with an attached cinder volume
+  Nova instance with an attached cinder volume.  Pay particular attention to
+  the value associated with the **os-extended-volumes:volumes_attached** field.
 
-    # nova show ubuntu-instance
+  ::
+
+    [~(keystone_admin)]# nova show ubuntu-instance
     +--------------------------------------+--------------------------------------------------------+
     | Property                             | Value                                                  |
     +--------------------------------------+--------------------------------------------------------+
@@ -33,30 +36,54 @@ possible with volumes residing on Compute nodes:
     | status                               | ACTIVE                                                 |
     ...
 
-    The volume resides in the stlrx300s7-107@cinder-lma#10.250.118.49:/cinder_flexvol_OSTK02 clustered Data ONTAP host.
+  Issue the **cinder show** command against the volume id shown above, 
+  notice that the cinder volume is located at
+  stlrx300s7-107@cinder-lma#10.250.118.49:/cinder_flexvol_OSTK02.
+  This location is of the form *compute node@backend#nfs server:/flexvol*.
 
-    # cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e
+  ::
+
+     [~(keystone_admin)]# cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e
+     +--------------------------------+----------------------------------------------------------------+
+     |            Property            |                             Value                              |
+     +--------------------------------+----------------------------------------------------------------+
+     ...
+     |               id               |              195d2581-d650-4618-ad65-a93ea0c3a89e              |
+     |     os-vol-host-attr:host      | stlrx300s7-107@cinder-lma#10.250.118.49:/cinder_flexvol_OSTK02 |
+     |             status             |                             in-use                             |
+     ...
+     +--------------------------------+----------------------------------------------------------------+
+
+  Get the list of available cinder pools, the target pool will be taken from this list
+
+  ::
+
+     [~(keystone_admin)]# cinder get-pools
+     +----------+------------------------------------------------------------------------------+
+     | Property | Value                                                                        |
+     +----------+------------------------------------------------------------------------------+
+     | name     | stlrx300s7-107@cinder-lma#10.250.118.49:/cinder_flexvol_OSTK02               |
+     +----------+------------------------------------------------------------------------------+
+     +----------+------------------------------------------------------------------------------+
+     | Property | Value                                                                        |
+     +----------+------------------------------------------------------------------------------+
+     | name     | stlrx300s7-107@cinder-lmb#10.250.118.51:/cinder_flexvol_OSTK09               |
+     +----------+------------------------------------------------------------------------------+
+
+  Migrate the cinder volume identified above to **stlrx300s7-107@cinder-lmb#10.250.118.51:/cinder_flexvol_OSTK09**.
+
+  ::
+
+    [~(keystone_admin)]# cinder migrate 195d2581-d650-4618-ad65-a93ea0c3a89e \
+                                        stlrx300s7-107@cinder-lmb#10.250.118.51:/cinder_flexvol_OSTK09
+
+  Upon Completion of migration, note that the cinder volume has migrated as specified.
+
+  ::
+
+    [~(keystone_admin)]# cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e
     +--------------------------------+----------------------------------------------------------------+
-    |            Property            |                             Value                              |
-    +--------------------------------+----------------------------------------------------------------+
-    ...
-    |               id               |              195d2581-d650-4618-ad65-a93ea0c3a89e              |
-    |     os-vol-host-attr:host      | stlrx300s7-107@cinder-lma#10.250.118.49:/cinder_flexvol_OSTK02 |
-    |             status             |                             in-use                             |
-    ...
-    +--------------------------------+----------------------------------------------------------------+
-
-
-    Migration of the volume to the stlrx300s7-107@cinder-lmb#10.250.118.51:/cinder_flexvol_OSTK09 clustered Data ONTAP host.
-
-    # cinder migrate 195d2581-d650-4618-ad65-a93ea0c3a89 stlrx300s7-107@cinder-lmb#10.250.118.51:/cinder_flexvol_OSTK09
-
-
-    Upon Completion of migration
-
-    # cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e
-    +--------------------------------+----------------------------------------------------------------+
-    |            Property            |                             Value                              |
+    |            Property            |                             Value                              |
     +--------------------------------+----------------------------------------------------------------+
     ...
     |               id               |              195d2581-d650-4618-ad65-a93ea0c3a89e              |

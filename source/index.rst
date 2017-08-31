@@ -17,5 +17,5 @@ Deployment and Operations Guide
    Object Storage (Swift) <ch_swift.rst>
 
    Day two operations <ch_operations.rst>
-   Troubleshooting OpenStack <appendices/appendix_debug.rst>
+   Appendix <ch_appendix.rst>
 
