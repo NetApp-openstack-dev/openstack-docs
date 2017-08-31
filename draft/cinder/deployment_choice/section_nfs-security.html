@@ -128,7 +128,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-08-31 21:20</div>
+            <div class="docs-updated">updated: 2017-08-31 22:21</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -167,6 +167,15 @@ the OpenStack operator, in concert with the NAS storage administrator,
 to reduce the potential attack surface created by allowing such liberal
 access to users and processes running on OpenStack storage and compute
 nodes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Consult with the OpenStack distribution documentation to determine
+supportability of this feature.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">NFS v4.X is required for these features to have effect.</p>
+</div>
 <table border="1" class="docutils">
 <colgroup>
 <col width="10%" />
@@ -194,7 +203,7 @@ nodes.</p>
 </tr>
 </tbody>
 </table>
-<p>Tablei 4.10. Configuration options for NFS Security</p>
+<p>Table 4.10. Configuration options for NFS Security</p>
 <p>When <code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> is set to ‘true’, Cinder operations
 on the backing files for Cinder volumes run as the dedicated <em>cinder</em>
 user rather than as <em>root</em>. With this option enabled, the NFS storage
@@ -207,7 +216,7 @@ and group <em>cinder</em>, only system processes running with uid or gid
 <em>cinder</em> are allowed to read or write these files, assuming that <em>root</em>
 has been squashed in the share export.</p>
 <p>The default value of both of these options is ‘auto’. For backwards
-compatibility, if there already exist cinder volumes when Cinder starts
+compatibility, if cinder volumes already exist when Cinder starts
 up and the value of one of these options is ‘auto’, it is set to ‘false’
 internally, whereas if there is a green field environment, the option is
 set to ‘true’ and a marker file <em>.cinderSecureEnvIndicator</em> is created
@@ -281,7 +290,7 @@ operations run with <em>cinder</em> group identity.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-08-31 21:20</div>
+            <div class="docs-updated">updated: 2017-08-31 22:21</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -415,7 +424,7 @@ operations run with <em>cinder</em> group identity.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 347e01f93b4086aa07de56169e18b48f43b88f34";
+    var gitSha = "SHA: 289b26c2e5bb16ac8fa3c4a6d74316ae5afed7fc";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deployment Choices: NFS Security in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -426,7 +435,7 @@ operations run with <em>cinder</em> group identity.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-08-31 21:20";
+    var buildstring = "Release: 2017.2 on 2017-08-31 22:21";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
