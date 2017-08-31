@@ -30,6 +30,24 @@ logical data elements (for example: files, Snapshot copies, clones,
 LUNs, etc.) that is abstracted from physical elements (for example:
 individual disks, and RAID groups).
 
+.. _manila_qos_attribute:
+
+Manila QoS
+----------
+Storage Quality of Service is a cluster-wide feature on ONTAP that requires no
+additional license. It allows users to set throughput limits and/or monitor
+IOPS or MB/s on the storage object. ONTAP enforces QoS via "policy-groups",
+a policy-group is a collection of QoS specifications where you may specify
+throughput limits. On ONTAP, multiple storage objects can be assigned to a
+policy-group, but assigning multiple storage objects renders them as part of
+a "workload". In case of QoS limits, this means that the limit is applied to
+the sum of all the IOPS/BPS from all the storage objects assigned to the policy
+group.
+
+When using QoS via Manila, the driver will not allow sharing QoS
+policy-groups. If a share type supports QoS, a new policy-group is created for
+every share of that type.
+
 .. _manila_scheduling_and_resource_selection:
 
 Manila scheduling and resource pool selection

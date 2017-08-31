@@ -1,6 +1,5 @@
-
 # Please sort this file always:
-# sort source/spelling_wordlist.txt -o source/spelling_wordlist.txt
+# sort -u source/spelling_wordlist.txt -o source/spelling_wordlist.txt
 API
 AWS
 Admin
@@ -52,7 +51,6 @@ Morgenstern
 Multinode
 Multipath
 NFS
-NFS
 Navneet
 NetApp
 NetAppDriver
@@ -93,6 +91,7 @@ VMware
 VServers
 Versioning
 Virtualization
+Vsadmin
 Vserver
 Vservers
 Webscale
@@ -104,7 +103,6 @@ aggrs
 aix
 api
 architected
-atto
 atto
 autogrow
 automounter

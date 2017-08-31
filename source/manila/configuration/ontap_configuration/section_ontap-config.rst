@@ -4,7 +4,7 @@ ONTAP Configuration
 .. _manila_data_ontap_prerequisites:
 
 ONTAP Prerequisites
-------------------------
+-------------------
 
 The prerequisites for ONTAP are:
 
@@ -71,6 +71,11 @@ considerations:
       `ONTAP 8 Product
       Documentation <https://mysupport.netapp.com/documentation/productlibrary/index.html?productID=30092>`__.
 
+7. If you wish to assign QoS policies to Manila shares, do not assign the SVM
+   used to a QoS policy group on ONTAP. Manila shares correspond to FlexVols
+   on ONTAP and FlexVols are constituents of an SVM. ONTAP does not
+   support nested QoS policies.
+
 .. _account-perm:
 
 Account Permission Considerations
@@ -78,7 +83,9 @@ Account Permission Considerations
 
 When configuring NetApp's Manila drivers to interact with an
 ONTAP instance, it is important to choose the correct
-administrative credentials to use. While an account with cluster-level
+administrative credentials to use.
+
+While an account with cluster-level
 administrative permissions is normally utilized, it is possible to use
 an account with reduced scope that has the appropriate privileges
 granted to it. In order to use an SVM-scoped account with the Manila
@@ -151,6 +158,8 @@ Table 6.17. Common Access Level Permissions Required with Any Manila Driver
 +-------------------------+----------------+
 | ``vserver``             | ``all``        |
 +-------------------------+----------------+
+| ``qos policy-group``    | ``all``        |
++-------------------------+----------------+
 
 Table 6.18. Access Level Permissions Required For Manila Driver for clustered
 Data ONTAP with share server management - with Cluster-wide
@@ -166,6 +175,8 @@ Administrative Account
 | ``storage aggregate``   | ``readonly``   |
 +-------------------------+----------------+
 | ``storage disk``        | ``readonly``   |
++-------------------------+----------------+
+| ``qos policy-group``    |   ``all``      |
 +-------------------------+----------------+
 
 Table 6.19. Access Level Permissions Required For Manila Driver for clustered
