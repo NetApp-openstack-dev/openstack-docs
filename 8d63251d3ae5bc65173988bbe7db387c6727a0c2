@@ -1,0 +1,9 @@
+Code-Review+2: Goutham Pacha Ravi <gouthampravi@gmail.com>
+QA-Review+2: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Release+1: Goutham Pacha Ravi <gouthampravi@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Wed, 30 Aug 2017 21:15:21 -0400
+Reviewed-on: https://review.openstack.netapp.com/217
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/gh-pages
