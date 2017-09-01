@@ -1,3 +1,5 @@
+.. _nfs_security:
+
 Deployment Choices: NFS Security
 ================================
 
@@ -26,10 +28,6 @@ nodes.
 
    Consult with the OpenStack distribution documentation to determine
    supportability of this feature.
-
-.. note::
-
-   NFS v4.X is required for these features to have effect.
 
 +-----------------------------------+------------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Option                            | Type       | Default Value   | Description                                                                                                                                                                                                                                                                                     |
