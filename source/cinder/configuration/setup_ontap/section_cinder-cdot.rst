@@ -1,4 +1,4 @@
-.. setup_ontap_for_cinder:
+.. _setup_ontap_for_cinder:
 
 Setup Clustered ONTAP for Cinder
 ======================================
