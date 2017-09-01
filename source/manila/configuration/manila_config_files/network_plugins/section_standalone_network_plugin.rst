@@ -17,8 +17,8 @@ Manila Network Plugins: Standalone Network Plugin
    netmask and gateway are obtained from ``manila.conf`` when creating a
    new share server.
 
-The network plugin is chosen by setting the value of the network_api_class 
-configuration option within the driver-specific stanza of the manila.conf 
+The network plugin is chosen by setting the value of the network_api_class
+configuration option within the driver-specific stanza of the manila.conf
 configuration file.
 
 To set up the standalone network plugin, the following options should be
