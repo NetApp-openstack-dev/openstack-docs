@@ -14,8 +14,9 @@ properly initialized by Manila.
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
     | Id | Binary           | Host                          | Zone | Status  | State | Updated_at                 |
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
-    | 1  | manila-scheduler | ostk-controller               | nova | enabled | up    | 2015-03-25T12:25:12.000000 |
-    | 2  | manila-share     | ostk-controller@cdotSingleSVM | nova | enabled | up    | 2015-03-25T12:25:15.000000 |
+    | 1  | manila-scheduler | ostk-controller               | nova | enabled | up    | 2017-09-01T12:25:12.000000 |
+    | 2  | manila-share     | ostk-controller@cdotSingleSVM | nova | enabled | up    | 2017-09-01T12:25:15.000000 |
+    | 2  | manila-share     | ostk-controller@cdoMultiSVM   | nova | enabled | up    | 2017-09-01T12:25:15.000000 |
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
 
 Creating and Defining Manila Share Types
@@ -36,6 +37,9 @@ specific extra specs described in
    contains SAS drives within the aggregate, and also creates thin
    provisioned FlexVol volumes.
 
+- The ``shared`` type provisions Manila a new SVM for each share
+  network object.  Snapshot support is enabled.
+
 -  The ``default`` type provisions Manila shares onto any pool of any
    driver without share server management and snapshot support.
 
@@ -47,18 +51,34 @@ specific extra specs described in
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | deadeebf-19a2-47b1-9d7f-1c3806cfcb72 | general | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
+
+::
+
     $ manila type-create flash False
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | 37fb9f7e-4ffe-4900-8dba-c6d4251e588f | flash   | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
+
+::
+
     $ manila type-create archive False
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | 20e4b58d-aab6-42ae-8e9b-8f9d44f17276 | archive | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
+
+::
+
+    $ manila type-create --snapshot_support True shared True
+    +--------------------------------------+---------+------------+------------+--------------------------------------+
+    | ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
+    +--------------------------------------+---------+------------+------------+--------------------------------------+
+    | db589d3e-09e9-49a2-a5be-05471d178eaa | shared  | public     | -          | driver_handles_share_servers : True  |
+    +--------------------------------------+---------+------------+------------+--------------------------------------+
+
 
 .. important::
 
@@ -94,12 +114,24 @@ specific extra specs described in
     $ manila type-key general set revert_to_snapshot_support=True
     $ manila type-key general set create_share_from_snapshot_support=True
 
+::
+
     $ manila type-key default set snapshot_support=False
+
+::
 
     $ manila type-key flash set netapp_disk_type=SSD
     $ manila type-key flash set netapp_hybrid_aggregate="<is> False"
 
+::
+
     $ manila type-key archive set thin_provisioning="<is> True" netapp_disk_type=SAS
+
+::
+
+    $ manila type-key shared set snapshot_support=True
+
+::
 
     $ manila extra-specs-list
     +--------------------------------------+---------+--------------------------------------------+
@@ -118,13 +150,179 @@ specific extra specs described in
     |                                      |         | snapshot_support : True                    |
     |                                      |         | revert_to_snapshot_support : True          |
     |                                      |         | create_share_from_snapshot_support : True  |
+    | db589d3e-09e9-49a2-a5be-05471d178eaa | shared  | snapshot_support : True                    |
+    |                                      |         | driver_handles_share_servers : True        |
     +--------------------------------------+---------+--------------------------------------------+
+
+Creating Manila Share Network Objects
+-------------------------------------
+
+In this section, we create two manila share network objects to.
+share-network-objects are only used with share servers.
+
+Network Plugin: NeutronNetworkPlugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this scenario the configurable Neutron Network Plugin is in use.
+As such each share network object is free to us any appropirate
+neutron network.  In this particular case, we are using a provider
+network.
+
+::
+
+    $ cat /etc/manila/manila.conf
+    ...
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin
+    ...
+
+::
+
+    $ neutron net-list
+    +--------------------------------------+------------------+-----------------------------------------------------+
+    | id                                   | name             | subnets                                             |
+    +--------------------------------------+------------------+-----------------------------------------------------+
+    ...
+    | 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 | storage-provider | 1f9ec07c-085a-437d-82f0-7390d706758b 192.168.0.0/16 |
+    ...
+    +--------------------------------------+------------------+-----------------------------------------------------+
+
+::
+
+    $ manila share-network-create --neutron-subnet-id 1f9ec07c-085a-437d-82f0-7390d706758b \
+                                  --neutron-net-id 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 \
+                                  --name storage-provider-network
+    +-------------------+--------------------------------------+
+    | Property          | Value                                |
+    +-------------------+--------------------------------------+
+    | network_type      | None                                 |
+    | name              | storage-provider-network             |
+    | segmentation_id   | None                                 |
+    | created_at        | 2017-09-01T10:16:16.999826           |
+    | neutron_subnet_id | 1f9ec07c-085a-437d-82f0-7390d706758b |
+    | updated_at        | None                                 |
+    | mtu               | None                                 |
+    | gateway           | None                                 |
+    | neutron_net_id    | 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 |
+    | ip_version        | None                                 |
+    | nova_net_id       | None                                 |
+    | cidr              | None                                 |
+    | project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+    | id                | 557243e9-aad6-4b63-8d86-70239ecf4993 |
+    | description       | None                                 |
+    +-------------------+--------------------------------------+
+
+::
+
+    $ manila share-network-list
+    +--------------------------------------+--------------------------+
+    | id                                   | name                     |
+    +--------------------------------------+--------------------------+
+    | 557243e9-aad6-4b63-8d86-70239ecf4993 | storage-provider-network |
+    +--------------------------------------+--------------------------+
+
+::
+
+    $ manila share-network-show storage-provider-network
+    +-------------------+--------------------------------------+
+    | Property          | Value                                |
+    +-------------------+--------------------------------------+
+    | network_type      | flat                                 |
+    | name              | storage-provider-network             |
+    | segmentation_id   | None                                 |
+    | created_at        | 2017-09-01T10:16:16.000000           |
+    | neutron_subnet_id | 1f9ec07c-085a-437d-82f0-7390d706758b |
+    | updated_at        | 2017-09-01T10:19:25.000000           |
+    | mtu               | 1500                                 |
+    | gateway           | None                                 |
+    | neutron_net_id    | 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 |
+    | ip_version        | 4                                    |
+    | nova_net_id       | None                                 |
+    | cidr              | 192.168.0.0/16                       |
+    | project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+    | id                | 557243e9-aad6-4b63-8d86-70239ecf4993 |
+    | description       | None                                 |
+    +-------------------+--------------------------------------+
+
+Network Plugin: NeutronSingleNetworkPlugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this scenario the simple Neutron Network Plugin is in use.
+As such each share network will use the Neutron Network and
+Neutron Subnet configured in the /etc/manila/manila.conf.
+
+::
+
+    $ cat /etc/manila/manila.conf
+    ...
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlugin
+    neutron_net_id = 0ba4ac4a-1408-4fa6-84d6-fd6db8113382
+    neutron_subnet_id = 1f9ec07c-085a-437d-82f0-7390d706758b
+    ...
+
+::
+
+    [root@chadcloud1 manila(keystone_mchad)]# manila share-network-show storage-provider-network-2
+    +-------------------+--------------------------------------+
+    | Property          | Value                                |
+    +-------------------+--------------------------------------+
+    | network_type      | None                                 |
+    | name              | storage-provider-network-2           |
+    | segmentation_id   | None                                 |
+    | created_at        | 2017-09-01T10:50:55.000000           |
+    | neutron_subnet_id | None                                 |
+    | updated_at        | None                                 |
+    | mtu               | None                                 |
+    | gateway           | None                                 |
+    | neutron_net_id    | None                                 |
+    | ip_version        | None                                 |
+    | nova_net_id       | None                                 |
+    | cidr              | None                                 |
+    | project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+    | id                | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+    | description       | None                                 |
+    +-------------------+--------------------------------------+
+
+::
+
+    [root@chadcloud1 manila(keystone_mchad)]# manila share-network-list
+    +--------------------------------------+----------------------------+
+    | id                                   | name                       |
+    +--------------------------------------+----------------------------+
+    | 557243e9-aad6-4b63-8d86-70239ecf4993 | storage-provider-network   |
+    | e6a05868-fdfd-4da9-a914-6beab07b3121 | storage-provider-network-2 |
+    +--------------------------------------+----------------------------+
+
+::
+
+    [root@chadcloud1 manila(keystone_mchad)]# manila share-network-show storage-provider-network-2
+    +-------------------+--------------------------------------+
+    | Property          | Value                                |
+    +-------------------+--------------------------------------+
+    | network_type      | flat                                 |
+    | name              | storage-provider-network-2           |
+    | segmentation_id   | None                                 |
+    | created_at        | 2017-09-01T10:50:55.000000           |
+    | neutron_subnet_id | 1f9ec07c-085a-437d-82f0-7390d706758b |
+    | updated_at        | 2017-09-01T10:52:29.000000           |
+    | mtu               | 1500                                 |
+    | gateway           | None                                 |
+    | neutron_net_id    | 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 |
+    | ip_version        | 4                                    |
+    | nova_net_id       | None                                 |
+    | cidr              | 192.168.0.0/16                       |
+    | project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+    | id                | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+    | description       | None                                 |
+    +-------------------+--------------------------------------+
 
 Creating Manila Shares with Share Types
 ---------------------------------------
 
-In this section, we create shares with the default type, as well as each
-of the previously defined share types.
+Without Share Server Management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this section, we create shares with the default type, as well as
+all but the shared share type.
 
 ::
 
@@ -145,11 +343,13 @@ of the previously defined share types.
     | size              | 1                                    |
     | name              | myDefault                            |
     | share_type        | 447732be-4cf2-42b0-83dc-4b6f4ed5368d |
-    | created_at        | 2015-03-25T12:44:11.794842           |
+    | created_at        | 2017-09-01T12:44:11.794842           |
     | share_proto       | NFS                                  |
     | project_id        | 5bf3e15106dd4333b1f55742fa08f90e     |
     | metadata          | {}                                   |
     +-------------------+--------------------------------------+
+
+::
 
     $ manila create --name myGeneral --share-type general NFS 1
     +-------------------+--------------------------------------------------------+
@@ -170,11 +370,13 @@ of the previously defined share types.
     | size                                | 1                                    |
     | name                                | myGeneral                            |
     | share_type                          | deadeebf-19a2-47b1-9d7f-1c3806cfcb72 |
-    | created_at                          | 2015-03-25T12:44:47.223548           |
+    | created_at                          | 2017-09-01T12:44:47.223548           |
     | share_proto                         | NFS                                  |
     | project_id                          | 5bf3e15106dd4333b1f55742fa08f90e     |
     | metadata                            | {}                                   |
     +-------------------+--------------------------------------------------------+
+
+::
 
     $ manila create --name myFlash --share-type flash NFS 1
     +-------------------+--------------------------------------+
@@ -192,11 +394,13 @@ of the previously defined share types.
     | size              | 1                                    |
     | name              | myFlash                              |
     | share_type        | 37fb9f7e-4ffe-4900-8dba-c6d4251e588f |
-    | created_at        | 2015-03-25T12:44:59.374780           |
+    | created_at        | 2017-09-01T12:44:59.374780           |
     | share_proto       | NFS                                  |
     | project_id        | 5bf3e15106dd4333b1f55742fa08f90e     |
     | metadata          | {}                                   |
     +-------------------+--------------------------------------+
+
+::
 
     $ manila create --name myArchive --share-type archive NFS 1
     +-------------------+--------------------------------------+
@@ -214,7 +418,7 @@ of the previously defined share types.
     | size              | 1                                    |
     | name              | myArchive                            |
     | share_type        | 20e4b58d-aab6-42ae-8e9b-8f9d44f17276 |
-    | created_at        | 2015-03-25T12:45:11.124722           |
+    | created_at        | 2017-09-01T12:45:11.124722           |
     | share_proto       | NFS                                  |
     | project_id        | 5bf3e15106dd4333b1f55742fa08f90e     |
     | metadata          | {}                                   |
@@ -223,14 +427,187 @@ of the previously defined share types.
 ::
 
     $ manila list
-    +--------------------------------------+-----------+------+-------------+-----------+-----------+-----------------+-------------------------------------+-------------------+
-    | ID                                   | Name      | Size | Share Proto | Status    | Is Public | Share Type Name | Host                                | Availability Zone |
-    +--------------------------------------+-----------+------+-------------+-----------+-----------+-----------------+-------------------------------------+-------------------+
-    | 63bd5bef-298d-4e49-bea0-49a4cfb143f9 | myDefault | 1    | NFS         | available | False     | default         | scspr0030615001@cdotSingleSVM#aggr1 | nova              |
-    | 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 | myGeneral | 1    | NFS         | available | False     | general         | scspr0030615001@cdotSingleSVM#aggr1 | nova              |
-    | e4774a70-3e70-4a7c-ab76-886f010efe0a | myArchive | 1    | NFS         | available | False     | archive         | scspr0030615001@cdotSingleSVM#aggr1 | nova              |
-    | ec5d2ddb-4573-4ee1-a1e8-2c8532c68e3d | myFlash   | 1    | NFS         | error     | False     | flash           | None                                | nova              |
-    +--------------------------------------+-----------+------+-------------+-----------+-----------+-----------------+-------------------------------------+-------------------+
+    +-------------------------------------+----------+----+------------+----------+-----------+-----------------+------------------------------------+------------------+
+    | ID                                  | Name     |Size| Share Proto| Status   | Is Public | Share Type Name | Host                               | Availability Zone|
+    +-------------------------------------+----------+----+------------+----------+-----------+-----------------+------------------------------------+------------------+
+    | 63bd5bef-298d-4e49-bea0-49a4cfb143f9| myDefault| 1  | NFS        | available| False     | default         | scspr0030615001@cdotSingleSVM#aggr1| nova             |
+    | 95f49ca6-723f-42d0-92f3-4be79c9ad7e6| myGeneral| 1  | NFS        | available| False     | general         | scspr0030615001@cdotSingleSVM#aggr1| nova             |
+    | e4774a70-3e70-4a7c-ab76-886f010efe0a| myArchive| 1  | NFS        | available| False     | archive         | scspr0030615001@cdotSingleSVM#aggr1| nova             |
+    | ec5d2ddb-4573-4ee1-a1e8-2c8532c68e3d| myFlash  | 1  | NFS        | error    | False     | flash           | None                               | nova             |
+    +-------------------------------------+----------+----+------------+----------+-----------+-----------------+------------------------------------+------------------+
+
+With Share Server Management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In this section we create three shares, two on the share network object built upon
+the Simple Neutron Network Plugin and one built upon the Configurable Neutron
+Network Plugin.
+
+::
+
+    $ manila create  --share-network storage-provider-network  --share-type shared --name shared1 NFS 1
+    +-----------------------------+--------------------------------------+
+    | Property                    | Value                                |
+    +-----------------------------+--------------------------------------+
+    | status                      | creating                             |
+    | share_type_name             | shared                               |
+    | description                 | None                                 |
+    | availability_zone           | None                                 |
+    | share_network_id            | 557243e9-aad6-4b63-8d86-70239ecf4993 |
+    | host                        |                                      |
+    | access_rules_status         | active                               |
+    | snapshot_id                 | None                                 |
+    | is_public                   | False                                |
+    | task_state                  | None                                 |
+    | snapshot_support            | True                                 |
+    | id                          | df8e63b1-3bb1-4c28-aad7-b29a80ac3e04 |
+    | size                        | 1                                    |
+    | user_id                     | 0c96b73302674429918df682c7d20f22     |
+    | name                        | shared1                              |
+    | share_type                  | db589d3e-09e9-49a2-a5be-05471d178eaa |
+    | has_replicas                | False                                |
+    | replication_type            | None                                 |
+    | created_at                  | 2017-09-01T11:20:21.000000           |
+    | share_proto                 | NFS                                  |
+    | consistency_group_id        | None                                 |
+    | source_cgsnapshot_member_id | None                                 |
+    | project_id                  | 37ceaca2938c409d8a6172f2da2ba788     |
+    | metadata                    | {}                                   |
+    +-----------------------------+--------------------------------------+
+
+::
+
+    $ manila create  --share-network storage-provider-network-2  --share-type shared --name shared2 NFS 1
+    +-----------------------------+--------------------------------------+
+    | Property                    | Value                                |
+    +-----------------------------+--------------------------------------+
+    | status                      | creating                             |
+    | share_type_name             | shared                               |
+    | description                 | None                                 |
+    | availability_zone           | None                                 |
+    | share_network_id            | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+    | host                        |                                      |
+    | access_rules_status         | active                               |
+    | snapshot_id                 | None                                 |
+    | is_public                   | False                                |
+    | task_state                  | None                                 |
+    | snapshot_support            | True                                 |
+    | id                          | 4f54f4e8-80f1-4b21-9fda-c0882f7837aa |
+    | size                        | 1                                    |
+    | user_id                     | 0c96b73302674429918df682c7d20f22     |
+    | name                        | shared2                              |
+    | share_type                  | db589d3e-09e9-49a2-a5be-05471d178eaa |
+    | has_replicas                | False                                |
+    | replication_type            | None                                 |
+    | created_at                  | 2017-09-01T11:21:55.000000           |
+    | share_proto                 | NFS                                  |
+    | consistency_group_id        | None                                 |
+    | source_cgsnapshot_member_id | None                                 |
+    | project_id                  | 37ceaca2938c409d8a6172f2da2ba788     |
+    | metadata                    | {}                                   |
+    +-----------------------------+--------------------------------------+
+
+::
+
+    $ manila create  --share-network storage-provider-network-2  --share-type shared --name shared3 NFS 1
+    +-----------------------------+--------------------------------------+
+    | Property                    | Value                                |
+    +-----------------------------+--------------------------------------+
+    | status                      | creating                             |
+    | share_type_name             | shared                               |
+    | description                 | None                                 |
+    | availability_zone           | None                                 |
+    | share_network_id            | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+    | host                        |                                      |
+    | access_rules_status         | active                               |
+    | snapshot_id                 | None                                 |
+    | is_public                   | False                                |
+    | task_state                  | None                                 |
+    | snapshot_support            | True                                 |
+    | id                          | 9c05879a-a063-487b-bed4-5c039d26e26a |
+    | size                        | 1                                    |
+    | user_id                     | 0c96b73302674429918df682c7d20f22     |
+    | name                        | shared3                              |
+    | share_type                  | db589d3e-09e9-49a2-a5be-05471d178eaa |
+    | has_replicas                | False                                |
+    | replication_type            | None                                 |
+    | created_at                  | 2017-09-01T11:28:15.000000           |
+    | share_proto                 | NFS                                  |
+    | consistency_group_id        | None                                 |
+    | source_cgsnapshot_member_id | None                                 |
+    | project_id                  | 37ceaca2938c409d8a6172f2da2ba788     |
+    | metadata                    | {}                                   |
+    +-----------------------------+--------------------------------------+
+
+::
+
+    $ manila list
+    +-------------------------------------+--------+------+------------+-----------+-----------+-----------------+-----------------------------------+------------------+
+    | ID                                  | Name   | Size | Share Proto| Status    | Is Public | Share Type Name | Host                              | Availability Zone|
+    +-------------------------------------+--------+------+------------+-----------+-----------+-----------------+-----------------------------------+------------------+
+    | 4f54f4e8-80f1-4b21-9fda-c0882f7837aa| shared2| 1    | NFS        | available | False     | shared          | scspr0030615001@cdotMultiSVM#aggr1| nova             |
+    | 9c05879a-a063-487b-bed4-5c039d26e26a| shared3| 1    | NFS        | available | False     | shared          | scspr0030615001@cdotMultiSVM#aggr1| nova             |
+    | df8e63b1-3bb1-4c28-aad7-b29a80ac3e04| shared1| 1    | NFS        | available | False     | shared          | scspr0030615001@cdotMultiSVM#aggr1| nova             |
+    +-------------------------------------+--------+------+------------+-----------+-----------+-----------------+-----------------------------------+------------------+
+
+Viewing Share Servers
+---------------------
+
+Shares created against any one share network are placed on the same SVM.
+Notice that there are two share-servers for the three shares.
+
+.. note::
+
+    Admin privileges are required to see or delete share-servers.
+    Notice the vserver names in the manila share-server-show command
+
+::
+
+    $ manila share-server-list
+    +--------------------------------------+-----------------------+--------+----------------------------+----------------------------------+----------------------------+
+    | Id                                   | Host                  | Status | Share Network              | Project Id                       | Updated_at                 |
+    +--------------------------------------+-----------------------+--------+----------------------------+----------------------------------+----------------------------+
+    | c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88 | chadcloud1@cdot_multi | active | storage-provider-network   | 37ceaca2938c409d8a6172f2da2ba788 | 2017-09-01T10:19:34.000000 |
+    | c3c6bbfb-c71d-416d-84f3-600575746a36 | chadcloud1@cdot_multi | active | storage-provider-network-2 | 37ceaca2938c409d8a6172f2da2ba788 | 2017-09-01T10:52:32.000000 |
+    +--------------------------------------+-----------------------+--------+----------------------------+----------------------------------+----------------------------+
+
+::
+
+    $ manila share-server-show c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88
+    +----------------------+-------------------------------------------------+
+    | Property             | Value                                           |
+    +----------------------+-------------------------------------------------+
+    | status               | active                                          |
+    | created_at           | 2017-09-01T10:19:24.000000                      |
+    | updated_at           | 2017-09-01T10:19:34.000000                      |
+    | share_network_name   | storage-provider-network                        |
+    | host                 | scspr0030615001@cdotMultiSVM                    |
+    | share_network_id     | 557243e9-aad6-4b63-8d86-70239ecf4993            |
+    | project_id           | 37ceaca2938c409d8a6172f2da2ba788                |
+    | id                   | c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88            |
+    | details:vserver_name | cdot_multi_c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88 |
+    +----------------------+-------------------------------------------------+
+
+::
+
+    +----------------------+-------------------------------------------------+
+    $ manila share-server-show c3c6bbfb-c71d-416d-84f3-600575746a36
+    +----------------------+-------------------------------------------------+
+    | Property             | Value                                           |
+    +----------------------+-------------------------------------------------+
+    | status               | active                                          |
+    | created_at           | 2017-09-01T10:52:28.000000                      |
+    | updated_at           | 2017-09-01T10:52:32.000000                      |
+    | share_network_name   | storage-provider-network-2                      |
+    | host                 | scspr0030615001@cdotMultiSVM                    |
+    | share_network_id     | e6a05868-fdfd-4da9-a914-6beab07b3121            |
+    | project_id           | 37ceaca2938c409d8a6172f2da2ba788                |
+    | id                   | c3c6bbfb-c71d-416d-84f3-600575746a36            |
+    | details:vserver_name | cdot_multi_c3c6bbfb-c71d-416d-84f3-600575746a36 |
+    +----------------------+-------------------------------------------------+
+
+Viewing Flexvols
+----------------
 
 We'll now look at the CLI output from the Data ONTAP cluster to see what
 FlexVol volumes were created for the Manila share objects, as well as
@@ -260,7 +637,7 @@ aggregates with SSD drives, as seen in the command output below.
               vol1         aggr1        online     RW         20MB    18.88MB    5%
     4 entries were displayed.
 
-    cluster-1::>
+::
 
     cluster-1::> volume show -vserver manila-vserver -space-guarantee none
     Vserver   Volume       Aggregate    State      Type       Size  Available Used%
@@ -268,6 +645,8 @@ aggregates with SSD drives, as seen in the command output below.
     manila-vserver
               share_e4774a70_3e70_4a7c_ab76_886f010efe0a
                            aggr1        online     RW          1GB    972.7MB    5%
+
+::
 
     cluster-1::> volume show -vserver manila-vserver -space-guarantee volume
     Vserver   Volume       Aggregate    State      Type       Size  Available Used%
@@ -282,10 +661,14 @@ aggregates with SSD drives, as seen in the command output below.
               vol1         aggr1        online     RW         20MB    18.88MB    5%
     3 entries were displayed.
 
-    cluster-1::>
+::
 
     cluster-1::> disk show -type SSD
     There are no entries matching your query.
+
+
+Granting Access To Shares
+-------------------------
 
 We'll now add access rules for any IP-connected client to mount these
 NFS shares with full read/write privileges.
@@ -298,7 +681,7 @@ NFS shares with full read/write privileges.
     +--------------+--------------------------------------+
     | share_id     | 63bd5bef-298d-4e49-bea0-49a4cfb143f9 |
     | deleted      | False                                |
-    | created_at   | 2015-03-25T13:25:24.577736           |
+    | created_at   | 2017-09-01T13:25:24.577736           |
     | updated_at   | None                                 |
     | access_type  | ip                                   |
     | access_to    | 0.0.0.0/0                            |
@@ -307,13 +690,16 @@ NFS shares with full read/write privileges.
     | deleted_at   | None                                 |
     | id           | c400bdd7-7e4f-49a4-b73d-5aa417af95c3 |
     +--------------+--------------------------------------+
+
+::
+
     $ manila access-allow 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 ip 0.0.0.0/0
     +--------------+--------------------------------------+
     | Property     | Value                                |
     +--------------+--------------------------------------+
     | share_id     | 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 |
     | deleted      | False                                |
-    | created_at   | 2015-03-25T13:25:47.417271           |
+    | created_at   | 2017-09-01T13:25:47.417271           |
     | updated_at   | None                                 |
     | access_type  | ip                                   |
     | access_to    | 0.0.0.0/0                            |
@@ -322,13 +708,16 @@ NFS shares with full read/write privileges.
     | deleted_at   | None                                 |
     | id           | 09f8f699-1cec-4519-8aaa-a30d346ad54c |
     +--------------+--------------------------------------+
+
+::
+
     $ manila access-allow e4774a70-3e70-4a7c-ab76-886f010efe0a ip 0.0.0.0/0
     +--------------+--------------------------------------+
     | Property     | Value                                |
     +--------------+--------------------------------------+
     | share_id     | e4774a70-3e70-4a7c-ab76-886f010efe0a |
     | deleted      | False                                |
-    | created_at   | 2015-03-25T13:26:03.344004           |
+    | created_at   | 2017-09-01T13:26:03.344004           |
     | updated_at   | None                                 |
     | access_type  | ip                                   |
     | access_to    | 0.0.0.0/0                            |
@@ -338,6 +727,9 @@ NFS shares with full read/write privileges.
     | id           | d0565115-8369-455e-ad8f-3dd7c56037ea |
     +--------------+--------------------------------------+
 
+Viewing Export Locations
+------------------------
+
 We'll now list the export location(s) for one of the new shares to see
 its network path. There may be multiple export locations for a given
 share, at least one of which should be listed as preferred; clients
@@ -345,7 +737,8 @@ should use the preferred path for optimum performance.
 
 ::
 
-    $ manila share-export-location-list 63bd5bef-298d-4e49-bea0-49a4cfb143f9 --columns Path,Preferred
+    $ manila share-export-location-list 63bd5bef-298d-4e49-bea0-49a4cfb143f9 \
+             --columns Path,Preferred
     +-------------------------------------------------------------+-----------+
     | Path                                                        | Preferred |
     +-------------------------------------------------------------+-----------+
@@ -362,10 +755,17 @@ necessary before creating the CIFS share.
 
 ::
 
-    manila share-network-create --neutron-net-id <neutron-net-id> --neutron-subnet-id <neutron-subnet-id> --name <share_network_name>
+    $ manila share-network-create --neutron-net-id <neutron-net-id> \
+                                  --neutron-subnet-id <neutron-subnet-id> \
+                                  --name <share_network_name>
 
-    manila security-service-create active_directory --dns-ip <dns_ip> --domain <dns_domain> --user <user_name> --password <password> --name <security_service_name>
+::
 
+    $ manila security-service-create active_directory --dns-ip <dns_ip> \
+                                                      --domain <dns_domain> \
+                                                      --user <user_name>
+                                                      --password <password>
+                                                      --name <security_service_name>
     +-------------+--------------------------------------+
     | Property    | Value                                |
     +-------------+--------------------------------------+
@@ -384,10 +784,11 @@ necessary before creating the CIFS share.
     | description | None                                 |
     +-------------+--------------------------------------+
 
-    manila share-network-security-service-add <share_network> <security_service>
+    $ manila share-network-security-service-add <share_network> <security_service>
 
-    manila create CIFS 1 --share-network <share_network_name> --share-type general
+::
 
+    $ manila create CIFS 1 --share-network <share_network_name> --share-type general
     +-----------------------------+--------------------------------------+
     | Property                    | Value                                |
     +-----------------------------+--------------------------------------+
@@ -522,6 +923,8 @@ create a CG using one of the existing types.
     | d7f70347-7464-4297-8d8e-12fa13e64775 | nope    | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
 
+::
+
     $ manila cg-create --name cg_1 --description "cg_1 consistency group" --share_type "type_1"
     +----------------------+--------------------------------------+
     | Property             | Value                                |
@@ -539,12 +942,16 @@ create a CG using one of the existing types.
     | name                 | cg_1                                 |
     +----------------------+--------------------------------------+
 
+::
+
     $ manila cg-list
     +--------------------------------------+------+------------------------+-----------+
     | id                                   | name | description            | status    |
     +--------------------------------------+------+------------------------+-----------+
     | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 | cg_1 | cg_1 consistency group | available |
     +--------------------------------------+------+------------------------+-----------+
+
+::
 
     $ manila cg-show 9379f22c-a5c0-4455-bd25-ad373e93d7c3
     +----------------------+--------------------------------------+
@@ -591,6 +998,8 @@ Next we'll create two shares in the new consistency group.
     | metadata                    | {}                                   |
     +-----------------------------+--------------------------------------+
 
+::
+
     $ manila create --name share_2 --consistency-group "cg_1" --share_type "type_1" NFS 1
     +-----------------------------+--------------------------------------+
     | Property                    | Value                                |
@@ -632,12 +1041,16 @@ Next we'll create two CG snapshots of the new consistency group.
     | description          | first snapshot of cg-1               |
     +----------------------+--------------------------------------+
 
+::
+
     $ manila cg-snapshot-list
     +--------------------------------------+------------+------------------------+-----------+
     | id                                   | name       | description            | status    |
     +--------------------------------------+------------+------------------------+-----------+
     | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc | snapshot_1 | first snapshot of cg-1 | available |
     +--------------------------------------+------------+------------------------+-----------+
+
+::
 
     $ manila cg-snapshot-show 'snapshot_1'
     +----------------------+--------------------------------------+
@@ -652,6 +1065,8 @@ Next we'll create two CG snapshots of the new consistency group.
     | description          | first snapshot of cg-1               |
     +----------------------+--------------------------------------+
 
+::
+
     $ manila cg-snapshot-create --name snapshot_2 --description 'second snapshot of cg-1' 'cg_1'
     +----------------------+--------------------------------------+
     | Property             | Value                                |
@@ -664,6 +1079,8 @@ Next we'll create two CG snapshots of the new consistency group.
     | id                   | c671dcc5-10bf-4445-b96e-b12723ade738 |
     | description          | second snapshot of cg-1              |
     +----------------------+--------------------------------------+
+
+::
 
     $ manila cg-snapshot-list
     +--------------------------------------+------------+-------------------------+-----------+
@@ -750,41 +1167,43 @@ Next we'll create a share.
     | metadata                    | {}                                   |
     +-----------------------------+--------------------------------------+
 
+::
+
     manila show f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
-    +-----------------------------+-------------------------------------------------------------------+
-    | Property                    | Value                                                             |
-    +-----------------------------+-------------------------------------------------------------------+
-    | status                      | available                                                         |
-    | share_type_name             | replication                                                       |
-    | description                 | None                                                              |
-    | availability_zone           | nova                                                              |
-    | share_network_id            | None                                                              |
-    | export_locations            |                                                                   |
-    |                             | path = 172.20.124.230:/share_11265e8a_200c_4e0a_a40f_b7a1117001ed |
-    |                             | preferred = True                                                  |
-    |                             | is_admin_only = False                                             |
-    |                             | id = d9634102-e859-42ab-842e-687c209067e3                         |
-    |                             | share_instance_id = 11265e8a-200c-4e0a-a40f-b7a1117001ed          |
-    | share_server_id             | None                                                              |
-    | host                        | openstack2@cmodeSSVMNFS#aggr3                                     |
-    | access_rules_status         | active                                                            |
-    | snapshot_id                 | None                                                              |
-    | is_public                   | False                                                             |
-    | task_state                  | None                                                              |
-    | snapshot_support            | True                                                              |
-    | id                          | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc                              |
-    | size                        | 1                                                                 |
-    | name                        | None                                                              |
-    | share_type                  | ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8                              |
-    | has_replicas                | False                                                             |
-    | replication_type            | dr                                                                |
-    | created_at                  | 2016-03-23T18:16:22.000000                                        |
-    | share_proto                 | NFS                                                               |
-    | consistency_group_id        | None                                                              |
-    | source_cgsnapshot_member_id | None                                                              |
-    | project_id                  | 3d1d93550b1448f094389d6b5df9659e                                  |
-    | metadata                    | {}                                                                |
-    +-----------------------------+-------------------------------------------------------------------+
+    +----------------------------+-----------------------------------------------------------------+
+    | Property                   |Value                                                            |
+    +----------------------------+-----------------------------------------------------------------+
+    | status                     |available                                                        |
+    | share_type_name            |replication                                                      |
+    | description                |None                                                             |
+    | availability_zone          |nova                                                             |
+    | share_network_id           |None                                                             |
+    | export_locations           |                                                                 |
+    |                            |path = 172.20.124.230:/share_11265e8a_200c_4e0a_a40f_b7a1117001ed|
+    |                            |preferred = True                                                 |
+    |                            |is_admin_only = False                                            |
+    |                            |id = d9634102-e859-42ab-842e-687c209067e3                        |
+    |                            |share_instance_id = 11265e8a-200c-4e0a-a40f-b7a1117001ed         |
+    | share_server_id            |None                                                             |
+    | host                       |openstack2@cmodeSSVMNFS#aggr3                                    |
+    | access_rules_status        |active                                                           |
+    | snapshot_id                |None                                                             |
+    | is_public                  |False                                                            |
+    | task_state                 |None                                                             |
+    | snapshot_support           |True                                                             |
+    | id                         |f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc                             |
+    | size                       |1                                                                |
+    | name                       |None                                                             |
+    | share_type                 |ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8                             |
+    | has_replicas               |False                                                            |
+    | replication_type           |dr                                                               |
+    | created_at                 |2016-03-23T18:16:22.000000                                       |
+    | share_proto                |NFS                                                              |
+    | consistency_group_id       |None                                                             |
+    | source_cgsnapshot_member_id|None                                                             |
+    | project_id                 |3d1d93550b1448f094389d6b5df9659e                                 |
+    | metadata                   |{}                                                               |
+    +----------------------------+-----------------------------------------------------------------+
 
 When a share is created with a share type that has the replication\_type
 extra spec, it will be treated as the primary/'active' replica. Let's
@@ -793,11 +1212,11 @@ list the replicas.
 ::
 
     $ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
-    +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
-    | ID                                   | Status    | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
-    +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
-    | 11265e8a-200c-4e0a-a40f-b7a1117001ed | available | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS#aggr3       | nova              | 2016-03-23T18:16:34.000000 |
-    +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+    +--------------------------------------+-----------+---------------+--------------------------------------+------------------------------+-------------------+----------------------------+
+    | ID                                   | Status    | Replica State | Share ID                             | Host                         | Availability Zone | Updated At                 |
+    +--------------------------------------+-----------+---------------+--------------------------------------+------------------------------+-------------------+----------------------------+
+    | 11265e8a-200c-4e0a-a40f-b7a1117001ed | available | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS#aggr3| nova              | 2016-03-23T18:16:34.000000 |
+    +--------------------------------------+-----------+---------------+--------------------------------------+------------------------------+-------------------+----------------------------+
 
 Next we'll create a replica of the share.
 
@@ -818,6 +1237,8 @@ Next we'll create a replica of the share.
     | replica_state     | None                                 |
     | id                | b3191744-cee9-478b-b906-c5a7a3934adb |
     +-------------------+--------------------------------------+
+
+::
 
     manila share-replica-show b3191744-cee9-478b-b906-c5a7a3934adb
     +-------------------+--------------------------------------+
@@ -881,6 +1302,8 @@ Finally, let us failover to our other replica.
     | b3191744-cee9-478b-b906-c5a7a3934adb | replication_change | in_sync       | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS2#aggr4      | nova              | 2016-03-23T18:31:08.000000 |
     +--------------------------------------+--------------------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
 
+::
+
     $ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
     +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
     | ID                                   | Status    | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
@@ -896,20 +1319,22 @@ In this section, we'll migrate a share from one pool to another.
 
 ::
 
-            $ manila migration-start myFlash ocata@cmode_multi_svm_nfs#manila --writable False --preserve-snapshots True --preserve-metadata True --nondisruptive True
+    $ manila migration-start myFlash ocata@cmode_multi_svm_nfs#manila --writable False \
+                                                                      --preserve-snapshots True \
+                                                                      --preserve-metadata True \
+                                                                      --nondisruptive True
 
-We can check the migration progress by using the
-``migration-get-progress`` command.
+We can check the migration progress by using the ``migration-get-progress`` command.
 
 ::
 
-            $ manila migration-get-progress myFlash
-            +----------------+-------------------------------+
-            | Property       | Value                         |
-            +----------------+-------------------------------+
-            | task_state     | migration_driver_in_progress  |
-            | total_progress | 99                            |
-            +----------------+-------------------------------+
+    $ manila migration-get-progress myFlash
+    +----------------+-------------------------------+
+    | Property       | Value                         |
+    +----------------+-------------------------------+
+    | task_state     | migration_driver_in_progress  |
+    | total_progress | 99                            |
+    +----------------+-------------------------------+
 
 Once the task state has transitioned to
 ``migration_driver_phase1_done``, we can complete the migration process

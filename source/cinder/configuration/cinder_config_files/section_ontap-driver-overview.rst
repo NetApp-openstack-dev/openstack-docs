@@ -1,6 +1,6 @@
 .. _netapp_ontap_unified_driver_overview:
 
-NetApp ONTAP Unified Driver (Cinder): Overview
+NetApp Unified Driver (Cinder): Overview
 ==================================================================
 
 NetApp drivers for clustered Data ONTAP and Data ONTAP operating in
@@ -16,8 +16,7 @@ NetApp’s contribution strategy involves adding all new capabilities
 directly into the upstream OpenStack Block Storage repositories, so all
 the features are available regardless of which distribution you choose
 when deploying OpenStack. Bug fixes are delivered into the appropriate
-branches that represent the different releases of OpenStack (e.g.
-``trunk``, ``stable/icehouse``, ``stable/havana``, etc).
+branches that represent the different releases of OpenStack.
 
 On occasion, it may be necessary for NetApp to deliver capability to a
 previous release of OpenStack that can not be accepted in the upstream

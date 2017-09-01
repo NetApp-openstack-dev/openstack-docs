@@ -1,4 +1,4 @@
-Theory of Operations: Mapping NetApp to OpenStack terminology
+Theory of Operation: Mapping NetApp to OpenStack Terminology
 =============================================================
 
 Cinder Backends and Storage Virtual Machines
