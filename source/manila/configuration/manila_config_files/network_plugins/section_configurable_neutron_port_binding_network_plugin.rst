@@ -24,16 +24,16 @@ Manila Network Plugins: Configurable Neutron Port Binding Network Plugin
    a new share server..
 
 In spirit this plugin works exactly like the Simple Neutron Port Binding
-Network Plugin. The only difference being that the Neutron network is not 
-configured within ``manila.conf`` by the administrator. Use of this plugin 
-allows Manila to derive network information from the Share Network objects 
-created by the tenants. To set up the configurable Neutron port binding 
-network plugin, the following options should be added to the driver-specific 
-stanza within the Manila configuration file (``manila.conf``). 
+Network Plugin. The only difference being that the Neutron network is not
+configured within ``manila.conf`` by the administrator. Use of this plugin
+allows Manila to derive network information from the Share Network objects
+created by the tenants. To set up the configurable Neutron port binding
+network plugin, the following options should be added to the driver-specific
+stanza within the Manila configuration file (``manila.conf``).
 The Neutron binding profile in this example is for a Cisco Nexus 9000 switch:
 
 
-.. figure:: ../../../images/manila_hierarchical_port_binding.png
+.. figure:: ../../../../images/manila_hierarchical_port_binding.png
    :alt: Hierarchical Network Topology
    :width: 10in
 
@@ -41,16 +41,16 @@ The Neutron binding profile in this example is for a Cisco Nexus 9000 switch:
 
 ::
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronBindNetworkPlugin
-                        neutron_host_id = netapp_lab42
-                        neutron_vnic_type = baremetal
-                        neutron_binding_profiles = phys1
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronBindNetworkPlugin
+    neutron_host_id = netapp_lab42
+    neutron_vnic_type = baremetal
+    neutron_binding_profiles = phys1
 
-                        [phys1]
-                        neutron_switch_id = 10.63.152.254
-                        neutron_port_id = 1/1-4
-                        neutron_switch_info = switch_ip:10.63.152.254
-                    
+    [phys1]
+    neutron_switch_id = 10.63.152.254
+    neutron_port_id = 1/1-4
+    neutron_switch_info = switch_ip:10.63.152.254
+
 
 `table\_title <#manila.configuration.network.neutron_bind.options>`__
 lists the configuration options available for the configurable Neutron

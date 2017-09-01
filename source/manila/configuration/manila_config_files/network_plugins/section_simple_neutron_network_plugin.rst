@@ -20,7 +20,7 @@ Manila Network Plugins: Simple Neutron Network Plugin
 
 
 In this configuration, administrators set up a single neutron network
-and specify the network information in ``manila.conf``. Manila will create 
+and specify the network information in ``manila.conf``. Manila will create
 network ports on the network and gather details regarding the IP address,
 gateway, netmask and MTU from this network. These details are used by the
 NetApp driver to create Data Logical Interfaces (LIFs) for the SVM
@@ -32,10 +32,10 @@ the driver-specific stanza within the Manila configuration file
 
 ::
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlugin
-                        neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
-                        neutron_subnet_id= 447732be-4cf2-42b0-83dc-4b6f4ed5368c
-                    
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlugin
+    neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
+    neutron_subnet_id= 447732be-4cf2-42b0-83dc-4b6f4ed5368c
+
 
 `table\_title <#manila.configuration.network.neutron.options>`__ lists
 the configuration options available for the Neutron network plugin:
