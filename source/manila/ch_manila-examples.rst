@@ -2,8 +2,8 @@ Examples
 ========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   examples/section_manila-conf.rst
-   examples/section_manila-cdot.rst
-   examples/section_manila-cli.rst
+   examples/ontap_setup/section_manila-cdot-with-share-server.rst
+   examples/ontap_setup/section_manila-cdot-without-share-server.rst
+   examples/openstack_command_line/section_manila-cli.rst

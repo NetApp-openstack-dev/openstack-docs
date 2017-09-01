@@ -1,14 +1,14 @@
-Data ONTAP Configuration
+ONTAP Configuration
 ========================
 
 .. _manila_data_ontap_prerequisites:
 
-Data ONTAP Prerequisites
+ONTAP Prerequisites
 ------------------------
 
-The prerequisites for Data ONTAP are:
+The prerequisites for ONTAP are:
 
--  The driver requires a storage controller running Clustered Data ONTAP
+-  The driver requires a storage controller running ONTAP
    8.2 or later.
 
 -  The storage system should have the following licenses applied:
@@ -76,13 +76,13 @@ considerations:
 Account Permission Considerations
 ---------------------------------
 
-When configuring NetApp's Manila drivers to interact with a clustered
-Data ONTAP instance, it is important to choose the correct
+When configuring NetApp's Manila drivers to interact with an
+ONTAP instance, it is important to choose the correct
 administrative credentials to use. While an account with cluster-level
 administrative permissions is normally utilized, it is possible to use
 an account with reduced scope that has the appropriate privileges
 granted to it. In order to use an SVM-scoped account with the Manila
-driver and clustered Data ONTAP and have access to the full set of
+driver and ONTAP and have access to the full set of
 features (including Manila Share Type Extra Specs support) availed by
 the Manila driver, be sure to add the access levels for the commands
 shown in :ref:`Table 6.17, “Common Access Level Permissions Required with Any

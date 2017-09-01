@@ -1,6 +1,6 @@
 .. _setup_ontap_for_cinder:
 
-Setup Clustered ONTAP for Cinder
+Setup ONTAP for Cinder
 ======================================
 
 This section provides an example set of configuration commands to be executed
@@ -11,7 +11,9 @@ licenses present.
 
 Licenses
 --------
-    assign licenses::
+    Assign licenses
+
+    ::
 
         license add --license-code xxxxxxxxxxxxxx
 
@@ -19,7 +21,9 @@ Licenses
 
 Aggregates
 ----------
-    create aggrs::
+    Create aggrs
+
+    ::
 
         storage aggregate create -aggregate aggr1 -diskcount 24 -nodes \
         democluster-1-01
@@ -29,7 +33,9 @@ Aggregates
 
 Storage Virtual Machines
 ------------------------
-    create SVMs::
+    Create SVMs
+
+    ::
 
         vserver create -vserver demo-iscsi-svm -rootvolume vol1 \
         -aggregate aggr1 -ns-switch file -rootvolume-security-style unix
@@ -40,11 +46,15 @@ Storage Virtual Machines
 
 Configure iSCSI 
 ---------------
-    iSCSI setup::
+    Setup iSCSI
+
+    ::
 
         iscsi create -vserver demo-iscsi-svm
 
-    Networking setup::
+    Setup networking
+
+    ::
 
         network interface create -vserver demo-iscsi-svm -lif \
         demo-iscsi-data -role data -data-protocol iscsi -home-node \
@@ -66,7 +76,9 @@ Configure iSCSI
         democluster-1-02 -home-port e0f -address 10.63.40.152 \
         -netmask 255.255.192.0
 
-    Volume setup::
+    Setup volume
+
+    ::
 
         volume create -vserver demo-iscsi-svm -volume vol1 \
         -aggregate aggr1 -size 1024g
@@ -94,11 +106,15 @@ Configure iSCSI
 
 Configure NFS 
 -------------
-    NFS Setup::
+    Setup NFS
+
+    ::
 
         nfs create -vserver demo-nfs-svm -access true
 
-    Networking setup::
+    Setup networking
+
+    ::
 
         network interface create -vserver demo-nfs-svm -lif node1-nfs-e0c \
         -role data -home-node democluster-1-01 -home-port e0c -address \
@@ -116,13 +132,17 @@ Configure NFS
         -role data -home-node democluster-1-02 -home-port e0d -address \
         10.63.41.150 -netmask 255.255.192.0
 
-    Export policy rule setup::
+    Setup export policy rule
+
+    ::
 
         vserver export-policy rule create -vserver demo-nfs-svm \
         -policyname default -clientmatch 0.0.0.0/0 -rorule any -rwrule \
         any -superuser any -anon 0
 
-    Volume setup::
+    Setup volume
+
+    ::
 
         volume create -vserver demo-nfs-svm -volume vol1_dedup \
         -aggregate aggr1 -size 1024g -junction-path /vo1_dedup
@@ -137,7 +157,9 @@ Configure NFS
         -aggregate aggr2 -size 1024g -type DP
 
 
-    SSC features::
+    SSC features
+
+    ::
 
         volume efficiency on -vserver demo-nfs-svm -volume vol1_dedup
 
@@ -153,7 +175,9 @@ Configure NFS
         snapmirror initialize -source-path demo-nfs-svm:vol4_mirrored \
         -destination-path demo-nfs-svm:vol4_mirror_dest -type DP
 
-    Enable NFS v4.0, v4.1, pNFS::
+    Enable NFS v4.0, v4.1, pNFS
+
+    ::
 
         nfs modify -vserver demo-nfs-svm -v4.0 enabled -v4.1 enabled \
         -v4.1-pnfs enabled
