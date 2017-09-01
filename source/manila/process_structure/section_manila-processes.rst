@@ -19,7 +19,7 @@ There are three processes that make up the Manila service:
    is multi-threaded and typically has one thread of execution per
    Manila backend as defined in the Manila configuration file.
 
-.. figure:: ../images/manila_process_layout.png
+.. figure:: ../../images/manila_process_layout.png
    :alt: Manila Processes Concept Diagram
    :scale: 90
 
@@ -34,7 +34,7 @@ selected that uses share servers.
 
 .. _figure-6.2:
 
-.. figure:: ../images/manila_workflow_with_share_servers.png
+.. figure:: ../../images/manila_workflow_with_share_servers.png
    :alt: Manila Workflow - Share Creation with Share Servers
    :scale: 90
 
@@ -97,7 +97,7 @@ selected that does not use share servers.
 
 .. _figure-6.3:
 
-.. figure:: ../images/manila_workflow_without_share_servers.png
+.. figure:: ../../images/manila_workflow_without_share_servers.png
    :alt: Manila Workflow - Share Creation without Share Servers
    :scale: 90
 
