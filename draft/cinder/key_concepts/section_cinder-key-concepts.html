@@ -128,7 +128,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -183,7 +183,7 @@ Cinder.</p>
 <p>The actual blocks provisioned in support of a Cinder volume reside on a
 single Cinder backend. Starting in the Havana release, a Cinder volume
 can be migrated from one storage backend to another within a deployment
-of the Cinder service; refer to the section called “<a class="reference internal" href="../examples/section_cinder-cli.html#cinder-cli"><span class="std std-ref">Cinder Command Line Interface (CLI)</span></a>”
+of the Cinder service; refer to the section called “<a class="reference internal" href="../examples/openstack_command_line/section_cinder-cli.html#cinder-cli"><span class="std std-ref">Cinder Command Line Interface (CLI)</span></a>”
 for an example of volume migration.</p>
 <p>The <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">manage</span></code> command allows importing existing storage objects
 that are not managed by Cinder into new Cinder volumes. The operation
@@ -196,13 +196,13 @@ on the protocol (iSCSI/FC/NFS) and driver (Data ONTAP operating in
 7-mode, clustered Data ONTAP, or E-Series) in use. This feature is
 useful in migration scenarios where virtual machines or other data need
 to be managed by Cinder; refer to the section called
-“<a class="reference internal" href="../examples/section_cinder-cli.html#cinder-manage"><span class="std std-ref">Cinder Manage Usage</span></a>” for an example of the <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">manage</span></code> command.</p>
+“<a class="reference internal" href="../examples/openstack_command_line/section_cinder-cli.html#cinder-manage"><span class="std std-ref">Cinder Manage Usage</span></a>” for an example of the <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">manage</span></code> command.</p>
 <p>The <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">unmanage</span></code> command allows Cinder to cease management of a
 particular Cinder volume. All data stored in the Cinder database related
 to the volume is removed, but the volume’s backing file, LUN, or
 appropriate storage object is not deleted. This allows the volume to be
 transferred to another environment for other use cases; refer to the
-section called “<a class="reference internal" href="../examples/section_cinder-cli.html#cinder-unmanage"><span class="std std-ref">Cinder Unmanage Usage</span></a>” for an example of the
+section called “<a class="reference internal" href="../examples/openstack_command_line/section_cinder-cli.html#cinder-unmanage"><span class="std std-ref">Cinder Unmanage Usage</span></a>” for an example of the
 <code class="docutils literal"><span class="pre">cinder</span> <span class="pre">unmanage</span></code> command.</p>
 </div>
 <div class="section" id="snapshot">
@@ -230,7 +230,7 @@ of <code class="docutils literal"><span class="pre">cinder.conf</span></code>; h
 comma-separated list of backend names, and each backend name have
 its own configuration stanza with the same name as listed in the
 <code class="docutils literal"><span class="pre">enabled_backends</span></code> option. Refer to the section called
-“<a class="reference internal" href="../configuration/cinder_config_files/section_cinder-conf.html#cinder"><span class="std std-ref">Cinder &amp; cinder.conf</span></a>” for an example of the use of this option.</p>
+“<a class="reference internal" href="../configuration/cinder_config_files/section_cinder-conf.html#cinder"><span class="std std-ref">Cinder.conf: Overview</span></a>” for an example of the use of this option.</p>
 </div>
 </div>
 <div class="section" id="driver">
@@ -499,7 +499,7 @@ NetApp</a></p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -633,7 +633,7 @@ NetApp</a></p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: eea867c2594d26d42950147216b34146c4ffaee3";
+    var gitSha = "SHA: 9182ceb0c746bf820b601d1aee65dbe8f222a487";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Key Concepts in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -644,7 +644,7 @@ NetApp</a></p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-01 06:34";
+    var buildstring = "Release: 2017.2 on 2017-09-01 13:24";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

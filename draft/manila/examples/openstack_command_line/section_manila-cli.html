@@ -1,0 +1,1577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Manila Command Line Interface (CLI)</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/manila/examples/openstack_command_line/section_manila-cli.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/"></a>
+      </div>
+      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Social Media <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://https://www.github.com/netapp">github/netapp</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://netapp.io/slack">slack</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/@openstacknetapp">twitter/@openstacknetapp</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.youtube.com/user/NetAppTV">youtube/users/NetAppTV</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/cinder.html">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/glance.html">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/ocata/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/nova.html">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/ocata/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Manila Command Line Interface (CLI)</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="../ontap_setup/section_manila-cdot-without-share-server.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Setup ONTAP: Without Share Server"></i></a>
+    
+    
+    <a href="../../../ch_swift.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Object Storage Service (Swift)"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Manila Command Line Interface (CLI)</a><ul>
+<li><a class="reference internal" href="#manila-service-verification">Manila Service Verification</a></li>
+<li><a class="reference internal" href="#creating-and-defining-manila-share-types">Creating and Defining Manila Share Types</a></li>
+<li><a class="reference internal" href="#creating-manila-share-network-objects">Creating Manila Share Network Objects</a><ul>
+<li><a class="reference internal" href="#network-plugin-neutronnetworkplugin">Network Plugin: NeutronNetworkPlugin</a></li>
+<li><a class="reference internal" href="#network-plugin-neutronsinglenetworkplugin">Network Plugin: NeutronSingleNetworkPlugin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-manila-shares-with-share-types">Creating Manila Shares with Share Types</a><ul>
+<li><a class="reference internal" href="#without-share-server-management">Without Share Server Management</a></li>
+<li><a class="reference internal" href="#with-share-server-management">With Share Server Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#viewing-share-servers">Viewing Share Servers</a></li>
+<li><a class="reference internal" href="#viewing-flexvols">Viewing Flexvols</a></li>
+<li><a class="reference internal" href="#granting-access-to-shares">Granting Access To Shares</a></li>
+<li><a class="reference internal" href="#viewing-export-locations">Viewing Export Locations</a></li>
+<li><a class="reference internal" href="#creating-a-manila-cifs-share-with-security-service">Creating a Manila CIFS share with security service</a></li>
+<li><a class="reference internal" href="#importing-and-exporting-manila-shares">Importing and Exporting Manila Shares</a></li>
+<li><a class="reference internal" href="#creating-manila-consistency-groups">Creating Manila Consistency Groups</a></li>
+<li><a class="reference internal" href="#creating-manila-share-replicas">Creating Manila Share Replicas</a></li>
+<li><a class="reference internal" href="#migrating-manila-shares">Migrating Manila Shares</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="manila-command-line-interface-cli">
+<h1>Manila Command Line Interface (CLI)<a class="headerlink" href="#manila-command-line-interface-cli" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="manila-service-verification">
+<h2>Manila Service Verification<a class="headerlink" href="#manila-service-verification" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we use the Manila CLI to verify that the configuration
+presented in the section called “<a class="reference internal" href="../../configuration/manila_config_files/section_sample_manila-conf.html#manila-conf-ex"><span class="std std-ref">Sample manila.conf</span></a>” has been
+properly initialized by Manila.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>stack@ostk-controller:~/$ manila service-list
++----+------------------+-------------------------------+------+---------+-------+----------------------------+
+| Id | Binary           | Host                          | Zone | Status  | State | Updated_at                 |
++----+------------------+-------------------------------+------+---------+-------+----------------------------+
+| 1  | manila-scheduler | ostk-controller               | nova | enabled | up    | 2017-09-01T12:25:12.000000 |
+| 2  | manila-share     | ostk-controller@cdotSingleSVM | nova | enabled | up    | 2017-09-01T12:25:15.000000 |
+| 2  | manila-share     | ostk-controller@cdoMultiSVM   | nova | enabled | up    | 2017-09-01T12:25:15.000000 |
++----+------------------+-------------------------------+------+---------+-------+----------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-and-defining-manila-share-types">
+<h2>Creating and Defining Manila Share Types<a class="headerlink" href="#creating-and-defining-manila-share-types" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we create a variety of Manila Share Types that leverage
+both the default capabilities of each driver, as well as the NetApp
+specific extra specs described in
+<a class="reference internal" href="../../deployment_choice/section_creating_service_catalog.html#table-6-10"><span class="std std-ref">Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”</span></a>.</p>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">general</span></code> type provisions Manila shares onto the cDOT backend
+using all the default settings, including snapshot support.</li>
+<li>The <code class="docutils literal"><span class="pre">flash</span></code> type provisions Manila shares onto any pool that
+contains only SSD disks within the aggregate.</li>
+<li>The <code class="docutils literal"><span class="pre">archive</span></code> type provisions Manila shares onto any pool that
+contains SAS drives within the aggregate, and also creates thin
+provisioned FlexVol volumes.</li>
+<li>The <code class="docutils literal"><span class="pre">shared</span></code> type provisions Manila a new SVM for each share
+network object.  Snapshot support is enabled.</li>
+<li>The <code class="docutils literal"><span class="pre">default</span></code> type provisions Manila shares onto any pool of any
+driver without share server management and snapshot support.</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create general False
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| deadeebf-19a2-47b1-9d7f-1c3806cfcb72 | general | public     | -          | driver_handles_share_servers : False |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create flash False
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| 37fb9f7e-4ffe-4900-8dba-c6d4251e588f | flash   | public     | -          | driver_handles_share_servers : False |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create archive False
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| 20e4b58d-aab6-42ae-8e9b-8f9d44f17276 | archive | public     | -          | driver_handles_share_servers : False |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create --snapshot_support True shared True
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| db589d3e-09e9-49a2-a5be-05471d178eaa | shared  | public     | -          | driver_handles_share_servers : True  |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>In the Mitaka and Newton release of OpenStack, snapshot support is
+enabled by default for a newly created share type. Starting with the
+Ocata release, the <code class="docutils literal"><span class="pre">snapshot_support</span></code> extra spec must be set to
+<code class="docutils literal"><span class="pre">True</span></code> in order to allow snapshots for a share type. If the
+‘snapshot_support’ extra_spec is omitted or if it is set to False,
+users would not be able to create snapshots on shares of this share
+type.</p>
+<p>Other snapshot-related extra specs in the Ocata release (and later)
+include:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">create_share_from_snapshot_support</span></code>: Allow the creation of a
+new share from a snapshot</li>
+<li><code class="docutils literal"><span class="pre">revert_to_snapshot_support</span></code>: Allow a share to be reverted to
+the most recent snapshot</li>
+</ul>
+<p class="last">If an extra-spec is left unset, it will default to ‘False’, but a
+newly created share may or may not end up on a backend with the
+associated capability. Set the extra spec explicitly to <code class="docutils literal"><span class="pre">False</span></code>,
+if you would like your shares to be created only on backends that do
+not support the associated capabilities. For a table of NetApp
+supported extra specs, refer to
+<a class="reference internal" href="../../deployment_choice/section_creating_service_catalog.html#table-6-10"><span class="std std-ref">Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”</span></a>.</p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-key general set share_backend_name=cdotSingleSVM
+$ manila type-key general set snapshot_support=True
+$ manila type-key general set revert_to_snapshot_support=True
+$ manila type-key general set create_share_from_snapshot_support=True
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-key default set snapshot_support=False
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-key flash set netapp_disk_type=SSD
+$ manila type-key flash set netapp_hybrid_aggregate=&quot;&lt;is&gt; False&quot;
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-key archive set thin_provisioning=&quot;&lt;is&gt; True&quot; netapp_disk_type=SAS
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-key shared set snapshot_support=True
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila extra-specs-list
++--------------------------------------+---------+--------------------------------------------+
+| ID                                   | Name    | all_extra_specs                            |
++--------------------------------------+---------+--------------------------------------------+
+| 20e4b58d-aab6-42ae-8e9b-8f9d44f17276 | archive | driver_handles_share_servers : False       |
+|                                      |         | netapp_disk_type : SAS                     |
+|                                      |         | thin_provisioning : &lt;is&gt; True              |
+| 37fb9f7e-4ffe-4900-8dba-c6d4251e588f | flash   | netapp_disk_type : SSD                     |
+|                                      |         | netapp_hybrid_aggregate : &lt;is&gt; False       |
+|                                      |         | driver_handles_share_servers : False       |
+| 447732be-4cf2-42b0-83dc-4b6f4ed5368d | default | driver_handles_share_servers : False       |
+|                                      |         | snapshot_support : False                   |
+| deadeebf-19a2-47b1-9d7f-1c3806cfcb72 | general | share_backend_name : cdotSingleSVM         |
+|                                      |         | driver_handles_share_servers : False       |
+|                                      |         | snapshot_support : True                    |
+|                                      |         | revert_to_snapshot_support : True          |
+|                                      |         | create_share_from_snapshot_support : True  |
+| db589d3e-09e9-49a2-a5be-05471d178eaa | shared  | snapshot_support : True                    |
+|                                      |         | driver_handles_share_servers : True        |
++--------------------------------------+---------+--------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-manila-share-network-objects">
+<h2>Creating Manila Share Network Objects<a class="headerlink" href="#creating-manila-share-network-objects" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we create two manila share network objects to.
+share-network-objects are only used with share servers.</p>
+<div class="section" id="network-plugin-neutronnetworkplugin">
+<h3>Network Plugin: NeutronNetworkPlugin<a class="headerlink" href="#network-plugin-neutronnetworkplugin" title="Permalink to this headline">¶</a></h3>
+<p>In this scenario the configurable Neutron Network Plugin is in use.
+As such each share network object is free to us any appropirate
+neutron network.  In this particular case, we are using a provider
+network.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat /etc/manila/manila.conf
+...
+network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin
+...
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ neutron net-list
++--------------------------------------+------------------+-----------------------------------------------------+
+| id                                   | name             | subnets                                             |
++--------------------------------------+------------------+-----------------------------------------------------+
+...
+| 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 | storage-provider | 1f9ec07c-085a-437d-82f0-7390d706758b 192.168.0.0/16 |
+...
++--------------------------------------+------------------+-----------------------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-network-create --neutron-subnet-id 1f9ec07c-085a-437d-82f0-7390d706758b \
+                              --neutron-net-id 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 \
+                              --name storage-provider-network
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| network_type      | None                                 |
+| name              | storage-provider-network             |
+| segmentation_id   | None                                 |
+| created_at        | 2017-09-01T10:16:16.999826           |
+| neutron_subnet_id | 1f9ec07c-085a-437d-82f0-7390d706758b |
+| updated_at        | None                                 |
+| mtu               | None                                 |
+| gateway           | None                                 |
+| neutron_net_id    | 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 |
+| ip_version        | None                                 |
+| nova_net_id       | None                                 |
+| cidr              | None                                 |
+| project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+| id                | 557243e9-aad6-4b63-8d86-70239ecf4993 |
+| description       | None                                 |
++-------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-network-list
++--------------------------------------+--------------------------+
+| id                                   | name                     |
++--------------------------------------+--------------------------+
+| 557243e9-aad6-4b63-8d86-70239ecf4993 | storage-provider-network |
++--------------------------------------+--------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-network-show storage-provider-network
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| network_type      | flat                                 |
+| name              | storage-provider-network             |
+| segmentation_id   | None                                 |
+| created_at        | 2017-09-01T10:16:16.000000           |
+| neutron_subnet_id | 1f9ec07c-085a-437d-82f0-7390d706758b |
+| updated_at        | 2017-09-01T10:19:25.000000           |
+| mtu               | 1500                                 |
+| gateway           | None                                 |
+| neutron_net_id    | 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 |
+| ip_version        | 4                                    |
+| nova_net_id       | None                                 |
+| cidr              | 192.168.0.0/16                       |
+| project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+| id                | 557243e9-aad6-4b63-8d86-70239ecf4993 |
+| description       | None                                 |
++-------------------+--------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="network-plugin-neutronsinglenetworkplugin">
+<h3>Network Plugin: NeutronSingleNetworkPlugin<a class="headerlink" href="#network-plugin-neutronsinglenetworkplugin" title="Permalink to this headline">¶</a></h3>
+<p>In this scenario the simple Neutron Network Plugin is in use.
+As such each share network will use the Neutron Network and
+Neutron Subnet configured in the /etc/manila/manila.conf.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat /etc/manila/manila.conf
+...
+network_api_class = manila.network.neutron.neutron_network_plugin.NeutronSingleNetworkPlugin
+neutron_net_id = 0ba4ac4a-1408-4fa6-84d6-fd6db8113382
+neutron_subnet_id = 1f9ec07c-085a-437d-82f0-7390d706758b
+...
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@chadcloud1</span> <span class="n">manila</span><span class="p">(</span><span class="n">keystone_mchad</span><span class="p">)]</span><span class="c1"># manila share-network-show storage-provider-network-2</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">Property</span>          <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">network_type</span>      <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">name</span>              <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="mi">2</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="n">segmentation_id</span>   <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">created_at</span>        <span class="o">|</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">01</span><span class="n">T10</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">55.000000</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="n">neutron_subnet_id</span> <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">updated_at</span>        <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">mtu</span>               <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">gateway</span>           <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">neutron_net_id</span>    <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">ip_version</span>        <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">nova_net_id</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">cidr</span>              <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">project_id</span>        <span class="o">|</span> <span class="mi">37</span><span class="n">ceaca2938c409d8a6172f2da2ba788</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="nb">id</span>                <span class="o">|</span> <span class="n">e6a05868</span><span class="o">-</span><span class="n">fdfd</span><span class="o">-</span><span class="mi">4</span><span class="n">da9</span><span class="o">-</span><span class="n">a914</span><span class="o">-</span><span class="mi">6</span><span class="n">beab07b3121</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">description</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@chadcloud1</span> <span class="n">manila</span><span class="p">(</span><span class="n">keystone_mchad</span><span class="p">)]</span><span class="c1"># manila share-network-list</span>
+<span class="o">+--------------------------------------+----------------------------+</span>
+<span class="o">|</span> <span class="nb">id</span>                                   <span class="o">|</span> <span class="n">name</span>                       <span class="o">|</span>
+<span class="o">+--------------------------------------+----------------------------+</span>
+<span class="o">|</span> <span class="mf">557243e9</span><span class="o">-</span><span class="n">aad6</span><span class="o">-</span><span class="mi">4</span><span class="n">b63</span><span class="o">-</span><span class="mi">8</span><span class="n">d86</span><span class="o">-</span><span class="mi">70239</span><span class="n">ecf4993</span> <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span>   <span class="o">|</span>
+<span class="o">|</span> <span class="n">e6a05868</span><span class="o">-</span><span class="n">fdfd</span><span class="o">-</span><span class="mi">4</span><span class="n">da9</span><span class="o">-</span><span class="n">a914</span><span class="o">-</span><span class="mi">6</span><span class="n">beab07b3121</span> <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="mi">2</span> <span class="o">|</span>
+<span class="o">+--------------------------------------+----------------------------+</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@chadcloud1</span> <span class="n">manila</span><span class="p">(</span><span class="n">keystone_mchad</span><span class="p">)]</span><span class="c1"># manila share-network-show storage-provider-network-2</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">Property</span>          <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">network_type</span>      <span class="o">|</span> <span class="n">flat</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">name</span>              <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="mi">2</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="n">segmentation_id</span>   <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">created_at</span>        <span class="o">|</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">01</span><span class="n">T10</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">55.000000</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="n">neutron_subnet_id</span> <span class="o">|</span> <span class="mi">1</span><span class="n">f9ec07c</span><span class="o">-</span><span class="mi">085</span><span class="n">a</span><span class="o">-</span><span class="mi">437</span><span class="n">d</span><span class="o">-</span><span class="mi">82</span><span class="n">f0</span><span class="o">-</span><span class="mi">7390</span><span class="n">d706758b</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">updated_at</span>        <span class="o">|</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">01</span><span class="n">T10</span><span class="p">:</span><span class="mi">52</span><span class="p">:</span><span class="mf">29.000000</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="n">mtu</span>               <span class="o">|</span> <span class="mi">1500</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">gateway</span>           <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">neutron_net_id</span>    <span class="o">|</span> <span class="mi">0</span><span class="n">ba4ac4a</span><span class="o">-</span><span class="mi">1408</span><span class="o">-</span><span class="mi">4</span><span class="n">fa6</span><span class="o">-</span><span class="mi">84</span><span class="n">d6</span><span class="o">-</span><span class="n">fd6db8113382</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">ip_version</span>        <span class="o">|</span> <span class="mi">4</span>                                    <span class="o">|</span>
+<span class="o">|</span> <span class="n">nova_net_id</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">cidr</span>              <span class="o">|</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">16</span>                       <span class="o">|</span>
+<span class="o">|</span> <span class="n">project_id</span>        <span class="o">|</span> <span class="mi">37</span><span class="n">ceaca2938c409d8a6172f2da2ba788</span>     <span class="o">|</span>
+<span class="o">|</span> <span class="nb">id</span>                <span class="o">|</span> <span class="n">e6a05868</span><span class="o">-</span><span class="n">fdfd</span><span class="o">-</span><span class="mi">4</span><span class="n">da9</span><span class="o">-</span><span class="n">a914</span><span class="o">-</span><span class="mi">6</span><span class="n">beab07b3121</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">description</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="creating-manila-shares-with-share-types">
+<h2>Creating Manila Shares with Share Types<a class="headerlink" href="#creating-manila-shares-with-share-types" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="without-share-server-management">
+<h3>Without Share Server Management<a class="headerlink" href="#without-share-server-management" title="Permalink to this headline">¶</a></h3>
+<p>In this section, we create shares with the default type, as well as
+all but the shared share type.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create --name myDefault NFS 1
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| status            | creating                             |
+| description       | None                                 |
+| availability_zone | nova                                 |
+| share_network_id  | None                                 |
+| share_server_id   | None                                 |
+| host              | None                                 |
+| snapshot_id       | None                                 |
+| is_public         | False                                |
+| snapshot_support  | False                                |
+| id                | 63bd5bef-298d-4e49-bea0-49a4cfb143f9 |
+| size              | 1                                    |
+| name              | myDefault                            |
+| share_type        | 447732be-4cf2-42b0-83dc-4b6f4ed5368d |
+| created_at        | 2017-09-01T12:44:11.794842           |
+| share_proto       | NFS                                  |
+| project_id        | 5bf3e15106dd4333b1f55742fa08f90e     |
+| metadata          | {}                                   |
++-------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create --name myGeneral --share-type general NFS 1
++-------------------+--------------------------------------------------------+
+| Property          | Value                                                  |
++-------------------+--------------------------------------------------------+
+| status                              | creating                             |
+| description                         | None                                 |
+| availability_zone                   | nova                                 |
+| share_network_id                    | None                                 |
+| share_server_id                     | None                                 |
+| host                                | None                                 |
+| snapshot_id                         | None                                 |
+| is_public                           | False                                |
+| snapshot_support                    | True                                 |
+| revert_to_snapshot_support          | True                                 |
+| create_share_from_snapshot_support  | True                                 |
+| id                                  | 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 |
+| size                                | 1                                    |
+| name                                | myGeneral                            |
+| share_type                          | deadeebf-19a2-47b1-9d7f-1c3806cfcb72 |
+| created_at                          | 2017-09-01T12:44:47.223548           |
+| share_proto                         | NFS                                  |
+| project_id                          | 5bf3e15106dd4333b1f55742fa08f90e     |
+| metadata                            | {}                                   |
++-------------------+--------------------------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create --name myFlash --share-type flash NFS 1
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| status            | creating                             |
+| description       | None                                 |
+| availability_zone | nova                                 |
+| share_network_id  | None                                 |
+| share_server_id   | None                                 |
+| host              | None                                 |
+| snapshot_id       | None                                 |
+| is_public         | False                                |
+| id                | ec5d2ddb-4573-4ee1-a1e8-2c8532c68e3d |
+| size              | 1                                    |
+| name              | myFlash                              |
+| share_type        | 37fb9f7e-4ffe-4900-8dba-c6d4251e588f |
+| created_at        | 2017-09-01T12:44:59.374780           |
+| share_proto       | NFS                                  |
+| project_id        | 5bf3e15106dd4333b1f55742fa08f90e     |
+| metadata          | {}                                   |
++-------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create --name myArchive --share-type archive NFS 1
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| status            | creating                             |
+| description       | None                                 |
+| availability_zone | nova                                 |
+| share_network_id  | None                                 |
+| share_server_id   | None                                 |
+| host              | None                                 |
+| snapshot_id       | None                                 |
+| is_public         | False                                |
+| id                | e4774a70-3e70-4a7c-ab76-886f010efe0a |
+| size              | 1                                    |
+| name              | myArchive                            |
+| share_type        | 20e4b58d-aab6-42ae-8e9b-8f9d44f17276 |
+| created_at        | 2017-09-01T12:45:11.124722           |
+| share_proto       | NFS                                  |
+| project_id        | 5bf3e15106dd4333b1f55742fa08f90e     |
+| metadata          | {}                                   |
++-------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila list
++-------------------------------------+----------+----+------------+----------+-----------+-----------------+------------------------------------+------------------+
+| ID                                  | Name     |Size| Share Proto| Status   | Is Public | Share Type Name | Host                               | Availability Zone|
++-------------------------------------+----------+----+------------+----------+-----------+-----------------+------------------------------------+------------------+
+| 63bd5bef-298d-4e49-bea0-49a4cfb143f9| myDefault| 1  | NFS        | available| False     | default         | scspr0030615001@cdotSingleSVM#aggr1| nova             |
+| 95f49ca6-723f-42d0-92f3-4be79c9ad7e6| myGeneral| 1  | NFS        | available| False     | general         | scspr0030615001@cdotSingleSVM#aggr1| nova             |
+| e4774a70-3e70-4a7c-ab76-886f010efe0a| myArchive| 1  | NFS        | available| False     | archive         | scspr0030615001@cdotSingleSVM#aggr1| nova             |
+| ec5d2ddb-4573-4ee1-a1e8-2c8532c68e3d| myFlash  | 1  | NFS        | error    | False     | flash           | None                               | nova             |
++-------------------------------------+----------+----+------------+----------+-----------+-----------------+------------------------------------+------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="with-share-server-management">
+<h3>With Share Server Management<a class="headerlink" href="#with-share-server-management" title="Permalink to this headline">¶</a></h3>
+<p>In this section we create three shares, two on the share network object built upon
+the Simple Neutron Network Plugin and one built upon the Configurable Neutron
+Network Plugin.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create  --share-network storage-provider-network  --share-type shared --name shared1 NFS 1
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | creating                             |
+| share_type_name             | shared                               |
+| description                 | None                                 |
+| availability_zone           | None                                 |
+| share_network_id            | 557243e9-aad6-4b63-8d86-70239ecf4993 |
+| host                        |                                      |
+| access_rules_status         | active                               |
+| snapshot_id                 | None                                 |
+| is_public                   | False                                |
+| task_state                  | None                                 |
+| snapshot_support            | True                                 |
+| id                          | df8e63b1-3bb1-4c28-aad7-b29a80ac3e04 |
+| size                        | 1                                    |
+| user_id                     | 0c96b73302674429918df682c7d20f22     |
+| name                        | shared1                              |
+| share_type                  | db589d3e-09e9-49a2-a5be-05471d178eaa |
+| has_replicas                | False                                |
+| replication_type            | None                                 |
+| created_at                  | 2017-09-01T11:20:21.000000           |
+| share_proto                 | NFS                                  |
+| consistency_group_id        | None                                 |
+| source_cgsnapshot_member_id | None                                 |
+| project_id                  | 37ceaca2938c409d8a6172f2da2ba788     |
+| metadata                    | {}                                   |
++-----------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create  --share-network storage-provider-network-2  --share-type shared --name shared2 NFS 1
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | creating                             |
+| share_type_name             | shared                               |
+| description                 | None                                 |
+| availability_zone           | None                                 |
+| share_network_id            | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+| host                        |                                      |
+| access_rules_status         | active                               |
+| snapshot_id                 | None                                 |
+| is_public                   | False                                |
+| task_state                  | None                                 |
+| snapshot_support            | True                                 |
+| id                          | 4f54f4e8-80f1-4b21-9fda-c0882f7837aa |
+| size                        | 1                                    |
+| user_id                     | 0c96b73302674429918df682c7d20f22     |
+| name                        | shared2                              |
+| share_type                  | db589d3e-09e9-49a2-a5be-05471d178eaa |
+| has_replicas                | False                                |
+| replication_type            | None                                 |
+| created_at                  | 2017-09-01T11:21:55.000000           |
+| share_proto                 | NFS                                  |
+| consistency_group_id        | None                                 |
+| source_cgsnapshot_member_id | None                                 |
+| project_id                  | 37ceaca2938c409d8a6172f2da2ba788     |
+| metadata                    | {}                                   |
++-----------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create  --share-network storage-provider-network-2  --share-type shared --name shared3 NFS 1
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | creating                             |
+| share_type_name             | shared                               |
+| description                 | None                                 |
+| availability_zone           | None                                 |
+| share_network_id            | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+| host                        |                                      |
+| access_rules_status         | active                               |
+| snapshot_id                 | None                                 |
+| is_public                   | False                                |
+| task_state                  | None                                 |
+| snapshot_support            | True                                 |
+| id                          | 9c05879a-a063-487b-bed4-5c039d26e26a |
+| size                        | 1                                    |
+| user_id                     | 0c96b73302674429918df682c7d20f22     |
+| name                        | shared3                              |
+| share_type                  | db589d3e-09e9-49a2-a5be-05471d178eaa |
+| has_replicas                | False                                |
+| replication_type            | None                                 |
+| created_at                  | 2017-09-01T11:28:15.000000           |
+| share_proto                 | NFS                                  |
+| consistency_group_id        | None                                 |
+| source_cgsnapshot_member_id | None                                 |
+| project_id                  | 37ceaca2938c409d8a6172f2da2ba788     |
+| metadata                    | {}                                   |
++-----------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila list
++-------------------------------------+--------+------+------------+-----------+-----------+-----------------+-----------------------------------+------------------+
+| ID                                  | Name   | Size | Share Proto| Status    | Is Public | Share Type Name | Host                              | Availability Zone|
++-------------------------------------+--------+------+------------+-----------+-----------+-----------------+-----------------------------------+------------------+
+| 4f54f4e8-80f1-4b21-9fda-c0882f7837aa| shared2| 1    | NFS        | available | False     | shared          | scspr0030615001@cdotMultiSVM#aggr1| nova             |
+| 9c05879a-a063-487b-bed4-5c039d26e26a| shared3| 1    | NFS        | available | False     | shared          | scspr0030615001@cdotMultiSVM#aggr1| nova             |
+| df8e63b1-3bb1-4c28-aad7-b29a80ac3e04| shared1| 1    | NFS        | available | False     | shared          | scspr0030615001@cdotMultiSVM#aggr1| nova             |
++-------------------------------------+--------+------+------------+-----------+-----------+-----------------+-----------------------------------+------------------+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="viewing-share-servers">
+<h2>Viewing Share Servers<a class="headerlink" href="#viewing-share-servers" title="Permalink to this headline">¶</a></h2>
+<p>Shares created against any one share network are placed on the same SVM.
+Notice that there are two share-servers for the three shares.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Admin privileges are required to see or delete share-servers.
+Notice the vserver names in the manila share-server-show command</p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-server-list
++--------------------------------------+-----------------------+--------+----------------------------+----------------------------------+----------------------------+
+| Id                                   | Host                  | Status | Share Network              | Project Id                       | Updated_at                 |
++--------------------------------------+-----------------------+--------+----------------------------+----------------------------------+----------------------------+
+| c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88 | chadcloud1@cdot_multi | active | storage-provider-network   | 37ceaca2938c409d8a6172f2da2ba788 | 2017-09-01T10:19:34.000000 |
+| c3c6bbfb-c71d-416d-84f3-600575746a36 | chadcloud1@cdot_multi | active | storage-provider-network-2 | 37ceaca2938c409d8a6172f2da2ba788 | 2017-09-01T10:52:32.000000 |
++--------------------------------------+-----------------------+--------+----------------------------+----------------------------------+----------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-server-show c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88
++----------------------+-------------------------------------------------+
+| Property             | Value                                           |
++----------------------+-------------------------------------------------+
+| status               | active                                          |
+| created_at           | 2017-09-01T10:19:24.000000                      |
+| updated_at           | 2017-09-01T10:19:34.000000                      |
+| share_network_name   | storage-provider-network                        |
+| host                 | scspr0030615001@cdotMultiSVM                    |
+| share_network_id     | 557243e9-aad6-4b63-8d86-70239ecf4993            |
+| project_id           | 37ceaca2938c409d8a6172f2da2ba788                |
+| id                   | c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88            |
+| details:vserver_name | cdot_multi_c6f2fcbb-8c35-4a42-8f0a-e8ac81605d88 |
++----------------------+-------------------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>+----------------------+-------------------------------------------------+
+$ manila share-server-show c3c6bbfb-c71d-416d-84f3-600575746a36
++----------------------+-------------------------------------------------+
+| Property             | Value                                           |
++----------------------+-------------------------------------------------+
+| status               | active                                          |
+| created_at           | 2017-09-01T10:52:28.000000                      |
+| updated_at           | 2017-09-01T10:52:32.000000                      |
+| share_network_name   | storage-provider-network-2                      |
+| host                 | scspr0030615001@cdotMultiSVM                    |
+| share_network_id     | e6a05868-fdfd-4da9-a914-6beab07b3121            |
+| project_id           | 37ceaca2938c409d8a6172f2da2ba788                |
+| id                   | c3c6bbfb-c71d-416d-84f3-600575746a36            |
+| details:vserver_name | cdot_multi_c3c6bbfb-c71d-416d-84f3-600575746a36 |
++----------------------+-------------------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewing-flexvols">
+<h2>Viewing Flexvols<a class="headerlink" href="#viewing-flexvols" title="Permalink to this headline">¶</a></h2>
+<p>We’ll now look at the CLI output from the Data ONTAP cluster to see what
+FlexVol volumes were created for the Manila share objects, as well as
+the provisioning strategy (thin or thick) for each share. Note how the
+name of the FlexVol volume corresponds to the share UUID as defined by
+Manila. You can see that share <code class="docutils literal"><span class="pre">e4774a70_3e70_4a7c_ab76_886f010efe0a</span></code>
+was thin provisioned, as declared by the <code class="docutils literal"><span class="pre">archive</span></code> share type. The
+rest of the shares were thick provisioned. Also note that the share of
+type <code class="docutils literal"><span class="pre">myFlash</span></code> failed to create, as this SVM does not have any
+aggregates with SSD drives, as seen in the command output below.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cluster</span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+<span class="n">Vserver</span>   <span class="n">Volume</span>       <span class="n">Aggregate</span>    <span class="n">State</span>      <span class="n">Type</span>       <span class="n">Size</span>  <span class="n">Available</span> <span class="n">Used</span><span class="o">%</span>
+<span class="o">---------</span> <span class="o">------------</span> <span class="o">------------</span> <span class="o">----------</span> <span class="o">----</span> <span class="o">----------</span> <span class="o">----------</span> <span class="o">-----</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">share_63bd5bef_298d_4e49_bea0_49a4cfb143f9</span>
+                       <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>          <span class="mi">1</span><span class="n">GB</span>    <span class="mf">972.7</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">share_95f49ca6_723f_42d0_92f3_4be79c9ad7e6</span>
+                       <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>          <span class="mi">1</span><span class="n">GB</span>    <span class="mf">972.7</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">share_e4774a70_3e70_4a7c_ab76_886f010efe0a</span>
+                       <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>          <span class="mi">1</span><span class="n">GB</span>    <span class="mf">972.7</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">vol1</span>         <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>         <span class="mi">20</span><span class="n">MB</span>    <span class="mf">18.88</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+<span class="mi">4</span> <span class="n">entries</span> <span class="n">were</span> <span class="n">displayed</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cluster</span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">manila</span><span class="o">-</span><span class="n">vserver</span> <span class="o">-</span><span class="n">space</span><span class="o">-</span><span class="n">guarantee</span> <span class="n">none</span>
+<span class="n">Vserver</span>   <span class="n">Volume</span>       <span class="n">Aggregate</span>    <span class="n">State</span>      <span class="n">Type</span>       <span class="n">Size</span>  <span class="n">Available</span> <span class="n">Used</span><span class="o">%</span>
+<span class="o">---------</span> <span class="o">------------</span> <span class="o">------------</span> <span class="o">----------</span> <span class="o">----</span> <span class="o">----------</span> <span class="o">----------</span> <span class="o">-----</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">share_e4774a70_3e70_4a7c_ab76_886f010efe0a</span>
+                       <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>          <span class="mi">1</span><span class="n">GB</span>    <span class="mf">972.7</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cluster</span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">manila</span><span class="o">-</span><span class="n">vserver</span> <span class="o">-</span><span class="n">space</span><span class="o">-</span><span class="n">guarantee</span> <span class="n">volume</span>
+<span class="n">Vserver</span>   <span class="n">Volume</span>       <span class="n">Aggregate</span>    <span class="n">State</span>      <span class="n">Type</span>       <span class="n">Size</span>  <span class="n">Available</span> <span class="n">Used</span><span class="o">%</span>
+<span class="o">---------</span> <span class="o">------------</span> <span class="o">------------</span> <span class="o">----------</span> <span class="o">----</span> <span class="o">----------</span> <span class="o">----------</span> <span class="o">-----</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">share_63bd5bef_298d_4e49_bea0_49a4cfb143f9</span>
+                       <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>          <span class="mi">1</span><span class="n">GB</span>    <span class="mf">972.7</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">share_95f49ca6_723f_42d0_92f3_4be79c9ad7e6</span>
+                       <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>          <span class="mi">1</span><span class="n">GB</span>    <span class="mf">972.7</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+<span class="n">manila</span><span class="o">-</span><span class="n">vserver</span>
+          <span class="n">vol1</span>         <span class="n">aggr1</span>        <span class="n">online</span>     <span class="n">RW</span>         <span class="mi">20</span><span class="n">MB</span>    <span class="mf">18.88</span><span class="n">MB</span>    <span class="mi">5</span><span class="o">%</span>
+<span class="mi">3</span> <span class="n">entries</span> <span class="n">were</span> <span class="n">displayed</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cluster</span><span class="o">-</span><span class="mi">1</span><span class="p">::</span><span class="o">&gt;</span> <span class="n">disk</span> <span class="n">show</span> <span class="o">-</span><span class="nb">type</span> <span class="n">SSD</span>
+<span class="n">There</span> <span class="n">are</span> <span class="n">no</span> <span class="n">entries</span> <span class="n">matching</span> <span class="n">your</span> <span class="n">query</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="granting-access-to-shares">
+<h2>Granting Access To Shares<a class="headerlink" href="#granting-access-to-shares" title="Permalink to this headline">¶</a></h2>
+<p>We’ll now add access rules for any IP-connected client to mount these
+NFS shares with full read/write privileges.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila access-allow 63bd5bef-298d-4e49-bea0-49a4cfb143f9 ip 0.0.0.0/0
++--------------+--------------------------------------+
+| Property     | Value                                |
++--------------+--------------------------------------+
+| share_id     | 63bd5bef-298d-4e49-bea0-49a4cfb143f9 |
+| deleted      | False                                |
+| created_at   | 2017-09-01T13:25:24.577736           |
+| updated_at   | None                                 |
+| access_type  | ip                                   |
+| access_to    | 0.0.0.0/0                            |
+| access_level | rw                                   |
+| state        | new                                  |
+| deleted_at   | None                                 |
+| id           | c400bdd7-7e4f-49a4-b73d-5aa417af95c3 |
++--------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila access-allow 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 ip 0.0.0.0/0
++--------------+--------------------------------------+
+| Property     | Value                                |
++--------------+--------------------------------------+
+| share_id     | 95f49ca6-723f-42d0-92f3-4be79c9ad7e6 |
+| deleted      | False                                |
+| created_at   | 2017-09-01T13:25:47.417271           |
+| updated_at   | None                                 |
+| access_type  | ip                                   |
+| access_to    | 0.0.0.0/0                            |
+| access_level | rw                                   |
+| state        | new                                  |
+| deleted_at   | None                                 |
+| id           | 09f8f699-1cec-4519-8aaa-a30d346ad54c |
++--------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila access-allow e4774a70-3e70-4a7c-ab76-886f010efe0a ip 0.0.0.0/0
++--------------+--------------------------------------+
+| Property     | Value                                |
++--------------+--------------------------------------+
+| share_id     | e4774a70-3e70-4a7c-ab76-886f010efe0a |
+| deleted      | False                                |
+| created_at   | 2017-09-01T13:26:03.344004           |
+| updated_at   | None                                 |
+| access_type  | ip                                   |
+| access_to    | 0.0.0.0/0                            |
+| access_level | rw                                   |
+| state        | new                                  |
+| deleted_at   | None                                 |
+| id           | d0565115-8369-455e-ad8f-3dd7c56037ea |
++--------------+--------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="viewing-export-locations">
+<h2>Viewing Export Locations<a class="headerlink" href="#viewing-export-locations" title="Permalink to this headline">¶</a></h2>
+<p>We’ll now list the export location(s) for one of the new shares to see
+its network path. There may be multiple export locations for a given
+share, at least one of which should be listed as preferred; clients
+should use the preferred path for optimum performance.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-export-location-list 63bd5bef-298d-4e49-bea0-49a4cfb143f9 \
+         --columns Path,Preferred
++-------------------------------------------------------------+-----------+
+| Path                                                        | Preferred |
++-------------------------------------------------------------+-----------+
+| 192.168.228.110:/share_6fae2eb7_9eea_4a0f_b215_1f405dbcc4d4 | True      |
++-------------------------------------------------------------+-----------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-a-manila-cifs-share-with-security-service">
+<h2>Creating a Manila CIFS share with security service<a class="headerlink" href="#creating-a-manila-cifs-share-with-security-service" title="Permalink to this headline">¶</a></h2>
+<p>As previously noted, creation of a CIFS share requires the co-deployment
+of one of three security services (LDAP, Active Directory, or Kerberos).
+This section demonstrates the share network and security service setup
+necessary before creating the CIFS share.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-network-create --neutron-net-id &lt;neutron-net-id&gt; \
+                              --neutron-subnet-id &lt;neutron-subnet-id&gt; \
+                              --name &lt;share_network_name&gt;
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila security-service-create active_directory --dns-ip &lt;dns_ip&gt; \
+                                                  --domain &lt;dns_domain&gt; \
+                                                  --user &lt;user_name&gt;
+                                                  --password &lt;password&gt;
+                                                  --name &lt;security_service_name&gt;
++-------------+--------------------------------------+
+| Property    | Value                                |
++-------------+--------------------------------------+
+| status      | new                                  |
+| domain      | stack1.netapp.com                    |
+| password    | secrete                              |
+| name        | ac10                                 |
+| dns_ip      | 10.250.XXX.XXX                       |
+| created_at  | 2015-10-15T19:02:19.309255           |
+| updated_at  | None                                 |
+| server      | None                                 |
+| user        | Administrator                        |
+| project_id  | b568323d304046d8a8abaa8e822f17e3     |
+| type        | active_directory                     |
+| id          | 259a203d-9e11-49cd-83d7-e5c986c01221 |
+| description | None                                 |
++-------------+--------------------------------------+
+
+$ manila share-network-security-service-add &lt;share_network&gt; &lt;security_service&gt;
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create CIFS 1 --share-network &lt;share_network_name&gt; --share-type general
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | None                                 |
+| share_type_name             | general                              |
+| description                 | None                                 |
+| availability_zone           | None                                 |
+| share_network_id            | None                                 |
+| share_server_id             | None                                 |
+| host                        | None                                 |
+| snapshot_id                 | None                                 |
+| is_public                   | False                                |
+| task_state                  | None                                 |
+| snapshot_support            | True                                 |
+| id                          | 4b4e512a-a1dd-45e6-a6c2-5eed978a29f0 |
+| size                        | 1                                    |
+| name                        | None                                 |
+| share_type                  | deadeebf-19a2-47b1-9d7f-1c3806cfcb72 |
+| created_at                  | 2015-10-19T15:10:30.314544           |
+| share_proto                 | CIFS                                 |
+| consistency_group_id        | None                                 |
+| source_cgsnapshot_member_id | None                                 |
+| project_id                  | b568323d304046d8a8abaa8e822f17e3     |
+| metadata                    | {}                                   |
++-----------------------------+--------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="importing-and-exporting-manila-shares">
+<h2>Importing and Exporting Manila Shares<a class="headerlink" href="#importing-and-exporting-manila-shares" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we use the admin-only <code class="docutils literal"><span class="pre">manage</span></code> command to bring
+storage resources under Manila management. A share is a Data ONTAP
+FlexVol, and we must tell Manila which host, backend and pool contain
+the FlexVol. It may be useful to list the Manila pools to get the
+correct format. Also note that the FlexVol must be specified in the
+format Manila uses to report share export locations. For NFS this format
+is <code class="docutils literal"><span class="pre">address:/path</span></code>, where <code class="docutils literal"><span class="pre">address</span></code> is that of any NFS LIF where the
+FlexVol is accessible and <code class="docutils literal"><span class="pre">path</span></code> is the junction path of the FlexVol.
+For CIFS this format is <code class="docutils literal"><span class="pre">\\address\name</span></code>, where <code class="docutils literal"><span class="pre">address</span></code> is that of
+any CIFS LIF where the FlexVol is accessible and <code class="docutils literal"><span class="pre">name</span></code> is the name of
+the FlexVol.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila pool-list
++-------------------------------------+---------+----------------------+--------+
+| Name                                | Host    | Backend              | Pool   |
++-------------------------------------+---------+----------------------+--------+
+| liberty@cmode_single_svm_nfs#manila | liberty | cmode_single_svm_nfs | manila |
++-------------------------------------+---------+----------------------+--------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila manage liberty@cmode_single_svm_nfs#manila NFS 192.168.228.102:/myvol
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| status            | manage_starting                      |
+| description       | None                                 |
+| availability_zone | None                                 |
+| share_network_id  | None                                 |
+| export_locations  | 192.168.228.102:/myvol               |
+| share_server_id   | None                                 |
+| host              | liberty@cmode_single_svm_nfs#manila  |
+| snapshot_id       | None                                 |
+| is_public         | False                                |
+| snapshot_support  | False                                |
+| id                | 6e42c910-67a8-47fd-885f-b03d1756675f |
+| size              | None                                 |
+| name              | None                                 |
+| share_type        | default                              |
+| created_at        | 2015-08-13T20:27:09.000000           |
+| share_proto       | NFS                                  |
+| project_id        | 75dbed01579f4a7e8df2878de25fbc49     |
+| metadata          | {}                                   |
++-------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila show 6e42c910-67a8-47fd-885f-b03d1756675f
++-------------------+-------------------------------------------------------------+
+| Property          | Value                                                       |
++-------------------+-------------------------------------------------------------+
+| status            | available                                                   |
+| description       | None                                                        |
+| availability_zone | None                                                        |
+| share_network_id  | None                                                        |
+| export_locations  | 192.168.228.102:/share_6e42c910_67a8_47fd_885f_b03d1756675f |
+|                   | 10.0.0.100:/share_6e42c910_67a8_47fd_885f_b03d1756675f      |
+| share_server_id   | None                                                        |
+| host              | liberty@cmode_single_svm_nfs#manila                         |
+| snapshot_id       | None                                                        |
+| is_public         | False                                                       |
+| snapshot_support  | False                                                       |
+| id                | 6e42c910-67a8-47fd-885f-b03d1756675f                        |
+| size              | 1                                                           |
+| name              | None                                                        |
+| share_type        | default                                                     |
+| created_at        | 2015-08-13T20:27:09.000000                                  |
+| share_proto       | NFS                                                         |
+| project_id        | 75dbed01579f4a7e8df2878de25fbc49                            |
+| metadata          | {}                                                          |
++-------------------+-------------------------------------------------------------+
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">FlexVols that are part of a snapmirror relationship cannot be
+brought under Manila’s management. Snapmirror relationships must be
+removed before attempting to <code class="docutils literal"><span class="pre">manage</span></code> the FlexVol.</p>
+</div>
+<p>We’ll now remove a share from Manila management using the admin-only
+<code class="docutils literal"><span class="pre">unmanage</span></code> CLI command.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila unmanage 6e42c910-67a8-47fd-885f-b03d1756675f
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-manila-consistency-groups">
+<h2>Creating Manila Consistency Groups<a class="headerlink" href="#creating-manila-consistency-groups" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we’ll create and work with consistency groups and
+consistency group (CG) snapshots. First we’ll list the share types and
+create a CG using one of the existing types.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-list
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| ID                                   | Name    | Visibility | is_default | required_extra_specs                 |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+| 08d3b20f-3685-4f83-ba4f-efe9276e922c | zoom    | public     | -          | driver_handles_share_servers : False |
+| 30abd1a6-0f5f-426b-adb4-13e0062d3183 | default | public     | YES        | driver_handles_share_servers : False |
+| d7f70347-7464-4297-8d8e-12fa13e64775 | nope    | public     | -          | driver_handles_share_servers : False |
++--------------------------------------+---------+------------+------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-create --name cg_1 --description &quot;cg_1 consistency group&quot; --share_type &quot;type_1&quot;
++----------------------+--------------------------------------+
+| Property             | Value                                |
++----------------------+--------------------------------------+
+| status               | creating                             |
+| description          | cg_1 consistency group               |
+| source_cgsnapshot_id | None                                 |
+| created_at           | 2015-08-18T17:36:36.088532           |
+| share_network_id     | None                                 |
+| share_server_id      | None                                 |
+| host                 | None                                 |
+| project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
+| share_types          | 45ff1d79-0dd7-4309-b259-652c5f9e3b41 |
+| id                   | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
+| name                 | cg_1                                 |
++----------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-list
++--------------------------------------+------+------------------------+-----------+
+| id                                   | name | description            | status    |
++--------------------------------------+------+------------------------+-----------+
+| 9379f22c-a5c0-4455-bd25-ad373e93d7c3 | cg_1 | cg_1 consistency group | available |
++--------------------------------------+------+------------------------+-----------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-show 9379f22c-a5c0-4455-bd25-ad373e93d7c3
++----------------------+--------------------------------------+
+| Property             | Value                                |
++----------------------+--------------------------------------+
+| status               | available                            |
+| description          | cg_1 consistency group               |
+| source_cgsnapshot_id | None                                 |
+| created_at           | 2015-08-18T17:36:36.000000           |
+| share_network_id     | None                                 |
+| share_server_id      | None                                 |
+| host                 | ubuntu@cmode_single_svm_nfs#aggr1    |
+| project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
+| share_types          | 45ff1d79-0dd7-4309-b259-652c5f9e3b41 |
+| id                   | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
+| name                 | cg_1                                 |
++----------------------+--------------------------------------+
+</pre></div>
+</div>
+<p>Next we’ll create two shares in the new consistency group.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create --name share_1 --consistency-group &quot;cg_1&quot; --share_type &quot;type_1&quot; NFS 1
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | creating                             |
+| description                 | None                                 |
+| availability_zone           | nova                                 |
+| share_network_id            | None                                 |
+| share_server_id             | None                                 |
+| host                        | None                                 |
+| snapshot_id                 | None                                 |
+| is_public                   | False                                |
+| id                          | 01eab865-a15b-4443-84e9-68b9c5fc3634 |
+| size                        | 1                                    |
+| name                        | None                                 |
+| share_type                  | type_1                               |
+| created_at                  | 2015-08-18T17:40:16.996290           |
+| share_proto                 | NFS                                  |
+| consistency_group_id        | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
+| source_cgsnapshot_member_id | None                                 |
+| project_id                  | f55f22cc74b347f6992a9f969eeb40a1     |
+| metadata                    | {}                                   |
++-----------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create --name share_2 --consistency-group &quot;cg_1&quot; --share_type &quot;type_1&quot; NFS 1
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | creating                             |
+| description                 | None                                 |
+| availability_zone           | nova                                 |
+| share_network_id            | None                                 |
+| share_server_id             | None                                 |
+| host                        | None                                 |
+| snapshot_id                 | None                                 |
+| is_public                   | False                                |
+| id                          | f60520d9-73e4-4755-a4e7-cec027d0dbad |
+| size                        | 1                                    |
+| name                        | share_2                              |
+| share_type                  | type_1                               |
+| created_at                  | 2015-08-18T17:44:48.290880           |
+| share_proto                 | NFS                                  |
+| consistency_group_id        | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
+| source_cgsnapshot_member_id | None                                 |
+| project_id                  | f55f22cc74b347f6992a9f969eeb40a1     |
+| metadata                    | {}                                   |
++-----------------------------+--------------------------------------+
+</pre></div>
+</div>
+<p>Next we’ll create two CG snapshots of the new consistency group.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-snapshot-create --name snapshot_1 --description &#39;first snapshot of cg-1&#39; &#39;cg_1&#39;
++----------------------+--------------------------------------+
+| Property             | Value                                |
++----------------------+--------------------------------------+
+| status               | creating                             |
+| name                 | snapshot_1                           |
+| created_at           | 2015-08-18T17:49:11.441552           |
+| consistency_group_id | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
+| project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
+| id                   | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc |
+| description          | first snapshot of cg-1               |
++----------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-snapshot-list
++--------------------------------------+------------+------------------------+-----------+
+| id                                   | name       | description            | status    |
++--------------------------------------+------------+------------------------+-----------+
+| 9fc2c246-b5dc-4cae-97b5-f136aff6abdc | snapshot_1 | first snapshot of cg-1 | available |
++--------------------------------------+------------+------------------------+-----------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-snapshot-show &#39;snapshot_1&#39;
++----------------------+--------------------------------------+
+| Property             | Value                                |
++----------------------+--------------------------------------+
+| status               | available                            |
+| name                 | snapshot_1                           |
+| created_at           | 2015-08-18T17:49:12.000000           |
+| consistency_group_id | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
+| project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
+| id                   | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc |
+| description          | first snapshot of cg-1               |
++----------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-snapshot-create --name snapshot_2 --description &#39;second snapshot of cg-1&#39; &#39;cg_1&#39;
++----------------------+--------------------------------------+
+| Property             | Value                                |
++----------------------+--------------------------------------+
+| status               | creating                             |
+| name                 | snapshot_2                           |
+| created_at           | 2015-08-18T17:51:01.319632           |
+| consistency_group_id | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
+| project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
+| id                   | c671dcc5-10bf-4445-b96e-b12723ade738 |
+| description          | second snapshot of cg-1              |
++----------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-snapshot-list
++--------------------------------------+------------+-------------------------+-----------+
+| id                                   | name       | description             | status    |
++--------------------------------------+------------+-------------------------+-----------+
+| 9fc2c246-b5dc-4cae-97b5-f136aff6abdc | snapshot_1 | first snapshot of cg-1  | available |
+| c671dcc5-10bf-4445-b96e-b12723ade738 | snapshot_2 | second snapshot of cg-1 | available |
++--------------------------------------+------------+-------------------------+-----------+
+</pre></div>
+</div>
+<p>Finally we’ll create a new CG from one of the CG snapshots we created
+above.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila cg-create --name cg_3 --source-cgsnapshot-id 9fc2c246-b5dc-4cae-97b5-f136aff6abdc
++----------------------+--------------------------------------+
+| Property             | Value                                |
++----------------------+--------------------------------------+
+| status               | creating                             |
+| description          | None                                 |
+| source_cgsnapshot_id | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc |
+| created_at           | 2015-08-18T19:26:46.419836           |
+| share_network_id     | None                                 |
+| share_server_id      | None                                 |
+| host                 | ubuntu@cmode_single_svm_nfs#aggr1    |
+| project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
+| share_types          | 45ff1d79-0dd7-4309-b259-652c5f9e3b41 |
+| id                   | d4a282dc-d28d-4d51-b0b0-64766cc099c6 |
+| name                 | cg_3                                 |
++----------------------+--------------------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-manila-share-replicas">
+<h2>Creating Manila Share Replicas<a class="headerlink" href="#creating-manila-share-replicas" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we’ll create and work with share replicas. First we’ll
+create a share type that supports replication.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create replication false
++----------------------+--------------------------------------+
+| Property             | Value                                |
++----------------------+--------------------------------------+
+| required_extra_specs | driver_handles_share_servers : False |
+| Name                 | replication                          |
+| Visibility           | public                               |
+| is_default           | -                                    |
+| ID                   | ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8 |
++----------------------+--------------------------------------+
+
+$ manila type-key replication set replication_type=dr snapshot_support=True
+</pre></div>
+</div>
+<p>Next we’ll create a share.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila create NFS 1 --share-type replication
++-----------------------------+--------------------------------------+
+| Property                    | Value                                |
++-----------------------------+--------------------------------------+
+| status                      | creating                             |
+| share_type_name             | replication                          |
+| description                 | None                                 |
+| availability_zone           | None                                 |
+| share_network_id            | None                                 |
+| share_server_id             | None                                 |
+| host                        |                                      |
+| access_rules_status         | active                               |
+| snapshot_id                 | None                                 |
+| is_public                   | False                                |
+| task_state                  | None                                 |
+| snapshot_support            | True                                 |
+| id                          | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc |
+| size                        | 1                                    |
+| name                        | None                                 |
+| share_type                  | ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8 |
+| has_replicas                | False                                |
+| replication_type            | dr                                   |
+| created_at                  | 2016-03-23T18:16:22.000000           |
+| share_proto                 | NFS                                  |
+| consistency_group_id        | None                                 |
+| source_cgsnapshot_member_id | None                                 |
+| project_id                  | 3d1d93550b1448f094389d6b5df9659e     |
+| metadata                    | {}                                   |
++-----------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">manila</span> <span class="n">show</span> <span class="n">f49d7f1f</span><span class="o">-</span><span class="mf">15e7</span><span class="o">-</span><span class="mi">484</span><span class="n">a</span><span class="o">-</span><span class="mi">83</span><span class="n">d9</span><span class="o">-</span><span class="mi">5</span><span class="n">eb5fb6ad7fc</span>
+<span class="o">+----------------------------+-----------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">Property</span>                   <span class="o">|</span><span class="n">Value</span>                                                            <span class="o">|</span>
+<span class="o">+----------------------------+-----------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="n">status</span>                     <span class="o">|</span><span class="n">available</span>                                                        <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_type_name</span>            <span class="o">|</span><span class="n">replication</span>                                                      <span class="o">|</span>
+<span class="o">|</span> <span class="n">description</span>                <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span>          <span class="o">|</span><span class="n">nova</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_network_id</span>           <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">export_locations</span>           <span class="o">|</span>                                                                 <span class="o">|</span>
+<span class="o">|</span>                            <span class="o">|</span><span class="n">path</span> <span class="o">=</span> <span class="mf">172.20</span><span class="o">.</span><span class="mf">124.230</span><span class="p">:</span><span class="o">/</span><span class="n">share_11265e8a_200c_4e0a_a40f_b7a1117001ed</span><span class="o">|</span>
+<span class="o">|</span>                            <span class="o">|</span><span class="n">preferred</span> <span class="o">=</span> <span class="kc">True</span>                                                 <span class="o">|</span>
+<span class="o">|</span>                            <span class="o">|</span><span class="n">is_admin_only</span> <span class="o">=</span> <span class="kc">False</span>                                            <span class="o">|</span>
+<span class="o">|</span>                            <span class="o">|</span><span class="nb">id</span> <span class="o">=</span> <span class="n">d9634102</span><span class="o">-</span><span class="n">e859</span><span class="o">-</span><span class="mi">42</span><span class="n">ab</span><span class="o">-</span><span class="mf">842e-687</span><span class="n">c209067e3</span>                        <span class="o">|</span>
+<span class="o">|</span>                            <span class="o">|</span><span class="n">share_instance_id</span> <span class="o">=</span> <span class="mf">11265e8</span><span class="n">a</span><span class="o">-</span><span class="mi">200</span><span class="n">c</span><span class="o">-</span><span class="mf">4e0</span><span class="n">a</span><span class="o">-</span><span class="n">a40f</span><span class="o">-</span><span class="n">b7a1117001ed</span>         <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_server_id</span>            <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">host</span>                       <span class="o">|</span><span class="n">openstack2</span><span class="nd">@cmodeSSVMNFS</span><span class="c1">#aggr3                                    |</span>
+<span class="o">|</span> <span class="n">access_rules_status</span>        <span class="o">|</span><span class="n">active</span>                                                           <span class="o">|</span>
+<span class="o">|</span> <span class="n">snapshot_id</span>                <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">is_public</span>                  <span class="o">|</span><span class="kc">False</span>                                                            <span class="o">|</span>
+<span class="o">|</span> <span class="n">task_state</span>                 <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">snapshot_support</span>           <span class="o">|</span><span class="kc">True</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="nb">id</span>                         <span class="o">|</span><span class="n">f49d7f1f</span><span class="o">-</span><span class="mf">15e7</span><span class="o">-</span><span class="mi">484</span><span class="n">a</span><span class="o">-</span><span class="mi">83</span><span class="n">d9</span><span class="o">-</span><span class="mi">5</span><span class="n">eb5fb6ad7fc</span>                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">size</span>                       <span class="o">|</span><span class="mi">1</span>                                                                <span class="o">|</span>
+<span class="o">|</span> <span class="n">name</span>                       <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_type</span>                 <span class="o">|</span><span class="n">ce1709ef</span><span class="o">-</span><span class="mi">0</span><span class="n">b20</span><span class="o">-</span><span class="mi">4</span><span class="n">cbf</span><span class="o">-</span><span class="mi">9</span><span class="n">fc0</span><span class="o">-</span><span class="mi">2</span><span class="n">b75adfee9b8</span>                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">has_replicas</span>               <span class="o">|</span><span class="kc">False</span>                                                            <span class="o">|</span>
+<span class="o">|</span> <span class="n">replication_type</span>           <span class="o">|</span><span class="n">dr</span>                                                               <span class="o">|</span>
+<span class="o">|</span> <span class="n">created_at</span>                 <span class="o">|</span><span class="mi">2016</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span><span class="n">T18</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mf">22.000000</span>                                       <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_proto</span>                <span class="o">|</span><span class="n">NFS</span>                                                              <span class="o">|</span>
+<span class="o">|</span> <span class="n">consistency_group_id</span>       <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">source_cgsnapshot_member_id</span><span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
+<span class="o">|</span> <span class="n">project_id</span>                 <span class="o">|</span><span class="mi">3</span><span class="n">d1d93550b1448f094389d6b5df9659e</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">metadata</span>                   <span class="o">|</span><span class="p">{}</span>                                                               <span class="o">|</span>
+<span class="o">+----------------------------+-----------------------------------------------------------------+</span>
+</pre></div>
+</div>
+<p>When a share is created with a share type that has the replication_type
+extra spec, it will be treated as the primary/’active’ replica. Let’s
+list the replicas.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
++--------------------------------------+-----------+---------------+--------------------------------------+------------------------------+-------------------+----------------------------+
+| ID                                   | Status    | Replica State | Share ID                             | Host                         | Availability Zone | Updated At                 |
++--------------------------------------+-----------+---------------+--------------------------------------+------------------------------+-------------------+----------------------------+
+| 11265e8a-200c-4e0a-a40f-b7a1117001ed | available | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS#aggr3| nova              | 2016-03-23T18:16:34.000000 |
++--------------------------------------+-----------+---------------+--------------------------------------+------------------------------+-------------------+----------------------------+
+</pre></div>
+</div>
+<p>Next we’ll create a replica of the share.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-create f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| status            | creating                             |
+| share_id          | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc |
+| availability_zone | None                                 |
+| created_at        | 2016-03-23T18:19:13.712615           |
+| updated_at        | None                                 |
+| share_network_id  | None                                 |
+| share_server_id   | None                                 |
+| host              |                                      |
+| replica_state     | None                                 |
+| id                | b3191744-cee9-478b-b906-c5a7a3934adb |
++-------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">manila</span> <span class="n">share</span><span class="o">-</span><span class="n">replica</span><span class="o">-</span><span class="n">show</span> <span class="n">b3191744</span><span class="o">-</span><span class="n">cee9</span><span class="o">-</span><span class="mi">478</span><span class="n">b</span><span class="o">-</span><span class="n">b906</span><span class="o">-</span><span class="n">c5a7a3934adb</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">Property</span>          <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+<span class="o">|</span> <span class="n">status</span>            <span class="o">|</span> <span class="n">available</span>                            <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_id</span>          <span class="o">|</span> <span class="n">f49d7f1f</span><span class="o">-</span><span class="mf">15e7</span><span class="o">-</span><span class="mi">484</span><span class="n">a</span><span class="o">-</span><span class="mi">83</span><span class="n">d9</span><span class="o">-</span><span class="mi">5</span><span class="n">eb5fb6ad7fc</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span> <span class="n">nova</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">created_at</span>        <span class="o">|</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span><span class="n">T18</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">13.000000</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="n">updated_at</span>        <span class="o">|</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span><span class="n">T18</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">23.000000</span>           <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_network_id</span>  <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">share_server_id</span>   <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
+<span class="o">|</span> <span class="n">host</span>              <span class="o">|</span> <span class="n">openstack2</span><span class="nd">@cmodeSSVMNFS2</span><span class="c1">#aggr4       |</span>
+<span class="o">|</span> <span class="n">replica_state</span>     <span class="o">|</span> <span class="n">out_of_sync</span>                          <span class="o">|</span>
+<span class="o">|</span> <span class="nb">id</span>                <span class="o">|</span> <span class="n">b3191744</span><span class="o">-</span><span class="n">cee9</span><span class="o">-</span><span class="mi">478</span><span class="n">b</span><span class="o">-</span><span class="n">b906</span><span class="o">-</span><span class="n">c5a7a3934adb</span> <span class="o">|</span>
+<span class="o">+-------------------+--------------------------------------+</span>
+</pre></div>
+</div>
+<p>Now we will list the replicas for the share. As you can see, the active
+replica is located on the pool <a class="reference external" href="mailto:'openstack2&#37;&#52;&#48;cmodeSSVMNFS#aggr3">‘openstack2<span>&#64;</span>cmodeSSVMNFS#aggr3</a>’ and the
+new replica is located on <a class="reference external" href="mailto:'openstack2&#37;&#52;&#48;cmodeSSVMNFS2#aggr4">‘openstack2<span>&#64;</span>cmodeSSVMNFS2#aggr4</a>’. The new
+replica has a replica state of ‘out_of_sync’, this means that the
+share data has not been synchronized within the replication window,
+which is one hour for the cDOT driver.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| ID                                   | Status    | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| 11265e8a-200c-4e0a-a40f-b7a1117001ed | available | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS#aggr3       | nova              | 2016-03-23T18:16:34.000000 |
+| b3191744-cee9-478b-b906-c5a7a3934adb | available | out_of_sync   | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS2#aggr4      | nova              | 2016-03-23T18:19:23.000000 |
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+</pre></div>
+</div>
+<p>Manila checks the status of a replica based on the
+<code class="docutils literal"><span class="pre">replica_state_update_interval</span></code> configuration option. If we wait a
+short while, the replica will become in sync. If the replica does not
+become in-sync, refer to the section called <a class="reference internal" href="../../../appendices/appendix_debug.html#common-probs"><span class="std std-ref">Common Problems</span></a>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| ID                                   | Status    | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| 11265e8a-200c-4e0a-a40f-b7a1117001ed | available | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS#aggr3       | nova              | 2016-03-23T18:16:34.000000 |
+| b3191744-cee9-478b-b906-c5a7a3934adb | available | in_sync       | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS2#aggr4      | nova              | 2016-03-23T18:27:57.000000 |
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+</pre></div>
+</div>
+<p>Finally, let us failover to our other replica.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-promote b3191744-cee9-478b-b906-c5a7a3934adb
+
+$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
++--------------------------------------+--------------------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| ID                                   | Status             | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
++--------------------------------------+--------------------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| 11265e8a-200c-4e0a-a40f-b7a1117001ed | available          | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS#aggr3       | nova              | 2016-03-23T18:16:34.000000 |
+| b3191744-cee9-478b-b906-c5a7a3934adb | replication_change | in_sync       | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS2#aggr4      | nova              | 2016-03-23T18:31:08.000000 |
++--------------------------------------+--------------------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| ID                                   | Status    | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+| 11265e8a-200c-4e0a-a40f-b7a1117001ed | available | out_of_sync   | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS#aggr3       | nova              | 2016-03-23T18:31:35.000000 |
+| b3191744-cee9-478b-b906-c5a7a3934adb | available | active        | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS2#aggr4      | nova              | 2016-03-23T18:31:35.000000 |
++--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
+</pre></div>
+</div>
+</div>
+<div class="section" id="migrating-manila-shares">
+<h2>Migrating Manila Shares<a class="headerlink" href="#migrating-manila-shares" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we’ll migrate a share from one pool to another.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila migration-start myFlash ocata@cmode_multi_svm_nfs#manila --writable False \
+                                                                  --preserve-snapshots True \
+                                                                  --preserve-metadata True \
+                                                                  --nondisruptive True
+</pre></div>
+</div>
+<p>We can check the migration progress by using the <code class="docutils literal"><span class="pre">migration-get-progress</span></code> command.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila migration-get-progress myFlash
++----------------+-------------------------------+
+| Property       | Value                         |
++----------------+-------------------------------+
+| task_state     | migration_driver_in_progress  |
+| total_progress | 99                            |
++----------------+-------------------------------+
+</pre></div>
+</div>
+<p>Once the task state has transitioned to
+<code class="docutils literal"><span class="pre">migration_driver_phase1_done</span></code>, we can complete the migration process</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila migration-complete myFlash
+</pre></div>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="../ontap_setup/section_manila-cdot-without-share-server.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Setup ONTAP: Without Share Server"></i></a>
+          
+          
+            <a href="../../../ch_swift.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Object Storage Service (Swift)"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<a href="https://creativecommons.org/licenses/by/3.0/">
+ <img src="../../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
+</a>
+<p>
+ Except where otherwise noted, this document is licensed under
+ <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
+ Attribution 3.0 License</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../../../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../ch_manila.html">Shared Filesystems (Manila)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview/section_manila-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../key_concepts/section_manila-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../process_structure/section_manila-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api_overview/section_manila-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_manila-theory-and-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_manila-configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../ch_manila-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Support</h3>
+        <ul>
+          <li><a href="https://community.netapp.com//">NetApp Community Forums</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News & Blogs</h3>
+        <ul>
+          <li><a href="http://planet.openstack.org/">Commnunity Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+          <li><a href="http://netapp.io/blog/">thePub Blog</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Upstream Documentation</h3>
+        <ul>
+          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
+          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+          <li><a href="http://openstack.org/projects/">Projects</a></li>
+          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
+          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "manila/examples/openstack_command_line/section_manila-cli" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: 9182ceb0c746bf820b601d1aee65dbe8f222a487";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Manila Command Line Interface (CLI) in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "PIKE DRAFT"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2017.2 on 2017-09-01 13:24";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+  </body>
+</html>

@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Construct Mappings between Manila and Clustered Data ONTAP</title>
+    <title>OpenStack Docs: Theory of Operation: Mapping NetApp to OpenStack Terminology</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -113,22 +113,22 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Construct Mappings between Manila and Clustered Data ONTAP</h2>
+      <h2>Theory of Operation: Mapping NetApp to OpenStack Terminology</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="../ch_manila-deployment-choices.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation & Deployment Choices"></i></a>
+    <a href="../ch_manila-theory-and-deployment-choices.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation & Deployment Choices"></i></a>
     
     
-    <a href="section_utilizing_share_servers.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choice: Utilizing Share Servers"></i></a>
+    <a href="section_creating_service_catalog.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Storage Service Catalog and Manila Share Types"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -136,7 +136,7 @@ ga('send', 'pageview');
 
 <h5><a href="../../index.html">Contents</a></h5>
 <ul>
-<li><a class="reference internal" href="#">Construct Mappings between Manila and Clustered Data ONTAP</a><ul>
+<li><a class="reference internal" href="#">Theory of Operation: Mapping NetApp to OpenStack Terminology</a><ul>
 <li><a class="reference internal" href="#manila-backends-and-clustered-data-ontap">Manila backends and Clustered Data ONTAP</a></li>
 <li><a class="reference internal" href="#manila-shares-and-flexvol-volumes">Manila shares and FlexVol volumes</a></li>
 <li><a class="reference internal" href="#manila-scheduling-and-resource-pool-selection">Manila scheduling and resource pool selection</a></li>
@@ -148,8 +148,8 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="construct-mappings-between-manila-and-clustered-data-ontap">
-<h1>Construct Mappings between Manila and Clustered Data ONTAP<a class="headerlink" href="#construct-mappings-between-manila-and-clustered-data-ontap" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="theory-of-operation-mapping-netapp-to-openstack-terminology">
+<h1>Theory of Operation: Mapping NetApp to OpenStack Terminology<a class="headerlink" href="#theory-of-operation-mapping-netapp-to-openstack-terminology" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="manila-backends-and-clustered-data-ontap">
 <h2>Manila backends and Clustered Data ONTAP<a class="headerlink" href="#manila-backends-and-clustered-data-ontap" title="Permalink to this headline">¶</a></h2>
 <p>Storage Virtual Machines (SVMs, formerly known as Vservers) contain one
@@ -178,7 +178,7 @@ individual disks, and RAID groups).</p>
 <div class="section" id="manila-scheduling-and-resource-pool-selection">
 <span id="manila-scheduling-and-resource-selection"></span><h2>Manila scheduling and resource pool selection<a class="headerlink" href="#manila-scheduling-and-resource-pool-selection" title="Permalink to this headline">¶</a></h2>
 <p>When Manila shares are created, the Manila scheduler selects a resource
-pool from the available storage pools: see “<a class="reference internal" href="../section_manila-key-concepts.html#manila-storage-pools"><span class="std std-ref">Storage Pools</span></a>”
+pool from the available storage pools: see “<a class="reference internal" href="../key_concepts/section_manila-key-concepts.html#manila-storage-pools"><span class="std std-ref">Storage Pools</span></a>”
 for an overview.</p>
 <p>Beginning with Kilo, each of NetApp’s Manila drivers report per-pool
 capacity to the scheduler.  When a new share is provisioned, the scheduler
@@ -244,16 +244,16 @@ requests a snapshot be taken of a particular Manila share.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="../ch_manila-deployment-choices.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation & Deployment Choices"></i></a>
+            <a href="../ch_manila-theory-and-deployment-choices.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation & Deployment Choices"></i></a>
           
           
-            <a href="section_utilizing_share_servers.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choice: Utilizing Share Servers"></i></a>
+            <a href="section_creating_service_catalog.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Storage Service Catalog and Manila Share Types"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -295,11 +295,11 @@ requests a snapshot be taken of a particular Manila share.</p>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../ch_manila.html">Shared Filesystems (Manila)</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-overview.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-key-concepts.html">Key Concepts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-processes.html">Process Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-api-overview.html">API Overview</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../ch_manila-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview/section_manila-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_manila-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../process_structure/section_manila-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_overview/section_manila-api-overview.html">API Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_manila-theory-and-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ch_manila-configuration.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ch_manila-examples.html">Examples</a></li>
 </ul>
@@ -387,9 +387,9 @@ requests a snapshot be taken of a particular Manila share.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: eea867c2594d26d42950147216b34146c4ffaee3";
+    var gitSha = "SHA: 9182ceb0c746bf820b601d1aee65dbe8f222a487";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Construct Mappings between Manila and Clustered Data ONTAP in NetApp OpenStack Docs";
+        var bugTitle = "Theory of Operation: Mapping NetApp to OpenStack Terminology in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";
@@ -398,7 +398,7 @@ requests a snapshot be taken of a particular Manila share.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-01 06:34";
+    var buildstring = "Release: 2017.2 on 2017-09-01 13:24";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

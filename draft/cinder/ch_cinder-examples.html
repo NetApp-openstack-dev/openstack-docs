@@ -121,14 +121,14 @@ ga('send', 'pageview');
     <a href="configuration/nfs_backup_config/section_nfs-config.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NFS Backup Configuration"></i></a>
     
     
-    <a href="examples/section_cinder-cli.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder Command Line Interface (CLI)"></i></a>
+    <a href="examples/ontap_setup/section_cinder-cdot.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Setup ONTAP for Cinder"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -141,7 +141,24 @@ ga('send', 'pageview');
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/section_cinder-cli.html">Cinder Command Line Interface (CLI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/ontap_setup/section_cinder-cdot.html">Setup ONTAP for Cinder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/ontap_setup/section_cinder-cdot.html#licenses">Licenses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/ontap_setup/section_cinder-cdot.html#aggregates">Aggregates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/ontap_setup/section_cinder-cdot.html#storage-virtual-machines">Storage Virtual Machines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/ontap_setup/section_cinder-cdot.html#configure-iscsi">Configure iSCSI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/ontap_setup/section_cinder-cdot.html#configure-nfs">Configure NFS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html">Cinder Command Line Interface (CLI)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html#cinder-service-verification">Cinder Service Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html#creating-and-defining-cinder-volume-types">Creating and Defining Cinder Volume Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html#creating-cinder-volumes-with-volume-types">Creating Cinder Volumes with Volume Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html#cinder-manage-usage">Cinder Manage Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html#cinder-unmanage-usage">Cinder Unmanage Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html#applying-cinder-qos-via-the-command-line">Applying Cinder QoS via the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/openstack_command_line/section_cinder-cli.html#manipulating-cinder-consistency-groups-via-the-command-line">Manipulating Cinder Consistency Groups via the Command Line</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -155,13 +172,13 @@ ga('send', 'pageview');
             <a href="configuration/nfs_backup_config/section_nfs-config.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NFS Backup Configuration"></i></a>
           
           
-            <a href="examples/section_cinder-cli.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder Command Line Interface (CLI)"></i></a>
+            <a href="examples/ontap_setup/section_cinder-cdot.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Setup ONTAP for Cinder"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -295,7 +312,7 @@ ga('send', 'pageview');
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: eea867c2594d26d42950147216b34146c4ffaee3";
+    var gitSha = "SHA: 9182ceb0c746bf820b601d1aee65dbe8f222a487";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Examples in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -306,7 +323,7 @@ ga('send', 'pageview');
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-01 06:34";
+    var buildstring = "Release: 2017.2 on 2017-09-01 13:24";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

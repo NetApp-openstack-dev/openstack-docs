@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Using Manila Share Types to Create a Storage Service Catalog</title>
+    <title>OpenStack Docs: Theory of Operation: Storage Service Catalog and Manila Share Types</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -113,22 +113,22 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Using Manila Share Types to Create a Storage Service Catalog</h2>
+      <h2>Theory of Operation: Storage Service Catalog and Manila Share Types</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_utilizing_share_servers.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choice: Utilizing Share Servers"></i></a>
+    <a href="section_construct-mappings.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: Mapping NetApp to OpenStack Terminology"></i></a>
     
     
-    <a href="../ch_manila-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
+    <a href="section_manila-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Manila.conf"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -137,8 +137,8 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="using-manila-share-types-to-create-a-storage-service-catalog">
-<h1>Using Manila Share Types to Create a Storage Service Catalog<a class="headerlink" href="#using-manila-share-types-to-create-a-storage-service-catalog" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="theory-of-operation-storage-service-catalog-and-manila-share-types">
+<h1>Theory of Operation: Storage Service Catalog and Manila Share Types<a class="headerlink" href="#theory-of-operation-storage-service-catalog-and-manila-share-types" title="Permalink to this headline">¶</a></h1>
 <p>The Storage Service Catalog (SSC) is a concept that describes a set of
 capabilities that enables efficient, repeated, and consistent use and
 management of storage resources by the definition of policy-based
@@ -257,7 +257,7 @@ SVM administration privileges (rather than cluster administration
 privileges); you should note some advanced features of the driver
 may not work and you may see warnings in the Manila logs, unless
 appropriate permissions are set. See the section called
-“<a class="reference internal" href="../configuration/section_ontap-config.html#account-perm"><span class="std std-ref">Account Permission Considerations</span></a>” for more details on the required access level
+“<a class="reference internal" href="../configuration/ontap_configuration/section_ontap-config.html#account-perm"><span class="std std-ref">Account Permission Considerations</span></a>” for more details on the required access level
 permissions for an SVM admin account.</p>
 </div>
 </div>
@@ -268,16 +268,16 @@ permissions for an SVM admin account.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="section_utilizing_share_servers.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choice: Utilizing Share Servers"></i></a>
+            <a href="section_construct-mappings.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: Mapping NetApp to OpenStack Terminology"></i></a>
           
           
-            <a href="../ch_manila-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
+            <a href="section_manila-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Manila.conf"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-01 06:34</div>
+            <div class="docs-updated">updated: 2017-09-01 13:24</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -319,11 +319,11 @@ permissions for an SVM admin account.</p>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../ch_manila.html">Shared Filesystems (Manila)</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-overview.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-key-concepts.html">Key Concepts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-processes.html">Process Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_manila-api-overview.html">API Overview</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../ch_manila-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview/section_manila-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_manila-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../process_structure/section_manila-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_overview/section_manila-api-overview.html">API Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_manila-theory-and-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ch_manila-configuration.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ch_manila-examples.html">Examples</a></li>
 </ul>
@@ -411,9 +411,9 @@ permissions for an SVM admin account.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: eea867c2594d26d42950147216b34146c4ffaee3";
+    var gitSha = "SHA: 9182ceb0c746bf820b601d1aee65dbe8f222a487";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Using Manila Share Types to Create a Storage Service Catalog in NetApp OpenStack Docs";
+        var bugTitle = "Theory of Operation: Storage Service Catalog and Manila Share Types in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";
@@ -422,7 +422,7 @@ permissions for an SVM admin account.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-01 06:34";
+    var buildstring = "Release: 2017.2 on 2017-09-01 13:24";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
