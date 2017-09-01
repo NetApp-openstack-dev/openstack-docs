@@ -1,5 +1,5 @@
-Construct Mappings between Manila and Clustered Data ONTAP
-==========================================================
+Theory of Operation: Mapping NetApp to OpenStack Terminology
+=============================================================
 
 Manila backends and Clustered Data ONTAP
 ----------------------------------------

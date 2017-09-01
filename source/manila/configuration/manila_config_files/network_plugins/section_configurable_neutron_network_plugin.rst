@@ -29,5 +29,4 @@ configuration file (``manila.conf``):
 
 ::
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin
-                    
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetworkPlugin

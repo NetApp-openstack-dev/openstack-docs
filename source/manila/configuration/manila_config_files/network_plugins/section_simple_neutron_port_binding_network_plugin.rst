@@ -44,18 +44,18 @@ switch:
 
 ::
 
-                        network_api_class = manila.network.neutron.neutron_network_plugin.NeutronBindSingleNetworkPlugin
-                        neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
-                        neutron_subnet_id = 447732be-4cf2-42b0-83dc-4b6f4ed5368c
-                        neutron_host_id = netapp_lab42
-                        neutron_vnic_type = baremetal
-                        neutron_binding_profiles = phys1
+    network_api_class = manila.network.neutron.neutron_network_plugin.NeutronBindSingleNetworkPlugin
+    neutron_net_id = 37fb9f7e-4ffe-4900-8dba-c6d4251e588e
+    neutron_subnet_id = 447732be-4cf2-42b0-83dc-4b6f4ed5368c
+    neutron_host_id = netapp_lab42
+    neutron_vnic_type = baremetal
+    neutron_binding_profiles = phys1
 
-                        [phys1]
-                        neutron_switch_id = 10.63.152.254
-                        neutron_port_id = 1/1-4
-                        neutron_switch_info = switch_ip:10.63.152.254
-                    
+    [phys1]
+    neutron_switch_id = 10.63.152.254
+    neutron_port_id = 1/1-4
+    neutron_switch_info = switch_ip:10.63.152.254
+
 
 `table\_title <#manila.configuration.network.simple_neutron_bind.options>`__
 lists the configuration options available for the Simple Neutron Port
