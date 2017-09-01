@@ -1,9 +1,12 @@
 .. _manila-conf-ex:
 
-``manila.conf``
-===============
+Sample manila.conf
+==================
 
-This section provides an example Manila configuration file
+Without Replication
+-------------------
+
+This section provides an sample Manila configuration file
 (``manila.conf``) that contains three backends - for clustered Data
 ONTAP. Two without share server management. One with share server
 management.
@@ -82,16 +85,14 @@ management.
     netapp_root_volume_aggregate = aggr1
     netapp_aggregate_name_search_pattern = ^((?!aggr0).)*$
 
-``manila.conf`` with Replication
+With Replication
 --------------------------------
 
-This section provides an example Manila configuration file
+This section provides a sample Manila configuration file
 (``manila.conf``) that contains one backend, ``cdotSingleSVM1``, that is
-in the same replication domain as ``cdotSingleSVM02``. Therefore, both
-backends must include their configuration stanzas so that
-``cdotSingleSVM01`` can communicate with ``cdotSingleSVM02`` in order to
-manage replication on ONTAP as needed; even though the only enabled
-backend for this Manila share service instance is ``cdotSingleSVM01``.
+in the same replication domain as ``cdotSingleSVM02``. 
+For the purpose of replication management, both backends must be included.
+Only the backend ``cdotSingleSVM01`` is enabled.
 
 .. important::
 
