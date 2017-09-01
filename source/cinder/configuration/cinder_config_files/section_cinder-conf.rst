@@ -1,7 +1,7 @@
 .. _cinder:
 
-Cinder & cinder.conf
-====================
+Cinder.conf: Overview
+=====================
 
 Cinder is configured by changing the contents of the ``cinder.conf``
 file and restarting all of the Cinder processes. Depending on the
