@@ -22,7 +22,8 @@ Storage Virtual Machine Considerations
    1. Be sure to enable the NFS service on the SVM.
 
    2. Be sure to enable the desired version of the NFS protocol (e.g.
-      ``v4.0, v4.1-pnfs``) on the SVM.
+      ``v4.0, v4.1-pnfs``) on the SVM.  Refer to the section ":ref:`nfs_security`" 
+      for additional NFS protocol version requirments.
 
    3. Be sure to define junction paths from the FlexVol volumes and
       refer to them in the file referenced by the ``nfs_shares_config``

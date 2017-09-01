@@ -46,9 +46,14 @@ availability features.
 -  NFS drivers require support from the hypervisor to virtualize files
    and present them as block devices to an instance.
 
--  As of the Icehouse release, the use of parallel NFS (pNFS) is
-   supported with the NetApp unified driver, providing enhanced
-   performance and scalability characteristics.
+-  Mounting of NFS exports is offloaded by Cinder and Nova to the 
+   linux nodes mount api.  By default, the linux mount api negotiates
+   the highest supported NFS protocol(e.g v3.0, v4.0, v4.1, v4.1-pnfs).
+
+-  If desired,  Selection of the protocol version is left up to the consumer. For more 
+   information, refer to `NetApp TR4067: NFS Best Pratice and Implimentation 
+   Guide <http://www.netapp.com/us/media/tr-4067.pdf>`__.  Refer to the section 
+   ":ref:`nfs_security`" for additional NFS protocol version requirments.
 
 -  You cannot apply Cinder QoS specs to NFS backends on cDOT through an
    SVM-Scoped admin user. In order to do so, you must use a
