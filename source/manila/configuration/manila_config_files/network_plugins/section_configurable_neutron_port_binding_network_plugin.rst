@@ -33,7 +33,7 @@ stanza within the Manila configuration file (``manila.conf``).
 The Neutron binding profile in this example is for a Cisco Nexus 9000 switch:
 
 
-.. figure:: ../../../images/manila_hierarchical_port_binding.png
+.. figure:: ../../../../images/manila_hierarchical_port_binding.png
    :alt: Hierarchical Network Topology
    :width: 10in
 
