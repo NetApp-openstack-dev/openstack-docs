@@ -1,27 +1,27 @@
 .. _configurable_neutron_port_binding_network_plugin:
 
 Manila Network Plugins: Configurable Neutron Port Binding Network Plugin
----------------------------------------------------------------------------
+========================================================================
 
--  *Configurable Neutron Port Binding Network Plugin*: This plugin is
-   very similar to the configurable neutron network plugin, the only
-   difference is that this plugin can enforce port-binding. Port binding
-   profiles from the manila configuration file are sent to Neutron at
-   the time of creating network ports for the purpose of creating ONTAP
-   LIFs. This allows network agents to bind the ports based off these
-   profiles. When using multiple top of the rack switches to connect
-   different compute nodes, this plugin is also capable of performing
-   Hierarchical Port Binding. Share networks can be defined with VLAN
-   shared provider networks or VLAN tenant networks. Administrators are
-   required to define one or more binding profiles in ``manila.conf``
-   per backend configured with this plugin. Manila consumes bound
-   network ports and invokes the NetApp driver to create LIFs assigned
-   to the network segment and IP address as chosen.
+*Configurable Neutron Port Binding Network Plugin*: This plugin is
+very similar to the configurable neutron network plugin, the only
+difference is that this plugin can enforce port-binding. Port binding
+profiles from the manila configuration file are sent to Neutron at
+the time of creating network ports for the purpose of creating ONTAP
+LIFs. This allows network agents to bind the ports based off these
+profiles. When using multiple top of the rack switches to connect
+different compute nodes, this plugin is also capable of performing
+Hierarchical Port Binding. Share networks can be defined with VLAN
+shared provider networks or VLAN tenant networks. Administrators are
+required to define one or more binding profiles in ``manila.conf``
+per backend configured with this plugin. Manila consumes bound
+network ports and invokes the NetApp driver to create LIFs assigned
+to the network segment and IP address as chosen.
 
-   Tenants *must* specify Neutron network information when creating
-   share network objects. Manila will derive values for segmentation
-   protocol, IP address, netmask and gateway from Neutron when creating
-   a new share server..
+Tenants *must* specify Neutron network information when creating
+share network objects. Manila will derive values for segmentation
+protocol, IP address, netmask and gateway from Neutron when creating
+a new share server..
 
 In spirit this plugin works exactly like the Simple Neutron Port Binding
 Network Plugin. The only difference being that the Neutron network is not
@@ -35,7 +35,7 @@ The Neutron binding profile in this example is for a Cisco Nexus 9000 switch:
 
 .. figure:: ../../../../images/manila_hierarchical_port_binding.png
    :alt: Hierarchical Network Topology
-   :width: 10in
+   :width: 7in
 
    Hierarchical Network Topology
 

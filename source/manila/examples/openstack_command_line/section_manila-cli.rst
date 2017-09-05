@@ -10,7 +10,7 @@ properly initialized by Manila.
 
 ::
 
-    stack@ostk-controller:~/$ manila service-list
+    $ manila service-list
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
     | Id | Binary           | Host                          | Zone | Status  | State | Updated_at                 |
     +----+------------------+-------------------------------+------+---------+-------+----------------------------+
@@ -157,8 +157,8 @@ specific extra specs described in
 Creating Manila Share Network Objects
 -------------------------------------
 
-In this section, we create two manila share network objects to.
-share-network-objects are only used with share servers.
+In this section, we create two manila share network objects, doing so
+to demonstrate that share-network-objects are used only with share servers.
 
 Network Plugin: NeutronNetworkPlugin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,7 +261,7 @@ Neutron Subnet configured in the /etc/manila/manila.conf.
 
 ::
 
-    [root@chadcloud1 manila(keystone_mchad)]# manila share-network-show storage-provider-network-2
+    $ manila share-network-show storage-provider-network-2
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
@@ -284,7 +284,7 @@ Neutron Subnet configured in the /etc/manila/manila.conf.
 
 ::
 
-    [root@chadcloud1 manila(keystone_mchad)]# manila share-network-list
+    $ manila share-network-list
     +--------------------------------------+----------------------------+
     | id                                   | name                       |
     +--------------------------------------+----------------------------+
@@ -294,7 +294,7 @@ Neutron Subnet configured in the /etc/manila/manila.conf.
 
 ::
 
-    [root@chadcloud1 manila(keystone_mchad)]# manila share-network-show storage-provider-network-2
+    $ manila share-network-show storage-provider-network-2
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
@@ -686,7 +686,7 @@ NFS shares with full read/write privileges.
     | access_type  | ip                                   |
     | access_to    | 0.0.0.0/0                            |
     | access_level | rw                                   |
-    | state        | new                                  |
+    | state        | queued_to_apply                      |
     | deleted_at   | None                                 |
     | id           | c400bdd7-7e4f-49a4-b73d-5aa417af95c3 |
     +--------------+--------------------------------------+
@@ -704,7 +704,7 @@ NFS shares with full read/write privileges.
     | access_type  | ip                                   |
     | access_to    | 0.0.0.0/0                            |
     | access_level | rw                                   |
-    | state        | new                                  |
+    | state        | queued_to_apply                      |
     | deleted_at   | None                                 |
     | id           | 09f8f699-1cec-4519-8aaa-a30d346ad54c |
     +--------------+--------------------------------------+
@@ -722,7 +722,7 @@ NFS shares with full read/write privileges.
     | access_type  | ip                                   |
     | access_to    | 0.0.0.0/0                            |
     | access_level | rw                                   |
-    | state        | new                                  |
+    | state        | queued_to_apply                      |
     | deleted_at   | None                                 |
     | id           | d0565115-8369-455e-ad8f-3dd7c56037ea |
     +--------------+--------------------------------------+
@@ -1131,6 +1131,10 @@ create a share type that supports replication.
     | ID                   | ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8 |
     +----------------------+--------------------------------------+
 
+Assign replication_type and snapshot_support attributes to the replication share-type
+
+::
+
     $ manila type-key replication set replication_type=dr snapshot_support=True
 
 Next we'll create a share.
@@ -1169,7 +1173,7 @@ Next we'll create a share.
 
 ::
 
-    manila show f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
+    $ manila show f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
     +----------------------------+-----------------------------------------------------------------+
     | Property                   |Value                                                            |
     +----------------------------+-----------------------------------------------------------------+
@@ -1240,7 +1244,7 @@ Next we'll create a replica of the share.
 
 ::
 
-    manila share-replica-show b3191744-cee9-478b-b906-c5a7a3934adb
+    $ manila share-replica-show b3191744-cee9-478b-b906-c5a7a3934adb
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
@@ -1293,6 +1297,8 @@ Finally, let us failover to our other replica.
 ::
 
     $ manila share-replica-promote b3191744-cee9-478b-b906-c5a7a3934adb
+
+::
 
     $ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
     +--------------------------------------+--------------------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+

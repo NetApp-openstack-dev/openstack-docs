@@ -49,17 +49,17 @@ created on it. This directory path can be specified as the
    ``/dev/sdc`` on the host, create a partition on the volume and then
    create a filesystem on the partition (e.g. ext4)::
 
-       fdisk /dev/sdc
-       mkfs.ext4 /dev/sdc1
-       mount /dev/sdc1 /mnt/sdc1
-       mkdir /mnt/sdc1/glanceImageStore
+     $ fdisk /dev/sdc
+     $ mkfs.ext4 /dev/sdc1
+     $ mount /dev/sdc1 /mnt/sdc1
+     $ mkdir /mnt/sdc1/glanceImageStore
 
 2. Edit the Glance configuration file ``glance-api.conf`` so that it
    contains the ``filesystem_store_datadir`` option, and ensure the
    value refers to the Glance image store directory created in the
    previous step::
 
-       filesystem_store_datadir=/mnt/sdc1/glanceImageStore
+     $ filesystem_store_datadir=/mnt/sdc1/glanceImageStore
 
 Configuration of Glance with NetApp StorageGRID Webscale
 --------------------------------------------------------
@@ -72,7 +72,7 @@ using the Amazon S3 API.
 1. Port redirect: Glance will only talk to port 443. Redirect port on
    gateway or storage node (8082 for CLB and 18082 for LDR)::
 
-       iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8082
+       $ iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 8082
 
 2. Set domain root::
 
@@ -126,7 +126,7 @@ using the Amazon S3 API.
        # Do we create the bucket if it does not exist?
        s3_store_create_bucket_on_put=True
 
-2. Restart Glance service: ``openstack-service restart glance``
+2. Restart Glance service: ``$ openstack-service restart glance``
 
 3. Edit DNS or Hosts file: Create entry for bucket.hostname example:
    glance55.webscalertp.stl.netapp.com
@@ -135,6 +135,6 @@ using the Amazon S3 API.
 
        Grab an image file to test – cirros is a very small image used for testing.
 
-       source /root/keystonerc_admin
+       $ source /root/keystonerc_admin
 
-       glance image-create --name cirros --disk-format qcow2 --container-format bare --file /root/cirros.img
+       $ glance image-create --name cirros --disk-format qcow2 --container-format bare --file /root/cirros.img

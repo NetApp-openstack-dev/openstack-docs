@@ -1,21 +1,21 @@
 .. _standalone_network_plugin:
 
 Manila Network Plugins: Standalone Network Plugin
--------------------------------------------------
+=================================================
 
--  *Standalone Network Plugin*: Use this plugin in stand-alone
-   deployments of OpenStack Manila, and in deployments where you don't
-   desire to manage the storage network with Neutron. IP settings
-   (address range, subnet mask, gateway, version, MTU) are all defined
-   through configuration options within the driver-specific stanza. This
-   network can either be segmented (VLAN) or non-segmented (FLAT).
-   Overlay networks (VxLAN, GRE, Geneve) are not supported by the NetApp
-   driver.
+*Standalone Network Plugin*: Use this plugin in stand-alone
+deployments of OpenStack Manila, and in deployments where you don't
+desire to manage the storage network with Neutron. IP settings
+(address range, subnet mask, gateway, version, MTU) are all defined
+through configuration options within the driver-specific stanza. This
+network can either be segmented (VLAN) or non-segmented (FLAT).
+Overlay networks (VxLAN, GRE, Geneve) are not supported by the NetApp
+driver.
 
-   Tenants *must not* specify Neutron network information when creating
-   share network objects. Values for segmentation protocol, IP address,
-   netmask and gateway are obtained from ``manila.conf`` when creating a
-   new share server.
+Tenants *must not* specify Neutron network information when creating
+share network objects. Values for segmentation protocol, IP address,
+netmask and gateway are obtained from ``manila.conf`` when creating a
+new share server.
 
 The network plugin is chosen by setting the value of the network_api_class
 configuration option within the driver-specific stanza of the manila.conf
