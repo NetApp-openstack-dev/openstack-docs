@@ -1,22 +1,22 @@
 .. _simple_neutron_network_plugin:
 
 Manila Network Plugins: Simple Neutron Network Plugin
------------------------------------------------------
+=====================================================
 
--  *Simple Neutron Network Plugin*: This is like the Standalone Network
-   Plugin, except that the network is managed by Neutron. Typically,
-   data center administrators that own a dedicated storage network would
-   want to manage such a network via Neutron so that virtual machines
-   can have access to storage resources on the storage network. In this
-   use case, an administrator creates a dedicated Neutron network and
-   provides the network details in the backend stanza of ``manila.conf``
-   providing the network ID and subnet ID. Note that you may only use
-   FLAT or VLAN networks with the NetApp driver.
+*Simple Neutron Network Plugin*: This is like the Standalone Network
+Plugin, except that the network is managed by Neutron. Typically,
+data center administrators that own a dedicated storage network would
+want to manage such a network via Neutron so that virtual machines
+can have access to storage resources on the storage network. In this
+use case, an administrator creates a dedicated Neutron network and
+provides the network details in the backend stanza of ``manila.conf``
+providing the network ID and subnet ID. Note that you may only use
+FLAT or VLAN networks with the NetApp driver.
 
-   Tenants *must not* specify Neutron network information when creating
-   share network objects. Manila will derive values for segmentation
-   protocol, IP address, netmask and gateway from Neutron when creating
-   a new share server.
+Tenants *must not* specify Neutron network information when creating
+share network objects. Manila will derive values for segmentation
+protocol, IP address, netmask and gateway from Neutron when creating
+a new share server.
 
 
 In this configuration, administrators set up a single neutron network

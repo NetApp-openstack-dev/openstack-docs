@@ -1,7 +1,7 @@
 .. _manila_network_plugin_overview:
 
-Deployment Choice: Manila Network Plugin
-========================================
+Deployment Choice: Manila Network Plugins
+=========================================
 
 .. warning::
 

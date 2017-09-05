@@ -70,7 +70,7 @@ Offload tool for NFS
 
 Obtain the user and group ids for ``glance`` service user::
 
-    # cat /etc/passwd | grep glance
+    $ cat /etc/passwd | grep glance
     glance:x:161:161:OpenStack Glance Daemons:/var/lib/glance:/sbin/nologin
 
 Set ownership for the FlexVol backing Glance accordingly::
@@ -82,7 +82,7 @@ Set ownership for the FlexVol backing Glance accordingly::
 
 Obtain the user and group ids for ``cinder`` service user::
 
-    # cat /etc/passwd | grep cinder
+    $ cat /etc/passwd | grep cinder
     cinder:x:165:165:OpenStack Cinder Daemons:/var/lib/cinder:/sbin/nologin
 
 Set ownership for the FlexVol backing Cinder accordingly::
@@ -97,13 +97,13 @@ Download the copy offload tool from NetApp Support.
 
 Place the archive on the OpenStack Controller(s)::
 
-    # mkdir /etc/cinder/copyoffload
-    # mv copyoffload.tar /etc/cinder/copyoffload/
-    # cd /etc/cinder/copyoffload
-    # tar xzvf copyoffload.tar
-    # ls
+    $ mkdir /etc/cinder/copyoffload
+    $ mv copyoffload.tar /etc/cinder/copyoffload/
+    $ cd /etc/cinder/copyoffload
+    $ tar xzvf copyoffload.tar
+    $ ls
     copyoffload.tar  na_copyoffload_64  NetApp_End_User_License_Agreement2014.pdf  NOTICE.pdf  README.txt
-    # pwd
+    $ pwd
     /etc/cinder/copyoffload
 
 Edit cinder.conf to contain the following entry in the NetApp ONTAP
@@ -138,7 +138,7 @@ backend stanza::
 
 ::
 
-    # chown cinder:cinder /etc/cinder/copyoffload/na_copyoffload_64
+    $ chown cinder:cinder /etc/cinder/copyoffload/na_copyoffload_64
 
 8) Change ``glance_api_version`` in cinder.conf
 
@@ -193,14 +193,14 @@ with the following content::
 
 ::
 
-    # gpasswd –a cinder glance
+    $ gpasswd –a cinder glance
 
 12) Restart Cinder and Glance services
 
 ::
 
-    # systemctl restart openstack-cinder-{api,scheduler,volume}
-    # systemctl restart openstack-glance-{api,registry}
+    $ systemctl restart openstack-cinder-{api,scheduler,volume}
+    $ systemctl restart openstack-glance-{api,registry}
 
 13) Check mounts
 
@@ -219,13 +219,13 @@ use the image you prefer and replace the URL accordingly.
 
 ::
 
-    # wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
+    $ wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
 
 15) Boot from Cinder
 
 ::
 
-    # nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
+    $ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
 
 16) Verify functionality
 
@@ -249,7 +249,7 @@ of Enhanced Instance Creation with NetApp FAS (ONTAP) for iSCSI or Fibre
 Channel:
 
 +-----+-------------------------------------------------------+---------+
-| #   | Description of Step                                   | Done?   |
+| Step| Description of Step                                   | Done?   |
 +=====+=======================================================+=========+
 | 1   | Configure internal tenant settings in cinder.conf     |         |
 +-----+-------------------------------------------------------+---------+
@@ -277,7 +277,7 @@ Review Cinder's Image-Volume cache reference:
 
 Obtain the ``cinder_internal_tenant_project_id``::
 
-    # openstack service list
+    $ openstack service list
     +----------------------------------+-------------+----------------+
     | ID                               | Name        | Type           |
     +----------------------------------+-------------+----------------+
@@ -299,7 +299,7 @@ Edit cinder.conf to contain the following entry in the DEFAULT stanza::
 
 Obtain the ``cinder_internal_tenant_user_id``::
 
-    # openstack user list
+    $ openstack user list
     +----------------------------------+----------+
     | ID                               | Name     |
     +----------------------------------+----------+
@@ -335,7 +335,7 @@ Edit cinder.conf to contain the following entry in the DEFAULT stanza::
 
 ::
 
-    # systemctl restart openstack-cinder-{api,scheduler,volume}
+    $ systemctl restart openstack-cinder-{api,scheduler,volume}
 
 5) Upload a Glance image
 
@@ -344,13 +344,13 @@ use the image you prefer and replace the URL accordingly.
 
 ::
 
-    # wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
+    $ wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
                 
 6) Boot from Cinder
 
 ::
 
-    # nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
+    $ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
 
 7) Verify functionality
 

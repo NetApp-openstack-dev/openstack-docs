@@ -82,7 +82,7 @@ availability features.
    adding the line "nfs_mount_options = lookupcache=pos" to your
    driver configuration stanza in your cinder.conf file. Alternatively,
    if you are already setting other NFS mount options, then you can
-   just add "lookupcache=pos<200b>" to the end of your current
+   just add "lookupcache=pos" to the end of your current
    "nfs_mount_options". The effect of this additional option is to
    force the NFS client to ignore any negative entries in its cache and
    always check the NFS host when attempting to confirm the existence

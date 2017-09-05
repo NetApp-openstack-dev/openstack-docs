@@ -1,21 +1,18 @@
-Troubleshooting
-***************
-
 .. _common-probs:
 
 Common Problems
-===============
+======================
 
 Common problems listed below are followed by the ``cinder``, ``manila``,
 or ``nova`` CLI command and possible reasons for the occurrence of the
 problem.
 
-1. Create volume operation fails with an error status
------------------------------------------------------
+1. Volume create operation fails
+--------------------------------
 
 ::
 
-    cinder create size_gb
+    $ cinder create size_gb
 
 -  No space left on the NetApp volume or NetApp volume does not have
    sufficient free space to host the specified OpenStack volume. Here
@@ -71,12 +68,12 @@ problem.
 -  NetApp volumes are shared between OpenStack Cinder and other client
    side applications.
 
-2. Create volume with volume-type operation fails with error status
--------------------------------------------------------------------
+2. Volume create with volume-type operation fails
+-------------------------------------------------
 
 ::
 
-    cinder create --volume-type volume_type size_gb
+    $ cinder create --volume-type volume_type size_gb
 
 -  All the reasons mentioned under Item 1 in this appendix.
 
@@ -97,12 +94,12 @@ problem.
    -  The configured IP address/host name is on a SVM network interface
       but the volume-type support requires cluster wide API access.
 
-3. Create volume from image-id operation fails with an error status
--------------------------------------------------------------------
+3. Volume create from image-id operation fails
+----------------------------------------------
 
 ::
 
-    cinder create --image-id image-id size_gb
+    $ cinder create --image-id image-id size_gb
 
 -  All the reasons mentioned under Item 1 in this appendix.
 
@@ -121,17 +118,17 @@ problem.
    files are files with prefix img-cache, and are periodically cleaned
    by the driver.
 
-4. Create volume from image-id with volume-type operation fails with an error status
-------------------------------------------------------------------------------------
+4. Volume create from image-id with volume-type operation fails
+---------------------------------------------------------------
 
 ::
 
-    cinder create --image-id image-id --volume-type volume_type size_gb
+    $ cinder create --image-id image-id --volume-type volume_type size_gb
 
 -  All the reasons mentioned under Items 1, 2, and 3 in this appendix.
 
-5. Create snapshot operation fails with an error status
--------------------------------------------------------
+5. Volume snapshot create operation fails
+-----------------------------------------
 
 ::
 
@@ -145,21 +142,21 @@ problem.
 -  Any maintenance operation by a storage admin directly at the storage
    backend causing LUN or file unavailability.
 
-6. Create volume from snapshot operation fails with an error status
--------------------------------------------------------------------
+6. Volume create from snapshot operation fails
+----------------------------------------------
 
 ::
 
-    cinder create --snapshot-id snapshot-id size_gb
+    $ cinder create --snapshot-id snapshot-id size_gb
 
 -  All reason mentioned under Items 1 & 5 in this appendix.
 
-7. Create cloned volume operation fails with an error status
-------------------------------------------------------------
+7. Create cloned volume operation fails
+---------------------------------------
 
 ::
 
-    cinder create --source-volid volume-id size_gb
+    $ cinder create --source-volid volume-id size_gb
 
 -  All reason mentioned under Items 1 & 5 in this appendix.
 
@@ -254,7 +251,7 @@ using cinder reset-state. The operation can be retried successfully once
 the conflicting operations on the pool are completed. It is recommended
 that DDP be used in place of Volume Groups if this is a commonly
 utilized operation in your environment, in order to avoid the previously
-ascribed limitations. See `??? <#cinder.config.eseries.pools>`__ for a
+ascribed limitations. See ":ref:`volume_groups_vs_ddp` for a
 comparison of storage pool options.
 
 14. Share replica fails to reach in-sync status
@@ -269,119 +266,3 @@ comparison of storage pool options.
 
 -  The controller hosting the active share replica is having trouble
    communicating with the share replica's host via intercluster LIFs.
-
-Triage and Data Collection
-==========================
-
-Please use the NetApp OpenStack Communities site to track or report
-issues related to Cinder. In case of issues, the data can be collected
-from logs printed by each of the below mentioned process. Logs need to
-be collected for Cinder related processes. For Glance and Nova verifying
-the service up status is sufficient.
-
--  ``cinder-api``
-
--  ``cinder-backup``
-
--  ``cinder-scheduler``
-
--  ``cinder-volume``
-
-.. note::
-
-   You can add the following line to your NetApp backend stanza(s) in
-   cinder.conf to capture much more detail about the driver’s
-   interaction with Data ONTAP in the cinder-volume log:
-
-   -  ``trace_flags``\ = method,api
-
-   Please note that this tends to bloat up the log files and hence you
-   should only do this for problem resolution.
-
--  ``manila-api``
-
--  ``manila-scheduler``
-
--  ``manila-share``
-
--  ``nova-api``
-
--  ``nova-scheduler``
-
--  ``nova-cpu``
-
--  ``glance-api``
-
--  ``glance-registry``
-
--  ``swift-object-server``
-
--  ``swift-object-replicator``
-
--  ``swift-object-updator``
-
--  ``swift-object-auditor``
-
--  ``swift-container-server``
-
--  ``swift-container-replicator``
-
--  ``swift-container-updator``
-
--  ``swift-container-auditor``
-
--  ``swift-account-server``
-
--  ``swift-account-replicator``
-
--  ``swift-account-auditor``
-
-References
-==========
-
-The following references were used in this paper:
-
--  NIST Cloud Definition http://www.nist.gov
-
--  OpenStack Foundation http://www.openstack.org
-
--  Cloud Data Management Interface (CDMI) http://www.snia.org/cdmi
-
-For additional information, visit:
-
--  For more information on the operation, deployment of, or support for
-   NetApp’s OpenStack integrations:
-   http://communities.netapp.com/groups/openstack
-
--  For source code for OpenStack, including NetApp contributions,
-   available through Github: http://www.github.com/openstack
-
--  For more information about NetApp’s participation in OpenStack, visit
-   the NetApp Community site: http://www.netapp.com/openstack
-
--  For more information about OpenStack history:
-   http://www.openstack.org or http://en.wikipedia.org/wiki/OpenStack
-
-Support
-=======
-
-Community support is available through the NetApp Communities site:
-http://communities.netapp.com/groups/openstack.
-
-NetApp’s Interoperability Matrix (IMT) details components and versions
-of qualified configurations. Since the majority of OpenStack provides a
-control plane it’s not presently explicitly called out, but host
-operating system, hypervisor, and other components involved in the data
-path should be noted.
-
-http://support.netapp.com/matrix/
-
-The NetApp OpenStack team presently intends to provide maintenance of
-the two most recently released versions of OpenStack. For example,
-during Juno development, all code that is part of the Havana and
-Icehouse official branches are supported. Upon Juno release, direct
-maintenance for Havana would be dropped and maintenance for Icehouse is
-added.
-
-NetApp can provide customized support options for production
-requirements. For more information, please contact your sales team.
