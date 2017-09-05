@@ -35,10 +35,10 @@ Create use case specific cluster admin role privileges
 Please see ":ref:`account-permissions` before creating
 security permissions in your environment.
 
-Permissions excusive of DR/protocol/replication
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Assign the following persmissions which are exclusive of DR,
-   replication, and protocols, each of which will be added next.::
+Permissions exclusive of DR/protocol/replication
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Assign the following permissions which are exclusive of DR,
+   replication, and protocols, each of which will be added next::
 
        security login role create -role cl-limited -cmddirname vserver -access readonly
        security login role create -role cl-limited -cmddirname "system node" -access readonly

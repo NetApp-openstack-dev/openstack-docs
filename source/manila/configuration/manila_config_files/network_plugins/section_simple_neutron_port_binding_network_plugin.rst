@@ -1,25 +1,25 @@
 .. _simple_neutron_port_binding_network_plugin:
 
 Manila Network Plugins: Simple Neutron Port Binding Network Plugin
--------------------------------------------------------------------
+==================================================================
 
--  *Simple Neutron Port Binding Network Plugin*: This plugin is very
-   similar to the simple Neutron network plugin, the only difference is
-   that this plugin can enforce port-binding. Port binding profiles from
-   the manila configuration file are sent to Neutron at the time of
-   creating network ports for the purpose of creating ONTAP LIFs. This
-   allows network agents to bind the ports based off these profiles.
-   When using multiple top of the rack switches to connect different
-   compute nodes, this plugin is also capable of performing Hierarchical
-   Port Binding. Administrators would configure the VLAN-only neutron
-   network to use in the backend stanza of the ``manila.conf`` and
-   tenants must create their own share network objects to allow the
-   NetApp driver to create VServers connected to this network.
+*Simple Neutron Port Binding Network Plugin*: This plugin is very
+similar to the simple Neutron network plugin, the only difference is
+that this plugin can enforce port-binding. Port binding profiles from
+the manila configuration file are sent to Neutron at the time of
+creating network ports for the purpose of creating ONTAP LIFs. This
+allows network agents to bind the ports based off these profiles.
+When using multiple top of the rack switches to connect different
+compute nodes, this plugin is also capable of performing Hierarchical
+Port Binding. Administrators would configure the VLAN-only neutron
+network to use in the backend stanza of the ``manila.conf`` and
+tenants must create their own share network objects to allow the
+NetApp driver to create VServers connected to this network.
 
-   Tenants *must not* specify Neutron network information when creating
-   share network objects. Manila will derive values for segmentation
-   protocol, IP address, netmask and gateway from Neutron when creating
-   a new share server.
+Tenants *must not* specify Neutron network information when creating
+share network objects. Manila will derive values for segmentation
+protocol, IP address, netmask and gateway from Neutron when creating
+a new share server.
 
 
 In this configuration, administrators set up a single neutron network,
@@ -41,6 +41,12 @@ plugin, the following options should be added to the driver-specific
 stanza within the Manila configuration file (``manila.conf``). The
 Neutron binding profile in this example is for a Cisco Nexus 9000
 switch:
+
+.. figure:: ../../../../images/manila_hierarchical_port_binding.png
+   :alt: Hierarchical Network Topology
+   :width: 7in
+
+   Hierarchical Network Topology
 
 ::
 

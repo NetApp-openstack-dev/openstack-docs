@@ -78,4 +78,3 @@ Assign Aggregates
     ::
 
         vserver modify -vserver manila-vserver -aggr-list aggr1,aggr2
-
