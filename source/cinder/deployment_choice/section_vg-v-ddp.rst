@@ -1,3 +1,5 @@
+.. _volume_groups_vs_ddp:
+
 Deployment Choices: Volume Groups vs. Dynamic Disk Pools (E-Series)
 ===================================================================
 

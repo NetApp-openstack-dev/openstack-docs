@@ -22,6 +22,7 @@
 
 import os
 import string
+import enchant
 
 import netappdocstheme
 
@@ -41,6 +42,7 @@ import netappdocstheme
 # TODO(ajaeger): enable PDF building, for example add 'rst2pdf.pdfbuilder'
 extensions = [
     'sphinxmark',
+    'sphinxcontrib.spelling',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

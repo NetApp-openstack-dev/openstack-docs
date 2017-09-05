@@ -1,13 +1,11 @@
 .. _netapp_ontap_unified_driver_overview:
 
-NetApp Unified Driver (Cinder): Overview
+Theory of Operation: NetApp Unified Driver Overview
 ==================================================================
 
-NetApp drivers for clustered Data ONTAP and Data ONTAP operating in
-7-Mode are now offered in a single, unified driver. The unified driver
-provides OpenStack with access to NetApp clustered Data ONTAP and Data
-ONTAP operating in 7-Mode controllers for provisioning and maintaining
-OpenStack block storage volumes.
+NetApp drivers for ONTAP, Data ONTAP operating in 7-Mode, and E-Series 
+are offered in a single, unified driver for the purpose of
+provisioning and maintaining OpenStack block storage volumes.
 
 Where to Obtain the Drivers
 ---------------------------
@@ -28,23 +26,6 @@ deploying with.
 
 Multiple Deployment Options
 ---------------------------
-
-A variety of OpenStack block storage deployment options for NetApp Data
-ONTAP based systems are available in the Kilo OpenStack release and
-involve making deployment choices between the following:
-
--  Clustered Data ONTAP or Data ONTAP operating in 7-Mode
-
--  iSCSI, Fibre Channel, or NFS storage protocol
-
-While there are multiple supported deployment options, since the Havana
-release there is a new, single NetApp unified driver that can be
-configured to achieve any of the desired deployments. In Grizzly and
-prior releases, there were multiple drivers segmented by storage family,
-protocol, and integration with additional NetApp management software.
-The previous drivers have all been deprecated since the Havana release;
-see :ref:`deprecated_drivers` for more information on
-the deprecated capabilities.
 
 The following lists all of the individual options and subsequent
 sections are intended to offer guidance on which configuration options
@@ -67,3 +48,7 @@ ought to be employed given varying use cases:
 
 -  :ref:`NetApp Data ONTAP operating in 7-Mode with Fibre
    Channel <7mode-fc>`
+
+-  :ref:`E-Series with iSCSI <eseries-iscsi>`
+
+-  :ref:`E-Series with FCP <eseries-fc>`
