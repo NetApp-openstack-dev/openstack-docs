@@ -128,7 +128,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-01 13:24</div>
+            <div class="docs-updated">updated: 2017-09-05 23:35</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -255,8 +255,8 @@ supported with this protocol.</p>
 <li>Set ownership of Glance FlexVol</li>
 </ol>
 <p>Obtain the user and group ids for <code class="docutils literal"><span class="pre">glance</span></code> service user:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cat /etc/passwd | grep glance</span>
-<span class="n">glance</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">161</span><span class="p">:</span><span class="mi">161</span><span class="p">:</span><span class="n">OpenStack</span> <span class="n">Glance</span> <span class="n">Daemons</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">glance</span><span class="p">:</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat /etc/passwd | grep glance
+glance:x:161:161:OpenStack Glance Daemons:/var/lib/glance:/sbin/nologin
 </pre></div>
 </div>
 <p>Set ownership for the FlexVol backing Glance accordingly:</p>
@@ -268,8 +268,8 @@ CDOT::&gt; volume show –vserver replace-with-vserver-name -volume replace-with
 <li>Set ownership of Cinder FlexVol</li>
 </ol>
 <p>Obtain the user and group ids for <code class="docutils literal"><span class="pre">cinder</span></code> service user:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cat /etc/passwd | grep cinder</span>
-<span class="n">cinder</span><span class="p">:</span><span class="n">x</span><span class="p">:</span><span class="mi">165</span><span class="p">:</span><span class="mi">165</span><span class="p">:</span><span class="n">OpenStack</span> <span class="n">Cinder</span> <span class="n">Daemons</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">cinder</span><span class="p">:</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat /etc/passwd | grep cinder
+cinder:x:165:165:OpenStack Cinder Daemons:/var/lib/cinder:/sbin/nologin
 </pre></div>
 </div>
 <p>Set ownership for the FlexVol backing Cinder accordingly:</p>
@@ -283,14 +283,14 @@ CDOT::&gt; volume show –vserver replace-with-vserver-name -volume replace-with
 <p>Download the copy offload tool from NetApp Support.
 (<a class="reference external" href="http://mysupport.netapp.com/tools/info/ECMLP2429244I.html?productID=61945">http://mysupport.netapp.com/tools/info/ECMLP2429244I.html?productID=61945</a>.)</p>
 <p>Place the archive on the OpenStack Controller(s):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># mkdir /etc/cinder/copyoffload</span>
-<span class="c1"># mv copyoffload.tar /etc/cinder/copyoffload/</span>
-<span class="c1"># cd /etc/cinder/copyoffload</span>
-<span class="c1"># tar xzvf copyoffload.tar</span>
-<span class="c1"># ls</span>
-<span class="n">copyoffload</span><span class="o">.</span><span class="n">tar</span>  <span class="n">na_copyoffload_64</span>  <span class="n">NetApp_End_User_License_Agreement2014</span><span class="o">.</span><span class="n">pdf</span>  <span class="n">NOTICE</span><span class="o">.</span><span class="n">pdf</span>  <span class="n">README</span><span class="o">.</span><span class="n">txt</span>
-<span class="c1"># pwd</span>
-<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cinder</span><span class="o">/</span><span class="n">copyoffload</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdir /etc/cinder/copyoffload
+$ mv copyoffload.tar /etc/cinder/copyoffload/
+$ cd /etc/cinder/copyoffload
+$ tar xzvf copyoffload.tar
+$ ls
+copyoffload.tar  na_copyoffload_64  NetApp_End_User_License_Agreement2014.pdf  NOTICE.pdf  README.txt
+$ pwd
+/etc/cinder/copyoffload
 </pre></div>
 </div>
 <p>Edit cinder.conf to contain the following entry in the NetApp ONTAP
@@ -325,7 +325,7 @@ backend stanza:</p>
 <ol class="arabic simple" start="7">
 <li>Change ownership for the copyoffload binary</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># chown cinder:cinder /etc/cinder/copyoffload/na_copyoffload_64</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ chown cinder:cinder /etc/cinder/copyoffload/na_copyoffload_64
 </pre></div>
 </div>
 <ol class="arabic simple" start="8">
@@ -382,14 +382,14 @@ regular conventions:</p>
 <ol class="arabic simple" start="11">
 <li>Add the <code class="docutils literal"><span class="pre">cinder</span></code> user to the <code class="docutils literal"><span class="pre">glance</span></code> group</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># gpasswd –a cinder glance</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ gpasswd –a cinder glance
 </pre></div>
 </div>
 <ol class="arabic simple" start="12">
 <li>Restart Cinder and Glance services</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># systemctl restart openstack-cinder-{api,scheduler,volume}</span>
-<span class="c1"># systemctl restart openstack-glance-{api,registry}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ systemctl restart openstack-cinder-{api,scheduler,volume}
+$ systemctl restart openstack-glance-{api,registry}
 </pre></div>
 </div>
 <ol class="arabic simple" start="13">
@@ -407,13 +407,13 @@ regular conventions:</p>
 </ol>
 <p>The following command uses an image that is publicly available. Please
 use the image you prefer and replace the URL accordingly.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
 </pre></div>
 </div>
 <ol class="arabic simple" start="15">
 <li>Boot from Cinder</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
 </pre></div>
 </div>
 <ol class="arabic simple" start="16">
@@ -444,7 +444,7 @@ Channel:</p>
 <col width="13%" />
 </colgroup>
 <thead valign="bottom">
-<tr class="row-odd"><th class="head">#</th>
+<tr class="row-odd"><th class="head">Step</th>
 <th class="head">Description of Step</th>
 <th class="head">Done?</th>
 </tr>
@@ -490,18 +490,18 @@ Channel:</p>
 <p>Review Cinder’s Image-Volume cache reference:
 (<a class="reference external" href="http://docs.openstack.org/admin-guide/blockstorage-image-volume-cache.html">http://docs.openstack.org/admin-guide/blockstorage-image-volume-cache.html</a>.)</p>
 <p>Obtain the <code class="docutils literal"><span class="pre">cinder_internal_tenant_project_id</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># openstack service list</span>
-<span class="o">+----------------------------------+-------------+----------------+</span>
-<span class="o">|</span> <span class="n">ID</span>                               <span class="o">|</span> <span class="n">Name</span>        <span class="o">|</span> <span class="n">Type</span>           <span class="o">|</span>
-<span class="o">+----------------------------------+-------------+----------------+</span>
-<span class="o">|</span> <span class="mi">468</span><span class="n">a57b3acd24aaaa41d65efd38cf9b3</span> <span class="o">|</span> <span class="n">cinder</span>      <span class="o">|</span> <span class="n">volume</span>         <span class="o">|</span>
-<span class="o">|</span> <span class="mf">6763e676132</span><span class="n">f4aaabb68cc1517b18d38</span> <span class="o">|</span> <span class="n">cinderv3</span>    <span class="o">|</span> <span class="n">volumev3</span>       <span class="o">|</span>
-<span class="o">|</span> <span class="mi">68</span><span class="n">c02f549aff48a8bd1a217af2acaf3d</span> <span class="o">|</span> <span class="n">cinderv2</span>    <span class="o">|</span> <span class="n">volumev2</span>       <span class="o">|</span>
-<span class="o">|</span> <span class="n">c4d4d6fad70842159e85927aba7b51f4</span> <span class="o">|</span> <span class="n">glance</span>      <span class="o">|</span> <span class="n">image</span>          <span class="o">|</span>
-<span class="o">|</span> <span class="n">da0958b746ad43e5844c09de23aae2b1</span> <span class="o">|</span> <span class="n">keystone</span>    <span class="o">|</span> <span class="n">identity</span>       <span class="o">|</span>
-<span class="o">|</span> <span class="n">ea78b41d174b4476be6d6bf6cc3c081c</span> <span class="o">|</span> <span class="n">neutron</span>     <span class="o">|</span> <span class="n">network</span>        <span class="o">|</span>
-<span class="o">|</span> <span class="n">f030c2914d77496c8dfc8c58acd0d833</span> <span class="o">|</span> <span class="n">nova</span>        <span class="o">|</span> <span class="n">compute</span>        <span class="o">|</span>
-<span class="o">+----------------------------------+-------------+----------------+</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ openstack service list
++----------------------------------+-------------+----------------+
+| ID                               | Name        | Type           |
++----------------------------------+-------------+----------------+
+| 468a57b3acd24aaaa41d65efd38cf9b3 | cinder      | volume         |
+| 6763e676132f4aaabb68cc1517b18d38 | cinderv3    | volumev3       |
+| 68c02f549aff48a8bd1a217af2acaf3d | cinderv2    | volumev2       |
+| c4d4d6fad70842159e85927aba7b51f4 | glance      | image          |
+| da0958b746ad43e5844c09de23aae2b1 | keystone    | identity       |
+| ea78b41d174b4476be6d6bf6cc3c081c | neutron     | network        |
+| f030c2914d77496c8dfc8c58acd0d833 | nova        | compute        |
++----------------------------------+-------------+----------------+
 </pre></div>
 </div>
 <p>Edit cinder.conf to contain the following entry in the DEFAULT stanza:</p>
@@ -512,12 +512,12 @@ Channel:</p>
 </pre></div>
 </div>
 <p>Obtain the <code class="docutils literal"><span class="pre">cinder_internal_tenant_user_id</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># openstack user list</span>
-<span class="o">+----------------------------------+----------+</span>
-<span class="o">|</span> <span class="n">ID</span>                               <span class="o">|</span> <span class="n">Name</span>     <span class="o">|</span>
-<span class="o">+----------------------------------+----------+</span>
-<span class="o">|</span> <span class="mi">6275</span><span class="n">bf0ad03743949f7d8752464e30e5</span> <span class="o">|</span> <span class="n">admin</span>    <span class="o">|</span>
-<span class="o">+----------------------------------+----------+</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ openstack user list
++----------------------------------+----------+
+| ID                               | Name     |
++----------------------------------+----------+
+| 6275bf0ad03743949f7d8752464e30e5 | admin    |
++----------------------------------+----------+
 </pre></div>
 </div>
 <p>Edit cinder.conf to contain the following entry in the DEFAULT stanza:</p>
@@ -548,7 +548,7 @@ Channel:</p>
 <ol class="arabic simple" start="4">
 <li>Restart Cinder services</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># systemctl restart openstack-cinder-{api,scheduler,volume}</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ systemctl restart openstack-cinder-{api,scheduler,volume}
 </pre></div>
 </div>
 <ol class="arabic simple" start="5">
@@ -556,13 +556,13 @@ Channel:</p>
 </ol>
 <p>The following command uses an image that is publicly available. Please
 use the image you prefer and replace the URL accordingly.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
 </pre></div>
 </div>
 <ol class="arabic simple" start="6">
 <li>Boot from Cinder</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
 </pre></div>
 </div>
 <ol class="arabic simple" start="7">
@@ -593,7 +593,7 @@ the following to confirm that the image-volume was cached successfully:</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-01 13:24</div>
+            <div class="docs-updated">updated: 2017-09-05 23:35</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -724,7 +724,7 @@ the following to confirm that the image-volume was cached successfully:</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 9182ceb0c746bf820b601d1aee65dbe8f222a487";
+    var gitSha = "SHA: 5c4586c2eb48874d5f9ea4438e05373cfc429378";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Configuration of Enhanced Instance Creation in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -735,7 +735,7 @@ the following to confirm that the image-volume was cached successfully:</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-01 13:24";
+    var buildstring = "Release: 2017.2 on 2017-09-05 23:35";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

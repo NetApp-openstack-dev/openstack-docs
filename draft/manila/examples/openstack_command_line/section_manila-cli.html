@@ -128,7 +128,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-01 13:24</div>
+            <div class="docs-updated">updated: 2017-09-05 23:35</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -172,7 +172,7 @@ ga('send', 'pageview');
 <p>In this section, we use the Manila CLI to verify that the configuration
 presented in the section called “<a class="reference internal" href="../../configuration/manila_config_files/section_sample_manila-conf.html#manila-conf-ex"><span class="std std-ref">Sample manila.conf</span></a>” has been
 properly initialized by Manila.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>stack@ostk-controller:~/$ manila service-list
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila service-list
 +----+------------------+-------------------------------+------+---------+-------+----------------------------+
 | Id | Binary           | Host                          | Zone | Status  | State | Updated_at                 |
 +----+------------------+-------------------------------+------+---------+-------+----------------------------+
@@ -303,8 +303,8 @@ $ manila type-key flash set netapp_hybrid_aggregate=&quot;&lt;is&gt; False&quot;
 </div>
 <div class="section" id="creating-manila-share-network-objects">
 <h2>Creating Manila Share Network Objects<a class="headerlink" href="#creating-manila-share-network-objects" title="Permalink to this headline">¶</a></h2>
-<p>In this section, we create two manila share network objects to.
-share-network-objects are only used with share servers.</p>
+<p>In this section, we create two manila share network objects, doing so
+to demonstrate that share-network-objects are used only with share servers.</p>
 <div class="section" id="network-plugin-neutronnetworkplugin">
 <h3>Network Plugin: NeutronNetworkPlugin<a class="headerlink" href="#network-plugin-neutronnetworkplugin" title="Permalink to this headline">¶</a></h3>
 <p>In this scenario the configurable Neutron Network Plugin is in use.
@@ -395,57 +395,57 @@ neutron_subnet_id = 1f9ec07c-085a-437d-82f0-7390d706758b
 ...
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@chadcloud1</span> <span class="n">manila</span><span class="p">(</span><span class="n">keystone_mchad</span><span class="p">)]</span><span class="c1"># manila share-network-show storage-provider-network-2</span>
-<span class="o">+-------------------+--------------------------------------+</span>
-<span class="o">|</span> <span class="n">Property</span>          <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
-<span class="o">+-------------------+--------------------------------------+</span>
-<span class="o">|</span> <span class="n">network_type</span>      <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">name</span>              <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="mi">2</span>           <span class="o">|</span>
-<span class="o">|</span> <span class="n">segmentation_id</span>   <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">created_at</span>        <span class="o">|</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">01</span><span class="n">T10</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">55.000000</span>           <span class="o">|</span>
-<span class="o">|</span> <span class="n">neutron_subnet_id</span> <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">updated_at</span>        <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">mtu</span>               <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">gateway</span>           <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">neutron_net_id</span>    <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">ip_version</span>        <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">nova_net_id</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">cidr</span>              <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">project_id</span>        <span class="o">|</span> <span class="mi">37</span><span class="n">ceaca2938c409d8a6172f2da2ba788</span>     <span class="o">|</span>
-<span class="o">|</span> <span class="nb">id</span>                <span class="o">|</span> <span class="n">e6a05868</span><span class="o">-</span><span class="n">fdfd</span><span class="o">-</span><span class="mi">4</span><span class="n">da9</span><span class="o">-</span><span class="n">a914</span><span class="o">-</span><span class="mi">6</span><span class="n">beab07b3121</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">description</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">+-------------------+--------------------------------------+</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-network-show storage-provider-network-2
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| network_type      | None                                 |
+| name              | storage-provider-network-2           |
+| segmentation_id   | None                                 |
+| created_at        | 2017-09-01T10:50:55.000000           |
+| neutron_subnet_id | None                                 |
+| updated_at        | None                                 |
+| mtu               | None                                 |
+| gateway           | None                                 |
+| neutron_net_id    | None                                 |
+| ip_version        | None                                 |
+| nova_net_id       | None                                 |
+| cidr              | None                                 |
+| project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+| id                | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+| description       | None                                 |
++-------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@chadcloud1</span> <span class="n">manila</span><span class="p">(</span><span class="n">keystone_mchad</span><span class="p">)]</span><span class="c1"># manila share-network-list</span>
-<span class="o">+--------------------------------------+----------------------------+</span>
-<span class="o">|</span> <span class="nb">id</span>                                   <span class="o">|</span> <span class="n">name</span>                       <span class="o">|</span>
-<span class="o">+--------------------------------------+----------------------------+</span>
-<span class="o">|</span> <span class="mf">557243e9</span><span class="o">-</span><span class="n">aad6</span><span class="o">-</span><span class="mi">4</span><span class="n">b63</span><span class="o">-</span><span class="mi">8</span><span class="n">d86</span><span class="o">-</span><span class="mi">70239</span><span class="n">ecf4993</span> <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span>   <span class="o">|</span>
-<span class="o">|</span> <span class="n">e6a05868</span><span class="o">-</span><span class="n">fdfd</span><span class="o">-</span><span class="mi">4</span><span class="n">da9</span><span class="o">-</span><span class="n">a914</span><span class="o">-</span><span class="mi">6</span><span class="n">beab07b3121</span> <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="mi">2</span> <span class="o">|</span>
-<span class="o">+--------------------------------------+----------------------------+</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-network-list
++--------------------------------------+----------------------------+
+| id                                   | name                       |
++--------------------------------------+----------------------------+
+| 557243e9-aad6-4b63-8d86-70239ecf4993 | storage-provider-network   |
+| e6a05868-fdfd-4da9-a914-6beab07b3121 | storage-provider-network-2 |
++--------------------------------------+----------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@chadcloud1</span> <span class="n">manila</span><span class="p">(</span><span class="n">keystone_mchad</span><span class="p">)]</span><span class="c1"># manila share-network-show storage-provider-network-2</span>
-<span class="o">+-------------------+--------------------------------------+</span>
-<span class="o">|</span> <span class="n">Property</span>          <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
-<span class="o">+-------------------+--------------------------------------+</span>
-<span class="o">|</span> <span class="n">network_type</span>      <span class="o">|</span> <span class="n">flat</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">name</span>              <span class="o">|</span> <span class="n">storage</span><span class="o">-</span><span class="n">provider</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="mi">2</span>           <span class="o">|</span>
-<span class="o">|</span> <span class="n">segmentation_id</span>   <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">created_at</span>        <span class="o">|</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">01</span><span class="n">T10</span><span class="p">:</span><span class="mi">50</span><span class="p">:</span><span class="mf">55.000000</span>           <span class="o">|</span>
-<span class="o">|</span> <span class="n">neutron_subnet_id</span> <span class="o">|</span> <span class="mi">1</span><span class="n">f9ec07c</span><span class="o">-</span><span class="mi">085</span><span class="n">a</span><span class="o">-</span><span class="mi">437</span><span class="n">d</span><span class="o">-</span><span class="mi">82</span><span class="n">f0</span><span class="o">-</span><span class="mi">7390</span><span class="n">d706758b</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">updated_at</span>        <span class="o">|</span> <span class="mi">2017</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">01</span><span class="n">T10</span><span class="p">:</span><span class="mi">52</span><span class="p">:</span><span class="mf">29.000000</span>           <span class="o">|</span>
-<span class="o">|</span> <span class="n">mtu</span>               <span class="o">|</span> <span class="mi">1500</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">gateway</span>           <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">neutron_net_id</span>    <span class="o">|</span> <span class="mi">0</span><span class="n">ba4ac4a</span><span class="o">-</span><span class="mi">1408</span><span class="o">-</span><span class="mi">4</span><span class="n">fa6</span><span class="o">-</span><span class="mi">84</span><span class="n">d6</span><span class="o">-</span><span class="n">fd6db8113382</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">ip_version</span>        <span class="o">|</span> <span class="mi">4</span>                                    <span class="o">|</span>
-<span class="o">|</span> <span class="n">nova_net_id</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">cidr</span>              <span class="o">|</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">16</span>                       <span class="o">|</span>
-<span class="o">|</span> <span class="n">project_id</span>        <span class="o">|</span> <span class="mi">37</span><span class="n">ceaca2938c409d8a6172f2da2ba788</span>     <span class="o">|</span>
-<span class="o">|</span> <span class="nb">id</span>                <span class="o">|</span> <span class="n">e6a05868</span><span class="o">-</span><span class="n">fdfd</span><span class="o">-</span><span class="mi">4</span><span class="n">da9</span><span class="o">-</span><span class="n">a914</span><span class="o">-</span><span class="mi">6</span><span class="n">beab07b3121</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">description</span>       <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">+-------------------+--------------------------------------+</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-network-show storage-provider-network-2
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| network_type      | flat                                 |
+| name              | storage-provider-network-2           |
+| segmentation_id   | None                                 |
+| created_at        | 2017-09-01T10:50:55.000000           |
+| neutron_subnet_id | 1f9ec07c-085a-437d-82f0-7390d706758b |
+| updated_at        | 2017-09-01T10:52:29.000000           |
+| mtu               | 1500                                 |
+| gateway           | None                                 |
+| neutron_net_id    | 0ba4ac4a-1408-4fa6-84d6-fd6db8113382 |
+| ip_version        | 4                                    |
+| nova_net_id       | None                                 |
+| cidr              | 192.168.0.0/16                       |
+| project_id        | 37ceaca2938c409d8a6172f2da2ba788     |
+| id                | e6a05868-fdfd-4da9-a914-6beab07b3121 |
+| description       | None                                 |
++-------------------+--------------------------------------+
 </pre></div>
 </div>
 </div>
@@ -796,7 +796,7 @@ NFS shares with full read/write privileges.</p>
 | access_type  | ip                                   |
 | access_to    | 0.0.0.0/0                            |
 | access_level | rw                                   |
-| state        | new                                  |
+| state        | queued_to_apply                      |
 | deleted_at   | None                                 |
 | id           | c400bdd7-7e4f-49a4-b73d-5aa417af95c3 |
 +--------------+--------------------------------------+
@@ -813,7 +813,7 @@ NFS shares with full read/write privileges.</p>
 | access_type  | ip                                   |
 | access_to    | 0.0.0.0/0                            |
 | access_level | rw                                   |
-| state        | new                                  |
+| state        | queued_to_apply                      |
 | deleted_at   | None                                 |
 | id           | 09f8f699-1cec-4519-8aaa-a30d346ad54c |
 +--------------+--------------------------------------+
@@ -830,7 +830,7 @@ NFS shares with full read/write privileges.</p>
 | access_type  | ip                                   |
 | access_to    | 0.0.0.0/0                            |
 | access_level | rw                                   |
-| state        | new                                  |
+| state        | queued_to_apply                      |
 | deleted_at   | None                                 |
 | id           | d0565115-8369-455e-ad8f-3dd7c56037ea |
 +--------------+--------------------------------------+
@@ -1208,8 +1208,10 @@ create a share type that supports replication.</p>
 | is_default           | -                                    |
 | ID                   | ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8 |
 +----------------------+--------------------------------------+
-
-$ manila type-key replication set replication_type=dr snapshot_support=True
+</pre></div>
+</div>
+<p>Assign replication_type and snapshot_support attributes to the replication share-type</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-key replication set replication_type=dr snapshot_support=True
 </pre></div>
 </div>
 <p>Next we’ll create a share.</p>
@@ -1244,41 +1246,41 @@ $ manila type-key replication set replication_type=dr snapshot_support=True
 +-----------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">manila</span> <span class="n">show</span> <span class="n">f49d7f1f</span><span class="o">-</span><span class="mf">15e7</span><span class="o">-</span><span class="mi">484</span><span class="n">a</span><span class="o">-</span><span class="mi">83</span><span class="n">d9</span><span class="o">-</span><span class="mi">5</span><span class="n">eb5fb6ad7fc</span>
-<span class="o">+----------------------------+-----------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="n">Property</span>                   <span class="o">|</span><span class="n">Value</span>                                                            <span class="o">|</span>
-<span class="o">+----------------------------+-----------------------------------------------------------------+</span>
-<span class="o">|</span> <span class="n">status</span>                     <span class="o">|</span><span class="n">available</span>                                                        <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_type_name</span>            <span class="o">|</span><span class="n">replication</span>                                                      <span class="o">|</span>
-<span class="o">|</span> <span class="n">description</span>                <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">availability_zone</span>          <span class="o">|</span><span class="n">nova</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_network_id</span>           <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">export_locations</span>           <span class="o">|</span>                                                                 <span class="o">|</span>
-<span class="o">|</span>                            <span class="o">|</span><span class="n">path</span> <span class="o">=</span> <span class="mf">172.20</span><span class="o">.</span><span class="mf">124.230</span><span class="p">:</span><span class="o">/</span><span class="n">share_11265e8a_200c_4e0a_a40f_b7a1117001ed</span><span class="o">|</span>
-<span class="o">|</span>                            <span class="o">|</span><span class="n">preferred</span> <span class="o">=</span> <span class="kc">True</span>                                                 <span class="o">|</span>
-<span class="o">|</span>                            <span class="o">|</span><span class="n">is_admin_only</span> <span class="o">=</span> <span class="kc">False</span>                                            <span class="o">|</span>
-<span class="o">|</span>                            <span class="o">|</span><span class="nb">id</span> <span class="o">=</span> <span class="n">d9634102</span><span class="o">-</span><span class="n">e859</span><span class="o">-</span><span class="mi">42</span><span class="n">ab</span><span class="o">-</span><span class="mf">842e-687</span><span class="n">c209067e3</span>                        <span class="o">|</span>
-<span class="o">|</span>                            <span class="o">|</span><span class="n">share_instance_id</span> <span class="o">=</span> <span class="mf">11265e8</span><span class="n">a</span><span class="o">-</span><span class="mi">200</span><span class="n">c</span><span class="o">-</span><span class="mf">4e0</span><span class="n">a</span><span class="o">-</span><span class="n">a40f</span><span class="o">-</span><span class="n">b7a1117001ed</span>         <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_server_id</span>            <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">host</span>                       <span class="o">|</span><span class="n">openstack2</span><span class="nd">@cmodeSSVMNFS</span><span class="c1">#aggr3                                    |</span>
-<span class="o">|</span> <span class="n">access_rules_status</span>        <span class="o">|</span><span class="n">active</span>                                                           <span class="o">|</span>
-<span class="o">|</span> <span class="n">snapshot_id</span>                <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">is_public</span>                  <span class="o">|</span><span class="kc">False</span>                                                            <span class="o">|</span>
-<span class="o">|</span> <span class="n">task_state</span>                 <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">snapshot_support</span>           <span class="o">|</span><span class="kc">True</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="nb">id</span>                         <span class="o">|</span><span class="n">f49d7f1f</span><span class="o">-</span><span class="mf">15e7</span><span class="o">-</span><span class="mi">484</span><span class="n">a</span><span class="o">-</span><span class="mi">83</span><span class="n">d9</span><span class="o">-</span><span class="mi">5</span><span class="n">eb5fb6ad7fc</span>                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">size</span>                       <span class="o">|</span><span class="mi">1</span>                                                                <span class="o">|</span>
-<span class="o">|</span> <span class="n">name</span>                       <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_type</span>                 <span class="o">|</span><span class="n">ce1709ef</span><span class="o">-</span><span class="mi">0</span><span class="n">b20</span><span class="o">-</span><span class="mi">4</span><span class="n">cbf</span><span class="o">-</span><span class="mi">9</span><span class="n">fc0</span><span class="o">-</span><span class="mi">2</span><span class="n">b75adfee9b8</span>                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">has_replicas</span>               <span class="o">|</span><span class="kc">False</span>                                                            <span class="o">|</span>
-<span class="o">|</span> <span class="n">replication_type</span>           <span class="o">|</span><span class="n">dr</span>                                                               <span class="o">|</span>
-<span class="o">|</span> <span class="n">created_at</span>                 <span class="o">|</span><span class="mi">2016</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span><span class="n">T18</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mf">22.000000</span>                                       <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_proto</span>                <span class="o">|</span><span class="n">NFS</span>                                                              <span class="o">|</span>
-<span class="o">|</span> <span class="n">consistency_group_id</span>       <span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">source_cgsnapshot_member_id</span><span class="o">|</span><span class="kc">None</span>                                                             <span class="o">|</span>
-<span class="o">|</span> <span class="n">project_id</span>                 <span class="o">|</span><span class="mi">3</span><span class="n">d1d93550b1448f094389d6b5df9659e</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">metadata</span>                   <span class="o">|</span><span class="p">{}</span>                                                               <span class="o">|</span>
-<span class="o">+----------------------------+-----------------------------------------------------------------+</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila show f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
++----------------------------+-----------------------------------------------------------------+
+| Property                   |Value                                                            |
++----------------------------+-----------------------------------------------------------------+
+| status                     |available                                                        |
+| share_type_name            |replication                                                      |
+| description                |None                                                             |
+| availability_zone          |nova                                                             |
+| share_network_id           |None                                                             |
+| export_locations           |                                                                 |
+|                            |path = 172.20.124.230:/share_11265e8a_200c_4e0a_a40f_b7a1117001ed|
+|                            |preferred = True                                                 |
+|                            |is_admin_only = False                                            |
+|                            |id = d9634102-e859-42ab-842e-687c209067e3                        |
+|                            |share_instance_id = 11265e8a-200c-4e0a-a40f-b7a1117001ed         |
+| share_server_id            |None                                                             |
+| host                       |openstack2@cmodeSSVMNFS#aggr3                                    |
+| access_rules_status        |active                                                           |
+| snapshot_id                |None                                                             |
+| is_public                  |False                                                            |
+| task_state                 |None                                                             |
+| snapshot_support           |True                                                             |
+| id                         |f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc                             |
+| size                       |1                                                                |
+| name                       |None                                                             |
+| share_type                 |ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8                             |
+| has_replicas               |False                                                            |
+| replication_type           |dr                                                               |
+| created_at                 |2016-03-23T18:16:22.000000                                       |
+| share_proto                |NFS                                                              |
+| consistency_group_id       |None                                                             |
+| source_cgsnapshot_member_id|None                                                             |
+| project_id                 |3d1d93550b1448f094389d6b5df9659e                                 |
+| metadata                   |{}                                                               |
++----------------------------+-----------------------------------------------------------------+
 </pre></div>
 </div>
 <p>When a share is created with a share type that has the replication_type
@@ -1310,21 +1312,21 @@ list the replicas.</p>
 +-------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">manila</span> <span class="n">share</span><span class="o">-</span><span class="n">replica</span><span class="o">-</span><span class="n">show</span> <span class="n">b3191744</span><span class="o">-</span><span class="n">cee9</span><span class="o">-</span><span class="mi">478</span><span class="n">b</span><span class="o">-</span><span class="n">b906</span><span class="o">-</span><span class="n">c5a7a3934adb</span>
-<span class="o">+-------------------+--------------------------------------+</span>
-<span class="o">|</span> <span class="n">Property</span>          <span class="o">|</span> <span class="n">Value</span>                                <span class="o">|</span>
-<span class="o">+-------------------+--------------------------------------+</span>
-<span class="o">|</span> <span class="n">status</span>            <span class="o">|</span> <span class="n">available</span>                            <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_id</span>          <span class="o">|</span> <span class="n">f49d7f1f</span><span class="o">-</span><span class="mf">15e7</span><span class="o">-</span><span class="mi">484</span><span class="n">a</span><span class="o">-</span><span class="mi">83</span><span class="n">d9</span><span class="o">-</span><span class="mi">5</span><span class="n">eb5fb6ad7fc</span> <span class="o">|</span>
-<span class="o">|</span> <span class="n">availability_zone</span> <span class="o">|</span> <span class="n">nova</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">created_at</span>        <span class="o">|</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span><span class="n">T18</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">13.000000</span>           <span class="o">|</span>
-<span class="o">|</span> <span class="n">updated_at</span>        <span class="o">|</span> <span class="mi">2016</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">23</span><span class="n">T18</span><span class="p">:</span><span class="mi">19</span><span class="p">:</span><span class="mf">23.000000</span>           <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_network_id</span>  <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">share_server_id</span>   <span class="o">|</span> <span class="kc">None</span>                                 <span class="o">|</span>
-<span class="o">|</span> <span class="n">host</span>              <span class="o">|</span> <span class="n">openstack2</span><span class="nd">@cmodeSSVMNFS2</span><span class="c1">#aggr4       |</span>
-<span class="o">|</span> <span class="n">replica_state</span>     <span class="o">|</span> <span class="n">out_of_sync</span>                          <span class="o">|</span>
-<span class="o">|</span> <span class="nb">id</span>                <span class="o">|</span> <span class="n">b3191744</span><span class="o">-</span><span class="n">cee9</span><span class="o">-</span><span class="mi">478</span><span class="n">b</span><span class="o">-</span><span class="n">b906</span><span class="o">-</span><span class="n">c5a7a3934adb</span> <span class="o">|</span>
-<span class="o">+-------------------+--------------------------------------+</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-show b3191744-cee9-478b-b906-c5a7a3934adb
++-------------------+--------------------------------------+
+| Property          | Value                                |
++-------------------+--------------------------------------+
+| status            | available                            |
+| share_id          | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc |
+| availability_zone | nova                                 |
+| created_at        | 2016-03-23T18:19:13.000000           |
+| updated_at        | 2016-03-23T18:19:23.000000           |
+| share_network_id  | None                                 |
+| share_server_id   | None                                 |
+| host              | openstack2@cmodeSSVMNFS2#aggr4       |
+| replica_state     | out_of_sync                          |
+| id                | b3191744-cee9-478b-b906-c5a7a3934adb |
++-------------------+--------------------------------------+
 </pre></div>
 </div>
 <p>Now we will list the replicas for the share. As you can see, the active
@@ -1345,7 +1347,7 @@ which is one hour for the cDOT driver.</p>
 <p>Manila checks the status of a replica based on the
 <code class="docutils literal"><span class="pre">replica_state_update_interval</span></code> configuration option. If we wait a
 short while, the replica will become in sync. If the replica does not
-become in-sync, refer to the section called <a class="reference internal" href="../../../appendices/appendix_debug.html#common-probs"><span class="std std-ref">Common Problems</span></a>.</p>
+become in-sync, refer to the section called <a class="reference internal" href="../../../appendices/section_common-problems.html#common-probs"><span class="std std-ref">Common Problems</span></a>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
 +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
 | ID                                   | Status    | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
@@ -1357,8 +1359,9 @@ become in-sync, refer to the section called <a class="reference internal" href="
 </div>
 <p>Finally, let us failover to our other replica.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-promote b3191744-cee9-478b-b906-c5a7a3934adb
-
-$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
 +--------------------------------------+--------------------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
 | ID                                   | Status             | Replica State | Share ID                             | Host                                | Availability Zone | Updated At                 |
 +--------------------------------------+--------------------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
@@ -1419,7 +1422,7 @@ $ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-01 13:24</div>
+            <div class="docs-updated">updated: 2017-09-05 23:35</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -1553,7 +1556,7 @@ $ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 9182ceb0c746bf820b601d1aee65dbe8f222a487";
+    var gitSha = "SHA: 5c4586c2eb48874d5f9ea4438e05373cfc429378";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Manila Command Line Interface (CLI) in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -1564,7 +1567,7 @@ $ manila share-replica-list --share-id f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-01 13:24";
+    var buildstring = "Release: 2017.2 on 2017-09-05 23:35";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

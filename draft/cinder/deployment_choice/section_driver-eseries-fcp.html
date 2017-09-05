@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Cinder Configuration Files</title>
+    <title>OpenStack Docs: Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/ch_cinder-conf.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/deployment_choice/section_driver-eseries-fcp.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -113,15 +113,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Cinder Configuration Files</h2>
+      <h2>Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="eseres_config/section_eseries-config.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: E-Series Configuration"></i></a>
+    <a href="section_driver-eseries-iscsi.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: NetApp Unified Driver for E-Series with iSCSI"></i></a>
     
     
-    <a href="cinder_config_files/section_cinder-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder.conf: Overview"></i></a>
+    <a href="section_ontap-v-eseries.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: ONTAP vs. E-Series"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -137,22 +137,53 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="cinder-configuration-files">
-<h1>Cinder Configuration Files<a class="headerlink" href="#cinder-configuration-files" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/section_cinder-conf.html">Cinder.conf: Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/section_fibre-channel.html">Fibre Channel &amp; cinder.conf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/unified_driver_ontap/section_cinder-conf-nfs.html">NetApp Unified Driver for Clustered Data ONTAP with NFS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/unified_driver_ontap/section_cinder-conf-iscsi.html">NetApp Unified Driver for Clustered Data ONTAP with iSCSI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/unified_driver_ontap/section_cinder-conf-fcp.html">NetApp Unified Driver for Clustered Data ONTAP with Fibre Channel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/unified_driver_7mode/section_cinder-conf-nfs.html">NetApp Unified Driver for Data ONTAP operating in 7-Mode with NFS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/unified_driver_7mode/section_cinder-conf-iscsi.html">NetApp Unified Driver for Data ONTAP operating in 7-Mode with iSCSI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/unified_driver_7mode/section_cinder-conf-fcp.html">NetApp Unified Driver for Data ONTAP operating in 7-Mode with Fibre Channel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/eseries_driver/section_cinder-conf-iscsi.html">NetApp Driver for E-Series with iSCSI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/eseries_driver/section_cinder-conf-fcp.html">NetApp Driver for E-Series with Fibre Channel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/section_sample_cinder-conf.html">Sample cinder.conf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cinder_config_files/section_sample_cinder-shares.html">Sample nfs.shares file</a></li>
+  <div class="section" id="theory-of-operation-netapp-unified-driver-for-e-series-with-fibre-channel">
+<h1>Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel<a class="headerlink" href="#theory-of-operation-netapp-unified-driver-for-e-series-with-fibre-channel" title="Permalink to this headline">¶</a></h1>
+<p>In order for Fibre Channel to be set up correctly, you also need to set up
+Fibre Channel zoning for your backends. See the section called <a class="reference internal" href="../configuration/cinder_config_files/section_fibre-channel.html#fc-switch"><span class="std std-ref">Fibre Channel &amp; cinder.conf</span></a>
+for more details on configuring Fibre Channel zoning.</p>
+<p>As described in the section called “<a class="reference internal" href="../ch_cinder-theory-and-deployment-choices.html#theory-op"><span class="std std-ref">Theory of Operation and Deployment Choices</span></a>”, Cinder
+with NetApp E-Series requires the use of the NetApp SANtricity Web
+Services Proxy server deployed as an intermediary between Cinder and the
+E-Series storage system. A common deployment topology with Cinder, Nova,
+and an E-Series controller with the SANtricity Web Services Proxy can be
+seen below in Figure 4.8, “Cinder &amp; E-Series Deployment Topology”.</p>
+<div class="figure" id="id1">
+<a class="reference internal image-reference" href="../../_images/cinder_eseries_fc_deployment_topology.png"><img alt="Cinder &amp; E-Series Deployment Topology" src="../../_images/cinder_eseries_fc_deployment_topology.png" style="width: 693.0px; height: 507.0px;" /></a>
+<p class="caption"><span class="caption-text">Figure 4.8. Cinder &amp; E-Series Deployment Topology</span></p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Installation instructions for the NetApp SANtricity Web Services
+Proxy server are available for download at
+<a class="reference external" href="https://library.netapp.com/ecm/ecm_download_file/ECMLP2428355">https://library.netapp.com/ecm/ecm_download_file/ECMLP2428355</a>, and
+the User Guide is available for download at
+<a class="reference external" href="https://library.netapp.com/ecm/ecm_download_file/ECMLP2428357">https://library.netapp.com/ecm/ecm_download_file/ECMLP2428357</a>.</p>
+</div>
+<p>Dynamic disk pools (as described in the section called “<a class="reference internal" href="../../netapp-storage/section_e-ef-series.html#ef-series"><span class="std std-ref">Description of E-Series and EF-Series Systems</span></a>) and
+volume groups are the supported disk collection strategies when
+utilizing the Cinder E-Series driver. For more information on the
+capabilities of the E-Series storage systems, visit
+<a class="reference external" href="http://support.netapp.com">http://support.netapp.com</a>.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">The use of multipath and DM-MP are required when using the OpenStack
+Block Storage driver for E-Series.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">In order for Fibre Channel to be set up correctly, you also need to
+set up Fibre Channel zoning for your backends. See “<a class="reference internal" href="../configuration/cinder_config_files/section_fibre-channel.html#fc-switch"><span class="std std-ref">Fibre Channel &amp; cinder.conf</span></a>”
+for more details on configuring Fibre Channel zoning.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>In order for OpenStack Block Storage and OpenStack Compute to take
+advantage of multiple paths, the following configuration options
+must be correctly configured:</p>
+<ul class="last simple">
+<li>The <code class="docutils literal"><span class="pre">use_multipath_for_image_xfer</span></code> should be set to <code class="docutils literal"><span class="pre">True</span></code> in
+<code class="docutils literal"><span class="pre">cinder.conf</span></code> within the driver stanza.</li>
 </ul>
 </div>
 </div>
@@ -163,10 +194,10 @@ ga('send', 'pageview');
           </div>
           <div class="docs-actions">
           
-            <a href="eseres_config/section_eseries-config.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: E-Series Configuration"></i></a>
+            <a href="section_driver-eseries-iscsi.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: NetApp Unified Driver for E-Series with iSCSI"></i></a>
           
           
-            <a href="cinder_config_files/section_cinder-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder.conf: Overview"></i></a>
+            <a href="section_ontap-v-eseries.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: ONTAP vs. E-Series"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -217,8 +248,8 @@ ga('send', 'pageview');
 <li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_cinder-key-concepts.html">Key Concepts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../process_structure/section_cinder-processes.html">Process Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../api_overview/section_cinder-api-overview.html">API Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ch_cinder-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../ch_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_cinder-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_cinder-configuration.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ch_cinder-examples.html">Examples</a></li>
 </ul>
 </li>
@@ -302,13 +333,13 @@ ga('send', 'pageview');
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "cinder/configuration/ch_cinder-conf" + ".rst";
+        var sourceFile = "cinder/deployment_choice/section_driver-eseries-fcp" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 5c4586c2eb48874d5f9ea4438e05373cfc429378";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Cinder Configuration Files in NetApp OpenStack Docs";
+        var bugTitle = "Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";
