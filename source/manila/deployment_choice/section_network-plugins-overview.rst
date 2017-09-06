@@ -71,7 +71,7 @@ driver in Neutron.
 
 Keep in mind that VLANs are limited to the range of 1 to 4094. When
 using VLANs, no more than 4092 isolated networks can exist. Keep
-this scaling limitation in mind when designing your Openstack
+this scaling limitation in mind when designing your OpenStack
 environment. Other encapsulation methodologies aim to solve this
 problem by encapsulating network packets with a larger virtual
 networking identifier. GRE (Generic Routing Encapsulation), GENEVE

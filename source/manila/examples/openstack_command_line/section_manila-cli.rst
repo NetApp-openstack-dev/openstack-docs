@@ -164,7 +164,7 @@ Network Plugin: NeutronNetworkPlugin
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In this scenario the configurable Neutron Network Plugin is in use.
-As such each share network object is free to us any appropirate
+As such each share network object is free to us any appropriate
 neutron network.  In this particular case, we are using a provider
 network.
 
@@ -894,8 +894,8 @@ the FlexVol.
 
 .. important::
 
-   FlexVols that are part of a snapmirror relationship cannot be
-   brought under Manila's management. Snapmirror relationships must be
+   FlexVols that are part of a SnapMirror relationship cannot be
+   brought under Manila's management. SnapMirror relationships must be
    removed before attempting to ``manage`` the FlexVol.
 
 We'll now remove a share from Manila management using the admin-only

@@ -17,7 +17,7 @@ catalog. In OpenStack, this is achieved together by the Cinder filter
 scheduler and the NetApp driver by making use of volume type extra-specs
 support together with the filter scheduler. There are some prominent
 features which are exposed in the NetApp driver including mirroring,
-de-duplication, compression, and thin provisioning.
+deduplication, compression, and thin provisioning.
 
 When the NetApp unified driver is used with clustered Data ONTAP and
 E-Series storage systems, you can leverage extra specs with Cinder

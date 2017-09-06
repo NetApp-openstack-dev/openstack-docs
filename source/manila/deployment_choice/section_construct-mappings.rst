@@ -27,7 +27,7 @@ Data ONTAP FlexVol volumes (commonly referred to as volumes) and
 OpenStack File Share Storage shares (commonly referred to as Manila
 shares) are semantically analogous. A FlexVol volume is a container of
 logical data elements (for example: files, Snapshot copies, clones,
-LUNs, et cetera) that is abstracted from physical elements (for example:
+LUNs, etc.) that is abstracted from physical elements (for example:
 individual disks, and RAID groups).
 
 .. _manila_scheduling_and_resource_selection:

@@ -53,5 +53,5 @@ Table 4.23. Configuration options for NFS backup service
    NetApp recommends that the ``backup_compression_algorithm`` option be
    set to ``None`` in order to avoid consuming excess CPU on the Cinder
    backup node, and that purpose-built deduplication and compression
-   features be enabled on the Data ONTAP storage systen providing the
+   features be enabled on the Data ONTAP storage system providing the
    backup repository to achieve storage efficiency.
