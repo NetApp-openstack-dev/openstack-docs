@@ -22,6 +22,7 @@
 
 import os
 import string
+import enchant
 
 import netappdocstheme
 
@@ -41,6 +42,7 @@ import netappdocstheme
 # TODO(ajaeger): enable PDF building, for example add 'rst2pdf.pdfbuilder'
 extensions = [
     'sphinxmark',
+    'sphinxcontrib.spelling',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -357,3 +359,8 @@ pdf_documents = [
     ('index', u'DeployOpsGuide', u'OpenStack Deployment and Operations Guide',
      u'NetApp Inc.')
 ]
+# -- Options for sphinxcontrib.spelling -----------------------------------------------
+# http://sphinxcontrib-spelling.readthedocs.io/en/latest/customize.htm
+spelling_lang='en_US'
+spelling_word_list_filename='spelling_wordlist.txt'
+spelling_ignore_pypi_package_names=True

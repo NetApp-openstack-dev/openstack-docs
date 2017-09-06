@@ -300,7 +300,7 @@ writable, readable, and DR.
 
 -  DR (for Disaster Recovery) - Generalized replication with secondary
    copies that are inaccessible. A secondary replica will become the
-   primary replica, and accessable, after a promotion.
+   primary replica, and accessible, after a promotion.
 
 .. important::
 

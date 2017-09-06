@@ -132,7 +132,7 @@ Flowchart” below describes the workflow associated with the Enhanced
 Instance Cloning capability of the NetApp NFS driver when using the
 NetApp Copy Offload tool.
 
-.. figure:: ../images/rapid_cloning_flowchart.png
+.. figure:: ../../images/rapid_cloning_flowchart.png
    :alt: Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
    :width: 5.75000in
 
