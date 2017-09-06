@@ -16,7 +16,7 @@ NetApp additionally leads a development effort within the OpenStack
 community to introduce a new core storage service developed under the
 project name Manila, which adds a shared file system service to the
 existing block and object storage services. This addresses a critical
-gap in OpenStack’s storage services coverage and enablesg a new category
+gap in OpenStack’s storage services coverage and enables a new category
 of on-demand file storage for Infrastructure as a Service (IaaS)
 deployments. Refer to :ref:`manila` for more information on
 Manila.

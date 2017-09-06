@@ -239,7 +239,7 @@ The host openstack1@7mode represents the backend representing the Data
 ONTAP operating in 7-Mode system, and openstack1@cDOT represents the
 backend representing the clustered Data ONTAP system. Volumes can be
 migrated individually to the new backend, through the use of the cinder
-migrate CLI command. For example, consider a Cidner volume with ID
+migrate CLI command. For example, consider a Cinder volume with ID
 781501e1-af79-4d3e-be90-f332a5841f5e on the openstack1@7mode storage
 backend. In order to migrate it to the openstack1@cDOT backend, please
 execute::

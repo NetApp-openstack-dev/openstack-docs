@@ -18,17 +18,17 @@ a SVM admin role:
    creating volumes (QoS\_support)
 
 -  Disk types considerations will not be possible when creating volumes
-   (netapp\_disk\_type)
+   (NetApp\_disk\_type)
 
--  Space Efficieny will not be considered when creating volumes
-   (netapp\_dedup, netapp\_compression)
+-  Space Efficiency will not be considered when creating volumes
+   (NetApp\_dedup, NetApp\_compression)
 
 -  Headroom considerations cannot be made when creating volumes,
    effectively, goodness and filter functions are disabled.
    (filter\_function, goodness\_function)
 
--  Disk protection leves will not be considered when creating volume
-   (netapp\_raid\_type)
+-  Disk protection levels will not be considered when creating volume
+   (NetApp\_raid\_type)
 
 Create use case specific cluster admin role privileges
 ------------------------------------------------------
@@ -38,7 +38,11 @@ security permissions in your environment.
 Permissions exclusive of DR/protocol/replication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    Assign the following permissions which are exclusive of DR,
+<<<<<<< HEAD
    replication, and protocols, each of which will be added next::
+=======
+   replication, and protocols, each of which will be added next.::
+>>>>>>> cdabb45... Fixed layout per discussion with Rob, also beginning relaying out glance
 
        security login role create -role cl-limited -cmddirname vserver -access readonly
        security login role create -role cl-limited -cmddirname "system node" -access readonly

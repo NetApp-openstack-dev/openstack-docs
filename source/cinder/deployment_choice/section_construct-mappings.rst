@@ -36,7 +36,7 @@ Data ONTAP FlexVol volumes (commonly referred to as volumes) and
 OpenStack Block Storage volumes (commonly referred to as Cinder volumes)
 are not semantically analogous. A FlexVol volume is a container of
 logical data elements (for example: files, Snapshot copies, clones,
-LUNs, et cetera) that is abstracted from physical elements (for example:
+LUNs, etc.) that is abstracted from physical elements (for example:
 individual disks, and RAID groups). A Cinder volume is a block device.
 Most commonly, these block devices are made available to OpenStack
 Compute instances. NetApp’s various driver options for deployment of FAS

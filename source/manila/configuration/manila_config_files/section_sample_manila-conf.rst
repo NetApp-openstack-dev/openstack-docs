@@ -96,7 +96,7 @@ Only the backend ``cdotSingleSVM01`` is enabled.
 
 .. important::
 
-   SVM names must be unique, even accross clusters, in order to
+   SVM names must be unique, even across clusters, in order to
    support replication between them.
 
 ::
