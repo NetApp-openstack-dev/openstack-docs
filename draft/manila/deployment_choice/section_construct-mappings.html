@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-07 15:33</div>
+            <div class="docs-updated">updated: 2017-09-07 22:18</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -133,6 +133,7 @@ ga('send', 'pageview');
 <li><a class="reference internal" href="#">Theory of Operation: Mapping NetApp to OpenStack Terminology</a><ul>
 <li><a class="reference internal" href="#manila-backends-and-clustered-data-ontap">Manila backends and Clustered Data ONTAP</a></li>
 <li><a class="reference internal" href="#manila-shares-and-flexvol-volumes">Manila shares and FlexVol volumes</a></li>
+<li><a class="reference internal" href="#manila-qos">Manila QoS</a></li>
 <li><a class="reference internal" href="#manila-scheduling-and-resource-pool-selection">Manila scheduling and resource pool selection</a></li>
 <li><a class="reference internal" href="#manila-snapshots-versus-netapp-snapshots">Manila snapshots versus NetApp Snapshots</a></li>
 </ul>
@@ -168,6 +169,21 @@ shares) are semantically analogous. A FlexVol volume is a container of
 logical data elements (for example: files, Snapshot copies, clones,
 LUNs, etc.) that is abstracted from physical elements (for example:
 individual disks, and RAID groups).</p>
+</div>
+<div class="section" id="manila-qos">
+<span id="manila-qos-attribute"></span><h2>Manila QoS<a class="headerlink" href="#manila-qos" title="Permalink to this headline">¶</a></h2>
+<p>Storage Quality of Service is a cluster-wide feature on ONTAP that requires no
+additional license. It allows users to set throughput limits and/or monitor
+IOPS or MB/s on the storage object. ONTAP enforces QoS via “policy-groups”,
+a policy-group is a collection of QoS specifications where you may specify
+throughput limits. On ONTAP, multiple storage objects can be assigned to a
+policy-group, but assigning multiple storage objects renders them as part of
+a “workload”. In case of QoS limits, this means that the limit is applied to
+the sum of all the IOPS/BPS from all the storage objects assigned to the policy
+group.</p>
+<p>When using QoS via Manila, the driver will not allow sharing QoS
+policy-groups. If a share type supports QoS, a new policy-group is created for
+every share of that type.</p>
 </div>
 <div class="section" id="manila-scheduling-and-resource-pool-selection">
 <span id="manila-scheduling-and-resource-selection"></span><h2>Manila scheduling and resource pool selection<a class="headerlink" href="#manila-scheduling-and-resource-pool-selection" title="Permalink to this headline">¶</a></h2>
@@ -247,7 +263,7 @@ requests a snapshot be taken of a particular Manila share.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-07 15:33</div>
+            <div class="docs-updated">updated: 2017-09-07 22:18</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -377,7 +393,7 @@ requests a snapshot be taken of a particular Manila share.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 1d5748b8e72ab13f7cb4a0658b441cd7e412ec25";
+    var gitSha = "SHA: 5b00372cd308249f3572abeca6b256390c776137";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Theory of Operation: Mapping NetApp to OpenStack Terminology in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -388,7 +404,7 @@ requests a snapshot be taken of a particular Manila share.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-07 15:33";
+    var buildstring = "Release: 2017.2 on 2017-09-07 22:18";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
