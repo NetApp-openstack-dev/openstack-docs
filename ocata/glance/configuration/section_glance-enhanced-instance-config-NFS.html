@@ -1,0 +1,556 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Enhanced Instance Creation with ONTAP NFS as a Cinder Backend</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/glance/configuration/section_glance-enhanced-instance-config-NFS.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/glance.html">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/nova.html">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/cinder.html">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/ocata/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/ocata/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Enhanced Instance Creation with ONTAP NFS as a Cinder Backend</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_glance-standard-config-sg.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Basic Configuration of Glance Using StorageGRID Webscale as a Glance Backing Store"></i></a>
+    
+    
+    <a href="section_glance-enhanced-instance-config-iSCSI.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Enhanced Instance Creation with ONTAP iSCSI/FC as a Cinder Backend"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-09-07 22:43</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="enhanced-instance-creation-with-ontap-nfs-as-a-cinder-backend">
+<span id="eic-fas-nfs"></span><h1>Enhanced Instance Creation with ONTAP NFS as a Cinder Backend<a class="headerlink" href="#enhanced-instance-creation-with-ontap-nfs-as-a-cinder-backend" title="Permalink to this headline">¶</a></h1>
+<p>The following checklist provides the steps necessary for configuration
+of Enhanced Instance Creation and Copy Offload with NetApp FAS (ONTAP)
+for NFS:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="80%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">#</th>
+<th class="head">Description of Step</th>
+<th class="head">Done?</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>ONTAP: Enable <code class="docutils literal"><span class="pre">vstorage</span></code></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>ONTAP: Enable NFSv3, NFSv4, and NFSv4.1</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>3</td>
+<td>ONTAP: Set ownership of Glance FlexVol</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>4</td>
+<td>ONTAP: Set ownership of Cinder FlexVol</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>5</td>
+<td>Change <code class="docutils literal"><span class="pre">netapp_copy_offload_tool_path</span></code> in cinder.conf</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>6</td>
+<td>Add <code class="docutils literal"><span class="pre">nfs_mount_options=lookupcache=pos</span></code> in cinder.conf</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>7</td>
+<td>Change ownership of copy offload binary</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>Change <code class="docutils literal"><span class="pre">glance_api_version</span></code> in cinder.conf</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>9</td>
+<td>Perform additional steps in glance-api.conf</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>Create JSON file for Glance metadata</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>11</td>
+<td>Add the <code class="docutils literal"><span class="pre">cinder</span></code> user to the <code class="docutils literal"><span class="pre">glance</span></code> group</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>12</td>
+<td>Restart Cinder and Glance services</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>13</td>
+<td>Check mounts</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>14</td>
+<td>Upload a Glance Image</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>15</td>
+<td>Boot from Cinder</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>16</td>
+<td>Verify functionality</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<p>Table 5.1. Checklist of Steps for Enhanced Instance Creation and Copy
+Offload tool for NFS</p>
+<ol class="arabic simple">
+<li>Enable <code class="docutils literal"><span class="pre">vstorage</span></code> on Storage Virtual Machine</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">::</span><span class="o">&gt;</span> <span class="n">nfs</span> <span class="n">modify</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">vstorage</span> <span class="n">enabled</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Enable NFSv3, NFSv4, and NFSv4.1 on Storage Virtual Machine</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">::</span><span class="o">&gt;</span> <span class="n">vserver</span> <span class="n">nfs</span> <span class="n">modify</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">access</span> <span class="n">true</span> <span class="o">-</span><span class="n">v3</span> <span class="n">enabled</span> <span class="o">-</span><span class="n">v4</span><span class="o">.</span><span class="mi">0</span> <span class="n">enabled</span> <span class="o">-</span><span class="n">v4</span><span class="o">.</span><span class="mi">1</span> <span class="n">enabled</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Set ownership of Glance FlexVol</li>
+</ol>
+<p>Obtain the user and group ids for <code class="docutils literal"><span class="pre">glance</span></code> service user</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat /etc/passwd | grep glance
+glance:x:161:161:OpenStack Glance Daemons:/var/lib/glance:/sbin/nologin
+</pre></div>
+</div>
+<p>Set ownership for the FlexVol backing Glance accordingly</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>CDOT::&gt; volume modify –vserver replace-with-vserver-name -volume replace-with-glance-flexvol-name -user 161 –group 161
+CDOT::&gt; volume show –vserver replace-with-vserver-name -volume replace-with-glance-flexvol-name -fields user,group
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Set ownership of Cinder FlexVol</li>
+</ol>
+<p>Obtain the user and group ids for <code class="docutils literal"><span class="pre">cinder</span></code> service user</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cat /etc/passwd | grep cinder
+cinder:x:165:165:OpenStack Cinder Daemons:/var/lib/cinder:/sbin/nologin
+</pre></div>
+</div>
+<p>Set ownership for the FlexVol(s) backing Cinder accordingly</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>CDOT::&gt; volume modify –vserver replace-with-vserver-name -volume replace-with-cinder-flexvol -user 165 –group 165
+CDOT::&gt; volume show –vserver replace-with-vserver-name -volume replace-with-cinder-flexvol -fields user,group
+</pre></div>
+</div>
+<p>5) Download the copy offload tool from <a class="reference external" href="http://mysupport.netapp.com/tools/info/ECMLP2429244I.html?productID=61945">NetApp Support</a>.</p>
+<ol class="arabic simple" start="6">
+<li>Place the archive on the OpenStack Controller(s) as follows</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdir /etc/cinder/copyoffload
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ mv copyoffload.tar /etc/cinder/copyoffload/
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd /etc/cinder/copyoffload
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ tar xzvf copyoffload.tar
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ls
+copyoffload.tar  na_copyoffload_64  NetApp_End_User_License_Agreement2014.pdf  NOTICE.pdf  README.txt
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ chown cinder:cinder /etc/cinder/copyoffload/na_copyoffload_64
+</pre></div>
+</div>
+<p>7) Set the following in /etc/cinder/cinder.conf in each ONTAP NFS
+backend stanza, paying attention to set glance_api_version to 2 in
+the DEFAULT stanza as well.</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>[DEFAULT]
+…
+glance_api_version = 2
+…
+…
+[NetAppONTAPBackend]
+…
+…
+netapp_copyoffload_tool_path=/etc/cinder/copyoffload/na_copyoffload_64
+nfs_mount_options=lookupcache=pos
+…</dd>
+</dl>
+<p>8) Create a json file at /etc/glance/filesystem_store_metadata.json
+with the following content:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="s2">&quot;NetAppNFS&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;share_location&quot;</span><span class="p">:</span><span class="s2">&quot;nfs://[replace-with-ip-address]/[replace-with-glance-export]&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mountpoint&quot;</span><span class="p">:</span> <span class="s2">&quot;/var/lib/glance/images&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;nfs&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>Please follow these guidelines for the JSON file, in addition to
+regular conventions:</p>
+<ul class="last simple">
+<li>Four spaces for each line entry (other than the braces)</li>
+<li><code class="docutils literal"><span class="pre">share_location</span></code> must be in the format above. ex.
+“<a class="reference external" href="nfs://192.168.100.10/glance_flexvol">nfs://192.168.100.10/glance_flexvol</a>”</li>
+</ul>
+</div>
+<ol class="arabic simple" start="9">
+<li>Update the following entries in the /etc/glance/glance-api.conf file</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="n">filesystem_store_datadir</span><span class="o">=</span><span class="s2">&quot;/var/lib/glance/images/&quot;</span>
+<span class="o">...</span>
+<span class="n">default_store</span><span class="o">=</span><span class="n">file</span>
+<span class="o">...</span>
+<span class="n">show_image_direct_url</span><span class="o">=</span><span class="kc">True</span>
+<span class="o">...</span>
+<span class="n">show_multiple_locations</span><span class="o">=</span><span class="kc">True</span>
+<span class="o">...</span>
+<span class="n">filesystem_store_metadata_file</span><span class="o">=</span><span class="s2">&quot;/etc/glance/filesystem_store_metadata.json&quot;</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Search for each of these entries in glance-api.conf using a text
+editor and update it accordingly.</p>
+</div>
+<ol class="arabic simple" start="10">
+<li>Add the <code class="docutils literal"><span class="pre">cinder</span></code> user to the <code class="docutils literal"><span class="pre">glance</span></code> group</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ gpasswd –a cinder glance
+</pre></div>
+</div>
+<ol class="arabic simple" start="12">
+<li>Restart Cinder and Glance services</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ systemctl restart openstack-cinder-{api,scheduler,volume}
+$ systemctl restart openstack-glance-{api,registry}
+</pre></div>
+</div>
+<ol class="arabic simple" start="13">
+<li>Check mounts</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># mount</span>
+<span class="o">...</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">100.10</span><span class="p">:</span><span class="o">/</span><span class="n">cinder_flexvol</span> <span class="n">on</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">cinder</span><span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="mi">69809486</span><span class="n">d67b39d4baa19744ef3ef90c</span> <span class="nb">type</span> <span class="n">nfs4</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">relatime</span><span class="p">,</span><span class="n">vers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">rsize</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span><span class="n">wsize</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span><span class="n">namlen</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span><span class="n">hard</span><span class="p">,</span><span class="n">proto</span><span class="o">=</span><span class="n">tcp</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">timeo</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span><span class="n">retrans</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">sec</span><span class="o">=</span><span class="n">sys</span><span class="p">,</span><span class="n">clientaddr</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">100.20</span><span class="p">,</span><span class="n">local_lock</span><span class="o">=</span><span class="n">none</span><span class="p">,</span><span class="n">addr</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">100.10</span><span class="p">)</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">100.10</span><span class="p">:</span><span class="o">/</span><span class="n">glance_flexvol</span> <span class="n">on</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">glance</span><span class="o">/</span><span class="n">images</span> <span class="nb">type</span> <span class="n">nfs4</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">relatime</span><span class="p">,</span><span class="n">vers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span><span class="n">rsize</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span><span class="n">wsize</span><span class="o">=</span><span class="mi">65536</span><span class="p">,</span><span class="n">namlen</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span><span class="n">hard</span><span class="p">,</span><span class="n">proto</span><span class="o">=</span><span class="n">tcp</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">timeo</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span><span class="n">retrans</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">sec</span><span class="o">=</span><span class="n">sys</span><span class="p">,</span><span class="n">clientaddr</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">100.20</span><span class="p">,</span><span class="n">local_lock</span><span class="o">=</span><span class="n">none</span><span class="p">,</span><span class="n">addr</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">100.10</span><span class="p">)</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="14">
+<li>Upload a Glance image</li>
+</ol>
+<p>The following command uses an image that is publicly available. Please
+use the image you prefer and replace the URL accordingly.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
+</pre></div>
+</div>
+<ol class="arabic simple" start="15">
+<li>Boot from Cinder</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
+</pre></div>
+</div>
+<ol class="arabic simple" start="16">
+<li>Verify functionality</li>
+</ol>
+<p>Please open /var/log/cinder/volume.log and look for a message similar to
+the following to confirm that copy offload was used successfully:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">...</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">13</span> <span class="mi">13</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">16.646</span> <span class="mi">6626</span> <span class="n">INFO</span> <span class="n">cinder</span><span class="o">.</span><span class="n">volume</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">netapp</span><span class="o">.</span><span class="n">dataontap</span><span class="o">.</span><span class="n">nfs_cmode</span> <span class="p">[</span><span class="n">req</span><span class="o">-...</span><span class="p">]</span> <span class="n">Copied</span> <span class="n">image</span> <span class="mi">7080</span><span class="n">dac2</span><span class="o">-</span><span class="mi">6272</span><span class="o">-</span><span class="mi">4</span><span class="n">c05</span><span class="o">-</span><span class="n">a2ed</span><span class="o">-</span><span class="mi">56888</span><span class="n">a34e589</span> <span class="n">to</span> <span class="n">volume</span> <span class="mi">06</span><span class="n">d081da</span><span class="o">-</span><span class="mi">7220</span><span class="o">-</span><span class="mi">4526</span><span class="o">-</span><span class="n">bfdf</span><span class="o">-</span><span class="mi">5</span><span class="n">b9e8eb4aac3</span> <span class="n">using</span> <span class="n">copy</span> <span class="n">offload</span> <span class="n">workflow</span><span class="o">.</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Search for the word “offload” to help locate the copy offload log
+entry in volume.log.</p>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_glance-standard-config-sg.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Basic Configuration of Glance Using StorageGRID Webscale as a Glance Backing Store"></i></a>
+          
+          
+            <a href="section_glance-enhanced-instance-config-iSCSI.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Enhanced Instance Creation with ONTAP iSCSI/FC as a Cinder Backend"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-09-07 22:43</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../ch_glance-image-service.html">Image Service (Glance)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview/section_glance-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_glance-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_glance-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_glance-configuration.html">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources ">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documents</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Commnunity Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">github/netapp</a></li>
+          <li><a href="http://netapp.io/slack">slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">twitter/@openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">youtube/users/NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "glance/configuration/section_glance-enhanced-instance-config-NFS" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: 3596aa87956a3f1900a2a3224204aa3027de018d";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Enhanced Instance Creation with ONTAP NFS as a Cinder Backend in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "OCATA"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2017.2 on 2017-09-07 22:43";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+  </body>
+</html>

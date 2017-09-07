@@ -1,0 +1,573 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: ONTAP Configuration</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/manila/configuration/ontap_configuration/section_ontap-config.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/glance.html">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/nova.html">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/cinder.html">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/ocata/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/ocata/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>ONTAP Configuration</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="../../ch_manila-configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuration"></i></a>
+    
+    
+    <a href="../ch_manila-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Manila Configuration Files"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-09-07 22:43</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">ONTAP Configuration</a><ul>
+<li><a class="reference internal" href="#ontap-prerequisites">ONTAP Prerequisites</a></li>
+<li><a class="reference internal" href="#storage-virtual-machine-considerations">Storage Virtual Machine Considerations</a></li>
+<li><a class="reference internal" href="#account-permission-considerations">Account Permission Considerations</a><ul>
+<li><a class="reference internal" href="#creating-role-for-cluster-scoped-account">Creating Role for Cluster-Scoped Account</a></li>
+<li><a class="reference internal" href="#creating-role-for-svm-scoped-account">Creating Role for SVM-Scoped Account</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#storage-networking-considerations">Storage Networking Considerations</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="ontap-configuration">
+<h1>ONTAP Configuration<a class="headerlink" href="#ontap-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="ontap-prerequisites">
+<span id="manila-data-ontap-prerequisites"></span><h2>ONTAP Prerequisites<a class="headerlink" href="#ontap-prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The prerequisites for ONTAP are:</p>
+<ul class="simple">
+<li>The driver requires a storage controller running ONTAP
+8.2 or later.</li>
+<li>The storage system should have the following licenses applied:<ul>
+<li>Base</li>
+<li>NFS (if the NFS storage protocol is to be used)</li>
+<li>CIFS (if the CIFS/SMB storage protocol is to be used)</li>
+<li>SnapMirror (if share replication is to be enabled)</li>
+<li>FlexClone</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="storage-virtual-machine-considerations">
+<span id="id1"></span><h2>Storage Virtual Machine Considerations<a class="headerlink" href="#storage-virtual-machine-considerations" title="Permalink to this headline">¶</a></h2>
+<p>When using the NetApp Manila driver in the mode where it does not manage
+share servers, it is important to pay attention to the following
+considerations:</p>
+<ol class="arabic simple">
+<li>Ensure the appropriate licenses (as described previously) are enabled
+on the storage system for the desired use case.</li>
+<li>The SVM referenced in the <code class="docutils literal"><span class="pre">netapp_vserver</span></code> option must be created
+(and associated with aggregates) before it can be utilized as a
+provisioning target for Manila.  If cluster-level credentials have
+not been specified in the configuration file, ensure that no root
+aggregates are associated with the SVM, since the driver will not
+be able to guarantee that automatically.</li>
+<li>Data LIFs must be created and assigned to SVMs before configuring
+Manila.</li>
+<li>If NFS is used as the storage protocol:<ol class="arabic">
+<li>Be sure to enable the NFS service on the SVM.</li>
+<li>Be sure to enable the desired version of the NFS protocol (e.g.
+<code class="docutils literal"><span class="pre">v4.0,</span> <span class="pre">v4.1-pnfs</span></code>) on the SVM.</li>
+</ol>
+</li>
+<li>If CIFS is used as the storage protocol:<ol class="arabic">
+<li>Be sure to enable the CIFS service on the SVM.</li>
+<li>Be sure to set CIFS as the data protocol on the data LIF.</li>
+</ol>
+</li>
+<li>In order to support share replication:<ol class="arabic">
+<li>Ensure all ONTAP clusters with the same <code class="docutils literal"><span class="pre">replication_domain</span></code> are
+peered, have intercluster LIFs configured, and are of equal ONTAP
+versions.</li>
+<li>Ensure all SVMs with the same <code class="docutils literal"><span class="pre">replication_domain</span></code> are peered
+and have unique names.</li>
+<li>For more information about ONTAP data protection, please see the
+<a class="reference external" href="https://mysupport.netapp.com/documentation/productlibrary/index.html?productID=30092">ONTAP 8 Product
+Documentation</a>.</li>
+</ol>
+</li>
+</ol>
+</div>
+<div class="section" id="account-permission-considerations">
+<span id="account-perm"></span><h2>Account Permission Considerations<a class="headerlink" href="#account-permission-considerations" title="Permalink to this headline">¶</a></h2>
+<p>When configuring NetApp’s Manila drivers to interact with an
+ONTAP instance, it is important to choose the correct
+administrative credentials to use. While an account with cluster-level
+administrative permissions is normally utilized, it is possible to use
+an account with reduced scope that has the appropriate privileges
+granted to it. In order to use an SVM-scoped account with the Manila
+driver and ONTAP and have access to the full set of
+features (including Manila Share Type Extra Specs support) availed by
+the Manila driver, be sure to add the access levels for the commands
+shown in <a class="reference internal" href="#table-6-17"><span class="std std-ref">Table 6.17, “Common Access Level Permissions Required with Any
+Manila Driver”</span></a>, <a class="reference internal" href="#table-6-18"><span class="std std-ref">Table 6.18, “Access Level Permissions Required For
+Manila Driver for clustered Data ONTAP with share server management - with
+Cluster-wide Administrative Account”</span></a>, and <a class="reference internal" href="#table-6-19"><span class="std std-ref">Table 6.19, “Access Level
+Permissions Required For Manila Driver for clustered Data ONTAP without
+share server management - with Cluster-wide Administrative Account”</span></a>.</p>
+<table border="1" class="docutils" id="table-6-17">
+<colgroup>
+<col width="64%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Access Level</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">cifs</span> <span class="pre">share</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">event</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">network</span> <span class="pre">interface</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vserver</span> <span class="pre">export-policy</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">volume</span> <span class="pre">snapshot</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">version</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">system</span> <span class="pre">node</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">version</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">volume</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vserver</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">security</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Table 6.17. Common Access Level Permissions Required with Any Manila Driver</p>
+<table border="1" class="docutils" id="table-6-18">
+<colgroup>
+<col width="61%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Access Level</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">cifs</span> <span class="pre">create</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">cifs</span> <span class="pre">delete</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">kerberos-config</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">kerberos-realm</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ldap</span> <span class="pre">client</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ldap</span> <span class="pre">create</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">license</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">dns</span> <span class="pre">create</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">network</span> <span class="pre">interface</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">network</span> <span class="pre">port</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">network</span> <span class="pre">port</span> <span class="pre">vlan</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vserver</span></code></td>
+<td><code class="docutils literal"><span class="pre">all</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Table 6.18. Access Level Permissions Required For Manila Driver for clustered
+Data ONTAP with share server management - with Cluster-wide
+Administrative Account</p>
+<table border="1" class="docutils" id="table-6-19">
+<colgroup>
+<col width="61%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Access Level</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">license</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">storage</span> <span class="pre">aggregate</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">storage</span> <span class="pre">disk</span></code></td>
+<td><code class="docutils literal"><span class="pre">readonly</span></code></td>
+</tr>
+</tbody>
+</table>
+<p>Table 6.19. Access Level Permissions Required For Manila Driver for clustered
+Data ONTAP without share server management - with Cluster-wide
+Administrative Account</p>
+<div class="section" id="creating-role-for-cluster-scoped-account">
+<h3>Creating Role for Cluster-Scoped Account<a class="headerlink" href="#creating-role-for-cluster-scoped-account" title="Permalink to this headline">¶</a></h3>
+<p>To create a role with the necessary privileges required, with access via
+ONTAP API only, use the following command syntax to create the role and
+the cDOT ONTAP user:</p>
+<ol class="arabic">
+<li><p class="first">Create role with appropriate command directory permissions (note you
+will need to execute this command for each of the required access
+levels as described in the earlier tables).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>security login role create –role openstack –cmddirname [required command from earlier tables] -access [Required Access Level]
+</pre></div>
+</div>
+</li>
+<li><p class="first">Command to create user with appropriate role</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>security login create –username openstack –application ontapi –authmethod password –role openstack
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="creating-role-for-svm-scoped-account">
+<h3>Creating Role for SVM-Scoped Account<a class="headerlink" href="#creating-role-for-svm-scoped-account" title="Permalink to this headline">¶</a></h3>
+<p>To create a role with the necessary privileges required, with access via
+ONTAP API only, use the following command syntax to create the role and
+the cDOT ONTAP user:</p>
+<ol class="arabic">
+<li><p class="first">Create role with appropriate command directory permissions (note you
+will need to execute this command for each of the required access
+levels as described in the earlier tables).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>security login role create –role openstack -vserver [vserver_name] –cmddirname [required command from earlier tables] -access [Required Access Level]
+</pre></div>
+</div>
+</li>
+<li><p class="first">Command to create user with appropriate role</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>security login create –username openstack –application ontapi –authmethod password –role openstack -vserver [vserver_name]
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">For more information on how to grant access level permissions to a
+role, and then assign the role to an administrative account, please
+refer to the <a class="reference external" href="http://support.netapp.com">System Administration Guide for Cluster
+Administrators</a> document in the
+Clustered DATA ONTAP documentation.</p>
+</div>
+</div>
+</div>
+<div class="section" id="storage-networking-considerations">
+<h2>Storage Networking Considerations<a class="headerlink" href="#storage-networking-considerations" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Ensure there is segmented network connectivity between the hypervisor
+nodes and the Data LIF interfaces from Data ONTAP.</li>
+<li>LIF assignment</li>
+</ol>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="../../ch_manila-configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuration"></i></a>
+          
+          
+            <a href="../ch_manila-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Manila Configuration Files"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-09-07 22:43</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../../../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../ch_manila.html">Shared Filesystems (Manila)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview/section_manila-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../key_concepts/section_manila-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../process_structure/section_manila-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api_overview/section_manila-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_manila-theory-and-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../ch_manila-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_manila-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources ">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documents</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Commnunity Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">github/netapp</a></li>
+          <li><a href="http://netapp.io/slack">slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">twitter/@openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">youtube/users/NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "manila/configuration/ontap_configuration/section_ontap-config" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: 3596aa87956a3f1900a2a3224204aa3027de018d";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "ONTAP Configuration in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "OCATA"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2017.2 on 2017-09-07 22:43";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+  </body>
+</html>
