@@ -3,23 +3,23 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Deployment and Operations Guide</title>
+    <title>OpenStack Docs: NetApp’s Contributions To OpenStack</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Bootstrap CSS -->
-<link href="_static/css/bootstrap.css" rel="stylesheet">
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
 
 <!-- Pygments CSS -->
-<link href="_static/css/native.css" rel="stylesheet">
+<link href="../_static/css/native.css" rel="stylesheet">
 
 <!-- Fonts -->
-<link href="_static/css/font-awesome.css" rel="stylesheet">
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
 <!-- Custom CSS -->
-<link href="_static/css/combined.css" rel="stylesheet">
+<link href="../_static/css/combined.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,8 +27,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" href="_static/bespoke.css" type="text/css" />
-<link rel="stylesheet" href="_static/sphinxmark.css" type="text/css" />
+<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
   
 
 
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/index.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/openstack-overview/section_contributions.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,13 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Deployment and Operations Guide</h2>
+      <h2>NetApp’s Contributions To OpenStack</h2>
     
   </div>
   <div class="docs-actions">
     
+    <a href="section_releases-distribution.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: OpenStack Releases and Distributions"></i></a>
     
-    <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+    
+    <a href="../ch_netapp-storage.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Systems and Software"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -129,23 +131,28 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="deployment-and-operations-guide">
-<h1>Deployment and Operations Guide<a class="headerlink" href="#deployment-and-operations-guide" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_appendix.html">Appendix</a></li>
-</ul>
-</div>
+  <div class="section" id="netapp-s-contributions-to-openstack">
+<h1>NetApp’s Contributions To OpenStack<a class="headerlink" href="#netapp-s-contributions-to-openstack" title="Permalink to this headline">¶</a></h1>
+<p>A suite of NetApp drivers for OpenStack Block Storage (aka Cinder) are
+built into the Icehouse release of OpenStack available from
+<a class="reference external" href="http://www.openstack.org/software/start/">http://www.openstack.org/software/start/</a>.</p>
+<p>NetApp has provided enhancements to the OpenStack Compute Service (Nova)
+and OpenStack Image Service (Glance) projects to enhance instance
+creation and storage efficiency as well. NetApp has also published a
+reference architecture for deploying OpenStack Object Storage (Swift) on
+top of NetApp’s E-Series storage solutions that reduces the overall
+deployment footprint and replication overhead.</p>
+<p>NetApp additionally leads a development effort within the OpenStack
+community to introduce a new core storage service developed under the
+project name Manila, which adds a shared file system service to the
+existing block and object storage services. This addresses a critical
+gap in OpenStack’s storage services coverage and enables a new category
+of on-demand file storage for Infrastructure as a Service (IaaS)
+deployments. Refer to <a class="reference internal" href="../ch_manila.html#manila"><span class="std std-ref">Shared Filesystems Service (Manila)</span></a> for more information on
+Manila.</p>
+<p>Where possible, NetApp intends to (and has to date) contribute
+integrations upstream in OpenStack directly. NetApp’s direct
+contributions to OpenStack date back to the Essex release.</p>
 </div>
 
 
@@ -154,8 +161,10 @@ ga('send', 'pageview');
           </div>
           <div class="docs-actions">
           
+            <a href="section_releases-distribution.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: OpenStack Releases and Distributions"></i></a>
           
-            <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+          
+            <a href="../ch_netapp-storage.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Systems and Software"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -181,7 +190,7 @@ ga('send', 'pageview');
         </div>
 <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
   <div class="btn-group docs-sidebar-releases">
-<a href="#">
+<a href="../index.html">
   <button href="#" type="button"
           class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
 </a>
@@ -190,18 +199,24 @@ ga('send', 'pageview');
   <div class="docs-sidebar-toc">
     <div class="docs-sidebar-section" id="table-of-contents">
       <h4></h4>
-      <ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_appendix.html">Appendix</a></li>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="section_openstack-foundation.html">OpenStack Foundation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_modular-collection.html">OpenStack - A Modular Collection of Cloud Services</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_releases-distribution.html">OpenStack Releases and Distributions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NetApp’s Contributions To OpenStack</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
 </ul>
 
     </div>
@@ -248,19 +263,19 @@ ga('send', 'pageview');
   </div>
 </footer>
 <!-- jQuery -->
-<script type="text/javascript" src="_static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
 
 <!-- Bootstrap JavaScript -->
-<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
 
 <!-- The rest of the JS -->
-<script type="text/javascript" src="_static/js/navigation.js"></script>
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
 
 <!-- Docs JS -->
-<script type="text/javascript" src="_static/js/docs.js"></script>
+<script type="text/javascript" src="../_static/js/docs.js"></script>
 
 <!-- Popovers -->
-<script type="text/javascript" src="_static/js/webui-popover.js"></script>
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
 
 <!-- Javascript for page -->
 <script language="JavaScript">
@@ -278,13 +293,13 @@ ga('send', 'pageview');
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "index" + ".rst";
+        var sourceFile = "openstack-overview/section_contributions" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 326dec568327fb9993117db6a8ff38bc0d6b0648";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Deployment and Operations Guide in NetApp OpenStack Docs";
+        var bugTitle = "NetApp’s Contributions To OpenStack in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";

@@ -3,23 +3,23 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Deployment and Operations Guide</title>
+    <title>OpenStack Docs: Swift Ring Considerations with DDP</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Bootstrap CSS -->
-<link href="_static/css/bootstrap.css" rel="stylesheet">
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
 
 <!-- Pygments CSS -->
-<link href="_static/css/native.css" rel="stylesheet">
+<link href="../_static/css/native.css" rel="stylesheet">
 
 <!-- Fonts -->
-<link href="_static/css/font-awesome.css" rel="stylesheet">
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
 <!-- Custom CSS -->
-<link href="_static/css/combined.css" rel="stylesheet">
+<link href="../_static/css/combined.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,8 +27,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" href="_static/bespoke.css" type="text/css" />
-<link rel="stylesheet" href="_static/sphinxmark.css" type="text/css" />
+<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
   
 
 
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/index.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/swift/section_swift-ring-considerations.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,13 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Deployment and Operations Guide</h2>
+      <h2>Swift Ring Considerations with DDP</h2>
     
   </div>
   <div class="docs-actions">
     
+    <a href="section_swift-partitioning.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Partitioning and File System Considerations"></i></a>
     
-    <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+    
+    <a href="../ch_operations.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Operational Considerations"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -129,22 +131,49 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="deployment-and-operations-guide">
-<h1>Deployment and Operations Guide<a class="headerlink" href="#deployment-and-operations-guide" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_appendix.html">Appendix</a></li>
-</ul>
+  <div class="section" id="swift-ring-considerations-with-ddp">
+<h1>Swift Ring Considerations with DDP<a class="headerlink" href="#swift-ring-considerations-with-ddp" title="Permalink to this headline">¶</a></h1>
+<p>A Swift ring represents a mapping between the names of entities stored
+on disk and their physical location. There are separate rings for
+accounts, containers, and objects. When other components need to perform
+any operation on an object, container, or account, they need to interact
+with the appropriate ring to determine its location in the cluster.</p>
+<p>The ring maintains this mapping using zones, devices, partitions, and
+replicas. Each partition in the ring is replicated 3 times, by default,
+across the cluster. The locations for a partition are stored in the
+mapping maintained by the ring. The ring is also responsible for
+determining which devices are used for handoff in failure scenarios.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">When leveraging the DDP capabilities of the E-Series storage system,
+it is only necessary to have Swift maintain 1 replica of the data as
+the storage subsystem automatically is providing sufficient
+replication of the data within the storage cluster to withstand
+multiple failures.</p>
+</div>
+<p>The number of replicas for partitions within Swift rings is set at the
+time the ring is created. To create the Swift rings for the Swift object
+types of account, container, and object, use the <code class="docutils literal"><span class="pre">swift-ring-builder</span></code>
+CLI command with the <code class="docutils literal"><span class="pre">replicas</span></code> parameter set to 1:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#swift-ring-builder ring-name create part-power replicas min-hours</span>
+<span class="n">swift</span><span class="o">-</span><span class="n">ring</span><span class="o">-</span><span class="n">builder</span> <span class="n">account</span><span class="o">.</span><span class="n">builder</span> <span class="n">create</span> <span class="mi">10</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="n">swift</span><span class="o">-</span><span class="n">ring</span><span class="o">-</span><span class="n">builder</span> <span class="n">container</span><span class="o">.</span><span class="n">builder</span> <span class="n">create</span> <span class="mi">10</span> <span class="mi">1</span> <span class="mi">1</span>
+<span class="n">swift</span><span class="o">-</span><span class="n">ring</span><span class="o">-</span><span class="n">builder</span> <span class="nb">object</span><span class="o">.</span><span class="n">builder</span> <span class="n">create</span> <span class="mi">10</span> <span class="mi">1</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">When creating the Swift rings, the number of partitions per ring
+must be calculated. However, the default computation for computing
+the number of partitions (expressed by the exponent of 2) -
+otherwise known as the partition power (<code class="docutils literal"><span class="pre">part-power</span></code>) - is based
+on the number of disks in a Swift cluster. While some Swift
+deployments (without NetApp E-Series storage solutions) utilize
+direct attached storage without RAID, with E-Series virtual disks
+are attached and leveraged that are created from a dynamic disk
+pool. As such, be sure to calculate the partition power as a
+function of the virtual disk count, rather than the number of
+physical (spinning or SSD) drives present.</p>
 </div>
 </div>
 
@@ -154,8 +183,10 @@ ga('send', 'pageview');
           </div>
           <div class="docs-actions">
           
+            <a href="section_swift-partitioning.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Partitioning and File System Considerations"></i></a>
           
-            <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+          
+            <a href="../ch_operations.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Operational Considerations"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -181,7 +212,7 @@ ga('send', 'pageview');
         </div>
 <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
   <div class="btn-group docs-sidebar-releases">
-<a href="#">
+<a href="../index.html">
   <button href="#" type="button"
           class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
 </a>
@@ -190,18 +221,25 @@ ga('send', 'pageview');
   <div class="docs-sidebar-toc">
     <div class="docs-sidebar-section" id="table-of-contents">
       <h4></h4>
-      <ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_appendix.html">Appendix</a></li>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="section_swift-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-e-series.html">Swift Zones and NetApp E-Series Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-disk-pools.html">Disk Pools, Volumes, and Mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-partitioning.html">Partitioning and File System Considerations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Swift Ring Considerations with DDP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
 </ul>
 
     </div>
@@ -248,19 +286,19 @@ ga('send', 'pageview');
   </div>
 </footer>
 <!-- jQuery -->
-<script type="text/javascript" src="_static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
 
 <!-- Bootstrap JavaScript -->
-<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
 
 <!-- The rest of the JS -->
-<script type="text/javascript" src="_static/js/navigation.js"></script>
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
 
 <!-- Docs JS -->
-<script type="text/javascript" src="_static/js/docs.js"></script>
+<script type="text/javascript" src="../_static/js/docs.js"></script>
 
 <!-- Popovers -->
-<script type="text/javascript" src="_static/js/webui-popover.js"></script>
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
 
 <!-- Javascript for page -->
 <script language="JavaScript">
@@ -278,13 +316,13 @@ ga('send', 'pageview');
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "index" + ".rst";
+        var sourceFile = "swift/section_swift-ring-considerations" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 326dec568327fb9993117db6a8ff38bc0d6b0648";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Deployment and Operations Guide in NetApp OpenStack Docs";
+        var bugTitle = "Swift Ring Considerations with DDP in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";

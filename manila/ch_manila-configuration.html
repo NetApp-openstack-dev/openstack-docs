@@ -3,23 +3,23 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Deployment and Operations Guide</title>
+    <title>OpenStack Docs: Configuration</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Bootstrap CSS -->
-<link href="_static/css/bootstrap.css" rel="stylesheet">
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
 
 <!-- Pygments CSS -->
-<link href="_static/css/native.css" rel="stylesheet">
+<link href="../_static/css/native.css" rel="stylesheet">
 
 <!-- Fonts -->
-<link href="_static/css/font-awesome.css" rel="stylesheet">
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
 <!-- Custom CSS -->
-<link href="_static/css/combined.css" rel="stylesheet">
+<link href="../_static/css/combined.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,8 +27,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" href="_static/bespoke.css" type="text/css" />
-<link rel="stylesheet" href="_static/sphinxmark.css" type="text/css" />
+<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
   
 
 
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/index.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/manila/ch_manila-configuration.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,13 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Deployment and Operations Guide</h2>
+      <h2>Configuration</h2>
     
   </div>
   <div class="docs-actions">
     
+    <a href="deployment_choice/section_network-plugins-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choice: Manila Network Plugins"></i></a>
     
-    <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+    
+    <a href="configuration/ontap_configuration/section_ontap-config.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: ONTAP Configuration"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -129,21 +131,28 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="deployment-and-operations-guide">
-<h1>Deployment and Operations Guide<a class="headerlink" href="#deployment-and-operations-guide" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration/ontap_configuration/section_ontap-config.html">ONTAP Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration/ontap_configuration/section_ontap-config.html#ontap-prerequisites">ONTAP Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/ontap_configuration/section_ontap-config.html#storage-virtual-machine-considerations">Storage Virtual Machine Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/ontap_configuration/section_ontap-config.html#account-permission-considerations">Account Permission Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/ontap_configuration/section_ontap-config.html#storage-networking-considerations">Storage Networking Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="configuration/ch_manila-conf.html">Manila Configuration Files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/section_unified-driver-with-share-server.html">NetApp Unified Driver for Clustered Data ONTAP with Share Server management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/section_unified-driver-without-share-server.html">NetApp Unified Driver for Clustered Data ONTAP without Share Server management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/network_plugins/section_standalone_network_plugin.html">Manila Network Plugins: Standalone Network Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/network_plugins/section_simple_neutron_network_plugin.html">Manila Network Plugins: Simple Neutron Network Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/network_plugins/section_configurable_neutron_network_plugin.html">Manila Network Plugins: Configurable Neutron Network Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/network_plugins/section_simple_neutron_port_binding_network_plugin.html">Manila Network Plugins: Simple Neutron Port Binding Network Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/network_plugins/section_configurable_neutron_port_binding_network_plugin.html">Manila Network Plugins: Configurable Neutron Port Binding Network Plugin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configuration/manila_config_files/section_sample_manila-conf.html">Sample manila.conf</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -154,8 +163,10 @@ ga('send', 'pageview');
           </div>
           <div class="docs-actions">
           
+            <a href="deployment_choice/section_network-plugins-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choice: Manila Network Plugins"></i></a>
           
-            <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+          
+            <a href="configuration/ontap_configuration/section_ontap-config.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: ONTAP Configuration"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -181,7 +192,7 @@ ga('send', 'pageview');
         </div>
 <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
   <div class="btn-group docs-sidebar-releases">
-<a href="#">
+<a href="../index.html">
   <button href="#" type="button"
           class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
 </a>
@@ -190,18 +201,27 @@ ga('send', 'pageview');
   <div class="docs-sidebar-toc">
     <div class="docs-sidebar-section" id="table-of-contents">
       <h4></h4>
-      <ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_appendix.html">Appendix</a></li>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_manila.html">Shared Filesystems (Manila)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="overview/section_manila-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="key_concepts/section_manila-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="process_structure/section_manila-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview/section_manila-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch_manila-theory-and-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ch_manila-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
 </ul>
 
     </div>
@@ -248,19 +268,19 @@ ga('send', 'pageview');
   </div>
 </footer>
 <!-- jQuery -->
-<script type="text/javascript" src="_static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
 
 <!-- Bootstrap JavaScript -->
-<script type="text/javascript" src="_static/js/bootstrap.js"></script>
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
 
 <!-- The rest of the JS -->
-<script type="text/javascript" src="_static/js/navigation.js"></script>
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
 
 <!-- Docs JS -->
-<script type="text/javascript" src="_static/js/docs.js"></script>
+<script type="text/javascript" src="../_static/js/docs.js"></script>
 
 <!-- Popovers -->
-<script type="text/javascript" src="_static/js/webui-popover.js"></script>
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
 
 <!-- Javascript for page -->
 <script language="JavaScript">
@@ -278,13 +298,13 @@ ga('send', 'pageview');
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "index" + ".rst";
+        var sourceFile = "manila/ch_manila-configuration" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 326dec568327fb9993117db6a8ff38bc0d6b0648";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Deployment and Operations Guide in NetApp OpenStack Docs";
+        var bugTitle = "Configuration in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";

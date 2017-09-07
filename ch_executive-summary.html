@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Deployment and Operations Guide</title>
+    <title>OpenStack Docs: Executive Summary</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/index.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/ch_executive-summary.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,13 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Deployment and Operations Guide</h2>
+      <h2>Executive Summary</h2>
     
   </div>
   <div class="docs-actions">
     
+    <a href="index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment and Operations Guide"></i></a>
     
-    <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+    
+    <a href="ch_openstack-overview.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: OpenStack Overview"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -129,23 +131,51 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="deployment-and-operations-guide">
-<h1>Deployment and Operations Guide<a class="headerlink" href="#deployment-and-operations-guide" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_cinder.html">Block Storage (Cinder)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ch_appendix.html">Appendix</a></li>
-</ul>
-</div>
+  <div class="section" id="executive-summary">
+<h1>Executive Summary<a class="headerlink" href="#executive-summary" title="Permalink to this headline">¶</a></h1>
+<p>Most options for OpenStack integrated storage solutions aspire to offer
+scalability, but often lack the features and performance needed for
+efficient and cost-effective cloud deployment at scale. NetApp platforms
+integrated with OpenStack avail a unique combination of advanced storage
+efficiency, integrated data protection, and non-disruptive operations
+with the ability to scale while preserving performance.</p>
+<p>NetApp creates innovative storage and data management solutions that
+help our customers accelerate business breakthroughs and achieve
+outstanding cost efficiency. Our dedication to principles of simplicity,
+innovation, and customer success has made us one of the fastest-growing
+storage and data management providers today.</p>
+<p>With NetApp, organizations can lower risk and enable a broad spectrum of
+cloud SLAs by combining the power and ingenuity of OpenStack cloud
+management with proven data integrity and fully-developed storage
+provisioning, data protection, and efficiency.</p>
+<p>By leveraging the power of the NetApp clustered Data ONTAP operating
+system, enterprise organizations and service providers can build a cloud
+storage platform with an agile data infrastructure that delivers
+high-performing, efficient, and scalable open-source cloud services.
+NetApp provides storage platforms that enable quick deployment, nimble
+reaction to change with the ability to scale.</p>
+<p>With capabilities such as self-healing and integrated data protection
+for backup and disaster recovery, NetApp solutions are enterprise proven
+and help reduce risk for OpenStack cloud deployments. A global network
+of service provider partners already have deployed hundreds of high-SLA
+cloud services built on NetApp with over a billion users worldwide.</p>
+<p>Because NetApp technology is integrated with OpenStack Block Storage
+Service, OpenStack Object Storage Service, OpenStack Image Service and
+OpenStack Compute Service, users can build on this proven and highly
+scalable storage platform to optimize their private and public cloud
+architectures by reducing risk and increasing efficiency.</p>
+<p>This document intends to describe the application of NetApp capabilities
+to enable production OpenStack deployments. In particular, it’s meant to
+address the needs of system architects, system administrators, and
+storage administrators who are investigating the use or deployment of
+OpenStack.</p>
+<p><strong>Authors and Contributors</strong></p>
+<p>Rushi Agrawal, Sajid Akhtar, Tom Barron, Jon Benedict, Bob Callaway,
+Robert Esker, Chuck Fouts, Jim Holl, Eric Johannes, Andrew Kerr, Clinton
+Knight, Yogesh Kshirsagar, Sumit Kumar, Alex Meade, Chad Morgenstern, Jon Olby,
+Goutham Pacha Ravi, Akshai Parthasarathy, Jose Porrua, Michael Price, Mike
+Rooney, Dustin Schoenbrun, Navneet Singh, Stan Skelton, Tim Snider, Ben
+Swartzlander, Marty Turner, Jennifer Yang</p>
 </div>
 
 
@@ -154,8 +184,10 @@ ga('send', 'pageview');
           </div>
           <div class="docs-actions">
           
+            <a href="index.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment and Operations Guide"></i></a>
           
-            <a href="ch_executive-summary.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Executive Summary"></i></a>
+          
+            <a href="ch_openstack-overview.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: OpenStack Overview"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -181,7 +213,7 @@ ga('send', 'pageview');
         </div>
 <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
   <div class="btn-group docs-sidebar-releases">
-<a href="#">
+<a href="index.html">
   <button href="#" type="button"
           class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
 </a>
@@ -190,8 +222,8 @@ ga('send', 'pageview');
   <div class="docs-sidebar-toc">
     <div class="docs-sidebar-section" id="table-of-contents">
       <h4></h4>
-      <ul>
-<li class="toctree-l1"><a class="reference internal" href="ch_executive-summary.html">Executive Summary</a></li>
+      <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Executive Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch_openstack-overview.html">OpenStack Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ch_netapp-storage.html">NetApp Systems and Software</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendices/appendix_packaging.html">Installing OpenStack</a></li>
@@ -278,13 +310,13 @@ ga('send', 'pageview');
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "index" + ".rst";
+        var sourceFile = "ch_executive-summary" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 326dec568327fb9993117db6a8ff38bc0d6b0648";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Deployment and Operations Guide in NetApp OpenStack Docs";
+        var bugTitle = "Executive Summary in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE DRAFT"
         var useStoryboard = "";
