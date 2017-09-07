@@ -63,20 +63,28 @@ releases = [
     'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
     'ocata', 'pike', 'queens', 'rocky',
 ]
-unnamed = list(string.ascii_lowercase[len(releases):])
+unnamed = list(string.ascii_lowercase[len(releases) % 26:])
 releases += unnamed
+
+try:
+    zuul_branch = os.environ['ZUUL_BRANCH']
+except KeyError:
+    zuul_branch = ''
 
 watermark = os.popen("git branch --contains $(git rev-parse HEAD)\
 | awk -F/ '/stable/ {print $2}'").read().strip(' \n\t').capitalize()
+
+watermark = watermark if watermark != "" else zuul_branch
+
 if watermark == "":
     stable_branches = sorted(os.popen(
-        "git branch | awk -F/ '/stable/ {print $2}'").read().strip(
-        ' \n\t').lower().split('\n'))
+        "git ls-remote --heads origin | grep stable | sed 's?.*refs/heads/??'"
+    ).read().strip(' \n\t').lower().split('\n'))
     if len(stable_branches) == 0 or '' in stable_branches:
         # Can be removed as soon as we have stable branches
         watermark = "PIKE DRAFT"
     else:
-        last_stable_release = stable_branches[-1]
+        last_stable_release = stable_branches[-1].split('stable/')[-1]
         try:
             rel_index = releases.index(last_stable_release)
         except ValueError:
