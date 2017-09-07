@@ -9,7 +9,7 @@ used as a template to get new servers up and running quickly and more
 consistently if you are provisioning multiple servers than installing a
 server operating system and individually configuring additional
 services. It can also be used to store and catalog an unlimited number
-of backups. 
+of backups.
 
 Glance can store disk and server images in a variety of back-ends
 (called stores), including through NFS and Object Storage (such as
