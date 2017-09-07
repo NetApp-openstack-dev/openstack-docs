@@ -9,11 +9,4 @@ used as a template to get new servers up and running quickly and more
 consistently if you are provisioning multiple servers than installing a
 server operating system and individually configuring additional
 services. It can also be used to store and catalog an unlimited number
-of backups. 
-
-Glance can store disk and server images in a variety of back-ends
-(called stores), including through NFS and Object Storage (such as
-StorageGRID Webscale). The Glance API provides a standard REST interface
-for querying information about disk images and lets clients stream the
-images to new servers. A multiformat image registry allowing uploads of
-private and public images in a variety of formats.
+of backups.
