@@ -22,7 +22,7 @@ and ``swift``.
     -  locally attached storage
 
     -  a remote, shared filesystem (e.g. NFS) - see
-       the section called ":ref:`glance-fas-config`", or
+       the section called ":ref:`glance-ontap-config`", or
 
     -  a remote block device that has been partitioned and a filesystem
        created within a partition - see
