@@ -6,7 +6,7 @@ NFS or iSCSI as the storage protocol with a Cinder deployment on top of
 the NetApp FAS product line. Both protocol options are TCP/IP-based,
 deliver similar throughputs and latencies, support Cinder features,
 snapshot copies and cloning are supported to similar degrees, as well as
-advertisement of other storage efficienty, data protection, and high
+advertisement of other storage efficiency, data protection, and high
 availability features.
 
 **iSCSI**
@@ -46,7 +46,7 @@ availability features.
 -  NFS drivers require support from the hypervisor to virtualize files
    and present them as block devices to an instance.
 
--  As of the Icehouse release, the use of parallel NFS (pNFS) is
+-  The use of parallel NFS (pNFS) is
    supported with the NetApp unified driver, providing enhanced
    performance and scalability characteristics.
 

@@ -3,7 +3,7 @@
 NetApp Unified Driver for Clustered Data ONTAP with NFS
 -------------------------------------------------------
 
-The NetApp unifed driver for clustered Data ONTAP with NFS is a driver
+The NetApp unified driver for clustered Data ONTAP with NFS is a driver
 interface from OpenStack block storage to a Data ONTAP cluster system to
 accomplish provisioning and management of OpenStack volumes on NFS
 exports provided by the Data ONTAP cluster system. The NetApp unified

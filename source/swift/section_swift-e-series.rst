@@ -12,7 +12,7 @@ cluster without data loss or loss of connectivity to the remaining
 cluster.
 
 By default, Swift replicates data 3 times across the cluster. Swift
-replicates data across zones in a unique pattenr that attempts to ensure
+replicates data across zones in a unique pattern that attempts to ensure
 high availability and high durability for data. Swift chooses to place a
 replica of data in a server in an unused zone before placing it into an
 unused server in a zone that already has a replica of the data.
