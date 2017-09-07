@@ -129,7 +129,7 @@ using the Amazon S3 API.
 2. Restart Glance service: ``$ openstack-service restart glance``
 
 3. Edit DNS or Hosts file: Create entry for bucket.hostname example:
-   glance55.webscalertp.stl.netapp.com
+   glance55.webscale.stl.netapp.com
 
 4. Test::
 
