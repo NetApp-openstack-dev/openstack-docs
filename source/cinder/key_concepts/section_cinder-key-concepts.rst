@@ -237,7 +237,7 @@ protocol used:
 -  *E-Series*: a Cinder pool is created for each pool matched by the
    configuration option ``netapp_pool_name_search_pattern``.
 
-For additonal information, refer to
+For additional information, refer to
 :ref:`cinder-schedule-resource-pool`.
 
 Consistency Groups

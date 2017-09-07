@@ -177,7 +177,7 @@ requests that a Cinder backup be restored.
 
 3. ``cinder-backup`` reads message from queue, fetches the database
    record for the backup and a new or preexisting volume database
-   record, depending on whether a pre-existing volume was requested or
+   record, depending on whether a preexisting volume was requested or
    not.
 
 4. ``cinder-backup`` invokes the ``backup_restore`` method of the Cinder
