@@ -21,6 +21,7 @@
 # serve to show the default.
 
 import os
+import re
 import string
 
 import netappdocstheme
@@ -63,20 +64,41 @@ releases = [
     'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
     'ocata', 'pike', 'queens', 'rocky',
 ]
-unnamed = list(string.ascii_lowercase[len(releases):])
+unnamed = list(string.ascii_lowercase[len(releases) % 26:])
 releases += unnamed
 
-watermark = os.popen("git branch --contains $(git rev-parse HEAD)\
-| awk -F/ '/stable/ {print $2}'").read().strip(' \n\t').capitalize()
+
+# Can we determine if we're on a stable branch via ZUUL_BRANCH?
+try:
+    zuul_branch = os.environ['ZUUL_BRANCH']
+    zuul_branch = zuul_branch if zuul_branch.startswith('stable') else ''
+except KeyError:
+    zuul_branch = ''
+
+watermark = None
+
+# Look at the base branch perhaps?
+local_base_branch = os.popen(
+    "git show-branch -a | grep '\*' | "
+    "grep -v $(git rev-parse --abbrev-ref HEAD) | head -n1").read()
+
+local_base_branch_search = re.search(
+    r"\[([A-Za-z0-9_/]+)\]", local_base_branch)
+if local_base_branch_search:
+    watermark = local_base_branch_search.group(1).split('stable/')[-1].upper()
+
+watermark = watermark or zuul_branch.split("stable/")[-1].upper()
+
+# No luck Jose, let's construct the release from what's merged.
 if watermark == "":
     stable_branches = sorted(os.popen(
-        "git branch | awk -F/ '/stable/ {print $2}'").read().strip(
-        ' \n\t').lower().split('\n'))
+        "git ls-remote --heads origin | grep stable | sed 's?.*refs/heads/??'"
+    ).read().strip(' \n\t').lower().split('\n'))
     if len(stable_branches) == 0 or '' in stable_branches:
         # Can be removed as soon as we have stable branches
         watermark = "PIKE DRAFT"
     else:
-        last_stable_release = stable_branches[-1]
+        last_stable_release = stable_branches[-1].split('stable/')[-1]
         try:
             rel_index = releases.index(last_stable_release)
         except ValueError:
