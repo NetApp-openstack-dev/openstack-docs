@@ -121,10 +121,10 @@ Creating a user with appropriate permissions
    Command to create user with appropriate role for ssh access::
 
        security login create -user-or-group-name openstack –application ssh -authentication-method password –role cl-limited
-  
+
 .. note::
 
    Access via ssh is optional in the case where the storage administrator
-   does not want to grant the openstack login access to the storage cluster.
-   With this said, ``ssh access is required for Cinder to perform iSCSI CHAP
-   authentication``.
+   does not want to grant the ``openstack`` login access to the storage cluster.
+   With this said, **ssh access is required for Cinder to perform iSCSI CHAP
+   authentication**.
