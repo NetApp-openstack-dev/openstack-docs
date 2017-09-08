@@ -261,7 +261,7 @@ Neutron Subnet configured in the /etc/manila/manila.conf.
 
 ::
 
-    $ manila share-network-show storage-provider-network-2
+    $ manila share-network-create --name storage-provider-network-2
     +-------------------+--------------------------------------+
     | Property          | Value                                |
     +-------------------+--------------------------------------+
