@@ -704,6 +704,12 @@ per-Cinder-volume basis.
 Manipulating Cinder Consistency Groups via the Command Line
 -----------------------------------------------------------
 
+.. note::
+
+   There is a plan, in the Cinder community, to migrate existing consistency
+   group operations to use Cinder group operations in an OpenStack release after
+   Pike.
+
 In this section, we will configure a Cinder volume type, associate the
 volume type with a backend capable of supporting consistency groups,
 create a Cinder consistency group, create a Cinder volume within the
@@ -809,3 +815,121 @@ consistency group.
     Request to delete volume 959e5f9f-67b9-4011-bd60-5dad2ee43200 has been accepted.
 
     $ cinder consisgroup-delete cg1
+
+
+Manipulating Cinder Groups via the Command Line
+-----------------------------------------------------------
+
+.. note::
+   Currently only the Block Storage V3 API supports group operations. The
+   minimum version for group operations supported by the ONTAP drivers is
+   3.14. Specifying the API version ``--os-volume-api-version 3.14``, for
+   the CLI client, allows access to the group API.
+
+.. note::
+   The Cinder community plans to migrate existing consistency group operations
+   to group operations in an upcoming release. Please review Cinder
+   release notes, for upgrade instructions, prior to using group operations.
+
+.. note::
+   The ONTAP volume drivers support the consistent_group_snapshot_enabled
+   group type. By default Cinder group snapshots do not take consistency
+   group snapshots. To enable consistency group snapshots set
+   ``consistent_group_snapshot_enabled="<is> True"`` in the group type used.
+   Be aware that only one consistency group snapshot per storage pool (i.e.
+   flexvol) can be performed a time. Overlapping consistency group snapshot
+   operations can fail.
+
+In this section, we will configure a Cinder volume type, associate the
+volume type with a backend capable of supporting groups, create a Cinder
+group type, create a Cinder group, create a Cinder volume within the group,
+take a snapshot of the group, and then finally create a group from the
+snapshot of the first group.
+
+::
+
+    $ cinder type-create volume-support
+    +--------------------------------------+----------------+-------------+-----------+
+    | ID                                   | Name           | Description | Is_Public |
+    +--------------------------------------+----------------+-------------+-----------+
+    | 52c62136-4c87-4ec1-9e29-1132e975eab9 | volume-support | -           | True      |
+    +--------------------------------------+----------------+-------------+-----------+
+
+    $ cinder type-key volume-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
+
+    $ cinder --os-volume-api-version 3.14 group-type-create group-support
+    +--------------------------------------+---------------+-------------+
+    | ID                                   | Name          | Description |
+    +--------------------------------------+---------------+-------------+
+    | bc910903-35d8-49cd-842e-77c77c1d52f5 | group-support | -           |
+    +--------------------------------------+---------------+-------------+
+
+    $ cinder --os-volume-api-version 3.14 group-type-key group-support set consistent_group_snapshot_enabled="<is> True"
+
+    $ cinder --os-volume-api-version 3.14 group-create --name group1 group-support volume-support
+    +-------------------+-------------------------------------------+
+    | Property          | Value                                     |
+    +-------------------+-------------------------------------------+
+    | availability_zone | nova                                      |
+    | created_at        | 2017-09-08T22:24:57.000000                |
+    | description       | None                                      |
+    | group_snapshot_id | None                                      |
+    | group_type        | 5bf45d12-0ea3-4061-b6b9-287965edce41      |
+    | id                | 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93      |
+    | name              | group1                                    |
+    | source_group_id   | None                                      |
+    | status            | creating                                  |
+    | volume_types      | [u'0ca68595-7218-4d44-a992-9f6db4b75143'] |
+    +-------------------+-------------------------------------------+
+
+    $ cinder --os-volume-api-version 3.14 create --name vol-in-group1 --group-id 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 --volume-type volume-support 1
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | attachments                    | []                                   |
+    | availability_zone              | nova                                 |
+    | bootable                       | false                                |
+    | consistencygroup_id            | None                                 |
+    | created_at                     | 2017-09-08T22:30:11.000000           |
+    | description                    | None                                 |
+    | encrypted                      | False                                |
+    | group_id                       | 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 |
+    | id                             | e982211e-1c34-4996-bee4-af30c5661d8a |
+    | metadata                       | {}                                   |
+    | migration_status               | None                                 |
+    | multiattach                    | False                                |
+    | name                           | vol-in-group1                        |
+    | os-vol-host-attr:host          | None                                 |
+    | os-vol-mig-status-attr:migstat | None                                 |
+    | os-vol-mig-status-attr:name_id | None                                 |
+    | os-vol-tenant-attr:tenant_id   | a9a7c9d88ad34fa889fd3b63c3d03292     |
+    | replication_status             | None                                 |
+    | size                           | 1                                    |
+    | snapshot_id                    | None                                 |
+    | source_volid                   | None                                 |
+    | status                         | creating                             |
+    | updated_at                     | None                                 |
+    | user_id                        | f7d1f04baac34064a238a45dc5a6aa1b     |
+    | volume_type                    | volume-support                       |
+    +--------------------------------+--------------------------------------+
+
+    $ cinder --os-volume-api-version 3.14 group-snapshot-create group1 --name group1-snapshot1
+    +---------------+--------------------------------------+
+    | Property      | Value                                |
+    +---------------+--------------------------------------+
+    | created_at    | 2017-09-08T22:32:06.000000           |
+    | description   | None                                 |
+    | group_id      | 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 |
+    | group_type_id | 5bf45d12-0ea3-4061-b6b9-287965edce41 |
+    | id            | 3ac3a4cc-658a-4b1a-96c5-6272756ea60e |
+    | name          | group1-snapshot1                     |
+    | status        | creating                             |
+    +---------------+--------------------------------------+
+
+    $ cinder --os-volume-api-version 3.14 group-create-from-src --group-snapshot group1-snapshot1 --name group2
+    +----------+--------------------------------------+
+    | Property | Value                                |
+    +----------+--------------------------------------+
+    | id       | 66c4d2a0-13b7-49a2-a144-89fcc4cf3362 |
+    | name     | group2                               |
+    +----------+--------------------------------------+
