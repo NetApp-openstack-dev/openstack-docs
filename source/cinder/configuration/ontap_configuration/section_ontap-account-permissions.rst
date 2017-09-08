@@ -114,6 +114,16 @@ Permissions required for cheesecake
 
 Creating a user with appropriate permissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Command to create user with appropriate role::
+   Command to create user with appropriate role for api access::
 
-       security login create –username openstack –application ontapi –authmethod password –role cl-limited
+       security login create -user-or-group-name openstack –application ontapi -authentication-method password –role cl-limited
+
+   Command to create user with appropriate role for ssh access::
+
+       security login create -user-or-group-name openstack –application ssh -authentication-method password –role cl-limited
+
+.. note::
+
+   Granting ssh access is required for iSCSI CHAP authentication.
+   Access via ssh is optional otherwise.
+
