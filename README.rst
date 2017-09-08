@@ -1,7 +1,24 @@
 NetApp OpenStack Deployment & Operations Guide
 ==============================================
 
-To build this guide, you will need `tox`.
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+This repository contains documentation to aid operators and users of
+OpenStack clouds powered by NetApp Storage Systems.
+
+The latest build of this documentation is live
+[here](https://netapp-openstack-dev.github.io/openstack-docs/draft/)::
+
+  https://netapp-openstack-dev.github.io/openstack-docs/draft/
+
+---
+
+This documentation is written and built with Sphinx using
+[reStructured Text](http://www.sphinx-doc.org/en/stable/rest.html) as the
+markup language.
+
+To build this guide, you will need
+[tox](https://tox.readthedocs.io/en/latest/).
 
 Install tox by running::
 
@@ -23,7 +40,14 @@ enable it with::
   xcode-select --install
 
 
-If you find bugs in documentation, please file an `issue`.
+If you find bugs in documentation, please file
+an [issue](https://github.com/NetApp-openstack-dev/openstack-docs/issues).
 
-.. _tox: https://tox.readthedocs.io/en/latest/
-.. _issue: https://github.com/NetApp-openstack-dev/openstack-docs/issues
+---
+
+Attributions
+------------
+
+The theme used by the builds of this documentation was [developed by the
+OpenStack community](https://docs.openstack.org/openstackdocstheme/latest/).
+
