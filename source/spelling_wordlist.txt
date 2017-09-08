@@ -156,6 +156,8 @@ online
 ontap
 ONTAP
 optimizations
+openstack
+OpenStack
 OSTK
 oversubscription
 overutilized
