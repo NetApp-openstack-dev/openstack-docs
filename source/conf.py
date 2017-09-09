@@ -43,6 +43,7 @@ import netappdocstheme
 extensions = [
     'sphinxmark',
     'sphinxcontrib.spelling',
+    'rst2pdf.pdfbuilder',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -290,15 +291,18 @@ html_copy_source = False
 
 latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
-    # 'papersize': 'letterpaper',
+    'papersize': 'a4paper',
 
     # The font size ('10pt', '11pt' or '12pt').
-    # 'pointsize': '10pt',
+    'pointsize': '12pt',
 
     # Additional stuff for the LaTeX preamble.
-    # 'preamble': '',
+    'preamble': '''
+    \setcounter{tocdepth}{3}
+    \usepackage{tocbibind}
+    \pagenumbering{arabic}
+    '''
 }
-
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
@@ -373,12 +377,76 @@ locale_dirs = ['locale/']
 
 # -- Options for PDF output --------------------------------------------------
 
-pdf_documents = [
-    ('index', u'DeployOpsGuide', u'OpenStack Deployment and Operations Guide',
-     u'NetApp Inc.')
-]
-# -- Options for sphinxcontrib.spelling -----------------------------------------------
+filename = 'NetApp_OpenStack_Docs_%s' % watermark.lower().replace(" ", "_")
+
+pdf_stylesheets = ['sphinx', 'kerning', 'a4']
+pdf_language = "en_US"
+# Mode for literal blocks wider than the frame. overflow, shrink or truncate
+pdf_fit_mode = "shrink"
+
+# Section level that forces a break page.
+# For example: 1 means top-level sections start in a new page 0 means disabled
+pdf_break_level = 0
+
+# When a section starts in a new page, force it to be 'even', 'odd', or 'any'
+pdf_breakside = 'any'
+
+# Insert footnotes where they are defined instead of at the end.
+pdf_inline_footnotes = False
+
+# verbosity level. 0 1 or 2
+pdf_verbosity = 0
+
+# If false, no index is generated.
+pdf_use_index = True
+
+# If false, no modindex is generated.
+pdf_use_modindex = True
+
+# If false, no coverpage is generated.
+pdf_use_coverpage = True
+
+# Name of the cover page template to use
+# pdf_cover_template = 'sphinxcover.tmpl'
+
+# Documents to append as an appendix to all manuals.
+# pdf_appendices = []
+
+# Enable experimental feature to split table cells. Use it
+# if you get "DelayedTable too big" errors
+# pdf_splittables = False
+
+# Set the default DPI for images
+# pdf_default_dpi = 72
+
+# Enable rst2pdf extension modules (default is only vectorpdf)
+# you need vectorpdf if you want to use sphinx's graphviz support
+# pdf_extensions = ['vectorpdf']
+
+# Page template name for "regular" pages
+# pdf_page_template = 'cutePage'
+
+# Show Table Of Contents at the beginning?
+pdf_use_toc = 'true'
+
+# How many levels deep should the table of contents be?
+pdf_toc_depth = 3
+
+# Add section number to section references
+pdf_use_numbered_links = False
+
+# Background images fitting mode
+pdf_fit_background_mode = 'scale'
+
+# rinoh_paper_size = A4
+pdf_documents = [('index',            # top-level file (index.rst)
+                  filename,           # output (.pdf)
+                  'OpenStack Deployment and Operations Guide', # doc title
+                  'NetApp Inc.')]   # document author
+
+
+# -- Options for sphinxcontrib.spelling --------------------------------------
 # http://sphinxcontrib-spelling.readthedocs.io/en/latest/customize.htm
-spelling_lang='en_US'
-spelling_word_list_filename='spelling_wordlist.txt'
-spelling_ignore_pypi_package_names=True
+spelling_lang = 'en_US'
+spelling_word_list_filename = 'spelling_wordlist.txt'
+spelling_ignore_pypi_package_names = True
