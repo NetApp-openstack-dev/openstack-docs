@@ -33,19 +33,21 @@ object storage nodes. These include:
    nodes, smaller and possibly lower power 1U nodes can be used in the
    cluster.
 
+.. _swift_compare:
+
 .. figure:: ../images/swift_compare.png
    :alt: Traditional and E-Series Swift Stack Comparison
 
    Traditional and E-Series Swift Stack Comparison
 
-On the left of `figure\_title <#swift.swift_compare>`__ is a traditional
+On the left of :ref:`swift_compare` is a traditional
 Swift cluster, which has a total storage capacity of 240TB. This
 requires 10 Swift object storage nodes with 12 2TB drives per system,
 which results in approximately 80 TB of effective storage capacity
 assuming that Swift uses the default replica count of 3.
 
 Compare this traditional system to the E-Series based cluster, shown on
-the right in `figure\_title <#swift.swift_compare>`__. The E-Series
+the right in :ref:`swift_compare`. The E-Series
 cluster has identical controller and compute nodes as the traditional
 system. In the E-Series cluster the effective 80TB storage capacity of
 the traditional system can be obtained by using a single 4U storage
