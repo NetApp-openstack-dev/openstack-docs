@@ -63,8 +63,7 @@ switch:
     neutron_switch_info = switch_ip:10.63.152.254
 
 
-`table\_title <#manila.configuration.network.simple_neutron_bind.options>`__
-lists the configuration options available for the Simple Neutron Port
+The following table lists the configuration options available for the Simple Neutron Port
 Binding network plugin:
 
 +--------------------------------+------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+

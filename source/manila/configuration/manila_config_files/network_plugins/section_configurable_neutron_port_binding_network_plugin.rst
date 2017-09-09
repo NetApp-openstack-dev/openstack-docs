@@ -52,8 +52,7 @@ The Neutron binding profile in this example is for a Cisco Nexus 9000 switch:
     neutron_switch_info = switch_ip:10.63.152.254
 
 
-`table\_title <#manila.configuration.network.neutron_bind.options>`__
-lists the configuration options available for the configurable Neutron
+The following table lists the configuration options available for the configurable Neutron
 Port Binding network plugin:
 
 +--------------------------------+------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
