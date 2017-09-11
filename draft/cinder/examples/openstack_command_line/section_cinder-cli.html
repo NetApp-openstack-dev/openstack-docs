@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-11 15:40</div>
+            <div class="docs-updated">updated: 2017-09-11 21:36</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -138,6 +138,7 @@ ga('send', 'pageview');
 <li><a class="reference internal" href="#cinder-unmanage-usage">Cinder Unmanage Usage</a></li>
 <li><a class="reference internal" href="#applying-cinder-qos-via-the-command-line">Applying Cinder QoS via the Command Line</a></li>
 <li><a class="reference internal" href="#manipulating-cinder-consistency-groups-via-the-command-line">Manipulating Cinder Consistency Groups via the Command Line</a></li>
+<li><a class="reference internal" href="#manipulating-cinder-groups-via-the-command-line">Manipulating Cinder Groups via the Command Line</a></li>
 </ul>
 </li>
 </ul>
@@ -209,43 +210,49 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+-------+
 | 46cecec0-a040-476c-9475-036ca5577e6a | iscsi |
 +--------------------------------------+-------+
-
-$ cinder type-create nfs
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create nfs
 +--------------------------------------+------+
 |                  ID                  | Name |
 +--------------------------------------+------+
 | 7564ec5c-a81b-4c62-8376-fdcab62037a2 | nfs  |
 +--------------------------------------+------+
-
-$ cinder type-create gold
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create gold
 +--------------------------------------+------+
 |                  ID                  | Name |
 +--------------------------------------+------+
 | 0ac5c001-d5fa-4fce-a9e3-e2cce7460027 | gold |
 +--------------------------------------+------+
-
-$ cinder type-create silver
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create silver
 +--------------------------------------+--------+
 |                  ID                  |  Name  |
 +--------------------------------------+--------+
 | f820211a-ee1c-47ff-8f70-2be45112826d | silver |
 +--------------------------------------+--------+
-
-$ cinder type-create bronze
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create bronze
 +--------------------------------------+--------+
 |                  ID                  |  Name  |
 +--------------------------------------+--------+
 | ae110bfc-0f5a-4e93-abe1-1a31856c0ec7 | bronze |
 +--------------------------------------+--------+
-
-$ cinder type-create analytics
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create analytics
 +--------------------------------------+-----------+
 |                  ID                  |    Name   |
 +--------------------------------------+-----------+
 | 66459c78-5cb5-4a15-a476-f1138a4022bc | analytics |
 +--------------------------------------+-----------+
-
-$ cinder type-create encrypted
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create encrypted
 +--------------------------------------+-----------+
 |                  ID                  |    Name   |
 +--------------------------------------+-----------+
@@ -254,15 +261,29 @@ $ cinder type-create encrypted
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key iscsi set storage_protocol=iSCSI
-$ cinder type-key nfs set storage_protocol=nfs
-$ cinder type-key gold set netapp_mirrored=true
+</pre></div>
+</div>
+<p>::  $ cinder type-key nfs set storage_protocol=nfs</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key gold set netapp_mirrored=true
 $ cinder type-key gold set netapp_disk_type=SSD
 $ cinder type-key gold set netapp_hybrid_aggregate=&quot;&lt;is&gt; False&quot;
-$ cinder type-key silver set netapp_dedup=true
-$ cinder type-key bronze set netapp_compression=true
-$ cinder type-key analytics set volume_backend_name=eseries-iscsi
-$ cinder type-key encrypted set netapp_flexvol_encryption=true
-$ cinder extra-specs-list
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key silver set netapp_dedup=true
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>::</dt>
+<dd>$ cinder type-key bronze set netapp_compression=true</dd>
+</dl>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key analytics set volume_backend_name=eseries-iscsi
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>::</dt>
+<dd>$ cinder type-key encrypted set netapp_flexvol_encryption=true</dd>
+</dl>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder extra-specs-list
 +--------------------------------------+-----------+--------------------------------------------+
 |                  ID                  |    Name   |                extra_specs                 |
 +--------------------------------------+-----------+--------------------------------------------+
@@ -307,8 +328,9 @@ previously defined volume types.</p>
 |            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
 |          volume_type           |                 gold                 |
 +--------------------------------+--------------------------------------+
-
-$ cinder create --display-name mySilver --volume-type silver 1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name mySilver --volume-type silver 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -332,8 +354,9 @@ $ cinder create --display-name mySilver --volume-type silver 1
 |            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
 |          volume_type           |                silver                |
 +--------------------------------+--------------------------------------+
-
-$ cinder create --display-name myBronze --volume-type bronze 1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myBronze --volume-type bronze 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -357,8 +380,9 @@ $ cinder create --display-name myBronze --volume-type bronze 1
 |            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
 |          volume_type           |                bronze                |
 +--------------------------------+--------------------------------------+
-
-$ cinder create --display-name myISCSI --volume-type iscsi 1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myISCSI --volume-type iscsi 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -382,8 +406,9 @@ $ cinder create --display-name myISCSI --volume-type iscsi 1
 |            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
 |          volume_type           |                iscsi                 |
 +--------------------------------+--------------------------------------+
-
-$ cinder create --display-name myNFS --volume-type nfs 1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myNFS --volume-type nfs 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -407,8 +432,9 @@ $ cinder create --display-name myNFS --volume-type nfs 1
 |            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
 |          volume_type           |                 nfs                  |
 +--------------------------------+--------------------------------------+
-
-$ cinder create --display-name myAnalytics --volume-type analytics 1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myAnalytics --volume-type analytics 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -432,8 +458,9 @@ $ cinder create --display-name myAnalytics --volume-type analytics 1
 |            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
 |          volume_type           |              analytics               |
 +--------------------------------+--------------------------------------+
-
-$ cinder create --display-name myGenericVol 1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myGenericVol 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -550,8 +577,9 @@ name or UUID.</p>
 |            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
 |          volume_type           |                 None                 |
 +--------------------------------+--------------------------------------+
-
-$ cinder manage --id-type source-id openstack9@iscsi#pool 013a7fe0-039b-459e-8cc2-7b59c693139d
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-id openstack9@iscsi#pool 013a7fe0-039b-459e-8cc2-7b59c693139d
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -621,8 +649,9 @@ world-wide identifier.</p>
 |            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
 |          volume_type           |                 None                 |
 +--------------------------------+--------------------------------------+
-
-$ cinder manage --id-type source-id openstack9@eseries#pool 60:08:0e:50:00:23:c7:34:00:00:47:33:54:03:7f:b9
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-id openstack9@eseries#pool 60:08:0e:50:00:23:c7:34:00:00:47:33:54:03:7f:b9
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -713,10 +742,12 @@ $ cinder manage --id-type source-id openstack9@eseries#pool 60:08:0e:50:00:23:c7
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
-
-$ cinder unmanage 206a6731-f23b-419d-8131-8bccbbd83647
-
-$ cinder list
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder unmanage 206a6731-f23b-419d-8131-8bccbbd83647
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 |                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
@@ -735,8 +766,9 @@ spec, and lastly associate the QoS spec with the volume type.</p>
 +--------------------------------------+-------------------+
 | 7b060008-632c-412d-8fdc-a12351f7dfe4 | vol_type_qos_demo |
 +--------------------------------------+-------------------+
-
-$ cinder qos-create qos_demo maxIOPS=100
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder qos-create qos_demo maxIOPS=100
 +----------+--------------------------------------+
 | Property |                Value                 |
 +----------+--------------------------------------+
@@ -745,17 +777,20 @@ $ cinder qos-create qos_demo maxIOPS=100
 |   name   |               qos_demo               |
 |  specs   |         {u&#39;maxIOPS&#39;: u&#39;100&#39;}         |
 +----------+--------------------------------------+
-
-$ cinder qos-associate db081cde-1a9a-41bd-a8a3-a0259db7409b 7b060008-632c-412d-8fdc-a12351f7dfe4
-
-$ cinder qos-list
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder qos-associate db081cde-1a9a-41bd-a8a3-a0259db7409b 7b060008-632c-412d-8fdc-a12351f7dfe4
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder qos-list
 +--------------------------------------+----------+----------+----------------------+
 |                  ID                  |   Name   | Consumer |        specs         |
 +--------------------------------------+----------+----------+----------------------+
 | db081cde-1a9a-41bd-a8a3-a0259db7409b | qos_demo | back-end | {u&#39;maxIOPS&#39;: u&#39;100&#39;} |
 +--------------------------------------+----------+----------+----------------------+
-
-$ cinder create 1 --volume-type vol_type_qos_demo
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create 1 --volume-type vol_type_qos_demo
 +---------------------------------------+--------------------------------------+
 |                Property               |                Value                 |
 +---------------------------------------+--------------------------------------+
@@ -806,6 +841,11 @@ per-Cinder-volume basis.</p>
 </div>
 <div class="section" id="manipulating-cinder-consistency-groups-via-the-command-line">
 <h2>Manipulating Cinder Consistency Groups via the Command Line<a class="headerlink" href="#manipulating-cinder-consistency-groups-via-the-command-line" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There is a plan, in the Cinder community, to migrate existing consistency
+group operations to use Cinder group operations in an upcoming release.</p>
+</div>
 <p>In this section, we will configure a Cinder volume type, associate the
 volume type with a backend capable of supporting consistency groups,
 create a Cinder consistency group, create a Cinder volume within the
@@ -818,10 +858,12 @@ consistency group.</p>
 +--------------------------------------+---------------------------+-----------+
 | 313da739-b629-47f6-ba5d-0d5e4ead0635 | consistency-group-support |    True   |
 +--------------------------------------+---------------------------+-----------+
-
-$ cinder type-key consistency-group-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
-
-$ cinder consisgroup-create consistency-group-support --name cg1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key consistency-group-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-create consistency-group-support --name cg1
 +-------------------+-------------------------------------------+
 |      Property     |                   Value                   |
 +-------------------+-------------------------------------------+
@@ -833,8 +875,9 @@ $ cinder consisgroup-create consistency-group-support --name cg1
 |       status      |                 available                 |
 |    volume_types   | [u&#39;313da739-b629-47f6-ba5d-0d5e4ead0635&#39;] |
 +-------------------+-------------------------------------------+
-
-$ cinder create --name vol-in-cg1 --consisgroup-id 2cc3d172-af05-421b-babd-01d4cd91078d --volume-type consistency-group-support 1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --name vol-in-cg1 --consisgroup-id 2cc3d172-af05-421b-babd-01d4cd91078d --volume-type consistency-group-support 1
 +---------------------------------------+-------------------------------------------+
 |                Property               |                   Value                   |
 +---------------------------------------+-------------------------------------------+
@@ -865,8 +908,9 @@ $ cinder create --name vol-in-cg1 --consisgroup-id 2cc3d172-af05-421b-babd-01d4c
 |                user_id                |      12364c2f57ee4d459ae535af100fdf63     |
 |              volume_type              |         consistency-group-support         |
 +---------------------------------------+-------------------------------------------+
-
-$ cinder cgsnapshot-create 2cc3d172-af05-421b-babd-01d4cd91078d --name snap-of-cg1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder cgsnapshot-create 2cc3d172-af05-421b-babd-01d4cd91078d --name snap-of-cg1
 +---------------------+--------------------------------------+
 |       Property      |                Value                 |
 +---------------------+--------------------------------------+
@@ -877,8 +921,9 @@ $ cinder cgsnapshot-create 2cc3d172-af05-421b-babd-01d4cd91078d --name snap-of-c
 |         name        |             snap-of-cg1              |
 |        status       |               creating               |
 +---------------------+--------------------------------------+
-
-$ cinder consisgroup-create-from-src --name cg2 --cgsnapshot cd3770e1-fa59-48a6-ba48-2f3581f2b03b
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-create-from-src --name cg2 --cgsnapshot cd3770e1-fa59-48a6-ba48-2f3581f2b03b
 +----------+--------------------------------------+
 | Property |                Value                 |
 +----------+--------------------------------------+
@@ -892,20 +937,152 @@ consistency group have first been deleted, and that any volumes in the
 consistency group have been removed via an update command on the
 consistency group.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-update cg2 --remove-volumes ddb31a53-6550-410c-ba48-a0a912c8ae95
-
-$ cinder delete ddb31a53-6550-410c-ba48-a0a912c8ae95
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder delete ddb31a53-6550-410c-ba48-a0a912c8ae95
 Request to delete volume ddb31a53-6550-410c-ba48-a0a912c8ae95 has been accepted.
-
-$ cinder consisgroup-delete cg2
-
-$ cinder cgsnapshot-delete snap-of-cg1
-
-$ cinder consisgroup-update cg1 --remove-volumes 959e5f9f-67b9-4011-bd60-5dad2ee43200
-
-$ cinder delete 959e5f9f-67b9-4011-bd60-5dad2ee43200
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-delete cg2
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder cgsnapshot-delete snap-of-cg1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-update cg1 --remove-volumes 959e5f9f-67b9-4011-bd60-5dad2ee43200
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder delete 959e5f9f-67b9-4011-bd60-5dad2ee43200
 Request to delete volume 959e5f9f-67b9-4011-bd60-5dad2ee43200 has been accepted.
-
-$ cinder consisgroup-delete cg1
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-delete cg1
+</pre></div>
+</div>
+</div>
+<div class="section" id="manipulating-cinder-groups-via-the-command-line">
+<h2>Manipulating Cinder Groups via the Command Line<a class="headerlink" href="#manipulating-cinder-groups-via-the-command-line" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will configure a Cinder volume type, associate the
+volume type with a backend capable of supporting groups, create a Cinder
+group type, create a Cinder group, create a Cinder volume within the group,
+take a snapshot of the group, and then finally create a group from the
+snapshot of the first group.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Currently only the Block Storage V3 API supports group operations. The
+minimum version for group operations supported by the ONTAP drivers is
+3.14. The API version can be specified with the following CLI flag
+<code class="docutils literal"><span class="pre">--os-volume-api-version</span> <span class="pre">3.14</span></code>. Optionally an environment variable can
+be set: <code class="docutils literal"><span class="pre">export</span> <span class="pre">OS_VOLUME_API_VERSION=3.14</span></code></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The Cinder community plans to migrate existing consistency group operations
+to group operations in an upcoming release. Please review Cinder
+release notes for upgrade instructions prior to using group operations.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The ONTAP volume drivers support the consistent_group_snapshot_enabled
+group type. By default Cinder group snapshots take individual snapshots
+of each Cinder volume in the group. To enable consistency group snapshots set
+<code class="docutils literal"><span class="pre">consistent_group_snapshot_enabled=&quot;&lt;is&gt;</span> <span class="pre">True&quot;</span></code> in the group type used.
+Be aware that only one consistency group snapshot per storage pool (i.e.
+flexvol) can be performed at a time. Overlapping consistency group snapshot
+operations can fail.</p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create volume-support
++--------------------------------------+----------------+-------------+-----------+
+| ID                                   | Name           | Description | Is_Public |
++--------------------------------------+----------------+-------------+-----------+
+| 52c62136-4c87-4ec1-9e29-1132e975eab9 | volume-support | -           | True      |
++--------------------------------------+----------------+-------------+-----------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key volume-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-type-create group-support
++--------------------------------------+---------------+-------------+
+| ID                                   | Name          | Description |
++--------------------------------------+---------------+-------------+
+| bc910903-35d8-49cd-842e-77c77c1d52f5 | group-support | -           |
++--------------------------------------+---------------+-------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-type-key group-support set consistent_group_snapshot_enabled=&quot;&lt;is&gt; True&quot;
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-create --name group1 group-support volume-support
++-------------------+-------------------------------------------+
+| Property          | Value                                     |
++-------------------+-------------------------------------------+
+| availability_zone | nova                                      |
+| created_at        | 2017-09-08T22:24:57.000000                |
+| description       | None                                      |
+| group_snapshot_id | None                                      |
+| group_type        | 5bf45d12-0ea3-4061-b6b9-287965edce41      |
+| id                | 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93      |
+| name              | group1                                    |
+| source_group_id   | None                                      |
+| status            | creating                                  |
+| volume_types      | [u&#39;0ca68595-7218-4d44-a992-9f6db4b75143&#39;] |
++-------------------+-------------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 create --name vol-in-group1 --group-id 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 --volume-type volume-support 1
++--------------------------------+--------------------------------------+
+| Property                       | Value                                |
++--------------------------------+--------------------------------------+
+| attachments                    | []                                   |
+| availability_zone              | nova                                 |
+| bootable                       | false                                |
+| consistencygroup_id            | None                                 |
+| created_at                     | 2017-09-08T22:30:11.000000           |
+| description                    | None                                 |
+| encrypted                      | False                                |
+| group_id                       | 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 |
+| id                             | e982211e-1c34-4996-bee4-af30c5661d8a |
+| metadata                       | {}                                   |
+| migration_status               | None                                 |
+| multiattach                    | False                                |
+| name                           | vol-in-group1                        |
+| os-vol-host-attr:host          | None                                 |
+| os-vol-mig-status-attr:migstat | None                                 |
+| os-vol-mig-status-attr:name_id | None                                 |
+| os-vol-tenant-attr:tenant_id   | a9a7c9d88ad34fa889fd3b63c3d03292     |
+| replication_status             | None                                 |
+| size                           | 1                                    |
+| snapshot_id                    | None                                 |
+| source_volid                   | None                                 |
+| status                         | creating                             |
+| updated_at                     | None                                 |
+| user_id                        | f7d1f04baac34064a238a45dc5a6aa1b     |
+| volume_type                    | volume-support                       |
++--------------------------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-snapshot-create group1 --name group1-snapshot1
++---------------+--------------------------------------+
+| Property      | Value                                |
++---------------+--------------------------------------+
+| created_at    | 2017-09-08T22:32:06.000000           |
+| description   | None                                 |
+| group_id      | 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 |
+| group_type_id | 5bf45d12-0ea3-4061-b6b9-287965edce41 |
+| id            | 3ac3a4cc-658a-4b1a-96c5-6272756ea60e |
+| name          | group1-snapshot1                     |
+| status        | creating                             |
++---------------+--------------------------------------+
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-create-from-src --group-snapshot group1-snapshot1 --name group2
++----------+--------------------------------------+
+| Property | Value                                |
++----------+--------------------------------------+
+| id       | 66c4d2a0-13b7-49a2-a144-89fcc4cf3362 |
+| name     | group2                               |
++----------+--------------------------------------+
 </pre></div>
 </div>
 </div>
@@ -926,7 +1103,7 @@ $ cinder consisgroup-delete cg1
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-11 15:40</div>
+            <div class="docs-updated">updated: 2017-09-11 21:36</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -1056,7 +1233,7 @@ $ cinder consisgroup-delete cg1
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 9e1ce9541a5dd15568dfa48a55a348186cb8c607";
+    var gitSha = "SHA: ae2b9d0b0a5b4a03164d87e0c30537cdd10e1cb7";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Cinder Command Line Interface (CLI) in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -1067,7 +1244,7 @@ $ cinder consisgroup-delete cg1
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-11 15:40";
+    var buildstring = "Release: 2017.2 on 2017-09-11 21:36";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
