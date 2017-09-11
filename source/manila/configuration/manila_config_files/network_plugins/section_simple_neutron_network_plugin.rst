@@ -37,8 +37,7 @@ the driver-specific stanza within the Manila configuration file
     neutron_subnet_id= 447732be-4cf2-42b0-83dc-4b6f4ed5368c
 
 
-`table\_title <#manila.configuration.network.neutron.options>`__ lists
-the configuration options available for the Neutron network plugin:
+The following table lists the configuration options available for the Neutron network plugin:
 
 +-------------------------+------------+-----------------+---------------------------------------------------------------------------+
 | Option                  | Type       | Default Value   | Description                                                               |

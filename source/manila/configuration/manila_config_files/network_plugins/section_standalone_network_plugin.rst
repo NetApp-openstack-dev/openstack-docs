@@ -34,8 +34,9 @@ added to the driver-specific stanza within the Manila configuration file
    standalone_network_plugin_gateway = 10.0.0.1
    standalone_network_plugin_mtu = 1500
 
-`table\_title <#manila.configuration.network.standalone.options>`__
-lists the configuration options available for the standalone network
+
+
+The following table lists the configuration options available for the standalone network
 plugin:
 
 +-------------------------------------------------------------------------------+------------+-----------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
