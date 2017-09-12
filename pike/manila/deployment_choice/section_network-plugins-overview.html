@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Deployment Choice: Manila Network Plugins</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/manila/deployment_choice/section_network-plugins-overview.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/glance.html">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/nova.html">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/cinder.html">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/ocata/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/ocata/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Deployment Choice: Manila Network Plugins</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_utilizing_share_servers.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choice: Utilizing Share Servers"></i></a>
+    
+    
+    <a href="../ch_manila-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2017-09-12 14:36</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Deployment Choice: Manila Network Plugins</a><ul>
+<li><a class="reference internal" href="#neutron-overview">Neutron Overview</a></li>
+<li><a class="reference internal" href="#network-types">Network Types</a></li>
+<li><a class="reference internal" href="#network-segmentation">Network Segmentation</a></li>
+<li><a class="reference internal" href="#network-plugins">Network Plugins</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="deployment-choice-manila-network-plugins">
+<span id="manila-network-plugin-overview"></span><h1>Deployment Choice: Manila Network Plugins<a class="headerlink" href="#deployment-choice-manila-network-plugins" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>The NetApp driver only supports provisioning share servers (ONTAP
+SVMs) on non-segmented (FLAT) networks and VLAN networks. While
+tenants may be deployed on overlay networks (GRE, VXLAN, GENEVE),
+Manila shares are only accessible over FLAT networks or VLAN
+networks.</p>
+<p>Your deployment options are:</p>
+<ul class="last simple">
+<li><strong>Overlay tenant network + Provider Network</strong>: Deploy nova instances
+within a VXLAN tenant network dedicated to the tenant, but access file
+shares over a FLAT or VLAN shared provider network.</li>
+<li><strong>VLAN tenant network</strong>: In this case, tenant networks are VLAN
+networks. In this case, the networking service assigns a new VLAN segment when
+a tenant creates a private network. This dedicated private
+network can be used to deploy the tenant’s Nova instances as well
+as access their file shares.</li>
+</ul>
+</div>
+<div class="section" id="neutron-overview">
+<h2>Neutron Overview<a class="headerlink" href="#neutron-overview" title="Permalink to this headline">¶</a></h2>
+<p>OpenStack’s networking-as-a-service project is codenamed Neutron.
+Neutron offers self service networking APIs to tenants. Tenant
+networks are typically segmented virtual networks that are isolated
+between each other and provide east-west network routing within the
+OpenStack installation. For packets to flow into external networks,
+including the internet, routers are created and attached to the
+indicated networks as necessary. For in-flow, Network Address
+Translation (NAT) is employed and IP addresses in the tenant router
+namespace are mapped to IP addresses in the external network
+namespace.</p>
+</div>
+<div class="section" id="network-types">
+<h2>Network Types<a class="headerlink" href="#network-types" title="Permalink to this headline">¶</a></h2>
+<p>Aside from tenant networks, administrators can create “provider”
+networks on Neutron, and share them with their OpenStack tenants.
+Such networks can either be segmented or non-segmented (FLAT). On a
+FLAT network, everyone shares the same network segment and hence
+there isn’t any isolation of network traffic. There’s usually a very
+good reason to use FLAT networks in OpenStack, such as sharing a
+dedicated high bandwidth storage network with all tenants. In such
+scenarios, network traffic is usually encrypted end-to-end providing
+logical isolation of cross tenant traffic. Overlapping IP and subnet
+ranges is not possible in this networking model.</p>
+</div>
+<div class="section" id="network-segmentation">
+<h2>Network Segmentation<a class="headerlink" href="#network-segmentation" title="Permalink to this headline">¶</a></h2>
+<p>Network segmentation is often accomplished using (VLANs).
+Administrators may allow tenants to create VLAN networks. In this
+case, each tenant network is assigned its own VLAN ID, and cross
+tenant traffic is isolated at layer-2. Subnets and IP ranges are
+allowed to safely overlap between tenant networks when the tenant
+networks are isolated in separate VLANs. OVS (Open vSwitch) has an
+ML2 plugin in Neutron that allocates internal VLANs on each compute
+host. OVS creates the tunnel bridges necessary to route packets
+between these VLAN networks. When combined with a hardware plugin
+such as the Cisco Nexus plugin, VLANs are allocated on the external
+hardware as well. Typically storage devices like NetApp ONTAP
+Fabric-Attached Storage (FAS) are configured on these hardware
+devices in a trunk configuration. VLANs are then created and managed
+with the help of the hardware switch vendor’s ML2 plugin mechanism
+driver in Neutron.</p>
+<p>Keep in mind that VLANs are limited to the range of 1 to 4094. When
+using VLANs, no more than 4092 isolated networks can exist. Keep
+this scaling limitation in mind when designing your OpenStack
+environment. Other encapsulation methodologies aim to solve this
+problem by encapsulating network packets with a larger virtual
+networking identifier. GRE (Generic Routing Encapsulation), GENEVE
+(Generic Network Virtualization Encapsulation) and VXLAN (Virtual
+Extensible LAN) are the popular standards used with OpenStack
+deployments.</p>
+<p>ONTAP does not natively support these layer-3 SDN network standards.
+Deployers have the choice of using administrator configured
+VLAN-only provider networks or VLAN-only tenant networks if using
+Neutron.</p>
+</div>
+<div class="section" id="network-plugins">
+<h2>Network Plugins<a class="headerlink" href="#network-plugins" title="Permalink to this headline">¶</a></h2>
+<p>As described in <a class="reference internal" href="../process_structure/section_manila-processes.html#figure-6-2"><span class="std std-ref">Figure 6.2. Manila Workflow - Share Creation with Share Servers</span></a>, there are a set of network plugins
+that provide for a variety of integration approaches with Neutron and
+Standalone networks. These plugins should only be used with the NetApp
+clustered Data ONTAP driver when using share server management.</p>
+<p>These are the valid network plugins:</p>
+<ul class="simple">
+<li><a class="reference internal" href="../configuration/manila_config_files/network_plugins/section_standalone_network_plugin.html#standalone-network-plugin"><span class="std std-ref">Standalone Network Plugin:</span></a>
+Use this plugin in stand-alone deployments of OpenStack Manila,
+and in deployments where you don’t desire to manage the storage
+network with Neutron.</li>
+<li><a class="reference internal" href="../configuration/manila_config_files/network_plugins/section_simple_neutron_network_plugin.html#simple-neutron-network-plugin"><span class="std std-ref">Simple Neutron Network Plugin:</span></a>
+This is like the Standalone Network Plugin, except that the network
+is managed by Neutron.</li>
+<li><a class="reference internal" href="../configuration/manila_config_files/network_plugins/section_configurable_neutron_network_plugin.html#configurable-neutron-network-plugin"><span class="std std-ref">Configurable Neutron Network Plugin:</span></a> This is like the Simple
+Network Neutron Plugin except that except that each share network
+object will use a tenant or provider network of the tenant’s
+choice.</li>
+<li><a class="reference internal" href="../configuration/manila_config_files/network_plugins/section_simple_neutron_port_binding_network_plugin.html#simple-neutron-port-binding-network-plugin"><span class="std std-ref">Simple Neutron Port Binding Network Plugin:</span></a>
+This plugin is very similar to the simple Neutron network
+plugin, the only difference is that this plugin can enforce
+port-binding.</li>
+<li><a class="reference internal" href="../configuration/manila_config_files/network_plugins/section_configurable_neutron_port_binding_network_plugin.html#configurable-neutron-port-binding-network-plugin"><span class="std std-ref">Configurable Neutron Port Binding Network Plugin:</span></a>
+This plugin is very similar to the configurable neutron
+network plugin, the only difference is that this plugin
+can enforce port-binding.</li>
+</ul>
+<p>The network plugin is chosen by setting the value of the network_api_class
+configuration option within the driver-specific stanza of the manila.conf
+configuration file.</p>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_utilizing_share_servers.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choice: Utilizing Share Servers"></i></a>
+          
+          
+            <a href="../ch_manila-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2017-09-12 14:36</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../ch_manila.html">Shared Filesystems (Manila)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview/section_manila-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_manila-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../process_structure/section_manila-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_overview/section_manila-api-overview.html">API Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_manila-theory-and-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_manila-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_manila-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources ">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documents</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Commnunity Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">github/netapp</a></li>
+          <li><a href="http://netapp.io/slack">slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">twitter/@openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">youtube/users/NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "manila/deployment_choice/section_network-plugins-overview" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: 92a9e87d4e2461fbf91241e85db4636a773e5471";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Deployment Choice: Manila Network Plugins in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "PIKE"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2017.2 on 2017-09-12 14:36";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+  </body>
+</html>
