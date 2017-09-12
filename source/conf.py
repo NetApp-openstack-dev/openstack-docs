@@ -114,7 +114,7 @@ sphinxmark_text = watermark
 sphinxmark_text_rotation = 0
 sphinxmark_text_spacing = 300
 sphinxmark_text_color = (255, 0, 0)
-sphinxmark_text_size = 120
+sphinxmark_text_size = 100
 
 # -- Building the html context -----------------------------------------------
 
