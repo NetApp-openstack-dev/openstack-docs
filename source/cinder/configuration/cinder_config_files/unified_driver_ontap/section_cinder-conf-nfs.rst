@@ -28,6 +28,7 @@ following stanza should be added to the Cinder configuration file
     nfs_shares_config=path_to_nfs_exports_file
     max_oversubscription_ratio=1.0
     reserved_percentage=5
+    nfs_mount_options=lookupcache=pos
 
 -  Be sure that the value of the ``enabled_backends`` option in the
    ``[DEFAULT]`` stanza includes the name of the stanza you chose for
@@ -117,3 +118,5 @@ Table 4.14. Configuration options for clustered Data ONTAP with NFS
    logs. See the section called ":ref:`account-permissions`"
    for more details on the required access level permissions for an SVM
    admin account.
+
+.. include:: ../../../common/nfs-cache-warning.rst
