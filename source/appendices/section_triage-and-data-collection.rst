@@ -3,11 +3,28 @@
 Triage and Data Collection
 ==========================
 
-Please use the NetApp OpenStack Communities site to track or report
-issues related to Cinder. In case of issues, the data can be collected
-from logs printed by each of the below mentioned process. Logs need to
-be collected for Cinder related processes. For Glance and Nova verifying
-the service up status is sufficient.
+When you run into an issue with the NetApp OpenStack integrations, you may
+
+- seek help in the
+  `NetApp OpenStack Communities <https://community.netapp.com>`_ site, or
+- open a support request through the
+  `NetApp Support portal <https://support.netapp.com>`_, or
+- contact your NetApp account representative.
+
+OpenStack log and configuration files provide information that aid in triaging
+bugs. As a rule of thumb log files need to be collected for the processes
+that were involved. You may enable logging at the ``debug`` level and
+attempt to reproduce the issue to trace through the logs. The option to
+toggle debug logging is called ``debug`` in the respective configuration
+file. This option defaults to ``False`` and can be set to ``True`` when
+troubleshooting.
+
+Be aware that debug logging will result in bloated log files and is
+typically turned off except when identifying root cause for failures or
+unexpected behavior. Also be aware of log rotation settings and attempt to
+collate archived log files as necessary.
+
+If using Cinder, the following processes log into individual files:
 
 -  ``cinder-api``
 
@@ -19,14 +36,14 @@ the service up status is sufficient.
 
 .. note::
 
-   You can add the following line to your NetApp backend stanza(s) in
-   cinder.conf to capture much more detail about the driver’s
-   interaction with Data ONTAP in the cinder-volume log:
+   When using ONTAP as your block storage back end, you can add the following
+   line to your NetApp backend stanza(s) in cinder.conf to capture more
+   debug logging around the driver’s interaction with ONTAP in the
+   cinder-volume log::
 
-   -  ``trace_flags``\ = method,api
+    trace_flags = method,api
 
-   Please note that this tends to bloat up the log files and hence you
-   should only do this for problem resolution.
+If using Manila, the following processes log into individual files:
 
 -  ``manila-api``
 
@@ -34,15 +51,32 @@ the service up status is sufficient.
 
 -  ``manila-share``
 
+-  ``manila-data``
+
+.. note::
+
+   When using ONTAP as your shared filesystems storage back end, you can add
+   the following line to your NetApp backend stanza(s) in manila.conf to
+   capture more debug logging around the driver’s interaction with ONTAP in
+   the manila-share log::
+
+    ``netapp_trace_flags`` = method,api
+
+If using Nova, the following processes log into individual files:
+
 -  ``nova-api``
 
 -  ``nova-scheduler``
 
 -  ``nova-cpu``
 
+If using Glance, the following processes log into individual files:
+
 -  ``glance-api``
 
 -  ``glance-registry``
+
+If using Swift, the following processes log into individual files:
 
 -  ``swift-object-server``
 
@@ -65,3 +99,9 @@ the service up status is sufficient.
 -  ``swift-account-replicator``
 
 -  ``swift-account-auditor``
+
+Besides log files, a support engineer would ask you to provide your
+Configuration files, with any sensitive information removed as necessary.
+The default location of the configuration files are in ``/etc`` directory
+on the controller nodes running those processes. For example, the default
+configuration files for Cinder are in ``/etc/cinder/`` directory.
