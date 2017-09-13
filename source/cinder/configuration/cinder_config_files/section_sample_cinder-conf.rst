@@ -58,6 +58,7 @@ the iSCSI storage protocol, and one for an E-Series deployment
     netapp_password=netapp123
     netapp_vserver=demo-nfs-svm
     nfs_shares_config=/etc/cinder/nfs.shares
+    nfs_mount_options=lookupcache=pos
 
     [eseries-iscsi]
     volume_backend_name=eseries-iscsi

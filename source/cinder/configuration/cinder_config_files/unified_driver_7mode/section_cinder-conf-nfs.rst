@@ -64,6 +64,7 @@ file (``cinder.conf``)::
     nfs_shares_config=path_to_nfs_exports_file
     max_oversubscription_ratio=1.0
     reserved_percentage=5
+    lookupcache=pos
 
 -  Be sure that the value of the ``enabled_backends`` option in the
    ``[DEFAULT]`` stanza includes the name of the stanza you chose for
@@ -139,3 +140,24 @@ uses the NFS storage protocol.
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.17. Configuration Options for Data ONTAP Operating in 7-Mode with NFS
+
+.. important::
+
+   The NFS client cache refresh interval can vary depending on how the
+   NFS client's default mounting options are configured. In order to
+   prevent the issue of being confronted with a stale negative cache
+   entry, an additional option must be passed to the NFS mount command
+   invoked by the Cinder using an NFS driver. This can be configured by
+   adding the line "nfs_mount_options = lookupcache=pos" to your
+   driver configuration stanza in your cinder.conf file. Alternatively,
+   if you are already setting other NFS mount options, then you can
+   just add "lookupcache=pos" to the end of your current
+   "nfs_mount_options". The effect of this additional option is to
+   force the NFS client to ignore any negative entries in its cache and
+   always check the NFS host when attempting to confirm the existence
+   of a file.
+
+   Please be aware, the "nfs_mount_options" values are not applied if
+   the export is already mounted.  In such a case, the
+   "nfs_mount_options" values are applied the next time the export
+   is mounted
