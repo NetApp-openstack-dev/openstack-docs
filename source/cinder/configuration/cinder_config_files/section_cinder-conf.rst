@@ -31,4 +31,3 @@ a particular Cinder backend should be placed in a separate stanza.
 
    The ``enabled_backends`` option should be specified within the
    ``[DEFAULT]`` configuration stanza.
-
