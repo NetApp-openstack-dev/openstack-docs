@@ -64,6 +64,7 @@ file (``cinder.conf``)::
     nfs_shares_config=path_to_nfs_exports_file
     max_oversubscription_ratio=1.0
     reserved_percentage=5
+    nfs_mount_options=lookupcache=pos
 
 -  Be sure that the value of the ``enabled_backends`` option in the
    ``[DEFAULT]`` stanza includes the name of the stanza you chose for
@@ -139,3 +140,5 @@ uses the NFS storage protocol.
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.17. Configuration Options for Data ONTAP Operating in 7-Mode with NFS
+
+.. include:: ../../../common/nfs-cache-warning.rst
