@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-14 17:20</div>
+            <div class="docs-updated">updated: 2017-09-14 18:13</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -156,6 +156,7 @@ following stanza should be added to the Cinder configuration file
 <span class="n">nfs_shares_config</span><span class="o">=</span><span class="n">path_to_nfs_exports_file</span>
 <span class="n">max_oversubscription_ratio</span><span class="o">=</span><span class="mf">1.0</span>
 <span class="n">reserved_percentage</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">nfs_mount_options</span><span class="o">=</span><span class="n">lookupcache</span><span class="o">=</span><span class="n">pos</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -317,6 +318,26 @@ logs. See the section called “<a class="reference internal" href="../../ontap_
 for more details on the required access level permissions for an SVM
 admin account.</p>
 </div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>The NFS client cache refresh interval can vary depending on how the
+NFS client’s default mounting options are configured. In order to
+prevent the issue of a stale negative cache
+entry, an additional option must be passed to the NFS mount command
+invoked by the Cinder using an NFS driver. This can be configured by
+adding the line <code class="docutils literal"><span class="pre">nfs_mount_options</span> <span class="pre">=</span> <span class="pre">lookupcache=pos</span></code> to your
+driver configuration stanza in your cinder.conf file. Alternatively,
+if you are already setting other NFS mount options, then you can
+just add <code class="docutils literal"><span class="pre">,lookupcache=pos</span></code> to the end of your current
+“nfs_mount_options”. The effect of this additional option is to
+force the NFS client to ignore any negative entries in its cache and
+always check the NFS host when attempting to confirm the existence
+of a file.</p>
+<p class="last">Please be aware, the <code class="docutils literal"><span class="pre">nfs_mount_options</span></code> values are not
+automatically applied if the export is already mounted.  In such
+a case, the <code class="docutils literal"><span class="pre">nfs_mount_options</span></code> values are applied the next
+time the export is mounted.</p>
+</div>
 </div>
 
 
@@ -334,7 +355,7 @@ admin account.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-14 17:20</div>
+            <div class="docs-updated">updated: 2017-09-14 18:13</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -465,7 +486,7 @@ admin account.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: b0464540f4de8e8149a7ee48902cbcbe9116988b";
+    var gitSha = "SHA: 272402c004695e8d24e872085c9278d7182c7cc2";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "NetApp Unified Driver for Clustered Data ONTAP with NFS in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -476,7 +497,7 @@ admin account.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-14 17:20";
+    var buildstring = "Release: 2017.2 on 2017-09-14 18:13";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
