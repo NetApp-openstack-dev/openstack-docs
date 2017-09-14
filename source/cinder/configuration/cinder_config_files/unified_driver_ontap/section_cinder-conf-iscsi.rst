@@ -16,7 +16,7 @@ following stanza should be added to the Cinder configuration file
     [myIscsiBackend]
     volume_backend_name=myIscsiBackend
     volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
-
+    netapp_server_hostname=hostname
     netapp_storage_protocol=iscsi
     netapp_storage_family=ontap_cluster
     netapp_login=admin_username
