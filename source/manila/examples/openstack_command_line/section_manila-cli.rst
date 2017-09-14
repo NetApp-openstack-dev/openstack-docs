@@ -756,7 +756,7 @@ supported specs refer to
 
 ::
 
-    $ manila type-create platinum True --extra-specs qos_support=True netapp:maxiopspergib=100 snapshot_support=True create_share_from_snapshot_support=True
+    $ manila type-create platinum True --extra-specs qos=True netapp:maxiopspergib=100 snapshot_support=True create_share_from_snapshot_support=True
     +----------------------+-------------------------------------------+
     | Property             | Value                                     |
     +----------------------+-------------------------------------------+
@@ -766,14 +766,14 @@ supported specs refer to
     | is_default           | -                                         |
     | ID                   | c6e8d62f-f827-4fc8-af94-789d370abac7      |
     | optional_extra_specs | netapp:maxiopspergib : 100                |
-    |                      | qos_support : True                        |
+    |                      | qos : True                                |
     |                      | create_share_from_snapshot_support : True |
     |                      | snapshot_support : True                   |
     +----------------------+-------------------------------------------+
 
 ::
 
-    $ manila type-create gold False --extra-specs qos_support=True netapp:maxbps=5000 snapshot_support=True create_share_from_snapshot_support=True
+    $ manila type-create gold False --extra-specs qos=True netapp:maxbps=5000 snapshot_support=True create_share_from_snapshot_support=True
     +----------------------+-------------------------------------------+
     | Property             | Value                                     |
     +----------------------+-------------------------------------------+
@@ -784,7 +784,7 @@ supported specs refer to
     | ID                   | 96b45147-ab7c-4f85-8b8e-bdb7e849689e      |
     | optional_extra_specs | create_share_from_snapshot_support : True |
     |                      | snapshot_support : True                   |
-    |                      | qos_support : True                        |
+    |                      | qos : True                                |
     |                      | netapp:maxbps : 5000                      |
     +----------------------+-------------------------------------------+
 

@@ -70,7 +70,7 @@ later in this section when defining Manila share types with the
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``revert_to_snapshot_support``           | Boolean   | Allow a share to be reverted to the most recent snapshot.                                                                                                                                                                                                                                                                                                                        |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``qos_support``                          | Boolean   | Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in [#f1]_. See the NetApp driver specific QoS extra-specs in :ref:`Table 6.11, “NetApp QoS Specs for use with Manila Share Types”<table-6.11>`.                                                                                                                     |
+| ``qos``                          | Boolean   | Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in [#f1]_. See the NetApp driver specific QoS extra-specs in :ref:`Table 6.11, “NetApp QoS Specs for use with Manila Share Types”<table-6.11>`.                                                                                                                     |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
@@ -91,7 +91,7 @@ Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
 | ``netapp:maxbpspergib``                  | String    | The maximum bytes per second allowed per GiB of the Manila share size.|
 +------------------------------------------+-----------+-----------------------------------------------------------------------+
 
-Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that have ``qos_support = True``.
+Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that have ``qos=True``.
 
 .. caution::
 
@@ -106,7 +106,7 @@ Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that
 
 .. rubric:: Footnotes
 
-.. [#f1] ``qos_support`` is reported as a capability by the Manila driver to
+.. [#f1] ``qos`` is reported as a capability by the Manila driver to
          the Manila scheduler for each ONTAP aggregate (Manila storage pool).
          This value will either be True (QoS is supported) or
          False (QoS is not supported) for all aggregates belonging
