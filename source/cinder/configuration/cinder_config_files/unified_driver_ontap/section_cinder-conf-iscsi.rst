@@ -16,7 +16,7 @@ following stanza should be added to the Cinder configuration file
     [myIscsiBackend]
     volume_backend_name=myIscsiBackend
     volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
-
+    netapp_server_hostname=hostname
     netapp_storage_protocol=iscsi
     netapp_storage_family=ontap_cluster
     netapp_login=admin_username
@@ -24,7 +24,7 @@ following stanza should be added to the Cinder configuration file
     netapp_vserver=svm_name
     max_oversubscription_ratio=1.0
     reserved_percentage=5
-    use_multipath_for_image_xfer = True
+    use_multipath_for_image_xfer=True
 
 -  Be sure that the value of the ``enabled_backends`` option in the
    ``[DEFAULT]`` stanza includes the name of the stanza you chose for
