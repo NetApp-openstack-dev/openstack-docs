@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-09-14 08:34</div>
+            <div class="docs-updated">updated: 2017-09-14 13:09</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -855,7 +855,7 @@ limits specified for each share that users create. The following examples
 demonstrate creating two share types with two different QoS specs. For all
 supported specs refer to
 “<a class="reference internal" href="../../deployment_choice/section_creating_service_catalog.html#table-6-11"><span class="std std-ref">Table 6.11, “NetApp specific QoS Extra Specs</span></a>”</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create platinum True --extra-specs qos_support=True netapp:maxiopspergib=100 snapshot_support=True create_share_from_snapshot_support=True
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create platinum True --extra-specs qos=True netapp:maxiopspergib=100 snapshot_support=True create_share_from_snapshot_support=True
 +----------------------+-------------------------------------------+
 | Property             | Value                                     |
 +----------------------+-------------------------------------------+
@@ -865,13 +865,13 @@ supported specs refer to
 | is_default           | -                                         |
 | ID                   | c6e8d62f-f827-4fc8-af94-789d370abac7      |
 | optional_extra_specs | netapp:maxiopspergib : 100                |
-|                      | qos_support : True                        |
+|                      | qos : True                                |
 |                      | create_share_from_snapshot_support : True |
 |                      | snapshot_support : True                   |
 +----------------------+-------------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create gold False --extra-specs qos_support=True netapp:maxbps=5000 snapshot_support=True create_share_from_snapshot_support=True
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ manila type-create gold False --extra-specs qos=True netapp:maxbps=5000 snapshot_support=True create_share_from_snapshot_support=True
 +----------------------+-------------------------------------------+
 | Property             | Value                                     |
 +----------------------+-------------------------------------------+
@@ -882,7 +882,7 @@ supported specs refer to
 | ID                   | 96b45147-ab7c-4f85-8b8e-bdb7e849689e      |
 | optional_extra_specs | create_share_from_snapshot_support : True |
 |                      | snapshot_support : True                   |
-|                      | qos_support : True                        |
+|                      | qos : True                                |
 |                      | netapp:maxbps : 5000                      |
 +----------------------+-------------------------------------------+
 </pre></div>
@@ -1536,7 +1536,7 @@ become in-sync, refer to the section called <a class="reference internal" href="
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-09-14 08:34</div>
+            <div class="docs-updated">updated: 2017-09-14 13:09</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -1666,7 +1666,7 @@ become in-sync, refer to the section called <a class="reference internal" href="
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 9d30ea84342350bb06ce747cd9602135bb5fd911";
+    var gitSha = "SHA: b88f17e415b38f44c52a75567e537ab30fa73002";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Manila Command Line Interface (CLI) in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -1677,7 +1677,7 @@ become in-sync, refer to the section called <a class="reference internal" href="
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-09-14 08:34";
+    var buildstring = "Release: 2017.2 on 2017-09-14 13:09";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
