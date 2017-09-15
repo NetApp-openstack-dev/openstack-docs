@@ -161,4 +161,4 @@ Only the backend ``cdotSingleSVM01`` is enabled.
     netapp_vserver = manila-vserver-2
     netapp_transport_type = http
     netapp_aggregate_name_search_pattern = ^((?!aggr0).)*$
-    replication_domaid = replication_domain_1
+    replication_domain = replication_domain_1
