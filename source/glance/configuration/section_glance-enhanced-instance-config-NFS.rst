@@ -18,47 +18,52 @@ for NFS:
 +------+------------------------------------------------------------+---------+
 | 4    | ONTAP: Set ownership of Cinder FlexVol                     |         |
 +------+------------------------------------------------------------+---------+
-| 5    | Change ``netapp_copy_offload_tool_path`` in cinder.conf    |         |
+| 5    | Download the ``copy_offload_tool`` from NetApp Support     |         |
 +------+------------------------------------------------------------+---------+
-| 6    | Add ``nfs_mount_options=lookupcache=pos`` in cinder.conf   |         |
+| 6    | Make changes to the cinder.conf                            |         |
 +------+------------------------------------------------------------+---------+
-| 7    | Change ownership of copy offload binary                    |         |
+| 6a   | Change ``netapp_copy_offload_tool_path``                   |         |
 +------+------------------------------------------------------------+---------+
-| 8    | Change ``glance_api_version`` in cinder.conf               |         |
+| 6b   | Change ``glance_api_version``                              |         |
 +------+------------------------------------------------------------+---------+
-| 9    | Perform additional steps in glance-api.conf                |         |
+| 6c   | Add ``nfs_mount_options=lookupcache=pos`` in cinder.conf   |         |
 +------+------------------------------------------------------------+---------+
-| 10   | Create JSON file for Glance metadata                       |         |
+| 7    | Create JSON file for Glance metadata                       |         |
 +------+------------------------------------------------------------+---------+
-| 11   | Add the ``cinder`` user to the ``glance`` group            |         |
+| 8    | Perform additional steps in glance-api.conf                |         |
 +------+------------------------------------------------------------+---------+
-| 12   | Restart Cinder and Glance services                         |         |
+| 9    | Add the ``cinder`` user to the ``glance`` group            |         |
 +------+------------------------------------------------------------+---------+
-| 13   | Check mounts                                               |         |
+| 10   | Restart Cinder and Glance services                         |         |
 +------+------------------------------------------------------------+---------+
-| 14   | Upload a Glance Image                                      |         |
+| 11   | Check mounts                                               |         |
 +------+------------------------------------------------------------+---------+
-| 15   | Boot from Cinder                                           |         |
+| 12   | Upload a Glance Image                                      |         |
 +------+------------------------------------------------------------+---------+
-| 16   | Verify functionality                                       |         |
+| 13   | Boot from Cinder                                           |         |
++------+------------------------------------------------------------+---------+
+| 14   | Verify functionality                                       |         |
 +------+------------------------------------------------------------+---------+
 
 Table 5.1. Checklist of Steps for Enhanced Instance Creation and Copy
 Offload tool for NFS
 
-1) Enable ``vstorage`` on Storage Virtual Machine
+1) Enable ``vstorage`` on
+Storage Virtual Machine
 
 ::
 
     CDOT::> nfs modify -vserver replace-with-vserver-name -vstorage enabled
 
-2) Enable NFSv3, NFSv4, and NFSv4.1 on Storage Virtual Machine
+2) Enable NFSv3, NFSv4, and NFSv4.1 on
+Storage Virtual Machine
 
 ::
 
     CDOT::> vserver nfs modify -vserver replace-with-vserver-name -access true -v3 enabled -v4.0 enabled -v4.1 enabled
 
-3) Set ownership of Glance FlexVol
+3) Set ownership of Glance
+FlexVol
 
 Obtain the user and group ids for ``glance`` service user
 
@@ -74,7 +79,8 @@ Set ownership for the FlexVol backing Glance accordingly
     CDOT::> volume modify –vserver replace-with-vserver-name -volume replace-with-glance-flexvol-name -user 161 –group 161
     CDOT::> volume show –vserver replace-with-vserver-name -volume replace-with-glance-flexvol-name -fields user,group
 
-4) Set ownership of Cinder FlexVol
+4) Set ownership of Cinder
+FlexVol
 
 Obtain the user and group ids for ``cinder`` service user
 
@@ -90,11 +96,8 @@ Set ownership for the FlexVol(s) backing Cinder accordingly
     CDOT::> volume modify –vserver replace-with-vserver-name -volume replace-with-cinder-flexvol -user 165 –group 165
     CDOT::> volume show –vserver replace-with-vserver-name -volume replace-with-cinder-flexvol -fields user,group
 
-5) Download the copy offload tool from `NetApp Support
-<http://mysupport.netapp.com/tools/info/ECMLP2429244I.html?productID=61945>`_.
-
-
-6) Place the archive on the OpenStack Controller(s) as follows
+5) Download, unpack, and set ownership of the copy offload tool from
+`NetApp Support <http://mysupport.netapp.com/tools/info/ECMLP2429244I.html?productID=61945>`_.
 
 ::
 
@@ -121,11 +124,14 @@ Set ownership for the FlexVol(s) backing Cinder accordingly
 
     $ chown cinder:cinder /etc/cinder/copyoffload/na_copyoffload_64
 
-7) Set the following in /etc/cinder/cinder.conf in each ONTAP NFS
-backend stanza, paying attention to set glance_api_version to 2 in
-the DEFAULT stanza as well.
+6) Make changes to
+/etc/cinder/cinder.conf
+
+Set the following in each NFS backend stanza, paying attention to
+set glance_api_version to 2 in the DEFAULT stanza as well.
 
 ::
+   
     [DEFAULT]
     ...
     glance_api_version = 2
@@ -139,9 +145,11 @@ the DEFAULT stanza as well.
     ...
 
 
-8) Create a json file at /etc/glance/filesystem\_store\_metadata.json
-with the following content::
+7) Create a json file at /etc/glance/filesystem_store_metadata.json
+with the following content
 
+::
+   
     {
         "id":"NetAppNFS",
         "share_location":"nfs://[replace-with-ip-address]/[replace-with-glance-export]",
@@ -155,12 +163,13 @@ with the following content::
    regular conventions:
 
    - Four spaces for each line entry (other than the braces)
-
+   
    - ``share_location`` must be in the format above. ex.
-     "nfs://192.168.100.10/glance\_flexvol"
-
-
-9) Update the following entries in the /etc/glance/glance-api.conf file
+     "nfs://192.168.100.10/glance_flexvol"
+   
+   
+8) Update the following entries in the
+/etc/glance/glance-api.conf file
 
 ::
 
@@ -181,20 +190,24 @@ with the following content::
    Search for each of these entries in glance-api.conf using a text
    editor and update it accordingly.
 
-10) Add the ``cinder`` user to the ``glance`` group
+9) Add the ``cinder`` user to the ``glance``
+group
 
 ::
 
     $ gpasswd –a cinder glance
 
-12) Restart Cinder and Glance services
+10) Restart Cinder and Glance
+services
 
 ::
 
     $ systemctl restart openstack-cinder-{api,scheduler,volume}
     $ systemctl restart openstack-glance-{api,registry}
 
-13) Check mounts
+11) Confirm that the NFS mounts are
+in place
+
 
 ::
 
@@ -204,7 +217,8 @@ with the following content::
     192.168.100.10:/glance_flexvol on /var/lib/glance/images type nfs4 (rw,relatime,vers=4,rsize=65536,wsize=65536,namlen=255,hard,proto=tcp,port=0,timeo=600,retrans=2,sec=sys,clientaddr=192.168.100.20,local_lock=none,addr=192.168.100.10)
     ...
 
-14) Upload a Glance image
+12) Upload a Glance
+image
 
 The following command uses an image that is publicly available. Please
 use the image you prefer and replace the URL accordingly.
@@ -213,16 +227,20 @@ use the image you prefer and replace the URL accordingly.
 
     $ wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
 
-15) Boot from Cinder
+13) Boot from
+Cinder
 
 ::
 
     $ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
 
-16) Verify functionality
+14) Verify
+functionality
 
 Please open /var/log/cinder/volume.log and look for a message similar to
-the following to confirm that copy offload was used successfully::
+the following to confirm that copy offload was used successfully
+  
+::
 
     ...
     2016-08-13 13:25:16.646 6626 INFO cinder.volume.drivers.netapp.dataontap.nfs_cmode [req-...] Copied image 7080dac2-6272-4c05-a2ed-56888a34e589 to volume 06d081da-7220-4526-bfdf-5b9e8eb4aac3 using copy offload workflow.
