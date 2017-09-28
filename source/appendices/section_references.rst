@@ -13,15 +13,14 @@ The following references were used in this paper:
 
 For additional information, visit:
 
--  For more information on the operation, deployment of, or support for
-   NetApp’s OpenStack integrations:
-   http://communities.netapp.com/groups/openstack
-
 -  For source code for OpenStack, including NetApp contributions,
    available through Github: http://www.github.com/openstack
 
 -  For more information about NetApp’s participation in OpenStack, visit
-   the NetApp Community site: http://www.netapp.com/openstack
+   the NetApp Community site: http://netapp.io/openstack
 
 -  For more information about OpenStack history:
    http://www.openstack.org or http://en.wikipedia.org/wiki/OpenStack
+
+-  For NetApp OpenStack Deployment and Operations Guide source code, 
+   visit: https://github.com/NetApp-openstack-dev/openstack-docs
