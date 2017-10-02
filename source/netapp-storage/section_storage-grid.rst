@@ -23,6 +23,17 @@ NetApp Cinder drivers and NetApp storage, StorageGRID Webscale customers
 can be confident they are building on a rock-solid foundation for their
 web data repositories, data archives, and media repositories.
 
+.. note::
+
+    Starting in OpenStack Newton, support for the S3 API has been
+    dropped from the Glance API.  
+
+.. note::
+
+    StorageGRID Webscale does not support the use the Images (Glance) 
+    v2.0 API.  The Images (Glance) v1 API is deprecated and will be 
+    removed on or after the Pike release
+
 **Efficient, Durable, and Flexible**
 
 Drive cost savings without sacrificing durability with NetApp
