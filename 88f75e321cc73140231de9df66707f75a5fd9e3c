@@ -1,0 +1,9 @@
+Code-Review+2: chad morgenstern <mchad@netapp.com>
+QA-Review+2: chad morgenstern <mchad@netapp.com>
+Release+1: chad morgenstern <mchad@netapp.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Tue, 03 Oct 2017 14:56:38 -0400
+Reviewed-on: https://review.openstack.netapp.com/417
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/stable/ocata
