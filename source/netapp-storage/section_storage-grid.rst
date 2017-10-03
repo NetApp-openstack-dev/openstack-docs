@@ -30,9 +30,9 @@ web data repositories, data archives, and media repositories.
 
 .. note::
 
-    StorageGRID Webscale does not support the use the Images (Glance)
-    v2.0 API.  The Images (Glance) v1 API is deprecated and will be
-    removed after the Pike release
+    StorageGRID Webscale does not support the use of the
+    Images (Glance) v2.0 API.  The Images (Glance) v1 API
+    is deprecated and will be removed after the Pike release.
 
 **Efficient, Durable, and Flexible**
 
