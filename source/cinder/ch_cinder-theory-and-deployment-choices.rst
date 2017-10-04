@@ -12,7 +12,7 @@ Theory of Operation and Deployment Choices
    deployment_choice/section_driver-eseries-iscsi.rst
    deployment_choice/section_driver-eseries-fcp.rst
    deployment_choice/section_over-subscription.rst
-   deployment_choice/section_ontap-v-eseries.rst
+   deployment_choice/section_solidfire-ontap-eseries.rst
    deployment_choice/section_iscsi-v-nfs.rst
    deployment_choice/section_vg-v-ddp.rst
    deployment_choice/section_nfs-security.rst
