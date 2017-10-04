@@ -28,6 +28,7 @@ Bexar
 bootable
 bootloader
 bugfixes
+burstIOPS
 Callaway
 cDOT
 Ceilometer
@@ -39,6 +40,7 @@ Cisco
 codenamed
 conf
 config
+contrib
 copyoffload
 dedup
 dedupe
@@ -71,6 +73,7 @@ flexvols
 Flexvols
 Fouts
 Gb
+GbE
 GenericShareDriver
 Geneve
 geo
@@ -95,6 +98,7 @@ Icehouse
 idmapd
 igroups
 img
+Inline
 inodes
 integrations
 intercluster
@@ -122,6 +126,7 @@ maxBPSperGiB
 maxIOPS
 maxIOPSperGiB
 metadata
+minIOPS
 Mirantis
 mitaka
 Mitaka
