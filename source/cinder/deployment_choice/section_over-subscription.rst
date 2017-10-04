@@ -52,7 +52,7 @@ planning and reduces the likelihood of wasted storage capacity.
    be monitored, and capacity must be increased as usage nears
    predefined thresholds.
 
-All NetApp drivers conform to the standard
+The NetApp unified driver conforms to the standard
 Cinder scheduler-based over-subscription framework
 in which the ``max_over_subscription_ratio`` and ``reserved_percentage``
 configuration options are used to control the degree of
@@ -60,6 +60,10 @@ over-subscription allowed in the relevant storage pool. Note that the
 Cinder scheduler only allows over-subscription of a storage pool if the
 pool reports the ``thin_provisioning_support`` capability, as described
 for each type of NetApp platform below.
+
+The SolidFire Cinder driver does not support thin or thick
+provisioning.  Please read the section
+:ref:`solidfire_thin_provisioning` for more details.
 
 Details
 -------
@@ -197,3 +201,20 @@ With E-series, thin-provisioned volumes and thick-provisioned volumes
 may be created in the same storage pool, so the
 *thin-provisioning-support* and *thick-provisioning-support* may both be
 reported to the scheduler for the same storage pool.
+
+.. _solidfire_thin_provisioning:
+
+SolidFire Thin Provisioning
+---------------------------
+
+All SolidFire volumes are provisioned thin, space is consumed
+on write but only after passing through a series of inline
+data reduction processes within the SolidFire cluster. The 
+SolidFire Cinder driver does not support Cinder managed
+thin or thick_provisioning, the SolidFire cluster maintains total
+control over space usage. SolidFire free space is considered
+during Cinder volume creation, free space is predicated upon
+used space rather than allocated space.
+
+For more information on SolidFire space management, please
+see `<http://www.netapp.com/us/media/ds-solidfire-data-efficiencies-breif.pdf>`__

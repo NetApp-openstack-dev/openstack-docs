@@ -4,10 +4,10 @@ Sample cinder.conf
 ==================
 
 This section provides an example Cinder configuration file
-(``cinder.conf``) that contains three backends - one for clustered Data
-ONTAP with the NFS storage protocol, one for clustered Data ONTAP with
-the iSCSI storage protocol, and one for an E-Series deployment
-(leveraging iSCSI).
+(``cinder.conf``) that contains three backends - one for SolidFire,
+one for clustered Data ONTAP with the NFS storage protocol,
+one for clustered Data ONTAP with the iSCSI storage protocol,
+and one for an E-Series deployment (leveraging iSCSI).
 
 ::
 
@@ -34,7 +34,14 @@ the iSCSI storage protocol, and one for an E-Series deployment
     cinder_volume_usage_audit_period=hour
     control_exchange=cinder
 
-    enabled_backends=cdot-iscsi,cdot-nfs,eseries-iscsi
+    enabled_backends=solidfire,cdot-iscsi,cdot-nfs,eseries-iscsi
+
+    [solidfire]
+    volume_backend_name=solidfire
+    volume_driver=cinder.volume.drivers.solidfire.SolidFireDriver
+    san_ip=172.17.1.182
+    san_login=login
+    san_password=password
 
     [cdot-iscsi]
     volume_backend_name=cdot-iscsi
