@@ -157,7 +157,57 @@ Quality of Service
 
 The Cinder Quality of Service (QoS) support for volumes can be enforced
 either at the hypervisor or at the storage subsystem (``backend``), or
-both. The NetApp clustered Data ONTAP Cinder driver currently supports
+both. 
+
+**SolidFire**
+
+Within the SolidFire platform, each volume is configured with
+minimum, maximum, and burst IOPS values that are strictly
+enforced within the system. The minimum IOPS provides
+a guarantee for performance, independent of what other
+applications on the system are doing. The maximum and burst
+values control the allocation of performance and deliver consistent
+performance to workloads.
+
+SolidFire’s fine-grain QoS controls enable service providers and
+enterprises with two key operational functions:
+
+- The ability to control performance and capacity independently
+  from one another
+
+- The ability to set fine-grain guaranteed QoS levels on a per volume
+  basis
+
+Within a SolidFire storage array, performance and capacity are
+presented as independent unified pools that are entirely separate
+from one another. Each storage volume within the system can
+be allocated an exact amount of capacity and performance, both
+of which can be changed on the fly without migrating data or
+impacting performance.
+
+QoS support for the SolidFire drivers includes the ability to set the
+following capabilities in the OpenStack Block Storage API
+``cinder.api.contrib.qos_specs_manage`` qos specs extension module:
+
++-----------------+-------------------------------------------------------------------------------------+
+| Option          | Description                                                                         |
++=================+=====================================================================================+
+| minIOPS         | The minimum number of IOPS guaranteed for this volume. Default = 100.               |
++-----------------+-------------------------------------------------------------------------------------+
+| maxIOPS         | The maximum number of IOPS allowed for this volume. Default = 15,000.               |
++-----------------+-------------------------------------------------------------------------------------+
+| burstIOPS       | The maximum number of IOPS allowed over a short period of time. Default = 15,000.   |
++-----------------+-------------------------------------------------------------------------------------+
+
+Table 4.1a. SolidFire QoS Options 
+
+.. note::
+   The SolidFire driver utilizes volume-types for QoS settings and allows dynamic changes to QoS. Volume
+   retype in the SolidFire driver enables the capability to modify QoS on an existing volume.
+
+**Data ONTAP**
+
+The NetApp clustered Data ONTAP Cinder driver currently supports
 QoS by backend QoS specs or via netapp:qos\_policy\_group assignment
 using Cinder Extra-Specs. The NetApp Cinder driver accomplishes this by
 using NetApp QoS policy groups, introduced with clustered Data ONTAP
@@ -204,7 +254,10 @@ using NetApp QoS policy groups, introduced with clustered Data ONTAP
 | maxIOPSperGiB   | The maximum IOPS allowed per GiB of Cinder volume capacity.               |
 +-----------------+---------------------------------------------------------------------------+
 
-Table 4.1. NetApp Supported Backend QoS Spec Options
+Table 4.1b. NetApp Supported Backend QoS Spec Options
+
+.. warning::
+   While SolidFire supports volume retyping, Data ONTAP does not.
 
 .. _storage-pools:
 
