@@ -29,7 +29,7 @@ Extra specs are associated with Cinder volume types, so that when users
 request volumes of a particular volume type, they are created on storage
 backends that meet the list of requirements (e.g. available space, extra
 specs, etc). You can use the specs in Table 4.11, "NetApp supported
-Extra Specs for use with Cinder Volume Types" below when defining Cinder
+Extra Specs for use with Cinder volume Types" below when defining Cinder
 volume types with the ``cinder type-key`` command.
 
 .. _table-4.11:
@@ -70,7 +70,7 @@ volume types with the ``cinder type-key`` command.
 | ``netapp_thin_provisioned``             | Boolean   | Clustered Data ONTAP, E-Series   | Limit the candidate volume list to only the ones that support thin provisioning on the storage controller.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 +-----------------------------------------+-----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table 4.11. NetApp supported Extra Specs for use with Cinder Volume Type
+Table 4.11. NetApp supported Extra Specs for use with Cinder volume Type
 
 .. [1]
    Note that RAID3 is a deprecated RAID type on E-Series storage controllers and operates as RAID5.

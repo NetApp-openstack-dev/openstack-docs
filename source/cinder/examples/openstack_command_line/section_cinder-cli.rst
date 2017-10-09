@@ -36,10 +36,10 @@ has been properly initialized by Cinder.
 Creating and Defining Cinder Volume Types
 -----------------------------------------
 
-In this section, we create a variety of Cinder Volume Types that
+In this section, we create a variety of Cinder volume Types that
 leverage both the default capabilities of each driver, as well as the
 NetApp specific extra specs described in
-:ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”<table-4.11>`
+:ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder volume Types”<table-4.11>`
 
 -  The ``iscsi`` type provisions Cinder volumes onto any backend that
    uses the iSCSI storage protocol (in this example, that would be
@@ -740,7 +740,7 @@ spec, and lastly associate the QoS spec with the volume type.
 
 After we associate the QoS spec with the volume type, we can use the
 volume type just as we did in the section called
-:ref:`“Creating and Defining Cinder Volume Types”<create-volume>`.
+:ref:`“Creating and Defining Cinder volume Types”<create-volume>`.
 The example below shows how to verify that the QoS policy group has
 been created on the NetApp storage controller.
 
@@ -1025,3 +1025,19 @@ snapshot of the first group.
     | id       | 66c4d2a0-13b7-49a2-a144-89fcc4cf3362 |
     | name     | group2                               |
     +----------+--------------------------------------+
+
+
+Thin Provisioning
+-----------------
+In this section, we will configure a Cinder volume type, associate
+the ``thin_provisioning_support`` attribute and then create a thin
+provisioned Cinder volume.
+
+::
+
+    $ cinder type-create thin
+    $ cinder type-key thin set thin_provisioning_support="<is> True"
+
+::
+
+    $ cinder create --name cinder-vol-a --volume-type thin 5000
