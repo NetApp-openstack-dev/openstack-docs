@@ -1025,3 +1025,19 @@ snapshot of the first group.
     | id       | 66c4d2a0-13b7-49a2-a144-89fcc4cf3362 |
     | name     | group2                               |
     +----------+--------------------------------------+
+
+
+Thin Provisioning
+-----------------
+In this section, we will configure a Cinder volume type, associate
+the ``thin_provisioning_support`` attribute and then create a thin
+provisioned Cinder Volume.
+
+::
+
+    $ cinder type-create thin
+    $ cinder type-key thin set thin_provisioning_support="<is> True"
+
+::
+
+    $ cinder create --name cinder-vol-a --volume-type thin 5000
