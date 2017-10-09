@@ -29,7 +29,7 @@ which they exist.
    mapping between a backend and an SVM, a variety of advanced
    functionality (e.g. volume type extra-specs) will be disabled.
 
-Cinder Volumes and FlexVol Volumes
+Cinder volumes and FlexVol Volumes
 ----------------------------------
 
 Data ONTAP FlexVol volumes (commonly referred to as volumes) and
@@ -54,7 +54,7 @@ and clones within FlexVol volumes.
    Infinite Volumes, as Data ONTAP currently only supports FlexClone
    files and FlexClone LUNs with FlexVol volumes.
 
-Cinder Volume Representation within a FlexVol Volume
+Cinder volume Representation within a FlexVol Volume
 ----------------------------------------------------
 
 A Cinder volume has a different representation in Data ONTAP when stored
@@ -77,7 +77,7 @@ Cinder Scheduling and Resource Pool Selection
 When Cinder volumes are created, the Cinder scheduler selects a resource
 pool from the available storage pools: see
 :ref:`storage-pools` for an overview.
-:ref:`Table 4.9, “Behavioral Differences in Cinder Volume Placement”
+:ref:`Table 4.9, “Behavioral Differences in Cinder volume Placement”
 <cinder-theory-table-4.9>` details the behavioral changes in NetApp's
 Cinder drivers when scheduling the provisioning of new Cinder volumes.
 
@@ -153,7 +153,7 @@ shared block limit, a filter expression of
 |                                  | -  E-Series volume groups are supported as of the Liberty release.                                                                                                                                                                |                                                                                                                                                                                                                       |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table 4.9. Behavioral Differences in Cinder Volume Placement
+Table 4.9. Behavioral Differences in Cinder volume Placement
 
 Cinder Snapshots versus NetApp Snapshots
 ----------------------------------------
