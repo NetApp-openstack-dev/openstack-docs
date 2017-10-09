@@ -1025,3 +1025,21 @@ snapshot of the first group.
     | id       | 66c4d2a0-13b7-49a2-a144-89fcc4cf3362 |
     | name     | group2                               |
     +----------+--------------------------------------+
+
+
+Thin Provisioning
+-----------------
+
+Consider the following scenarios:
+
+Before we begin, note the cinder syntax to create a volume type that
+supports thin provisioning
+
+::
+
+    [admin@openstack ~(keystonerc_admin)]$ cinder type-create thin
+    [admin@openstack ~(keystonerc_admin)]$ cinder type-key thin set thin_provisioning_support="<is> True"
+
+::
+
+    [admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-a --volume-type thin 5000
