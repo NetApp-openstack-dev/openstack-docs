@@ -150,7 +150,7 @@ are created on storage backends that meet the specified criteria.
       block storage to clients (e.g. ``iSCSI``, ``fc``, or ``nfs``)
 
    For a table of NetApp supported extra specs, refer to
-   :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”<table-4.11>`.
+   :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder volume Types”<table-4.11>`.
 
 Quality of Service
 ------------------
@@ -173,7 +173,7 @@ using NetApp QoS policy groups, introduced with clustered Data ONTAP
    Cinder extra-spec. Use the netapp:qos\_policy\_group option when a
    Service Level Objective (SLO) needs to be applied to a set of Cinder
    volumes. For more information on this, see
-   :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder Volume Types”<table-4.11>`.
+   :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder volume Types”<table-4.11>`.
 
 -  *QoS Spec*: QoS specifications are added as standalone objects that
    can then be associated with Cinder volume types. A Cinder QoS Spec
