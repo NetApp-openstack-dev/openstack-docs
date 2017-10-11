@@ -22,6 +22,7 @@ pool in order to create another Cinder volume even if the Cinder volumes
 were to remain empty.
 
 ::
+
     Storage Pool: Thick provisioned
     Storage Pool capacity = 1TB
     Cinder volume One:   250GB allocated
@@ -34,6 +35,7 @@ Thin-provisioning with over-subscription allows flexibility in capacity
 planning and reduces the likelihood of wasted storage capacity.
 
 ::
+
     Storage Pool: Thin provisioned
     Storage Pool capacity = 1TB
     Cinder volume One:  250GB allocated
