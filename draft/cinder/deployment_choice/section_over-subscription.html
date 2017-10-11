@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Deployment Choices: Over-Subscription and Thin-Provisioning</title>
+    <title>OpenStack Docs: Theory of Operation: Over-Subscription and Thin-Provisioning</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,22 +107,22 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Deployment Choices: Over-Subscription and Thin-Provisioning</h2>
+      <h2>Theory of Operation: Over-Subscription and Thin-Provisioning</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_nfs-security.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choices: NFS Security"></i></a>
+    <a href="section_driver-eseries-fcp.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel"></i></a>
     
     
-    <a href="section_unidirectional-chap.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: Unidirectional CHAP Authentication"></i></a>
+    <a href="section_ontap-v-eseries.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: ONTAP vs. E-Series"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-10-03 18:07</div>
+            <div class="docs-updated">updated: 2017-10-11 21:20</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -130,7 +130,9 @@ ga('send', 'pageview');
 
 <h5><a href="../../index.html">Contents</a></h5>
 <ul>
-<li><a class="reference internal" href="#">Deployment Choices: Over-Subscription and Thin-Provisioning</a><ul>
+<li><a class="reference internal" href="#">Theory of Operation: Over-Subscription and Thin-Provisioning</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#details">Details</a></li>
 <li><a class="reference internal" href="#data-ontap-thin-provisioning">Data ONTAP Thin Provisioning</a></li>
 <li><a class="reference internal" href="#e-series-thin-provisioning">E-Series Thin Provisioning</a></li>
 </ul>
@@ -140,71 +142,156 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="deployment-choices-over-subscription-and-thin-provisioning">
-<h1>Deployment Choices: Over-Subscription and Thin-Provisioning<a class="headerlink" href="#deployment-choices-over-subscription-and-thin-provisioning" title="Permalink to this headline">¶</a></h1>
-<p>When a thick-provisioned Cinder volume is created, an amount of space is
+  <div class="section" id="theory-of-operation-over-subscription-and-thin-provisioning">
+<h1>Theory of Operation: Over-Subscription and Thin-Provisioning<a class="headerlink" href="#theory-of-operation-over-subscription-and-thin-provisioning" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>With a thick-provisioned Cinder volume, an amount of space is
 reserved from the backend storage system equal to the size of the
 requested volume. Because users typically do not actually consume all
-the space in the Cinder volume, overall storage efficiency is reduced.
-With thin-provisioned Cinder volumes, on the other hand, space is only
-carved from the backend storage system as required for actual usage. A
-thin-provisioned Cinder volume can grow up to its nominal size, but for
-space-accounting only the actual physically used space counts.</p>
-<p>Thin-provisioning allows for over-subscription because you can present
-more storage space to the hosts connecting to the storage controller
-than is actually currently available on the storage controller. As an
-example, in a 1TB storage pool, if four 250GB thick-provisioned volumes
+the space in the Cinder volume, overall storage efficiency is reduced.</p>
+<p>With a thin-provisioned Cinder volume, space is only carved from the
+backend storage system as required for actual usage.</p>
+<p>Thin-provisioning allows for capacity over-subscription. In other words,
+more storage space may be allocated than is available on the storage
+controller.</p>
+<p>As example, in a 1TB storage pool, if four 250GB thick-provisioned volumes
 are created, it would be necessary to add more storage capacity to the
-pool in order to create another 250GB volume, even if all volumes are at
-less than 25% utilization. With thin-provisioning, it is possible to
-allocate a new volume without exhausting the physical capacity of the
-storage pool, as only the utilized storage capacity of the volumes
-impacts the available capacity of the pool.</p>
+pool in order to create another Cinder volume even if the Cinder volumes
+were to remain empty.</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>Storage Pool: Thick provisioned
+Storage Pool capacity = 1TB
+Cinder volume One:   250GB allocated
+Cinder volume Two:   250GB allocated
+Cinder volume Three: 250GB allocated
+Cinder volume Four:  250GB allocated
+Storage Pool space consumed = 1TB</dd>
+</dl>
 <p>Thin-provisioning with over-subscription allows flexibility in capacity
-planning and reduces waste of storage capacity. The storage
-administrator is able to simply grow storage pools as needed to fill
-capacity requirements.</p>
+planning and reduces the likelihood of wasted storage capacity.</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>Storage Pool: Thin provisioned
+Storage Pool capacity = 1TB
+Cinder volume One:  250GB allocated
+Cinder volume Two:  250GB allocated
+Cinder volume Three 250GB allocated
+Cinder volume Four: 250GB allocated
+Cinder volume Five: 250GB allocated
+Storage Pool space consumed = ~0GB</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Thin provisioning helps maximize storage utilization. However, if
+aggregates are over committed through thin provisioning, usage must
+be monitored, and capacity must be increased as usage nears
+predefined thresholds.</p>
+</div>
 <p>All NetApp drivers conform to the standard
-Cinder scheduler-based over-subscription framework as described
-<a class="reference external" href="http://docs.openstack.org/admin-guide-cloud/blockstorage_over_subscription.html">here</a>,
+Cinder scheduler-based over-subscription framework
 in which the <code class="docutils literal"><span class="pre">max_over_subscription_ratio</span></code> and <code class="docutils literal"><span class="pre">reserved_percentage</span></code>
 configuration options are used to control the degree of
 over-subscription allowed in the relevant storage pool. Note that the
 Cinder scheduler only allows over-subscription of a storage pool if the
-pool reports the <em>thin-provisioning-support</em> capability, as described
+pool reports the <code class="docutils literal"><span class="pre">thin_provisioning_support</span></code> capability, as described
 for each type of NetApp platform below.</p>
-<p>The default <code class="docutils literal"><span class="pre">max_over_subscription_ratio</span></code> for all drivers is 20 and
-the default <code class="docutils literal"><span class="pre">reserved_percentage</span></code> is 0. With these values and
-<em>thin-provisioning-support</em> capability on (see below), if there is 5TB
-of actual free space currently available in the backing store for a
-Cinder pool, then up to 1,000 Cinder volumes of 100GB capacity may be
-provisioned before getting a failure, assuming actual physical space
-used averages 5% of nominal capacity.</p>
+</div>
+<div class="section" id="details">
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h2>
+<p>Refer to the following snippet in exploring further:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$  cinder get-pools --detail
++-------------------------------+--------+
+| Property                      | Value  |                                                                                       |
++-------------------------------+--------+
+....
+| free_capacity_gb              | 2348.93|
+| max_over_subscription_ratio   | 4.0    |
+| reserved_percentage           | 10     |
+| total_capacity_gb             | 10240.0|
+....
++-------------------------------+--------
+</pre></div>
+</div>
+<p>The attribute <code class="docutils literal"><span class="pre">max_over_subscription_ratio</span></code> is a multiplier
+that controls how much beyond the reported storage pool
+capacity may be allocated for additional Cinder volumes.</p>
+<p>The attribute <code class="docutils literal"><span class="pre">reserved_percentage</span></code> dictates how much space
+is to be discounted from the total_capacity when performing
+the maximum over subscription calculations.</p>
+<p>In the example above, the storage pool has a capacity of 10240.0GB.
+A <code class="docutils literal"><span class="pre">reserved_percentage</span></code> of 10% will be applied against this 10240GB
+<code class="docutils literal"><span class="pre">total_capacity</span></code> value.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">reserved_percentage</span>   <span class="o">=</span> <span class="mi">10</span>
+<span class="n">max_over_subscription_ratio</span>   <span class="o">=</span>  <span class="mf">4.0</span>
+<span class="n">total_capacity_gb</span>   <span class="o">=</span> <span class="mi">10</span><span class="p">,</span><span class="mi">240</span><span class="n">GB</span>
+</pre></div>
+</div>
+<p>The following derives the maximum amount of space that may be
+allocated to Cinder volumes.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span> <span class="n">max_over_subscription_ratio</span> <span class="o">*</span> <span class="p">(</span> <span class="n">total_capacity_gb</span> <span class="o">-</span> <span class="p">(</span> <span class="n">total_capacity_gb</span> <span class="o">*</span> <span class="p">(</span> <span class="n">reserved_percentage</span> <span class="o">/</span> <span class="mi">100</span>  <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+<span class="p">(</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">10240.0</span> <span class="o">-</span> <span class="p">(</span> <span class="mf">10240.0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">100</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span> <span class="o">=</span> <span class="mi">36</span><span class="p">,</span><span class="mi">864</span> <span class="n">GB</span>
+</pre></div>
+</div>
+<p>Every sixty seconds, the total and free capacity is reported
+to the Cinder Scheduler. Between the sixty second updates,
+the Cinder Scheduler assumes a pessimistic view of free space.
+The allocated capacity of each newly created Cinder volume
+is subtracted from the free space value returned previously
+by the Cinder volume Controller.</p>
+<p>At the time of Cinder volume creation, the requested Cinder volume
+size must be less than or equal to the amount of free space known by the
+Cinder scheduler.</p>
+<p>The above snippet reports the following free space at the reporting interval:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">free_capacity_gb</span> <span class="o">=</span>  <span class="mi">2</span><span class="p">,</span><span class="mf">348.93</span><span class="n">GB</span>
+</pre></div>
+</div>
+<p>Consider what happens in the following Cinder volume creation scenario
+where four thin volume creation requests come in back to back within the
+reporting interval:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">request</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">2000</span><span class="n">GB</span> <span class="p">(</span><span class="n">success</span><span class="p">:</span> <span class="n">free</span> <span class="n">space</span> <span class="n">goes</span> <span class="kn">from</span> <span class="mi">2348</span><span class="n">GB</span> <span class="n">to</span> <span class="mi">348</span><span class="n">GB</span><span class="p">)</span>
+<span class="n">request</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">200</span><span class="n">GB</span>  <span class="p">(</span><span class="n">success</span><span class="p">:</span> <span class="n">free</span> <span class="n">space</span> <span class="n">drops</span> <span class="kn">from</span> <span class="mi">348</span><span class="n">GB</span> <span class="n">to</span> <span class="mi">148</span><span class="n">GB</span><span class="p">)</span>
+<span class="n">request</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">250</span><span class="n">GB</span>  <span class="p">(</span><span class="n">failure</span><span class="p">:</span> <span class="n">insufficient</span> <span class="n">free</span> <span class="n">space</span><span class="p">)</span>
+<span class="n">Space</span> <span class="n">Update</span> <span class="n">Occurs</span>
+<span class="n">request</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">250</span><span class="n">GB</span>  <span class="p">(</span><span class="n">success</span><span class="p">:</span> <span class="n">free</span> <span class="n">space</span> <span class="n">goes</span> <span class="kn">from</span> <span class="mi">2348</span><span class="n">GB</span> <span class="n">to</span> <span class="mi">2098</span><span class="n">GB</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="data-ontap-thin-provisioning">
 <h2>Data ONTAP Thin Provisioning<a class="headerlink" href="#data-ontap-thin-provisioning" title="Permalink to this headline">¶</a></h2>
-<p>In Data ONTAP multiple forms of thin-provisioning are possible. By
-default, the <code class="docutils literal"><span class="pre">nfs_sparsed_volumes</span></code> configuration option is True, so
-that files that back Cinder volumes with our NFS drivers are sparsely
-provisioned, occupying essentially no space when they are created, and
-growing as data is actually written into the file. With block drivers,
-on the other hand, the default <code class="docutils literal"><span class="pre">netapp_lun_space_reservation</span></code>
-configuration option is ‘enabled’ and the corresponding behavior is to
-reserve space for the entire LUN backing a cinder volume. For
-thick-provisioned Cinder volumes with NetApp drivers, set
-<code class="docutils literal"><span class="pre">nfs_sparsed_volumes</span></code> to False. For thin-provisioned Cinder volumes
-with NetApp block drivers, set <code class="docutils literal"><span class="pre">netapp_lun_space_reservation</span></code> to
-‘disabled’.</p>
-<p>With Data ONTAP, the flexvols that act as storage pools for Cinder
-volumes may themselves be thin-provisioned since when these flexvols are
-carved from storage aggregates this may be done without space
-guarantees, i.e. the flexvols themselves grow up to their nominal size
-as actual physical space is consumed.</p>
-<p>Data ONTAP drivers report the <em>thin-provisioning-support</em> capability if
-either the files or LUNs backing cinder volumes in a storage pool are
-thin-provisioned, or if the flexvol backing the storage pool itself is
-thin-provisioned. Note that with Data ONTAP drivers, the
-<em>thin-provisioning-support</em> and <em>thick-provisioning-support</em>
-capabilities are mutually-exclusive.</p>
+<p>The following <code class="docutils literal"><span class="pre">cinder.conf</span></code> configuration settings control thin
+provisioning with ONTAP backends.
+<code class="docutils literal"><span class="pre">nfs_sparsed_volumes</span></code>: This setting controls whether
+Cinder volume backed by NFS backends are sparsely or thickly provisioned.
+By default, the option is <code class="docutils literal"><span class="pre">True</span></code> and the volumes are
+thinly provisioned.</p>
+<p><code class="docutils literal"><span class="pre">netapp_lun_space_reservation</span></code>: This setting controls whether
+space is initially reserved within the pool for LUNS provisioned by
+Cinder when using the iSCSI or FC as the <code class="docutils literal"><span class="pre">storage_protocol</span></code>.
+By default, the option is <code class="docutils literal"><span class="pre">Enabled</span></code> and LUNS are thickly
+provisioned.</p>
+<p>Thin provisioning is <code class="docutils literal"><span class="pre">True</span></code> in the following scenarios</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">NFS</span> <span class="n">Backend</span>
+<span class="o">+==================================================+============+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">nfs_sparsed_volumes</span>               <span class="o">|</span>   <span class="kc">True</span>     <span class="o">|</span>
+<span class="o">+--------------------------------------------------+------------+</span>
+<span class="o">|</span> <span class="n">ONTAP</span> <span class="n">Volume</span> <span class="n">Setting</span><span class="p">:</span> <span class="n">netapp_thin_provisioned</span>    <span class="o">|</span>   <span class="kc">True</span>     <span class="o">|</span>
+<span class="o">+--------------------------------------------------+------------+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">max_over_subscription_ratio</span>       <span class="o">|</span>    <span class="o">&gt;</span> <span class="mf">1.0</span>   <span class="o">|</span>
+<span class="o">+--------------------------------------------------+------------+</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">iSCSI</span> <span class="ow">or</span> <span class="n">FCP</span> <span class="n">Backend</span>
+<span class="o">+==================================================+===============+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">netapp_lun_space_reservation</span>      <span class="o">|</span>   <span class="n">disabled</span>    <span class="o">|</span>
+<span class="o">+--------------------------------------------------+---------------+</span>
+<span class="o">|</span> <span class="n">ONTAP</span> <span class="n">Volume</span> <span class="n">Setting</span><span class="p">:</span> <span class="n">netapp_thin_provisioned</span>    <span class="o">|</span>   <span class="kc">True</span>        <span class="o">|</span>
+<span class="o">+--------------------------------------------------+---------------+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">max_over_subscription_ratio</span>       <span class="o">|</span>    <span class="o">&gt;</span> <span class="mf">1.0</span>      <span class="o">|</span>
+<span class="o">+--------------------------------------------------+---------------+</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="e-series-thin-provisioning">
 <h2>E-Series Thin Provisioning<a class="headerlink" href="#e-series-thin-provisioning" title="Permalink to this headline">¶</a></h2>
@@ -223,31 +310,6 @@ storage management software.</p>
 may be created in the same storage pool, so the
 <em>thin-provisioning-support</em> and <em>thick-provisioning-support</em> may both be
 reported to the scheduler for the same storage pool.</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="22%" />
-<col width="8%" />
-<col width="71%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Extra spec</th>
-<th class="head">Type</th>
-<th class="head">Description</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">max_over_subscription_ratio</span></code></td>
-<td><code class="docutils literal"><span class="pre">20.0</span></code></td>
-<td>A floating point representation of the oversubscription ratio when thin-provisioning is enabled for the pool.</td>
-</tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">reserved_percentage</span></code></td>
-<td><code class="docutils literal"><span class="pre">0</span></code></td>
-<td>Percentage of total pool capacity that is reserved, not available for provisioning.</td>
-</tr>
-</tbody>
-</table>
-<p>Table 4.12. NetApp supported configuration options for use with
-Over-Subscription</p>
 </div>
 </div>
 
@@ -257,16 +319,16 @@ Over-Subscription</p>
           </div>
           <div class="docs-actions">
           
-            <a href="section_nfs-security.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choices: NFS Security"></i></a>
+            <a href="section_driver-eseries-fcp.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel"></i></a>
           
           
-            <a href="section_unidirectional-chap.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: Unidirectional CHAP Authentication"></i></a>
+            <a href="section_ontap-v-eseries.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: ONTAP vs. E-Series"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-10-03 18:07</div>
+            <div class="docs-updated">updated: 2017-10-11 21:20</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -397,9 +459,9 @@ Over-Subscription</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 776ab6c31864f141439a58be7a16f727e73bb60b";
+    var gitSha = "SHA: dee350e9ba0a63c517fb60579623da4d643e2bdf";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Deployment Choices: Over-Subscription and Thin-Provisioning in NetApp OpenStack Docs";
+        var bugTitle = "Theory of Operation: Over-Subscription and Thin-Provisioning in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "QUEENS DRAFT"
         var useStoryboard = "";
@@ -408,7 +470,7 @@ Over-Subscription</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-10-03 18:07";
+    var buildstring = "Release: 2017.2 on 2017-10-11 21:20";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

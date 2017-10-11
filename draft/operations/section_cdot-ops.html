@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-10-03 18:07</div>
+            <div class="docs-updated">updated: 2017-10-11 21:20</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -131,8 +131,6 @@ ga('send', 'pageview');
 <h5><a href="../index.html">Contents</a></h5>
 <ul>
 <li><a class="reference internal" href="#">Operational Concerns with Data ONTAP</a><ul>
-<li><a class="reference internal" href="#considerations-for-the-use-of-thin-provisioning-with-flexvol-volumes">Considerations for the use of thin provisioning with FlexVol volumes</a></li>
-<li><a class="reference internal" href="#reserved-percentage">Reserved Percentage</a></li>
 <li><a class="reference internal" href="#nfs-v4-0-and-nfs-v4-1-configuration">NFS v4.0 and NFS v4.1 Configuration</a></li>
 <li><a class="reference internal" href="#volume-migration">Volume Migration</a></li>
 <li><a class="reference internal" href="#live-migration">Live Migration</a></li>
@@ -145,163 +143,6 @@ ga('send', 'pageview');
 
   <div class="section" id="operational-concerns-with-data-ontap">
 <h1>Operational Concerns with Data ONTAP<a class="headerlink" href="#operational-concerns-with-data-ontap" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="considerations-for-the-use-of-thin-provisioning-with-flexvol-volumes">
-<h2>Considerations for the use of thin provisioning with FlexVol volumes<a class="headerlink" href="#considerations-for-the-use-of-thin-provisioning-with-flexvol-volumes" title="Permalink to this headline">¶</a></h2>
-<p>Using thin provisioning, FlexVol volumes can be configured to appear to
-provide more storage than available. If FlexVol volumes associated with
-an aggregate show more storage as available than the physical resources
-available to the aggregates (disk pools) backing the FlexVol, the
-aggregate is over committed. When an aggregate is over committed, it is
-possible for writes to LUNs or files in FlexVols contained by that
-aggregate to fail if there is insufficient free space available to
-accommodate those writes.</p>
-<p>Consider the following scenarios:</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">For the following scenarios, assume that the reserved_percentage is
-set to 0, and max_over_subscription_ratio is set to 1.0.</p>
-</div>
-<p>Before we begin, note the cinder syntax to create a volume type that
-supports thin provisioning:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder type-create thin
-[admin@openstack ~(keystonerc_admin)]$ cinder type-key thin set thin_provisioning_support=&quot;&lt;is&gt; True&quot;
-</pre></div>
-</div>
-<p>Scenario A: Creating a Cinder Volume with Sufficient Available Space in
-Aggregate Aggregate Capacity: 10 TB FlexVol Size: 100 TB (Thin
-Provisioned) Cinder Volume 1 Size: 10TB (Thin Provisioned Extra Spec),
-1TB used (volume is already provisioned). Available Space: ~9TB Cinder
-Volume 2 Requirement: 5TB (Thin Provisioned)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-a --volume-type thin 5000
-</pre></div>
-</div>
-<p>The above command to create a new 5TB thin provisioned Cinder volume
-will succeed. Note that the underlying aggregate (disk pool) only has
-10TB of usable capacity, whereas each of the total of Cinder volume
-capacities is 15TB. Both volumes will be usable, but if the aggregate
-runs out of free space, it will not be possible to write to either of
-these Cinder volumes, or other volumes that are backed by this
-aggregate.</p>
-<p>Scenario B: Insufficient Available Space in Aggregate Aggregate
-Capacity: 10 TB FlexVol Size: 100 TB (Thin Provisioned) Cinder Volume 1
-Size: 10TB (Thin Provisioned Extra Spec), 10TB used for a database
-(volume is already provisioned). Available Space: ~0 Cinder Volume 2
-Requirement: 10TB (Thin Provisioned)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-b --volume-type thin 10000
-</pre></div>
-</div>
-<p>The above command to create a new thin provisioned Cinder volume will
-fail since there is no space available in the aggregate to satisfy the
-provisioning request.</p>
-<p>Scenario C: Resizing Thin Provisioned FlexVol Volume for Cinder
-Volume(s) Aggregate Capacity: 500 TB FlexVol Size: 50 TB (Thin
-Provisioned) Cinder Volume 1 Size: 10TB (Thin Provisioned Extra Spec),
-10TB used (volume is already provisioned). Available: 40 TB Cinder
-Volume 2 Requirement: 100TB (Thin Provisioned)</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[admin@openstack ~(keystonerc_admin)]$ cinder create --name cinder-vol-c --volume-type thin 100000
-</pre></div>
-</div>
-<p>The above command to create a new thin provisioned Cinder volume will
-fail since the FlexVol size is smaller than the requirement for
-cinder-vol-c. In order to provision this 100TB Cinder volume, resize the
-FlexVol and try the provisioning request again. As an alternative,
-please adjust the max_over_subscription_ratio from 1.0 to a higher
-value. Details on this <code class="docutils literal"><span class="pre">cinder.conf</span></code> parameter are available below.</p>
-<p>If you have over committed your aggregate, you must monitor your
-available space and add storage to the aggregate as needed to avoid
-write errors due to insufficient space. Aggregates can provide storage
-to FlexVol volumes associated with more than one Storage Virtual Machine
-(SVM). When sharing aggregates for thin-provisioned volumes in a
-multi-tenancy environment, be aware that one tenant’s aggregate space
-availability can be adversely affected by the growth of another tenant’s
-volumes.</p>
-<p>For more information about thin provisioning, see the following
-technical reports:</p>
-<ul class="simple">
-<li><a class="reference external" href="http://media.netapp.com/DOCUMENTS/TR-3965.PDF">TR 3965: NetApp Thin Provisioning Deployment and Implementation
-Guide</a></li>
-<li><a class="reference external" href="http://media.netapp.com/DOCUMENTS/TR3483.PDF">TR 3483: Thin Provisioning in a NetApp SAN or IP SAN Enterprise
-Environment</a></li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Thin provisioning helps maximize storage utilization. However, if
-aggregates are over committed through thin provisioning, usage must
-be monitored, and capacity must be increased as usage nears
-predefined thresholds.</p>
-</div>
-<p>In order to provision a larger capacities than allowed, use the
-<code class="docutils literal"><span class="pre">max_over_subscription_ratio</span></code> parameter in the <code class="docutils literal"><span class="pre">cinder.conf</span></code> file.
-For example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span># /etc/cinder/cinder.conf
-
-[DEFAULT]
-…
-…
-[NetAppBackend]
-…
-…
-max_over_subscription_ratio = 2.0
-</pre></div>
-</div>
-<p>In this case, the max_over_subscription_ratio will permit the
-creation of volumes that that are oversubscribed by a factor of 2.
-Consider the following scenarios:</p>
-<p>Scenario X: FlexVol Volume Size: 10GB max_over_subscription_ratio =
-1.0 Total Perceived Free Capacity for Provisioning: 1.0 * 10 = 10GB</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 10 # success</span>
-<span class="c1"># cinder create 11 # failure, since no oversubscription is allowed</span>
-</pre></div>
-</div>
-<p>Scenario Y: FlexVol Volume Size: 10GB max_over_subscription_ratio =
-2.0 Total Perceived Free Capacity for Provisioning: 2.0 * 10 = 20GB</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 10 # success</span>
-<span class="c1"># cinder create 20 # success, since up to 10GB of capacity can be oversubscribed</span>
-<span class="c1"># cinder create 21 # failure</span>
-</pre></div>
-</div>
-<p>Scenario Z: FlexVol Volume Size: 10GB max_over_subscription_ratio = 4
-Total Perceived Free Capacity for Provisioning: 4.0 * 10 = 40GB</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 40 # success, since up to 40GB of capacity can be oversubscribed</span>
-<span class="c1"># cinder create 41 # failure</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>After adjusting the max_over_subscription_ratio, restart the
-cinder scheduler and volume services. ex:</p>
-<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">openstack</span><span class="o">-</span><span class="n">cinder</span><span class="o">-</span><span class="p">{</span><span class="n">scheduler</span><span class="p">,</span><span class="n">volume</span><span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="section" id="reserved-percentage">
-<h2>Reserved Percentage<a class="headerlink" href="#reserved-percentage" title="Permalink to this headline">¶</a></h2>
-<p>This represents a part of the FlexVol that is reserved and cannot be
-used for provisioning. This can be useful, for example, if a FlexVol is
-used for multiple applications, some of them using storage that is not
-managed by OpenStack Cinder. Specify this parameter in <code class="docutils literal"><span class="pre">cinder.conf</span></code>:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#/etc/cinder/cinder.conf
-
-[DEFAULT]
-…
-…
-[NetAppBackend]
-…
-…
-reserved_percentage=50
-</pre></div>
-</div>
-<p>Consider another example:</p>
-<p>FlexVol Size: 100GB Snapshot reserve: 10% Effective FlexVol Size: 90GB
-max_over_subscription_ratio = 1.5 reserved_percentage = 50
-#specified in <code class="docutils literal"><span class="pre">cinder.conf</span></code> Total Perceived Free Capacity for
-Provisioning: 1.5 * 50%*90 = 67.5GB</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># cinder create 67 # succeeds since that much free space is perceived to be available</span>
-<span class="c1"># cinder create 68 # fails</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="nfs-v4-0-and-nfs-v4-1-configuration">
 <h2>NFS v4.0 and NFS v4.1 Configuration<a class="headerlink" href="#nfs-v4-0-and-nfs-v4-1-configuration" title="Permalink to this headline">¶</a></h2>
 <p>Be sure to refer to the <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&amp;m=tr-4067.pdf">Clustered Data ONTAP NFS Best Practices and
@@ -404,7 +245,7 @@ Live Migration of Instances with Attached E-Series Volumes.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-10-03 18:07</div>
+            <div class="docs-updated">updated: 2017-10-11 21:20</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -530,7 +371,7 @@ Live Migration of Instances with Attached E-Series Volumes.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 776ab6c31864f141439a58be7a16f727e73bb60b";
+    var gitSha = "SHA: dee350e9ba0a63c517fb60579623da4d643e2bdf";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Operational Concerns with Data ONTAP in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -541,7 +382,7 @@ Live Migration of Instances with Attached E-Series Volumes.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-10-03 18:07";
+    var buildstring = "Release: 2017.2 on 2017-10-11 21:20";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
