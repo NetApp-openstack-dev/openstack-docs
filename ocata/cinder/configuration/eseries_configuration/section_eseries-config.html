@@ -3,23 +3,23 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Theory of Operation and Deployment Choices</title>
+    <title>OpenStack Docs: E-Series Configuration</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Bootstrap CSS -->
-<link href="../_static/css/bootstrap.css" rel="stylesheet">
+<link href="../../../_static/css/bootstrap.css" rel="stylesheet">
 
 <!-- Pygments CSS -->
-<link href="../_static/css/native.css" rel="stylesheet">
+<link href="../../../_static/css/native.css" rel="stylesheet">
 
 <!-- Fonts -->
-<link href="../_static/css/font-awesome.css" rel="stylesheet">
+<link href="../../../_static/css/font-awesome.css" rel="stylesheet">
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
 
 <!-- Custom CSS -->
-<link href="../_static/css/combined.css" rel="stylesheet">
+<link href="../../../_static/css/combined.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,8 +27,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
-<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/sphinxmark.css" type="text/css" />
   
 
 
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/ch_cinder-theory-and-deployment-choices.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/eseries_configuration/section_eseries-config.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,15 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Theory of Operation and Deployment Choices</h2>
+      <h2>E-Series Configuration</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="api_overview/section_cinder-api-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: API Overview"></i></a>
+    <a href="../ontap_configuration/section_storage_networking_considerations.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Storage Networking Considerations"></i></a>
     
     
-    <a href="deployment_choice/section_construct-mappings.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Mapping NetApp to OpenStack Terminology"></i></a>
+    <a href="../ch_cinder-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder Configuration Files"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -128,25 +128,102 @@ ga('send', 'pageview');
             <div class="col-lg-12">
               <div class="docs-top-contents">
 
+<h5><a href="../../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">E-Series Configuration</a><ul>
+<li><a class="reference internal" href="#e-series-prerequisites">E-Series Prerequisites</a></li>
+<li><a class="reference internal" href="#santricity-web-services-proxy">SANtricity Web Services Proxy</a></li>
+<li><a class="reference internal" href="#storage-networking-considerations">Storage Networking Considerations</a></li>
+<li><a class="reference internal" href="#nova-live-migration-of-instances-with-attached-e-series-volumes">Nova Live Migration of Instances with Attached E-Series Volumes</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
               <div class="docs-body">
 
-  <div class="section" id="theory-of-operation-and-deployment-choices">
-<span id="theory-op"></span><h1>Theory of Operation and Deployment Choices<a class="headerlink" href="#theory-of-operation-and-deployment-choices" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_construct-mappings.html">Theory of Operation: Mapping NetApp to OpenStack Terminology</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_service-catalog.html">Theory of Operation: Storage Service Catalog and Cinder Volume Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_ontap-driver-overview.html">Theory of Operation: NetApp Unified Driver Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_driver-eseries-iscsi.html">Theory of Operation: NetApp Unified Driver for E-Series with iSCSI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_driver-eseries-fcp.html">Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_over-subscription.html">Theory of Operation: Over-Subscription and Thin-Provisioning</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_solidfire-ontap-eseries.html">Deployment Choices: SolidFire, ONTAP, and E-Series</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_iscsi-v-nfs.html">Deployment Choices: NFS vs. iSCSI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_vg-v-ddp.html">Deployment Choices: Volume Groups vs. Dynamic Disk Pools (E-Series)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_nfs-security.html">Deployment Choices: NFS Security</a></li>
-<li class="toctree-l1"><a class="reference internal" href="deployment_choice/section_unidirectional-chap.html">Deployment Choices: Unidirectional CHAP Authentication</a></li>
+  <div class="section" id="e-series-configuration">
+<h1>E-Series Configuration<a class="headerlink" href="#e-series-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="e-series-prerequisites">
+<h2>E-Series Prerequisites<a class="headerlink" href="#e-series-prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The prerequisites for NetApp E-Series are:</p>
+<ul class="simple">
+<li>The driver requires the use of the NetApp SANtricity Web Services.
+Please refer to the table below for the required Web Services Proxy
+version.</li>
+<li>The storage controller should have a firmware version installed that
+is supported by the NetApp SANtricity Web Services Proxy. Refer to
+the proxy documentation for the most recent list of firmware versions
+that are supported.</li>
 </ul>
+</div>
+<div class="section" id="santricity-web-services-proxy">
+<h2>SANtricity Web Services Proxy<a class="headerlink" href="#santricity-web-services-proxy" title="Permalink to this headline">¶</a></h2>
+<p>The NetApp SANtricity Web Services Proxy provides access through
+standard HTTPS mechanisms to configuring management services for
+E-Series storage arrays. You can install Web Services Proxy on either
+Linux or Windows. As Web Services Proxy satisfies the client request by
+collecting data or executing configuration change requests to a target
+storage array, the Web Services Proxy module issues SYMbol requests to
+the target storage arrays. Web Services Proxy provides a Representative
+State Transfer (REST)-style API for managing E-Series controllers. The
+API enables you to integrate storage array management into other
+applications or ecosystems.</p>
+<p>When Cinder is used with a NetApp E-Series system, use of the SANtricity
+Web Services Proxy is currently required. The SANtricity Web Services
+Proxy may be deployed in a highly-available topology using an
+active/passive strategy.</p>
+<p>While WFA can be utilized in conjunction with the NetApp unified Cinder
+driver, a deployment of Cinder and WFA does introduce additional
+complexity, management entities, and potential points of failure within
+a cloud architecture. If you have an existing set of workflows that are
+written within the WFA framework, and are looking to leverage them in
+lieu of the default provisioning behavior of the Cinder driver operating
+directly against a FAS system, then it may be desirable to use the
+intermediated mode.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">As of the Mitaka release, only NetApp SANtricity Web Services Proxy
+version 1.4 and greater are supported by the E-Series Cinder driver.
+If an older version is installed, the user will be notified that an
+upgrade is required upon starting the Cinder-Volume service.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Unless you have a significant existing investment with OnCommand
+Workflow Automator that you wish to leverage in an OpenStack
+deployment, it is recommended that you start with the <em>direct</em> mode
+of operation when deploying Cinder with a NetApp FAS system. When
+Cinder is used with a NetApp E-Series system, use of the SANtricity
+Web Services Proxy in the <em>intermediated</em> mode is currently
+required. The SANtricity Web Services Proxy may be deployed in a
+highly-available topology using an active/passive strategy.</p>
+</div>
+</div>
+<div class="section" id="storage-networking-considerations">
+<h2>Storage Networking Considerations<a class="headerlink" href="#storage-networking-considerations" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Ensure there is segmented network connectivity between the hypervisor
+nodes and the network interfaces present on the E-Series controller.</li>
+<li>Ensure there is network connectivity between the <code class="docutils literal"><span class="pre">cinder-volume</span></code>
+nodes and the interfaces present on the node running the NetApp
+SANtricity Web Services Proxy software.</li>
+</ol>
+</div>
+<div class="section" id="nova-live-migration-of-instances-with-attached-e-series-volumes">
+<span id="nova-live"></span><h2>Nova Live Migration of Instances with Attached E-Series Volumes<a class="headerlink" href="#nova-live-migration-of-instances-with-attached-e-series-volumes" title="Permalink to this headline">¶</a></h2>
+<p>Live migration of Nova instances with attached volumes hosted on
+E-Series are disabled by default. Setting <code class="docutils literal"><span class="pre">netapp_enable_multiattach</span></code>
+to true will allow this operation, however, it is facilitated by mapping
+to a host group on the E-Series array, and comes with some limitations:</p>
+<ul class="simple">
+<li>There is a maximum of 256 Cinder volumes for this backend.</li>
+<li>E-Series hosts representing Nova Compute nodes must not be assigned
+to a foreign E-Series host group.</li>
+</ul>
+<p>Irrespective of this option, live migrations between hosts may fail due
+to ‘LUN id’ collisions where the immutable attachment identifier of the
+attached volume is already in use on the destination host.</p>
 </div>
 </div>
 
@@ -156,10 +233,10 @@ ga('send', 'pageview');
           </div>
           <div class="docs-actions">
           
-            <a href="api_overview/section_cinder-api-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: API Overview"></i></a>
+            <a href="../ontap_configuration/section_storage_networking_considerations.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Storage Networking Considerations"></i></a>
           
           
-            <a href="deployment_choice/section_construct-mappings.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Mapping NetApp to OpenStack Terminology"></i></a>
+            <a href="../ch_cinder-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder Configuration Files"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -185,7 +262,7 @@ ga('send', 'pageview');
         </div>
 <div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
   <div class="btn-group docs-sidebar-releases">
-<a href="../index.html">
+<a href="../../../index.html">
   <button href="#" type="button"
           class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.1</button>
 </a>
@@ -195,26 +272,26 @@ ga('send', 'pageview');
     <div class="docs-sidebar-section" id="table-of-contents">
       <h4></h4>
       <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">NetApp Systems and Software</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">Image Service (Glance)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../ch_cinder.html">Block Storage (Cinder)</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="overview/section_cinder-overview.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="key_concepts/section_cinder-key-concepts.html">Key Concepts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="process_structure/section_cinder-processes.html">Process Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api_overview/section_cinder-api-overview.html">API Overview</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Theory of Operation and Deployment Choices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch_cinder-configuration.html">Configuration</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ch_cinder-examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../ch_cinder.html">Block Storage (Cinder)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview/section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../key_concepts/section_cinder-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../process_structure/section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api_overview/section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_cinder-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../ch_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_cinder-examples.html">Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">Shared Filesystems (Manila)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_appendix.html">Appendix</a></li>
 </ul>
 
     </div>
@@ -262,19 +339,19 @@ ga('send', 'pageview');
   </div>
 </footer>
 <!-- jQuery -->
-<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="../../../_static/js/jquery-3.1.1.js"></script>
 
 <!-- Bootstrap JavaScript -->
-<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+<script type="text/javascript" src="../../../_static/js/bootstrap.js"></script>
 
 <!-- The rest of the JS -->
-<script type="text/javascript" src="../_static/js/navigation.js"></script>
+<script type="text/javascript" src="../../../_static/js/navigation.js"></script>
 
 <!-- Docs JS -->
-<script type="text/javascript" src="../_static/js/docs.js"></script>
+<script type="text/javascript" src="../../../_static/js/docs.js"></script>
 
 <!-- Popovers -->
-<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+<script type="text/javascript" src="../../../_static/js/webui-popover.js"></script>
 
 <!-- Javascript for page -->
 <script language="JavaScript">
@@ -292,13 +369,13 @@ ga('send', 'pageview');
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "cinder/ch_cinder-theory-and-deployment-choices" + ".rst";
+        var sourceFile = "cinder/configuration/eseries_configuration/section_eseries-config" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: a963a248996649da3c77d5982ae12d54176bd0ec";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Theory of Operation and Deployment Choices in NetApp OpenStack Docs";
+        var bugTitle = "E-Series Configuration in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "OCATA"
         var useStoryboard = "";
