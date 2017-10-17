@@ -35,7 +35,9 @@ Ceilometer
 CentOS
 cgsnapshot
 cgsnapshots
+chmod
 chown
+cinderSecureEnvIndicator
 Cisco
 codenamed
 conf
@@ -194,6 +196,7 @@ Sajid
 scalability
 scalable
 Schoenbrun
+sgid
 Singh
 Skelton
 SLA
@@ -205,6 +208,7 @@ stl
 subnet
 Subnet
 Subnets
+suid
 Sumit
 supportability
 svc
@@ -220,6 +224,7 @@ uid
 unconfigured
 uninstall
 Uninstallation
+unix
 unmanage
 Unmanage
 Versioning
