@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Fibre Channel &amp; cinder.conf</title>
+    <title>OpenStack Docs: NetApp Driver for SolidFire</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/cinder_config_files/section_fibre-channel.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/cinder_config_files/section_solidfire-conf.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,15 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Fibre Channel &amp; cinder.conf</h2>
+      <h2>NetApp Driver for SolidFire</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_cinder-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cinder.conf: Overview"></i></a>
+    <a href="section_fibre-channel.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Fibre Channel & cinder.conf"></i></a>
     
     
-    <a href="section_solidfire-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Driver for SolidFire"></i></a>
+    <a href="unified_driver_ontap/section_cinder-conf-nfs.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Unified Driver for Clustered Data ONTAP with NFS"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -128,55 +128,197 @@ ga('send', 'pageview');
             <div class="col-lg-12">
               <div class="docs-top-contents">
 
+<h5><a href="../../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">NetApp Driver for SolidFire</a><ul>
+<li><a class="reference internal" href="#solidfire-cinder-driver-configuration">SolidFire Cinder Driver Configuration</a></li>
+<li><a class="reference internal" href="#optional-cinder-configuration-attributes">Optional Cinder Configuration Attributes</a></li>
+<li><a class="reference internal" href="#multiple-openstack-cloud-instances">Multiple OpenStack Cloud Instances</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
               <div class="docs-body">
 
-  <div class="section" id="fibre-channel-cinder-conf">
-<span id="fc-switch"></span><h1>Fibre Channel &amp; cinder.conf<a class="headerlink" href="#fibre-channel-cinder-conf" title="Permalink to this headline">¶</a></h1>
-<p>Cinder includes a Fibre Channel zone manager facility for configuring
-zoning in Fibre Channel fabrics, specifically supporting Cisco and
-Brocade Fibre Channel switches. The user is required to configure the
-zoning parameters in the Cinder configuration file (<code class="docutils literal"><span class="pre">cinder.conf</span></code>). An
-example configuration using Brocade is given below:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">zoning_mode</span><span class="o">=</span><span class="n">fabric</span>
+  <div class="section" id="netapp-driver-for-solidfire">
+<h1>NetApp Driver for SolidFire<a class="headerlink" href="#netapp-driver-for-solidfire" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="solidfire-cinder-driver-configuration">
+<h2>SolidFire Cinder Driver Configuration<a class="headerlink" href="#solidfire-cinder-driver-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The OpenStack Cinder driver enables communication between OpenStack
+SolidFire storage system. The user can use information from
+the SF-Series cluster to configure the driver by modifying the
+<code class="docutils literal"><span class="pre">/etc/cinder/cinder.conf</span></code> service file on the controller host.
+For more information on the configuration and best practices please visit
+the following link: <a class="reference external" href="http://www.netapp.com/us/media/tr-4620.pdf">http://www.netapp.com/us/media/tr-4620.pdf</a></p>
+<p>Table 4.13 lists the required storage system attributes used in the
+<code class="docutils literal"><span class="pre">/etc/cinder/cinder.conf</span></code> configuration file.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="25%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">SolidFire Attribute</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">san_ip</span></code></td>
+<td>None</td>
+<td>SolidFire cluster MVIP</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">san_login</span></code></td>
+<td>None</td>
+<td>SolidFire cluster administrative user</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">san_password</span></code></td>
+<td>None</td>
+<td>SolidFire cluster administrative password</td>
+</tr>
+</tbody>
+</table>
+<p>Table 4.13. Required SolidFire Attributes</p>
+<p>Add the following lines to the file, replacing login and password with
+the cluster admin login credentials</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">solidfire</span><span class="p">]</span>
+<span class="n">volume_backend_name</span><span class="o">=</span><span class="n">solidfire</span>
+<span class="n">volume_driver</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">volume</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">solidfire</span><span class="o">.</span><span class="n">SolidFireDriver</span>
+<span class="n">san_ip</span><span class="o">=</span><span class="mf">172.17</span><span class="o">.</span><span class="mf">1.182</span>
+<span class="n">san_login</span><span class="o">=</span><span class="n">login</span>
+<span class="n">san_password</span><span class="o">=</span><span class="n">password</span>
 
-<span class="p">[</span><span class="n">fc</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">manager</span><span class="p">]</span>
-<span class="n">fc_fabric_names</span><span class="o">=</span><span class="n">fabricA</span><span class="p">,</span><span class="n">fabricB</span>
-<span class="n">zoning_policy</span><span class="o">=</span><span class="n">initiator</span><span class="o">-</span><span class="n">target</span>
-<span class="n">brcd_sb_connector</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">zonemanager</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">brocade</span><span class="o">.</span><span class="n">brcd_fc_zone_client_cli</span><span class="o">.</span><span class="n">BrcdFCZoneClientCLI</span>
-<span class="n">fc_san_lookup_service</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">zonemanager</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">brocade</span><span class="o">.</span><span class="n">brcd_fc_san_lookup_service</span><span class="o">.</span><span class="n">BrcdFCSanLookupService</span>
-<span class="n">zone_driver</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">zonemanager</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">brocade</span><span class="o">.</span><span class="n">brcd_fc_zone_driver</span><span class="o">.</span><span class="n">BrcdFCZoneDriver</span>
-
-<span class="p">[</span><span class="n">fabricA</span><span class="p">]</span>
-<span class="n">fc_fabric_address</span><span class="o">=</span><span class="n">hostname</span>
-<span class="n">fc_fabric_user</span><span class="o">=</span><span class="n">username</span>
-<span class="n">fc_fabric_password</span><span class="o">=</span><span class="n">password</span>
-<span class="n">principal_switch_wwn</span><span class="o">=</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
-
-<span class="p">[</span><span class="n">fabricB</span><span class="p">]</span>
-<span class="n">fc_fabric_address</span><span class="o">=</span><span class="n">hostname</span>
-<span class="n">fc_fabric_user</span><span class="o">=</span><span class="n">username</span>
-<span class="n">fc_fabric_password</span><span class="o">=</span><span class="n">password</span>
-<span class="n">principal_switch_wwn</span><span class="o">=</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">enabled_backends</span><span class="o">=</span><span class="n">solidfire</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li>This option will need to be set in the <code class="docutils literal"><span class="pre">DEFAULT</span></code> configuration
-stanza and its value must be <code class="docutils literal"><span class="pre">fabric</span></code>.</li>
-<li>Be sure that the name of the stanza matches one of the values given
-in the <code class="docutils literal"><span class="pre">fc_fabric_names</span></code> option in the <code class="docutils literal"><span class="pre">fc-zone-manager</span></code>
-configuration stanza.</li>
-<li>Be sure that the name of the stanza matches the other value given in
-the <code class="docutils literal"><span class="pre">fc_fabric_names</span></code> option in the <code class="docutils literal"><span class="pre">fc-zone-manager</span></code>
-configuration stanza.</li>
-</ul>
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">While OpenStack has support for several Fibre Channel fabric switch
-vendors, NetApp has validated their drivers with the use of Brocade
-switches. For more information on other vendors, refer to the
-<a class="reference external" href="http://docs.openstack.org/trunk/config-reference/content/section_fc-zoning.html">upstream
-documentation</a>.</p>
+</div>
+<div class="section" id="optional-cinder-configuration-attributes">
+<h2>Optional Cinder Configuration Attributes<a class="headerlink" href="#optional-cinder-configuration-attributes" title="Permalink to this headline">¶</a></h2>
+<p>You can optionally use the following attributes specific to SolidFire
+in the <code class="docutils literal"><span class="pre">[solidfire]</span></code> section of the <code class="docutils literal"><span class="pre">/etc/cinder/cinder.conf</span></code>
+configuration file to control the interaction between the storage
+system and the OpenStack Cinder service. (See Table 4.14.)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="10%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">SolidFire Attribute</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">sf_account_prefix</span></code></td>
+<td>None</td>
+<td>Create storage system accounts with this prefix. The default is no prefix.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">sf_allow_template_caching</span></code></td>
+<td>True</td>
+<td>Create an internal cache of image copies when a bootable volume is created to eliminate the fetch from OpenStack Glance and QEMU conversion on subsequent calls.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">sf_allow_tenant_qos</span></code></td>
+<td>False</td>
+<td>Allow individual tenants to specify QoS on volume creation. Setting this value to True disables dynamic QOS as well as administrative control over QOS. Changing from the default is not recommended.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">sf_api_port</span></code></td>
+<td>443</td>
+<td>The SolidFire storage system API port. Change this value if the device API is behind a proxy on a different port.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">sf_emulate_512</span></code></td>
+<td>True</td>
+<td>Set 512-byte emulation on volume creation. Note: The default is to enable 512 emulation. Required for KVM hypervisors.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">sf_enable_vag</span></code></td>
+<td>False</td>
+<td>Use volume access groups on a per tenant basis instead of using CHAP secrets.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">sf_enable_volume_mapping</span></code></td>
+<td>True</td>
+<td>Create an internal mapping of volume IDs and accounts. This option optimizes look-ups and performance at the expense of memory. Use with caution. For very large deployments, this can cause performance issues.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">sf_svip</span></code></td>
+<td>None</td>
+<td>Overrides the default cluster SVIP with the one specified. This option should only be used when multiple OpenStack instances are accessing the storage cluster from non-default VLANs.</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">sf_template_account_name</span></code></td>
+<td><code class="docutils literal"><span class="pre">openstack-vtemplate</span></code></td>
+<td>The account name on the SF-Series cluster to use as the owner of the template and cache volumes.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">sf_volume_prefix</span></code></td>
+<td><code class="docutils literal"><span class="pre">UUID-</span></code></td>
+<td>Create volumes on the cluster with this prefix. Volumes use the prefix format <code class="docutils literal"><span class="pre">&lt;sf_volume_prefix&gt;&lt;cindervolume-id&gt;</span></code>. The default is to use the prefix <code class="docutils literal"><span class="pre">UUID-</span></code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Table 4.14 Optional SolidFire Attributes</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Set sf_allow_template_caching to False and use the
+generalized Cinder global caching feature instead
+of the SolidFire internal image caching feature.</p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">NetApp recommends the use of the generalized Cinder global caching
+feature over the SolidFire internal image cache.  As of the Queens
+release, the default value of sf_allow_template_caching will be
+set to False.  Also in the Queens release, the SolidFire internal
+image caching feature will be deprecated.</p>
+</div>
+</div>
+<div class="section" id="multiple-openstack-cloud-instances">
+<h2>Multiple OpenStack Cloud Instances<a class="headerlink" href="#multiple-openstack-cloud-instances" title="Permalink to this headline">¶</a></h2>
+<p>There are several facilities in the SolidFire driver that can
+accommodate scenarios involving multiple OpenStack cloud instances
+using a single SolidFire cluster. These features include account
+prefixes, volume prefixes, virtual networks, and multiple virtual
+interfaces (VIFs).</p>
+<p>You can configure an account prefix using the variable
+<code class="docutils literal"><span class="pre">sf_account_prefix</span></code> in the <code class="docutils literal"><span class="pre">/etc/cinder/cinder.conf</span></code> file. You
+can set this variable differently for each OpenStack cloud
+instance, allowing the storage cluster administrator to
+distinguish between accounts for each OpenStack instance.
+By default, the <code class="docutils literal"><span class="pre">sf_account_prefix</span></code> variable is not set,
+and account names have no prefix.</p>
+<p>The OpenStack Mitaka release introduced the <code class="docutils literal"><span class="pre">sf_volume_prefix</span></code>
+variable to allow creation of unique volume prefixes for each
+OpenStack cloud instance.</p>
+<p>The default value of the <code class="docutils literal"><span class="pre">sf_volume_prefix</span></code> variable is
+UUID-, which automatically configures the driver to work
+as it has prior to the OpenStack Mitaka release. If you have multiple
+OpenStack cloud instances attached to a single SolidFire system,
+NetApp recommends that you change this variable for each instance
+using the SolidFire system.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The variable <code class="docutils literal"><span class="pre">sf_volume_prefix</span></code> should not be changed within a
+cloud after a volume has been provisioned on the SolidFire storage
+system with OpenStack.</p>
+</div>
+<p>You can use VLANs and multiple VIFs to separate multiple OpenStack
+cloud instances. Element OS supports multiple storage virtual
+interfaces (SVIPs) on separate virtual networks. Each OpenStack cloud
+instance accesses the storage system through the shared management
+port. NetApp recommends that you configure each OpenStack cloud
+instance with a unique cluster admin account.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When you use a single SVIP with OpenStack, the SolidFire
+driver acquires the SVIP by querying the cluster. If multiple SVIP
+addresses are configured, the query returns the default SVIP on
+the native virtual network. You can configure an alternate virtual
+network for the OpenStack cloud instance by modifying the
+<code class="docutils literal"><span class="pre">/etc/cinder/cinder.conf</span></code> file. Set the <code class="docutils literal"><span class="pre">sf_svip</span></code> variable in the
+<code class="docutils literal"><span class="pre">[solidfire]</span></code> section of the <code class="docutils literal"><span class="pre">/etc/cinder/cinder.conf</span></code> file for that
+OpenStack cloud instance to the IP address you want the iSCSI
+initiator to use to access volumes on the storage system.</p>
+</div>
 </div>
 </div>
 
@@ -186,10 +328,10 @@ documentation</a>.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="section_cinder-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cinder.conf: Overview"></i></a>
+            <a href="section_fibre-channel.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Fibre Channel & cinder.conf"></i></a>
           
           
-            <a href="section_solidfire-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Driver for SolidFire"></i></a>
+            <a href="unified_driver_ontap/section_cinder-conf-nfs.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Unified Driver for Clustered Data ONTAP with NFS"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -322,13 +464,13 @@ documentation</a>.</p>
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "cinder/configuration/cinder_config_files/section_fibre-channel" + ".rst";
+        var sourceFile = "cinder/configuration/cinder_config_files/section_solidfire-conf" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: ae6e4693918b6b7d2a85722736744131569f90f5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Fibre Channel &amp; cinder.conf in NetApp OpenStack Docs";
+        var bugTitle = "NetApp Driver for SolidFire in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE"
         var useStoryboard = "";

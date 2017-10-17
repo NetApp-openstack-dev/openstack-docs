@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Fibre Channel &amp; cinder.conf</title>
+    <title>OpenStack Docs: E-Series Configuration</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/cinder_config_files/section_fibre-channel.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/eseries_configuration/section_eseries-config.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,15 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Fibre Channel &amp; cinder.conf</h2>
+      <h2>E-Series Configuration</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_cinder-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cinder.conf: Overview"></i></a>
+    <a href="../ontap_configuration/section_storage_networking_considerations.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Storage Networking Considerations"></i></a>
     
     
-    <a href="section_solidfire-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Driver for SolidFire"></i></a>
+    <a href="../ch_cinder-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder Configuration Files"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -128,55 +128,102 @@ ga('send', 'pageview');
             <div class="col-lg-12">
               <div class="docs-top-contents">
 
+<h5><a href="../../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">E-Series Configuration</a><ul>
+<li><a class="reference internal" href="#e-series-prerequisites">E-Series Prerequisites</a></li>
+<li><a class="reference internal" href="#santricity-web-services-proxy">SANtricity Web Services Proxy</a></li>
+<li><a class="reference internal" href="#storage-networking-considerations">Storage Networking Considerations</a></li>
+<li><a class="reference internal" href="#nova-live-migration-of-instances-with-attached-e-series-volumes">Nova Live Migration of Instances with Attached E-Series Volumes</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
               <div class="docs-body">
 
-  <div class="section" id="fibre-channel-cinder-conf">
-<span id="fc-switch"></span><h1>Fibre Channel &amp; cinder.conf<a class="headerlink" href="#fibre-channel-cinder-conf" title="Permalink to this headline">¶</a></h1>
-<p>Cinder includes a Fibre Channel zone manager facility for configuring
-zoning in Fibre Channel fabrics, specifically supporting Cisco and
-Brocade Fibre Channel switches. The user is required to configure the
-zoning parameters in the Cinder configuration file (<code class="docutils literal"><span class="pre">cinder.conf</span></code>). An
-example configuration using Brocade is given below:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">zoning_mode</span><span class="o">=</span><span class="n">fabric</span>
-
-<span class="p">[</span><span class="n">fc</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">manager</span><span class="p">]</span>
-<span class="n">fc_fabric_names</span><span class="o">=</span><span class="n">fabricA</span><span class="p">,</span><span class="n">fabricB</span>
-<span class="n">zoning_policy</span><span class="o">=</span><span class="n">initiator</span><span class="o">-</span><span class="n">target</span>
-<span class="n">brcd_sb_connector</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">zonemanager</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">brocade</span><span class="o">.</span><span class="n">brcd_fc_zone_client_cli</span><span class="o">.</span><span class="n">BrcdFCZoneClientCLI</span>
-<span class="n">fc_san_lookup_service</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">zonemanager</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">brocade</span><span class="o">.</span><span class="n">brcd_fc_san_lookup_service</span><span class="o">.</span><span class="n">BrcdFCSanLookupService</span>
-<span class="n">zone_driver</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">zonemanager</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">brocade</span><span class="o">.</span><span class="n">brcd_fc_zone_driver</span><span class="o">.</span><span class="n">BrcdFCZoneDriver</span>
-
-<span class="p">[</span><span class="n">fabricA</span><span class="p">]</span>
-<span class="n">fc_fabric_address</span><span class="o">=</span><span class="n">hostname</span>
-<span class="n">fc_fabric_user</span><span class="o">=</span><span class="n">username</span>
-<span class="n">fc_fabric_password</span><span class="o">=</span><span class="n">password</span>
-<span class="n">principal_switch_wwn</span><span class="o">=</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
-
-<span class="p">[</span><span class="n">fabricB</span><span class="p">]</span>
-<span class="n">fc_fabric_address</span><span class="o">=</span><span class="n">hostname</span>
-<span class="n">fc_fabric_user</span><span class="o">=</span><span class="n">username</span>
-<span class="n">fc_fabric_password</span><span class="o">=</span><span class="n">password</span>
-<span class="n">principal_switch_wwn</span><span class="o">=</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
-</pre></div>
-</div>
+  <div class="section" id="e-series-configuration">
+<h1>E-Series Configuration<a class="headerlink" href="#e-series-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="e-series-prerequisites">
+<h2>E-Series Prerequisites<a class="headerlink" href="#e-series-prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>The prerequisites for NetApp E-Series are:</p>
 <ul class="simple">
-<li>This option will need to be set in the <code class="docutils literal"><span class="pre">DEFAULT</span></code> configuration
-stanza and its value must be <code class="docutils literal"><span class="pre">fabric</span></code>.</li>
-<li>Be sure that the name of the stanza matches one of the values given
-in the <code class="docutils literal"><span class="pre">fc_fabric_names</span></code> option in the <code class="docutils literal"><span class="pre">fc-zone-manager</span></code>
-configuration stanza.</li>
-<li>Be sure that the name of the stanza matches the other value given in
-the <code class="docutils literal"><span class="pre">fc_fabric_names</span></code> option in the <code class="docutils literal"><span class="pre">fc-zone-manager</span></code>
-configuration stanza.</li>
+<li>The driver requires the use of the NetApp SANtricity Web Services.
+Please refer to the table below for the required Web Services Proxy
+version.</li>
+<li>The storage controller should have a firmware version installed that
+is supported by the NetApp SANtricity Web Services Proxy. Refer to
+the proxy documentation for the most recent list of firmware versions
+that are supported.</li>
 </ul>
+</div>
+<div class="section" id="santricity-web-services-proxy">
+<h2>SANtricity Web Services Proxy<a class="headerlink" href="#santricity-web-services-proxy" title="Permalink to this headline">¶</a></h2>
+<p>The NetApp SANtricity Web Services Proxy provides access through
+standard HTTPS mechanisms to configuring management services for
+E-Series storage arrays. You can install Web Services Proxy on either
+Linux or Windows. As Web Services Proxy satisfies the client request by
+collecting data or executing configuration change requests to a target
+storage array, the Web Services Proxy module issues SYMbol requests to
+the target storage arrays. Web Services Proxy provides a Representative
+State Transfer (REST)-style API for managing E-Series controllers. The
+API enables you to integrate storage array management into other
+applications or ecosystems.</p>
+<p>When Cinder is used with a NetApp E-Series system, use of the SANtricity
+Web Services Proxy is currently required. The SANtricity Web Services
+Proxy may be deployed in a highly-available topology using an
+active/passive strategy.</p>
+<p>While WFA can be utilized in conjunction with the NetApp unified Cinder
+driver, a deployment of Cinder and WFA does introduce additional
+complexity, management entities, and potential points of failure within
+a cloud architecture. If you have an existing set of workflows that are
+written within the WFA framework, and are looking to leverage them in
+lieu of the default provisioning behavior of the Cinder driver operating
+directly against a FAS system, then it may be desirable to use the
+intermediated mode.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p class="last">While OpenStack has support for several Fibre Channel fabric switch
-vendors, NetApp has validated their drivers with the use of Brocade
-switches. For more information on other vendors, refer to the
-<a class="reference external" href="http://docs.openstack.org/trunk/config-reference/content/section_fc-zoning.html">upstream
-documentation</a>.</p>
+<p class="last">As of the Mitaka release, only NetApp SANtricity Web Services Proxy
+version 1.4 and greater are supported by the E-Series Cinder driver.
+If an older version is installed, the user will be notified that an
+upgrade is required upon starting the Cinder-Volume service.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Unless you have a significant existing investment with OnCommand
+Workflow Automator that you wish to leverage in an OpenStack
+deployment, it is recommended that you start with the <em>direct</em> mode
+of operation when deploying Cinder with a NetApp FAS system. When
+Cinder is used with a NetApp E-Series system, use of the SANtricity
+Web Services Proxy in the <em>intermediated</em> mode is currently
+required. The SANtricity Web Services Proxy may be deployed in a
+highly-available topology using an active/passive strategy.</p>
+</div>
+</div>
+<div class="section" id="storage-networking-considerations">
+<h2>Storage Networking Considerations<a class="headerlink" href="#storage-networking-considerations" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Ensure there is segmented network connectivity between the hypervisor
+nodes and the network interfaces present on the E-Series controller.</li>
+<li>Ensure there is network connectivity between the <code class="docutils literal"><span class="pre">cinder-volume</span></code>
+nodes and the interfaces present on the node running the NetApp
+SANtricity Web Services Proxy software.</li>
+</ol>
+</div>
+<div class="section" id="nova-live-migration-of-instances-with-attached-e-series-volumes">
+<span id="nova-live"></span><h2>Nova Live Migration of Instances with Attached E-Series Volumes<a class="headerlink" href="#nova-live-migration-of-instances-with-attached-e-series-volumes" title="Permalink to this headline">¶</a></h2>
+<p>Live migration of Nova instances with attached volumes hosted on
+E-Series are disabled by default. Setting <code class="docutils literal"><span class="pre">netapp_enable_multiattach</span></code>
+to true will allow this operation, however, it is facilitated by mapping
+to a host group on the E-Series array, and comes with some limitations:</p>
+<ul class="simple">
+<li>There is a maximum of 256 Cinder volumes for this backend.</li>
+<li>E-Series hosts representing Nova Compute nodes must not be assigned
+to a foreign E-Series host group.</li>
+</ul>
+<p>Irrespective of this option, live migrations between hosts may fail due
+to ‘LUN id’ collisions where the immutable attachment identifier of the
+attached volume is already in use on the destination host.</p>
 </div>
 </div>
 
@@ -186,10 +233,10 @@ documentation</a>.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="section_cinder-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Cinder.conf: Overview"></i></a>
+            <a href="../ontap_configuration/section_storage_networking_considerations.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Storage Networking Considerations"></i></a>
           
           
-            <a href="section_solidfire-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Driver for SolidFire"></i></a>
+            <a href="../ch_cinder-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Cinder Configuration Files"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -322,13 +369,13 @@ documentation</a>.</p>
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "cinder/configuration/cinder_config_files/section_fibre-channel" + ".rst";
+        var sourceFile = "cinder/configuration/eseries_configuration/section_eseries-config" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: ae6e4693918b6b7d2a85722736744131569f90f5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Fibre Channel &amp; cinder.conf in NetApp OpenStack Docs";
+        var bugTitle = "E-Series Configuration in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE"
         var useStoryboard = "";
