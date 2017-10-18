@@ -35,10 +35,11 @@ of service provider partners already have deployed hundreds of high-SLA
 cloud services built on NetApp with over a billion users worldwide.
 
 Because NetApp technology is integrated with OpenStack Block Storage
-Service, OpenStack Object Storage Service, OpenStack Image Service and
-OpenStack Compute Service, users can build on this proven and highly
-scalable storage platform to optimize their private and public cloud
-architectures by reducing risk and increasing efficiency.
+Service, OpenStack Shared File System Service, OpenStack Object Storage
+Service, OpenStack Image Service and OpenStack Compute Service, users
+can build on this proven and highly scalable storage platform to
+optimize their private and public cloud architectures by reducing risk
+and increasing efficiency.
 
 This document intends to describe the application of NetApp capabilities
 to enable production OpenStack deployments. In particular, it’s meant to
