@@ -64,7 +64,7 @@ Setup
 -----
 
 When NAS security options are deployed, OpenStack Cinder and Nova nodes
-must be configured appropriately, as well as Data ONTAP, for Cinder
+must be configured appropriately, as well as ONTAP, for Cinder
 volume operations and Nova attaches to succeed. For example, if *root*
 root is "squashed" and "set uid" is disabled but the NAS security
 options are set to 'false', the driver will attempt to run "chown" as
@@ -89,7 +89,7 @@ ONTAP Side Setup
 
 -  See `NetApp TR3850: NFSv4 Enhancements and Best Practices Guide: Data
    ONTAP Implementation <http://www.netapp.com/us/media/tr-3580.pdf>`__
-   and `NetApp TR4067: Clustered Data ONTAP NFS Best Practice and
+   and `NetApp TR4067: ONTAP NFS Best Practice and
    Implementation Guide <http://www.netapp.com/us/media/tr-4067.pdf>`__,
    as well as the File Access and Protocols Management Guides available
    from the NetApp NOW site for setup information.

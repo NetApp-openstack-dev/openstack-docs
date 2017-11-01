@@ -4,7 +4,7 @@ Storage Networking Considerations
 =================================
 
 1. Ensure there is segmented network connectivity between the hypervisor
-   nodes and the Data LIF interfaces from Data ONTAP.
+   nodes and the Data LIF interfaces from ONTAP.
 
 2. When NFS is used as the storage protocol with Cinder, the node
    running the ``cinder-volume`` process will attempt to mount the NFS

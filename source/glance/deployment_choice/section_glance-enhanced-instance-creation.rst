@@ -52,7 +52,7 @@ the storage cluster.
 
    The NetApp Copy Offload tool requires that:
 
-   -  The storage system must have Data ONTAP v8.2 or greater
+   -  The storage system must have ONTAP v8.2 or greater
       installed.
 
    -  The vStorage feature must be enabled on each storage virtual

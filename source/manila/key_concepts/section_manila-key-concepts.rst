@@ -66,7 +66,7 @@ scheduling logic is performed completely within the Manila scheduler.
 .. important::
 
    For NetApp's Manila drivers, a Manila storage pool is an aggregate
-   defined within Data ONTAP.
+   defined within ONTAP.
 
 .. _manila_driver:
 
@@ -272,7 +272,7 @@ services, please refer to :ref:`figure-6.2` and :ref:`figure-6.3`.
 
    Within the NetApp Manila driver, a share server is defined to be a
    storage virtual machine (also known as a Vserver) within the
-   clustered Data ONTAP system that is associated with a particular
+   ONTAP system that is associated with a particular
    backend. The NetApp Manila driver has two operating "modes":
 
    1. One that supports the dynamic creation of share servers (SVMs)
@@ -304,9 +304,9 @@ writable, readable, and DR.
 
 .. important::
 
-   The NetApp Unified Driver for Clustered Data ONTAP *without* Share
+   The NetApp Unified Driver for ONTAP *without* Share
    Server management currently supports DR style replication. The
-   NetApp Unified Driver for Clustered Data ONTAP *with* Share Server
+   NetApp Unified Driver for ONTAP *with* Share Server
    management does not support replication.
 
 Share Migration

@@ -11,7 +11,7 @@ system verifies the response and authenticates the initiator.
 
 .. important::
 
-   For Data ONTAP the use of CHAP authentication requires that TCP port
+   For ONTAP the use of CHAP authentication requires that TCP port
    22 (SSH) is available on the cluster management LIF. A SSH
    connection, from the driver to the storage system, is required to
    set the credentials on the appropriate iSCSI initiator. For E-Series
@@ -46,7 +46,7 @@ terminated and a new iSCSI session is established.
 Configuration Options
 ---------------------
 
-To enable CHAP authentication for the NetApp clustered Data ONTAP,
+To enable CHAP authentication for the NetApp ONTAP,
 7-mode, or E-Series iSCSI drivers, the following options should be added
 to the appropriate NetApp stanza in the Cinder configuration file
 (cinder.conf). This configuration option is only relevant to iSCSI

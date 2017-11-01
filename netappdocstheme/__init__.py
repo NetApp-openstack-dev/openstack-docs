@@ -95,9 +95,9 @@ def _html_page_context(app, pagename, templatename, context, doctree):
         bug_tag = app.config.bug_tag
         if bug_tag:
             _html_context_data['bug_tag'] = bug_tag
-        watermark = app.config.watermark
-        if watermark:
-            _html_context_data['watermark'] = watermark
+        #watermark = app.config.watermark
+        #if watermark:
+        #    _html_context_data['watermark'] = watermark
 
     context.update(_html_context_data)
     context['other_versions'] = _get_other_versions(app)
@@ -110,7 +110,7 @@ def setup(app):
     app.add_config_value('repository_name', '', 'env')
     app.add_config_value('bug_project', '', 'env')
     app.add_config_value('bug_tag', '', 'env')
-    app.add_config_value('watermark', '', 'env')
+    #app.add_config_value('watermark', '', 'env')
     app.add_html_theme(
         'netappdocs',
         os.path.abspath(os.path.dirname(__file__)) + '/theme/netappdocstheme',

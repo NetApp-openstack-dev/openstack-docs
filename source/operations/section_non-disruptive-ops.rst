@@ -1,7 +1,7 @@
 Non-Disruptive Operations
 =========================
 
-NetApp’s clustered Data ONTAP provides these benefits for non-disruptive
+NetApp’s ONTAP provides these benefits for non-disruptive
 operations:
 
 -  The movement of NetApp FlexVol volumes that contain Cinder volumes
@@ -9,7 +9,7 @@ operations:
 
 -  The movement of Manila shares between different aggregates
 
-In addition, using NetApp Clustered Data ONTAP or E-Series, OpenStack
+In addition, using NetApp ONTAP or E-Series, OpenStack
 environments gain these two key differentiators that would not be
 possible with volumes residing on Compute nodes:
 
@@ -19,7 +19,7 @@ possible with volumes residing on Compute nodes:
 -  The ability to migrate Cinder volumes from one backend to another.
    The source and destination backend can be in the same cluster or in
    different clusters. The following is an example of migrating a Cinder
-   volume that is in-use across two clustered Data ONTAP hosts
+   volume that is in-use across two ONTAP hosts
 
   Nova instance with an attached cinder volume.  Pay particular attention to
   the value associated with the **os-extended-volumes:volumes_attached** field.
