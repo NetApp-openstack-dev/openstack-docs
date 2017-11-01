@@ -90,7 +90,7 @@ Network Plugins
 As described in :ref:`figure-6.2`, there are a set of network plugins
 that provide for a variety of integration approaches with Neutron and
 Standalone networks. These plugins should only be used with the NetApp
-clustered Data ONTAP driver when using share server management.
+ONTAP driver when using share server management.
 
 These are the valid network plugins:
 

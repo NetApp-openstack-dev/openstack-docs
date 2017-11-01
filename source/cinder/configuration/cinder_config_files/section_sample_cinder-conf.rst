@@ -5,8 +5,8 @@ Sample cinder.conf
 
 This section provides an example Cinder configuration file
 (``cinder.conf``) that contains four backends - one for SolidFire,
-one for clustered Data ONTAP with the NFS storage protocol,
-one for clustered Data ONTAP with the iSCSI storage protocol,
+one for ONTAP with the NFS storage protocol,
+one for ONTAP with the iSCSI storage protocol,
 and one for an E-Series deployment (leveraging iSCSI).
 
 ::

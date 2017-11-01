@@ -1,15 +1,15 @@
 .. _7mode-nfs:
 
-NetApp Unified Driver for Data ONTAP operating in 7-Mode with NFS
+NetApp Unified Driver for ONTAP operating in 7-Mode with NFS
 -----------------------------------------------------------------
 
-The NetApp unified driver for Data ONTAP operating in 7-Mode with NFS is
-a driver interface from OpenStack block storage to a Data ONTAP cluster
+The NetApp unified driver for ONTAP operating in 7-Mode with NFS is
+a driver interface from OpenStack block storage to an ONTAP cluster
 system to accomplish provisioning and management of OpenStack volumes on
-NFS exports provided by the Data ONTAP cluster system. The NetApp
-unified driver for the Data ONTAP cluster does not require any
+NFS exports provided by the ONTAP cluster system. The NetApp
+unified driver for the ONTAP cluster does not require any
 additional management software to achieve the desired functionality. It
-uses NetApp APIs to interact with the Data ONTAP cluster.
+uses NetApp APIs to interact with the ONTAP cluster.
 
 .. important::
 
@@ -33,7 +33,7 @@ uses NetApp APIs to interact with the Data ONTAP cluster.
       release (All milestones of this release)
 
    -  ``What should users/operators do:`` Follow the recommended
-      migration path to upgrade to Clustered Data ONTAP [c]_ or get in
+      migration path to upgrade to ONTAP [c]_ or get in
       touch with your NetApp support representative.
 
    .. [a]
@@ -45,10 +45,10 @@ uses NetApp APIs to interact with the Data ONTAP cluster.
       policy <https://governance.openstack.org/tc/reference/tags/assert_follows-standard-deprecation.html>`__
 
    .. [c]
-      `Clustered Data ONTAP for 7-Mode
+      `ONTAP for 7-Mode
       Administrators <https://mysupport.netapp.com/info/web/ECMP1658253.html>`__
 
-To set up the NetApp Data ONTAP operating in 7-Mode NFS driver for
+To set up the NetApp ONTAP operating in 7-Mode NFS driver for
 Cinder, the following stanza should be added to the Cinder configuration
 file (``cinder.conf``)::
 
@@ -85,16 +85,16 @@ file (``cinder.conf``)::
    where ``ip`` corresponds to the IP address assigned to a Data LIF,
    and ``share`` refers to a junction path for a FlexVol volume within
    an SVM. Make sure that volumes corresponding to exports have
-   read/write permissions set on the Data ONTAP controllers. Do *not*
+   read/write permissions set on the ONTAP controllers. Do *not*
    put mount options in the ``nfs_shares_config`` file; use
    ``nfs_mount_options`` instead. For more information on that and
    other parameters available to affect the behavior of NetApp's NFS
    driver, please refer to
    http://docs.openstack.org/trunk/config-reference/content/nfs-driver-options.html.
 
-Table 4.17, “Configuration options for Data ONTAP operating in 7-Mode
+Table 4.17, “Configuration options for ONTAP operating in 7-Mode
 with NFS” below lists the configuration options available for the
-unified driver for a Data ONTAP operating in 7-Mode deployment that
+unified driver for an ONTAP operating in 7-Mode deployment that
 uses the NFS storage protocol.
 
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -102,7 +102,7 @@ uses the NFS storage protocol.
 +===================================+============+==============================+=========================================================================================================================================================================================================================================================================================================================================================================================================================+
 | ``netapp_server_hostname``        | Required   |                              | The hostname or IP address for the storage system or proxy server. *The value of this option should be the IP address of either the cluster management LIF or the SVM management LIF.*                                                                                                                                                                                                                                  |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``netapp_server_port``            | Optional   |                              | The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.                                                                                                                                                                                                         |
+| ``netapp_server_port``            | Optional   |                              | The TCP port to use for communication with the storage system or proxy server. If not specified, ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.                                                                                                                                                                                                              |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp_login``                  | Required   |                              | Administrative user account name used to access the storage system or proxy server.                                                                                                                                                                                                                                                                                                                                     |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -112,9 +112,9 @@ uses the NFS storage protocol.
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp_transport_type``         | Required   | ``http``                     | Transport protocol for communicating with the storage system or proxy server. Valid options include ``http`` and ``https``.                                                                                                                                                                                                                                                                                             |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``netapp_vfiler``                 | Optional   |                              | The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode. Only use this option when utilizing the MultiStore feature on the NetApp storage system.                                                                                                                    |
+| ``netapp_vfiler``                 | Optional   |                              | The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of ONTAP operating in 7-Mode. Only use this option when utilizing the MultiStore feature on the NetApp storage system.                                                                                                                         |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``netapp_storage_family``         | Required   | ``ontap_cluster``            | The storage family type used on the storage system; valid values are ``ontap_7mode`` for Data ONTAP operating in 7-Mode, ``ontap_cluster`` for clustered Data ONTAP, or ``eseries`` for E-Series.                                                                                                                                                                                                                       |
+| ``netapp_storage_family``         | Required   | ``ontap_cluster``            | The storage family type used on the storage system; valid values are ``ontap_7mode`` for ONTAP operating in 7-Mode, ``ontap_cluster`` for ONTAP, or ``eseries`` for E-Series.                                                                                                                                                                                                                                           |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``nfs_shares_config``             | Required   | ``/etc/cinder/nfs_shares``   | The file referenced by this configuration option should contain a list of NFS shares, each on their own line, to which the driver should attempt to provision new Cinder volumes into.                                                                                                                                                                                                                                  |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -141,6 +141,6 @@ uses the NFS storage protocol.
 | ``goodness_function``             | Optional   | (see description)            | This option may be used to override the default goodness function, which allows Cinder to place new volumes on lesser-utilized storage controllers. The default value is "100 - capabilities.utilization".                                                                                                                                                                                                              |
 +-----------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table 4.17. Configuration Options for Data ONTAP Operating in 7-Mode with NFS
+Table 4.17. Configuration Options for ONTAP Operating in 7-Mode with NFS
 
 .. include:: ../../../common/nfs-cache-warning.rst

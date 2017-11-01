@@ -50,11 +50,11 @@ Storage Virtual Machine Considerations
 8. Once FlexVol volumes have been created, be sure to configure the
    desired features (e.g. deduplication, compression, SnapMirror
    relationships, etc) before configuring Cinder. While Cinder will
-   periodically poll Data ONTAP to discover changes in configuration
+   periodically poll ONTAP to discover changes in configuration
    and/or features, there is a delay in time between when changes are
    performed and when they are reflected within Cinder.
 
-9. NetApp does not recommend using the autogrow capability for Data
+9. NetApp does not recommend using the autogrow capability for
    ONTAP FlexVol volumes within a Cinder deployment. A FlexVol only
    reports its current size, so the Cinder scheduler is never made aware
    of the autogrow limit that may or may not be enabled for the FlexVol.

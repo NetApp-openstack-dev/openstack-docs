@@ -42,8 +42,8 @@ create the necessary metadata within the Cinder database to allow it to
 be managed like any other Cinder volume. The operation will also rename
 the volume to a name appropriate to the particular Cinder driver in use.
 The imported storage object could be a file, LUN, or a volume depending
-on the protocol (iSCSI/FC/NFS) and driver (Data ONTAP operating in
-7-mode, clustered Data ONTAP, or E-Series) in use. This feature is
+on the protocol (iSCSI/FC/NFS) and driver (ONTAP operating in
+7-mode, ONTAP, or E-Series) in use. This feature is
 useful in migration scenarios where virtual machines or other data need
 to be managed by Cinder; refer to the section called
 ":ref:`cinder-manage`" for an example of the ``cinder manage`` command.
@@ -191,17 +191,17 @@ Table 4.1a. SolidFire QoS Options
 
 **ONTAP**
 
-The NetApp clustered Data ONTAP Cinder driver currently supports
+The NetApp ONTAP Cinder driver currently supports
 QoS by backend QoS specs or via netapp:qos_policy_group assignment
 using Cinder Extra-Specs. The NetApp Cinder driver accomplishes this by
-using NetApp QoS policy groups, introduced with clustered Data ONTAP
+using NetApp QoS policy groups, introduced with ONTAP
 8.2, and applying these policy groups to Cinder volumes.
 
 -  *netapp:qos_policy_group*: A Cinder extra-spec, which references an
    externally provisioned QoS policy group, provides a means to assign a
    Netapp QoS policy group for a set of Cinder volumes. All Cinder
    volumes associated with a single QoS policy group share the
-   throughput value restrictions as a group. The clustered Data ONTAP
+   throughput value restrictions as a group. The ONTAP
    QoS policy group must be created by the storage administrator on the
    backend prior to specifying the netapp:qos_policy_group option in a
    Cinder extra-spec. Use the netapp:qos_policy_group option when a
@@ -220,7 +220,7 @@ using NetApp QoS policy groups, introduced with clustered Data ONTAP
    The driver marks the QoS policies for deletion by the NetApp QoS
    policy reaping job. The NetApp QoS policy reaping job runs every 60
    seconds. Refer to NetApp ONTAP documentation for your version of
-   clustered Data ONTAP to determine NetApp QoS policy group limits. Use
+   ONTAP to determine NetApp QoS policy group limits. Use
    the QoS Spec feature when a SLO needs to be applied to a single
    Cinder volume.
 
@@ -241,7 +241,7 @@ using NetApp QoS policy groups, introduced with clustered Data ONTAP
 Table 4.1b. NetApp Supported Backend QoS Spec Options
 
 .. warning::
-   While SolidFire supports volume retyping, Data ONTAP does not.
+   While SolidFire supports volume retyping, ONTAP does not.
 
 .. _storage-pools:
 
@@ -263,7 +263,7 @@ protocol used:
 
 -  *iSCSI and Fibre Channel*: a Cinder pool is created for every FlexVol
    volume within the SVM specified by the configuration option
-   ``netapp_vserver``, or for Data ONTAP operating in c/7-mode, all
+   ``netapp_vserver``, or for ONTAP operating in c/7-mode, all
    FlexVol volumes within the system unless limited by the configuration
    option ``netapp_pool_name_search_pattern``.
 
@@ -281,9 +281,9 @@ Consistency Groups
 ------------------
 
 With the Mitaka release of OpenStack, NetApp supports Cinder Consistency
-Groups when using E-series or 7-Mode/Clustered Data ONTAP iSCSI/Fibre
+Groups when using E-series or 7-Mode/ONTAP iSCSI/Fibre
 Channel drivers. With the Newton release of OpenStack, NetApp supports
-Cinder Consistency Groups when using 7-Mode/Clustered Data ONTAP NFS
+Cinder Consistency Groups when using 7-Mode/ONTAP NFS
 drivers. Consistency group support allows snapshots of multiple volumes
 in the same consistency group to be taken at the same point-in-time to
 ensure data consistency. To illustrate the usefulness of consistency
@@ -363,7 +363,7 @@ Cinder backup repositories may be implemented either using an object
 store (such as Swift) or by using an NFS shared filesystem. The Cinder
 backup service uses a single repository, irrespective of the backends
 used to provide storage pools for the volumes themselves. For example, a
-FlexVol volume exported from a Data ONTAP storage system using NFS can
+FlexVol volume exported from an ONTAP storage system using NFS can
 serve as a backup repository for multi-backend, heterogeneous Cinder
 deployments.
 
@@ -371,14 +371,14 @@ Tenant-controlled, per-volume backup service is complementary to, but
 not a replacement for, administrative backups of the storage pools
 themselves that hold Cinder volumes. See
 http://netapp.github.io/openstack/2015/03/12/cinder-backup-restore/ for
-a valuable approach to administrative backups when clustered Data ONTAP
+a valuable approach to administrative backups when ONTAP
 storage pools are used to host Cinder volumes.
 
 Disaster Recovery
 -----------------
 
-In the Newton release of OpenStack, NetApp's Cinder driver for clustered
-Data ONTAP (for FC, NFS, iSCSI) was updated to match Cinder's v2.1 spec
+In the Newton release of OpenStack, NetApp's Cinder driver for
+ONTAP (for FC, NFS, iSCSI) was updated to match Cinder's v2.1 spec
 for replication. This makes it possible to replicate an entire backend,
 and allow all replicated volumes across different pools to fail over
 together. Intended to be a disaster recovery mechanism, it provides a

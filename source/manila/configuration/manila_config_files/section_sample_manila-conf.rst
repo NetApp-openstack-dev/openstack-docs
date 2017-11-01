@@ -7,7 +7,7 @@ Without Replication
 -------------------
 
 This section provides an sample Manila configuration file
-(``manila.conf``) that contains three backends - for clustered Data
+(``manila.conf``) that contains three backends for
 ONTAP. Two without share server management. One with share server
 management.
 

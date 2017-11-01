@@ -17,7 +17,7 @@ problem.
 -  No space left on the NetApp volume or NetApp volume does not have
    sufficient free space to host the specified OpenStack volume. Here
    NetApp volume refers to a FlexVol volume inside the configured
-   Storage Virtual Machine (SVM aka Vserver) for Clustered Data ONTAP
+   Storage Virtual Machine (SVM aka Vserver) for the ONTAP
    driver. It refers to NetApp volumes filtered in Cinder through
    parameter ``netapp_pool_name_search_pattern`` or NetApp volumes in
    the configured vFiler unit as parameter ``netapp_vfiler`` or system
@@ -30,16 +30,16 @@ problem.
 -  Cinder scheduler reports sufficient available space on NetApp backend
    but Cinder volume fails to create backend:
 
-   -  The Grizzly-based iSCSI driver for Clustered Data ONTAP and 7-mode
+   -  The Grizzly-based iSCSI driver for ONTAP and 7-mode
       driver report available space as infinite and hence failure may
       occur when no NetApp volume can host the OpenStack volume.
 
-   -  The Grizzly-based NFS driver Clustered Data ONTAP and 7-mode
+   -  The Grizzly-based NFS driver ONTAP and 7-mode
       report available space as the sum of available space of all
       configured NFS exports and hence failure may occur when no single
       NetApp volume can host the OpenStack volume of the given size.
 
-   -  The Havana-based iSCSI and NFS driver for Clustered Data ONTAP
+   -  The Havana-based iSCSI and NFS driver for ONTAP
       report the available capacity for largest NetApp volume in the
       configured Storage Virtual Machine (SVM aka Vserver). Capacity
       mismatch might fail volume creation.
@@ -50,7 +50,7 @@ problem.
       single NetApp volume can host the OpenStack volume of the given
       size.
 
--  The Havana based NFS driver for Clustered Data ONTAP has the
+-  The Havana based NFS driver for ONTAP has the
    configuration option ``netapp_vserver`` to specify the Storage
    Virtual Machine (SVM aka Vserver) to use for provisioning. It may so
    happen that the NFS exports specified in the configuration and the
@@ -82,7 +82,7 @@ problem.
    does not return the extra spec in volume stats call to the Cinder
    scheduler.
 
--  In Clustered Data ONTAP drivers operation fails due to:
+-  In ONTAP drivers operation fails due to:
 
    -  No NetApp volume supports all extra specs bound to the
       volume-type.
