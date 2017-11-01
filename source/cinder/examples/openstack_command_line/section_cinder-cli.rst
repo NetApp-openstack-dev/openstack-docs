@@ -137,8 +137,7 @@ NetApp specific extra specs described in
 ::
 
     $ cinder type-key iscsi set storage_protocol=iSCSI
-
-::  $ cinder type-key nfs set storage_protocol=nfs
+    $ cinder type-key nfs set storage_protocol=nfs
 
 ::
 
@@ -436,7 +435,7 @@ features enabled that matched the Cinder volume type definitions.
 Cinder Manage Usage
 -------------------
 
-In this section we import a Data ONTAP iSCSI LUN by specifying it by
+In this section we import an ONTAP iSCSI LUN by specifying it by
 name or UUID.
 
 ::
@@ -590,7 +589,7 @@ world-wide identifier.
     | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 
-In this section we import a Data ONTAP NFS file by specifying its path.::
+In this section we import an ONTAP NFS file by specifying its path.::
 
     $ cinder get-pools
     +----------+------------------------------+

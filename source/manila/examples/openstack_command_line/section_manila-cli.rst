@@ -609,7 +609,7 @@ Notice that there are two share-servers for the three shares.
 Viewing Flexvols
 ----------------
 
-We'll now look at the CLI output from the Data ONTAP cluster to see what
+We'll now look at the CLI output from the ONTAP cluster to see what
 FlexVol volumes were created for the Manila share objects, as well as
 the provisioning strategy (thin or thick) for each share. Note how the
 name of the FlexVol volume corresponds to the share UUID as defined by
@@ -946,7 +946,7 @@ Importing and Exporting Manila Shares
 -------------------------------------
 
 In this section, we use the admin-only ``manage`` command to bring
-storage resources under Manila management. A share is a Data ONTAP
+storage resources under Manila management. A share is an ONTAP
 FlexVol, and we must tell Manila which host, backend and pool contain
 the FlexVol. It may be useful to list the Manila pools to get the
 correct format. Also note that the FlexVol must be specified in the
