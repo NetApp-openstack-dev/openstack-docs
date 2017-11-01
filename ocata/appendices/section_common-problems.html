@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-10-18 20:52</div>
+            <div class="docs-updated">updated: 2017-11-01 22:17</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -166,7 +166,7 @@ problem.</p>
 <li>No space left on the NetApp volume or NetApp volume does not have
 sufficient free space to host the specified OpenStack volume. Here
 NetApp volume refers to a FlexVol volume inside the configured
-Storage Virtual Machine (SVM aka Vserver) for Clustered Data ONTAP
+Storage Virtual Machine (SVM aka Vserver) for the ONTAP
 driver. It refers to NetApp volumes filtered in Cinder through
 parameter <code class="docutils literal"><span class="pre">netapp_pool_name_search_pattern</span></code> or NetApp volumes in
 the configured vFiler unit as parameter <code class="docutils literal"><span class="pre">netapp_vfiler</span></code> or system
@@ -175,14 +175,14 @@ wide NetApp volumes for 7-mode storage system.</li>
 <li>Cinder scheduler service is down.</li>
 <li>Cinder scheduler reports sufficient available space on NetApp backend
 but Cinder volume fails to create backend:<ul>
-<li>The Grizzly-based iSCSI driver for Clustered Data ONTAP and 7-mode
+<li>The Grizzly-based iSCSI driver for ONTAP and 7-mode
 driver report available space as infinite and hence failure may
 occur when no NetApp volume can host the OpenStack volume.</li>
-<li>The Grizzly-based NFS driver Clustered Data ONTAP and 7-mode
+<li>The Grizzly-based NFS driver ONTAP and 7-mode
 report available space as the sum of available space of all
 configured NFS exports and hence failure may occur when no single
 NetApp volume can host the OpenStack volume of the given size.</li>
-<li>The Havana-based iSCSI and NFS driver for Clustered Data ONTAP
+<li>The Havana-based iSCSI and NFS driver for ONTAP
 report the available capacity for largest NetApp volume in the
 configured Storage Virtual Machine (SVM aka Vserver). Capacity
 mismatch might fail volume creation.</li>
@@ -193,7 +193,7 @@ single NetApp volume can host the OpenStack volume of the given
 size.</li>
 </ul>
 </li>
-<li>The Havana based NFS driver for Clustered Data ONTAP has the
+<li>The Havana based NFS driver for ONTAP has the
 configuration option <code class="docutils literal"><span class="pre">netapp_vserver</span></code> to specify the Storage
 Virtual Machine (SVM aka Vserver) to use for provisioning. It may so
 happen that the NFS exports specified in the configuration and the
@@ -219,7 +219,7 @@ side applications.</li>
 one of the extra-specs bound to the volume-type requested. Hence, it
 does not return the extra spec in volume stats call to the Cinder
 scheduler.</li>
-<li>In Clustered Data ONTAP drivers operation fails due to:<ul>
+<li>In ONTAP drivers operation fails due to:<ul>
 <li>No NetApp volume supports all extra specs bound to the
 volume-type.</li>
 <li>The configured storage admin user does not have sufficient
@@ -407,7 +407,7 @@ communicating with the share replica’s host via intercluster LIFs.</li>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-10-18 20:52</div>
+            <div class="docs-updated">updated: 2017-11-01 22:17</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -535,7 +535,7 @@ communicating with the share replica’s host via intercluster LIFs.</li>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 31dd32eb061434e8ee5590fe92b3767c2c94ab82";
+    var gitSha = "SHA: b6c7eb69eb2d1048e4740ae3023ae1a033d84ea3";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Common Problems in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -546,7 +546,7 @@ communicating with the share replica’s host via intercluster LIFs.</li>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.1 on 2017-10-18 20:52";
+    var buildstring = "Release: 2017.1 on 2017-11-01 22:17";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

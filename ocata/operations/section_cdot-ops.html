@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Operational Concerns with Data ONTAP</title>
+    <title>OpenStack Docs: Operational Concerns with ONTAP</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,7 +107,7 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Operational Concerns with Data ONTAP</h2>
+      <h2>Operational Concerns with ONTAP</h2>
     
   </div>
   <div class="docs-actions">
@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-10-18 20:52</div>
+            <div class="docs-updated">updated: 2017-11-01 22:17</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -130,7 +130,7 @@ ga('send', 'pageview');
 
 <h5><a href="../index.html">Contents</a></h5>
 <ul>
-<li><a class="reference internal" href="#">Operational Concerns with Data ONTAP</a><ul>
+<li><a class="reference internal" href="#">Operational Concerns with ONTAP</a><ul>
 <li><a class="reference internal" href="#nfs-v4-0-and-nfs-v4-1-configuration">NFS v4.0 and NFS v4.1 Configuration</a></li>
 <li><a class="reference internal" href="#volume-migration">Volume Migration</a></li>
 <li><a class="reference internal" href="#live-migration">Live Migration</a></li>
@@ -141,11 +141,11 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="operational-concerns-with-data-ontap">
-<h1>Operational Concerns with Data ONTAP<a class="headerlink" href="#operational-concerns-with-data-ontap" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="operational-concerns-with-ontap">
+<h1>Operational Concerns with ONTAP<a class="headerlink" href="#operational-concerns-with-ontap" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="nfs-v4-0-and-nfs-v4-1-configuration">
 <h2>NFS v4.0 and NFS v4.1 Configuration<a class="headerlink" href="#nfs-v4-0-and-nfs-v4-1-configuration" title="Permalink to this headline">¶</a></h2>
-<p>Be sure to refer to the <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&amp;m=tr-4067.pdf">Clustered Data ONTAP NFS Best Practices and
+<p>Be sure to refer to the <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&amp;m=tr-4067.pdf">ONTAP NFS Best Practices and
 Implementation
 Guide</a>
 for information on how to optimally set up NFS exports for use with
@@ -164,14 +164,14 @@ or via command line.</p>
 <div class="section" id="volume-migration">
 <h2>Volume Migration<a class="headerlink" href="#volume-migration" title="Permalink to this headline">¶</a></h2>
 <p>Volume migration for Cinder has been available since the Havana release
-for clustered Data ONTAP and the Icehouse release for E-Series.</p>
+for ONTAP and the Icehouse release for E-Series.</p>
 <p>The volume migration feature of Cinder can be used to aid in the
-transition from Data ONTAP operating in 7-Mode to clustered Data ONTAP
-with minimal disruption. If you have volumes managed by Cinder on a Data
+transition from ONTAP operating in 7-Mode to ONTAP
+with minimal disruption. If you have volumes managed by Cinder on an
 ONTAP operating in 7-Mode storage system, you can configure the
-clustered Data ONTAP instance as a new backend in the Cinder
+ONTAP instance as a new backend in the Cinder
 configuration and leverage the migration feature to move existing
-volumes to the new backend and then retire the Data ONTAP operating in
+volumes to the new backend and then retire the ONTAP operating in
 7-Mode system.</p>
 <p>Once the two storage systems to operate with Cinder, please verify that
 both backends have been enabled successfully and are ready to support
@@ -186,9 +186,9 @@ the migration process.</p>
 +------------------+-------------------+------+---------+-------+--------------------------+
 </pre></div>
 </div>
-<p>The host <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;7mode">openstack1<span>&#64;</span>7mode</a> represents the backend representing the Data
+<p>The host <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;7mode">openstack1<span>&#64;</span>7mode</a> represents the backend representing the
 ONTAP operating in 7-Mode system, and <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;cDOT">openstack1<span>&#64;</span>cDOT</a> represents the
-backend representing the clustered Data ONTAP system. Volumes can be
+backend representing the ONTAP system. Volumes can be
 migrated individually to the new backend, through the use of the cinder
 migrate CLI command. For example, consider a Cinder volume with ID
 781501e1-af79-4d3e-be90-f332a5841f5e on the <a class="reference external" href="mailto:openstack1&#37;&#52;&#48;7mode">openstack1<span>&#64;</span>7mode</a> storage
@@ -245,7 +245,7 @@ Live Migration of Instances with Attached E-Series Volumes.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-10-18 20:52</div>
+            <div class="docs-updated">updated: 2017-11-01 22:17</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -286,7 +286,7 @@ Live Migration of Instances with Attached E-Series Volumes.</p>
 <li class="toctree-l1"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ch_operations.html">Day two operations</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="section_non-disruptive-ops.html">Non-Disruptive Operations</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Operational Concerns with Data ONTAP</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Operational Concerns with ONTAP</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
@@ -371,9 +371,9 @@ Live Migration of Instances with Attached E-Series Volumes.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 31dd32eb061434e8ee5590fe92b3767c2c94ab82";
+    var gitSha = "SHA: b6c7eb69eb2d1048e4740ae3023ae1a033d84ea3";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Operational Concerns with Data ONTAP in NetApp OpenStack Docs";
+        var bugTitle = "Operational Concerns with ONTAP in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "OCATA"
         var useStoryboard = "";
@@ -382,7 +382,7 @@ Live Migration of Instances with Attached E-Series Volumes.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.1 on 2017-10-18 20:52";
+    var buildstring = "Release: 2017.1 on 2017-11-01 22:17";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
