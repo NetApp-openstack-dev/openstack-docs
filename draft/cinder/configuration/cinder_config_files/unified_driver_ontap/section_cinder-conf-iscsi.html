@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: NetApp Unified Driver for Clustered Data ONTAP with iSCSI</title>
+    <title>OpenStack Docs: NetApp Unified Driver for ONTAP with iSCSI</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,22 +107,22 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>NetApp Unified Driver for Clustered Data ONTAP with iSCSI</h2>
+      <h2>NetApp Unified Driver for ONTAP with iSCSI</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_cinder-conf-nfs.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for Clustered Data ONTAP with NFS"></i></a>
+    <a href="section_cinder-conf-nfs.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for ONTAP with NFS"></i></a>
     
     
-    <a href="section_cinder-conf-fcp.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Unified Driver for Clustered Data ONTAP with Fibre Channel"></i></a>
+    <a href="section_cinder-conf-fcp.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Unified Driver for ONTAP with Fibre Channel"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-10-18 19:43</div>
+            <div class="docs-updated">updated: 2017-11-01 21:46</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -131,14 +131,14 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="netapp-unified-driver-for-clustered-data-ontap-with-iscsi">
-<span id="cdot-iscsi"></span><h1>NetApp Unified Driver for Clustered Data ONTAP with iSCSI<a class="headerlink" href="#netapp-unified-driver-for-clustered-data-ontap-with-iscsi" title="Permalink to this headline">¶</a></h1>
-<p>The NetApp unified driver for clustered Data ONTAP with iSCSI is a
-driver interface from OpenStack Cinder to NetApp clustered Data ONTAP
+  <div class="section" id="netapp-unified-driver-for-ontap-with-iscsi">
+<span id="cdot-iscsi"></span><h1>NetApp Unified Driver for ONTAP with iSCSI<a class="headerlink" href="#netapp-unified-driver-for-ontap-with-iscsi" title="Permalink to this headline">¶</a></h1>
+<p>The NetApp unified driver for ONTAP with iSCSI is a
+driver interface from OpenStack Cinder to NetApp ONTAP
 storage controllers to accomplish provisioning and management of a
 storage-area network (SAN) block storage entity; that is, a NetApp LUN
 that uses the iSCSI protocol.</p>
-<p>To set up the NetApp clustered Data ONTAP iSCSI driver for Cinder, the
+<p>To set up the NetApp ONTAP iSCSI driver for Cinder, the
 following stanza should be added to the Cinder configuration file
 (<code class="docutils literal"><span class="pre">cinder.conf</span></code>):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">myIscsiBackend</span><span class="p">]</span>
@@ -161,8 +161,8 @@ following stanza should be added to the Cinder configuration file
 the backend.</li>
 <li>The value of <code class="docutils literal"><span class="pre">netapp_storage_protocol</span></code> MUST be set to <code class="docutils literal"><span class="pre">iscsi</span></code>.</li>
 </ul>
-<p>Table 4.13, “Configuration options for clustered Data ONTAP with iSCSI” below lists the configuration
-options available for the unified driver for a clustered Data ONTAP
+<p>Table 4.13, “Configuration options for ONTAP with iSCSI” below lists the configuration
+options available for the unified driver for an ONTAP
 deployment that uses the iSCSI storage protocol.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -187,7 +187,7 @@ deployment that uses the iSCSI storage protocol.</p>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_server_port</span></code></td>
 <td>Optional</td>
 <td>&#160;</td>
-<td>The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.</td>
+<td>The TCP port to use for communication with the storage system or proxy server. If not specified, ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_login</span></code></td>
 <td>Required</td>
@@ -222,12 +222,12 @@ deployment that uses the iSCSI storage protocol.</p>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_storage_family</span></code></td>
 <td>Optional</td>
 <td><code class="docutils literal"><span class="pre">ontap_cluster</span></code></td>
-<td>The storage family type used on the storage system; valid values are <code class="docutils literal"><span class="pre">ontap_7mode</span></code> for Data ONTAP operating in 7-Mode, <code class="docutils literal"><span class="pre">ontap_cluster</span></code> for clustered Data ONTAP, or <code class="docutils literal"><span class="pre">eseries</span></code> for E-Series.</td>
+<td>The storage family type used on the storage system; valid values are <code class="docutils literal"><span class="pre">ontap_7mode</span></code> for ONTAP operating in 7-Mode, <code class="docutils literal"><span class="pre">ontap_cluster</span></code> for ONTAP, or <code class="docutils literal"><span class="pre">eseries</span></code> for E-Series.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_lun_ostype</span></code></td>
 <td>Optional</td>
 <td><code class="docutils literal"><span class="pre">linux</span></code></td>
-<td>This option defines the type of operating system that will access a LUN exported from Data ONTAP; it is assigned to the LUN at the time it is created.</td>
+<td>This option defines the type of operating system that will access a LUN exported from ONTAP; it is assigned to the LUN at the time it is created.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_lun_space_reservation</span></code></td>
 <td>Optional</td>
@@ -237,7 +237,7 @@ deployment that uses the iSCSI storage protocol.</p>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_host_type</span></code></td>
 <td>Optional</td>
 <td><code class="docutils literal"><span class="pre">linux</span></code></td>
-<td>This option defines the type of operating system for all initiators that can access a LUN. This information is used when mapping LUNs to individual hosts or groups of hosts. For a list of valid OS types, refer to the <a class="reference external" href="https://library.netapp.com/ecmdocs/ECMP1196995/html/GUID-7D4DD6E3-DB77-4671-BDA2-E393002E9EB2.html">Data ONTAP documentation</a></td>
+<td>This option defines the type of operating system for all initiators that can access a LUN. This information is used when mapping LUNs to individual hosts or groups of hosts. For a list of valid OS types, refer to the <a class="reference external" href="https://library.netapp.com/ecmdocs/ECMP1196995/html/GUID-7D4DD6E3-DB77-4671-BDA2-E393002E9EB2.html">ONTAP documentation</a></td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">reserved_percentage</span></code></td>
 <td>Optional</td>
@@ -272,11 +272,11 @@ deployment that uses the iSCSI storage protocol.</p>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">use_chap_auth</span></code></td>
 <td>Optional</td>
 <td>&#160;</td>
-<td>This option is defined as a boolean, and specifies if unidirectional CHAP is enabled. Provides authenticated communication between iSCSI initiators and targets. For Data ONTAP the TCP port 22 (SSH) on the cluster management LIF must be open and available to set CHAP authentication credentials on the storage system.</td>
+<td>This option is defined as a boolean, and specifies if unidirectional CHAP is enabled. Provides authenticated communication between iSCSI initiators and targets. For ONTAP the TCP port 22 (SSH) on the cluster management LIF must be open and available to set CHAP authentication credentials on the storage system.</td>
 </tr>
 </tbody>
 </table>
-<p>Table 4.13. Configuration Options for Clustered Data ONTAP with iSCSI</p>
+<p>Table 4.13. Configuration Options for ONTAP with iSCSI</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
 <p class="last">If you specify an account in the <code class="docutils literal"><span class="pre">netapp_login</span></code> option that only
@@ -295,16 +295,16 @@ admin account.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="section_cinder-conf-nfs.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for Clustered Data ONTAP with NFS"></i></a>
+            <a href="section_cinder-conf-nfs.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for ONTAP with NFS"></i></a>
           
           
-            <a href="section_cinder-conf-fcp.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Unified Driver for Clustered Data ONTAP with Fibre Channel"></i></a>
+            <a href="section_cinder-conf-fcp.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Unified Driver for ONTAP with Fibre Channel"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-10-18 19:43</div>
+            <div class="docs-updated">updated: 2017-11-01 21:46</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -435,9 +435,9 @@ admin account.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 4fe410e526f200a463f31276eb3d9f655e780562";
+    var gitSha = "SHA: 750033176cd920a3875dc9fbd261463372dcf977";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "NetApp Unified Driver for Clustered Data ONTAP with iSCSI in NetApp OpenStack Docs";
+        var bugTitle = "NetApp Unified Driver for ONTAP with iSCSI in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "QUEENS DRAFT"
         var useStoryboard = "";
@@ -446,7 +446,7 @@ admin account.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-10-18 19:43";
+    var buildstring = "Release: 2017.2 on 2017-11-01 21:46";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
