@@ -141,7 +141,7 @@ reporting interval:
 
 
 
-Data ONTAP Thin Provisioning
+ONTAP Thin Provisioning
 ----------------------------
 
 The following ``cinder.conf`` configuration settings control thin
