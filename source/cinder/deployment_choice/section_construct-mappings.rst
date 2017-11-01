@@ -22,7 +22,7 @@ which they exist.
 
 .. important::
 
-   When deploying Cinder with clustered Data ONTAP, NetApp recommends
+   When deploying Cinder with ONTAP, NetApp recommends
    that each Cinder backend refer to a single SVM within a cluster
    through the use of the ``netapp_vserver`` configuration option.
    While the driver can operate without the explicit declaration of a
@@ -32,7 +32,7 @@ which they exist.
 Cinder volumes and FlexVol Volumes
 ----------------------------------
 
-Data ONTAP FlexVol volumes (commonly referred to as volumes) and
+ONTAP FlexVol volumes (commonly referred to as volumes) and
 OpenStack Block Storage volumes (commonly referred to as Cinder volumes)
 are not semantically analogous. A FlexVol volume is a container of
 logical data elements (for example: files, Snapshot copies, clones,
@@ -51,13 +51,13 @@ and clones within FlexVol volumes.
 .. note::
 
    NetApp's OpenStack Cinder drivers are not supported for use with
-   Infinite Volumes, as Data ONTAP currently only supports FlexClone
+   Infinite Volumes, as ONTAP currently only supports FlexClone
    files and FlexClone LUNs with FlexVol volumes.
 
 Cinder volume Representation within a FlexVol Volume
 ----------------------------------------------------
 
-A Cinder volume has a different representation in Data ONTAP when stored
+A Cinder volume has a different representation in ONTAP when stored
 in a FlexVol volume, dependent on storage protocol utilized with Cinder:
 
 -  *iSCSI*: When utilizing the iSCSI storage protocol, a Cinder volume
@@ -90,12 +90,12 @@ new volume based on the volume type and other volume characteristics.
 
 The scheduler also has an evaluator filter that evaluates an optional
 arithmetic expression to determine whether a pool may contain a new
-volume. Beginning with Mitaka, the Data ONTAP drivers report per-pool
+volume. Beginning with Mitaka, the ONTAP drivers report per-pool
 controller utilization values to the scheduler, along with a "filter
 function" that prevents new volumes from being created on pools that are
 overutilized. Controller utilization is computed by the drivers as a
 function of CPU utilization and other internal I/O metrics. The default
-filter function supplied by the Data ONTAP drivers is
+filter function supplied by the ONTAP drivers is
 "capabilities.utilization < 70". A utilization of 70% is a good starting
 point beyond which I/O throughput and latency may be adversely affected
 by additional Cinder volumes. The filter function may be overridden on a
@@ -110,20 +110,20 @@ As of Juno, the Cinder scheduler has per-pool capacity information, and
 the scheduler capacity weigher may be configured to spread new volumes
 among backends uniformly or to fill one backend before using another.
 
-Beginning with Mitaka, the Data ONTAP drivers report per-pool controller
+Beginning with Mitaka, the ONTAP drivers report per-pool controller
 utilization values to the scheduler, along with a "goodness function"
 that allows the scheduler to prioritize backends that are less utilized.
 Controller utilization is reported as a percentage, and the goodness
 function is expected to yield a value between 0 and 100, with 100
 representing maximum "goodness". The default goodness function supplied
-by the Data ONTAP drivers is "100 - capabilities.utilization", and it
+by the ONTAP drivers is "100 - capabilities.utilization", and it
 may be overridden on a per-backend basis in the Cinder configuration
 file.
 
 .. note::
 
    The storage controller utilization metrics are reported by the
-   Mitaka Cinder drivers for Data ONTAP 8.2 or higher, operating in
+   Mitaka Cinder drivers for ONTAP 8.2 or higher, operating in
    either Cluster or 7-mode.
 
 Beginning with Newton, additional information such as aggregate name and
@@ -133,20 +133,20 @@ aggregate completely, a filter expression of
 "capabilities.aggregate_used_percent < 80" might be used.
 
 Beginning with Ocata, additional information such as per-pool
-consumption of the Data ONTAP shared block limit is reported to the
+consumption of the ONTAP shared block limit is reported to the
 scheduler and may be used in filter and weigher expressions.  For
 example, to steer new Cinder volumes away from a FlexVol nearing its
 shared block limit, a filter expression of
 "capabilities.netapp_dedupe_used_percent < 90" might be used.
- 
+
 .. _cinder-theory-table-4.9:
 
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Driver                           | Scheduling Behavior (as of Juno)                                                                                                                                                                                                  | Scheduling Behavior (as of Mitaka)                                                                                                                                                                                    |
 +==================================+===================================================================================================================================================================================================================================+=======================================================================================================================================================================================================================+
-| Clustered Data ONTAP             | Each FlexVol volume’s capacity and SSC data is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.               | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
+| ONTAP                            | Each FlexVol volume’s capacity and SSC data is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.               | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Data ONTAP operating in 7-mode   | Each FlexVol volume’s capacity is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.                            | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
+| ONTAP operating in 7-mode        | Each FlexVol volume’s capacity is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.                            | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | E-Series                         | -  Each dynamic disk pool's and volume group’s capacity is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.   | Same as Juno.                                                                                                                                                                                                         |
 |                                  |                                                                                                                                                                                                                                   |                                                                                                                                                                                                                       |
@@ -161,7 +161,7 @@ Cinder Snapshots versus NetApp Snapshots
 A NetApp Snapshot copy is a point-in-time file system image.
 Low-overhead NetApp Snapshot copies are made possible by the unique
 features of the WAFL storage virtualization technology that is part of
-Data ONTAP. The high performance of the NetApp Snapshot makes it highly
+ONTAP. The high performance of the NetApp Snapshot makes it highly
 scalable. A NetApp Snapshot takes only a few seconds to create —
 typically less than one second, regardless of the size of the volume or
 the level of activity on the NetApp storage system. After a Snapshot
@@ -178,7 +178,7 @@ directly leveraged within an OpenStack context, as a user of Cinder
 requests a snapshot be taken of a particular Cinder volume (not the
 containing FlexVol volume). As a Cinder volume is represented as either
 a file on NFS or as a LUN (in the case of iSCSI or Fibre Channel), the
-way that Cinder snapshots are created is through use of Data ONTAP's'
+way that Cinder snapshots are created is through use of ONTAP's
 FlexClone technology. By leveraging the FlexClone technology to
 facilitate Cinder snapshots, it is possible to create many thousands of
 Cinder snapshots for a single Cinder volume.
@@ -212,19 +212,19 @@ snapshots, consider FAS.
 
 .. important::
 
-   When Cinder is deployed with Data ONTAP, Cinder snapshots are
-   created leveraging the FlexClone feature of Data ONTAP. As such, a
+   When Cinder is deployed with ONTAP, Cinder snapshots are
+   created leveraging the FlexClone feature of ONTAP. As such, a
    license option for FlexClone must be enabled.
 
 CDOT and 7-mode Consistency Groups
 ----------------------------------
 
-Data ONTAP currently has "Consistency Group" snapshot operations, but
+ONTAP currently has "Consistency Group" snapshot operations, but
 their semantics are not identical to Cinder CG operations. Cinder CGs
 are tenant-defined sets of Cinder-volumes that act together as a unit
-for a snapshot. Data ONTAP currently has no actual "Consistency Group"
+for a snapshot. ONTAP currently has no actual "Consistency Group"
 object, but only CG snapshot operations. Moreover, these operations act
-on Data ONTAP volumes, flexvols, which are themselves containers of the
+on ONTAP volumes, flexvols, which are themselves containers of the
 backing files or LUNs for Cinder volumes. In effect, so long as there is
 room in a Cinder pool to fit a snapshot or a copy of a consistency
 group, that operation will be permitted without any further restriction.

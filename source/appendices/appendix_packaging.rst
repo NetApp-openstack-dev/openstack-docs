@@ -79,7 +79,7 @@ unified driver set to conclude with their removal in the Queens release.
 This will apply to all three protocols currently supported in this
 driver: iSCSI, FC and NFS.
 
--  ``What is being deprecated:`` Cinder drivers for NetApp Data ONTAP
+-  ``What is being deprecated:`` Cinder drivers for NetApp ONTAP
    7-mode NFS, iSCSI, FC
 
 -  ``Period of deprecation:`` 7-mode drivers will be around in
@@ -87,10 +87,10 @@ driver: iSCSI, FC and NFS.
    release (All milestones of this release)
 
 -  ``What should users/operators do:`` Follow the recommended migration
-   path to upgrade to Clustered Data ONTAP [3]_ or get in touch with your
+   path to upgrade to ONTAP [3]_ or get in touch with your
    NetApp support representative.
 
-.. [1] 
+.. [1]
    `Transition Fundamentals and
    Guidance <https://transition.netapp.com/>`__
 
@@ -99,5 +99,5 @@ driver: iSCSI, FC and NFS.
    policy <https://governance.openstack.org/tc/reference/tags/assert_follows-standard-deprecation.html>`__
 
 .. [3]
-   `Clustered Data ONTAP for 7-Mode
+   `ONTAP for 7-Mode
    Administrators <https://mysupport.netapp.com/info/web/ECMP1658253.html>`__

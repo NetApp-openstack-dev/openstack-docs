@@ -4,7 +4,7 @@ Setup ONTAP for Cinder
 ======================================
 
 This section provides an example set of configuration commands to be executed
-within Data ONTAP that enables two SVMs, appropriately configured for
+within ONTAP that enables two SVMs, appropriately configured for
 the Cinder configuration referenced in the section called ":ref:`cinder-conf`".
 Note that you may have to edit IP addresses and feature lists based on the environment and
 licenses present.

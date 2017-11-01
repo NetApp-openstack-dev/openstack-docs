@@ -1,10 +1,10 @@
-Operational Concerns with Data ONTAP
+Operational Concerns with ONTAP
 ====================================
 
 NFS v4.0 and NFS v4.1 Configuration
 -----------------------------------
 
-Be sure to refer to the `Clustered Data ONTAP NFS Best Practices and
+Be sure to refer to the `ONTAP NFS Best Practices and
 Implementation
 Guide <http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&m=tr-4067.pdf>`__
 for information on how to optimally set up NFS exports for use with
@@ -26,15 +26,15 @@ Volume Migration
 ----------------
 
 Volume migration for Cinder has been available since the Havana release
-for clustered Data ONTAP and the Icehouse release for E-Series.
+for ONTAP and the Icehouse release for E-Series.
 
 The volume migration feature of Cinder can be used to aid in the
-transition from Data ONTAP operating in 7-Mode to clustered Data ONTAP
-with minimal disruption. If you have volumes managed by Cinder on a Data
+transition from ONTAP operating in 7-Mode to ONTAP
+with minimal disruption. If you have volumes managed by Cinder on an
 ONTAP operating in 7-Mode storage system, you can configure the
-clustered Data ONTAP instance as a new backend in the Cinder
+ONTAP instance as a new backend in the Cinder
 configuration and leverage the migration feature to move existing
-volumes to the new backend and then retire the Data ONTAP operating in
+volumes to the new backend and then retire the ONTAP operating in
 7-Mode system.
 
 Once the two storage systems to operate with Cinder, please verify that
@@ -52,9 +52,9 @@ the migration process.
     |  cinder-volume   |  openstack1@cDOT  | nova | enabled |   up  | 2013-1-1T19:01:27.000000 |
     +------------------+-------------------+------+---------+-------+--------------------------+
 
-The host openstack1@7mode represents the backend representing the Data
+The host openstack1@7mode represents the backend representing the
 ONTAP operating in 7-Mode system, and openstack1@cDOT represents the
-backend representing the clustered Data ONTAP system. Volumes can be
+backend representing the ONTAP system. Volumes can be
 migrated individually to the new backend, through the use of the cinder
 migrate CLI command. For example, consider a Cinder volume with ID
 781501e1-af79-4d3e-be90-f332a5841f5e on the openstack1@7mode storage

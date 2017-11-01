@@ -1,7 +1,7 @@
 Deployment Choice: Utilizing Share Servers
 ==========================================
 
-NetApp's Manila drivers for clustered Data ONTAP (with or without the
+NetApp's Manila drivers for ONTAP (with or without the
 management of share servers) are offered in a single, unified driver.
 
 Where to Obtain the Drivers
@@ -44,8 +44,8 @@ Manila that manages the relationship between share networks and shares.
 In the case of the reference driver implementation, a share server
 corresponds to an actual Nova instance that provides the file system
 service, with raw capacity provided through attached Cinder block
-storage volumes. In the case of the Manila driver for NetApp clustered
-Data ONTAP, a share server corresponds to a storage virtual machine
+storage volumes. In the case of the Manila driver for NetApp
+ONTAP, a share server corresponds to a storage virtual machine
 (SVM), also referred to as a Vserver.
 
 .. note::
@@ -55,7 +55,7 @@ Data ONTAP, a share server corresponds to a storage virtual machine
 
 .. important::
 
-   When deploying Manila with NetApp clustered Data ONTAP without share
+   When deploying Manila with NetApp ONTAP without share
    server management, NetApp requires that each Manila backend refer to
    a single SVM within a cluster through the use of the
    ``netapp_vserver`` configuration option.
@@ -63,7 +63,7 @@ Data ONTAP, a share server corresponds to a storage virtual machine
 With Share Server Management
 ----------------------------
 
-Within the clustered Data ONTAP driver with share server support, a
+Within the ONTAP driver with share server support, a
 storage virtual machine will be created for each share server. While
 this can provide some advantages with regards to secure multitenancy and
 integration with a variety of network services within OpenStack, care
@@ -78,7 +78,7 @@ performance and responsive management operations.
 Without Share Server Management
 -------------------------------
 
-With the clustered Data ONTAP driver without share server support, data
+With the ONTAP driver without share server support, data
 LIFs are reused and the provisioning of new Manila shares (i.e. FlexVol
 volumes) is limited to the scope of a single SVM.
 
