@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: NetApp Unified Driver for Data ONTAP operating in 7-Mode with Fibre Channel</title>
+    <title>OpenStack Docs: NetApp Unified Driver for ONTAP operating in 7-Mode with Fibre Channel</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,12 +107,12 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>NetApp Unified Driver for Data ONTAP operating in 7-Mode with Fibre Channel</h2>
+      <h2>NetApp Unified Driver for ONTAP operating in 7-Mode with Fibre Channel</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_cinder-conf-iscsi.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for Data ONTAP operating in 7-Mode with iSCSI"></i></a>
+    <a href="section_cinder-conf-iscsi.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for ONTAP operating in 7-Mode with iSCSI"></i></a>
     
     
     <a href="../eseries_driver/section_cinder-conf-iscsi.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Driver for E-Series with iSCSI"></i></a>
@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-10-18 20:29</div>
+            <div class="docs-updated">updated: 2017-11-01 22:06</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -131,10 +131,10 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="netapp-unified-driver-for-data-ontap-operating-in-7-mode-with-fibre-channel">
-<span id="mode-fc"></span><h1>NetApp Unified Driver for Data ONTAP operating in 7-Mode with Fibre Channel<a class="headerlink" href="#netapp-unified-driver-for-data-ontap-operating-in-7-mode-with-fibre-channel" title="Permalink to this headline">¶</a></h1>
-<p>The NetApp unified driver for Data ONTAP operating in 7-Mode with Fibre
-Channel is a driver interface from OpenStack Cinder to NetApp Data ONTAP
+  <div class="section" id="netapp-unified-driver-for-ontap-operating-in-7-mode-with-fibre-channel">
+<span id="mode-fc"></span><h1>NetApp Unified Driver for ONTAP operating in 7-Mode with Fibre Channel<a class="headerlink" href="#netapp-unified-driver-for-ontap-operating-in-7-mode-with-fibre-channel" title="Permalink to this headline">¶</a></h1>
+<p>The NetApp unified driver for ONTAP operating in 7-Mode with Fibre
+Channel is a driver interface from OpenStack Cinder to NetApp ONTAP
 operating in 7-Mode storage controllers to accomplish provisioning and
 management of a storage-area network (SAN) block storage entity; that
 is, a NetApp LUN that uses the Fibre Channel protocol.</p>
@@ -157,7 +157,7 @@ ONTAP 7-mode NFS, iSCSI, FC</li>
 stable/ocata and stable/pike and will be removed in the Queens
 release (All milestones of this release)</li>
 <li><code class="docutils literal"><span class="pre">What</span> <span class="pre">should</span> <span class="pre">users/operators</span> <span class="pre">do:</span></code> Follow the recommended
-migration path to upgrade to Clustered Data ONTAP [3] or get in
+migration path to upgrade to ONTAP [3] or get in
 touch with your NetApp support representative.</li>
 </ul>
 <ol class="last arabic simple">
@@ -165,7 +165,7 @@ touch with your NetApp support representative.</li>
 Guidance</a></li>
 <li><a class="reference external" href="https://governance.openstack.org/tc/reference/tags/assert_follows-standard-deprecation.html">OpenStack deprecation
 policy</a></li>
-<li><a class="reference external" href="https://mysupport.netapp.com/info/web/ECMP1658253.html">Clustered Data ONTAP for 7-Mode
+<li><a class="reference external" href="https://mysupport.netapp.com/info/web/ECMP1658253.html">ONTAP for 7-Mode
 Administrators</a></li>
 </ol>
 </div>
@@ -175,7 +175,7 @@ Administrators</a></li>
 separate Cinder backends with an appropriate cross-reference to one
 another using the <code class="docutils literal"><span class="pre">netapp_partner_backend_name</span></code> option.</p>
 </div>
-<p>To set up the NetApp Data ONTAP operating in 7-Mode Fibre Channel driver
+<p>To set up the NetApp ONTAP operating in 7-Mode Fibre Channel driver
 for Cinder, the following stanza should be added to the Cinder
 configuration file (<code class="docutils literal"><span class="pre">cinder.conf</span></code>) for the first node in the HA Pair:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">myFCBackend</span><span class="p">]</span>
@@ -232,9 +232,9 @@ stanza under the <code class="docutils literal"><span class="pre">netapp_partner
 <code class="docutils literal"><span class="pre">ontap_7mode</span></code>, as the default value for this option is
 <code class="docutils literal"><span class="pre">ontap_cluster</span></code>.</li>
 </ul>
-<p>Table 4.18, “Configuration options for Data ONTAP operating in 7-Mode
+<p>Table 4.18, “Configuration options for ONTAP operating in 7-Mode
 with Fibre Channel” below lists the configuration options available
-for the unified driver for a clustered Data ONTAP deployment that uses
+for the unified driver for an ONTAP deployment that uses
 the Fibre Channel storage protocol.</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -259,7 +259,7 @@ the Fibre Channel storage protocol.</p>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_server_port</span></code></td>
 <td>Optional</td>
 <td>&#160;</td>
-<td>The TCP port to use for communication with the storage system or proxy server. If not specified, Data ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.</td>
+<td>The TCP port to use for communication with the storage system or proxy server. If not specified, ONTAP drivers will use 80 for HTTP and 443 for HTTPS; E-Series will use 8080 for HTTP and 8443 for HTTPS.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_login</span></code></td>
 <td>Required</td>
@@ -294,17 +294,17 @@ the Fibre Channel storage protocol.</p>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_vfiler</span></code></td>
 <td>Optional</td>
 <td>&#160;</td>
-<td>The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of Data ONTAP operating in 7-Mode. Only use this option when utilizing the MultiStore feature on the NetApp storage system.</td>
+<td>The vFiler unit on which provisioning of block storage volumes will be done. This option is only used by the driver when connecting to an instance with a storage family of ONTAP operating in 7-Mode. Only use this option when utilizing the MultiStore feature on the NetApp storage system.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_storage_family</span></code></td>
 <td>Required</td>
 <td><code class="docutils literal"><span class="pre">ontap_cluster</span></code></td>
-<td>The storage family type used on the storage system; valid values are <code class="docutils literal"><span class="pre">ontap_7mode</span></code> for Data ONTAP operating in 7-Mode, <code class="docutils literal"><span class="pre">ontap_cluster</span></code> for clustered Data ONTAP, or <code class="docutils literal"><span class="pre">eseries</span></code> for E-Series.</td>
+<td>The storage family type used on the storage system; valid values are <code class="docutils literal"><span class="pre">ontap_7mode</span></code> for ONTAP operating in 7-Mode, <code class="docutils literal"><span class="pre">ontap_cluster</span></code> for ONTAP, or <code class="docutils literal"><span class="pre">eseries</span></code> for E-Series.</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_partner_backend_name</span></code></td>
 <td>Required</td>
 <td>&#160;</td>
-<td>The name of the <code class="docutils literal"><span class="pre">cinder.conf</span></code> stanza for a Data ONTAP operating in 7-Mode HA partner. This option is only used by the driver when connecting to an instance with a <code class="docutils literal"><span class="pre">netapp_storage_family</span></code> value of <code class="docutils literal"><span class="pre">ontap_7mode</span></code> and is required when <code class="docutils literal"><span class="pre">netapp_storage_protocol</span></code> is set to <code class="docutils literal"><span class="pre">fc</span></code>.</td>
+<td>The name of the <code class="docutils literal"><span class="pre">cinder.conf</span></code> stanza for a ONTAP operating in 7-Mode HA partner. This option is only used by the driver when connecting to an instance with a <code class="docutils literal"><span class="pre">netapp_storage_family</span></code> value of <code class="docutils literal"><span class="pre">ontap_7mode</span></code> and is required when <code class="docutils literal"><span class="pre">netapp_storage_protocol</span></code> is set to <code class="docutils literal"><span class="pre">fc</span></code>.</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_lun_space_reservation</span></code></td>
 <td>Optional</td>
@@ -338,7 +338,7 @@ the Fibre Channel storage protocol.</p>
 </tr>
 </tbody>
 </table>
-<p>Table 4.18. Configuration options for Data ONTAP operating in 7-Mode with
+<p>Table 4.18. Configuration options for ONTAP operating in 7-Mode with
 Fibre Channel</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -355,7 +355,7 @@ Channel zoning.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="section_cinder-conf-iscsi.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for Data ONTAP operating in 7-Mode with iSCSI"></i></a>
+            <a href="section_cinder-conf-iscsi.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for ONTAP operating in 7-Mode with iSCSI"></i></a>
           
           
             <a href="../eseries_driver/section_cinder-conf-iscsi.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NetApp Driver for E-Series with iSCSI"></i></a>
@@ -364,7 +364,7 @@ Channel zoning.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-10-18 20:29</div>
+            <div class="docs-updated">updated: 2017-11-01 22:06</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -495,9 +495,9 @@ Channel zoning.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 79bb2534d6ab08c504466876b102fe808d7b79e1";
+    var gitSha = "SHA: 0a91c75fae37035aa6285bf9c59c7cce8d3648a5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "NetApp Unified Driver for Data ONTAP operating in 7-Mode with Fibre Channel in NetApp OpenStack Docs";
+        var bugTitle = "NetApp Unified Driver for ONTAP operating in 7-Mode with Fibre Channel in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "PIKE"
         var useStoryboard = "";
@@ -506,7 +506,7 @@ Channel zoning.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-10-18 20:29";
+    var buildstring = "Release: 2017.2 on 2017-11-01 22:06";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
