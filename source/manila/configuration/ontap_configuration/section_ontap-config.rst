@@ -1,5 +1,5 @@
 ONTAP Configuration
-========================
+===================
 
 .. _manila_data_ontap_prerequisites:
 
@@ -87,9 +87,9 @@ features (including Manila Share Type Extra Specs support) availed by
 the Manila driver, be sure to add the access levels for the commands
 shown in :ref:`Table 6.17, “Common Access Level Permissions Required with Any
 Manila Driver”<table-6.17>`, :ref:`Table 6.18, “Access Level Permissions Required For
-Manila Driver for clustered Data ONTAP with share server management - with
+Manila Driver for ONTAP with share server management - with
 Cluster-wide Administrative Account”<table-6.18>`, and :ref:`Table 6.19, “Access Level
-Permissions Required For Manila Driver for clustered Data ONTAP without
+Permissions Required For Manila Driver for ONTAP without
 share server management - with Cluster-wide Administrative Account”<table-6.19>`.
 
 .. _table-6.17:
@@ -152,8 +152,8 @@ Table 6.17. Common Access Level Permissions Required with Any Manila Driver
 | ``vserver``             | ``all``        |
 +-------------------------+----------------+
 
-Table 6.18. Access Level Permissions Required For Manila Driver for clustered
-Data ONTAP with share server management - with Cluster-wide
+Table 6.18. Access Level Permissions Required For Manila Driver for
+ONTAP with share server management - with Cluster-wide
 Administrative Account
 
 .. _table-6.19:
@@ -168,8 +168,8 @@ Administrative Account
 | ``storage disk``        | ``readonly``   |
 +-------------------------+----------------+
 
-Table 6.19. Access Level Permissions Required For Manila Driver for clustered
-Data ONTAP without share server management - with Cluster-wide
+Table 6.19. Access Level Permissions Required For Manila Driver for
+ONTAP without share server management - with Cluster-wide
 Administrative Account
 
 Creating Role for Cluster-Scoped Account
@@ -177,7 +177,7 @@ Creating Role for Cluster-Scoped Account
 
 To create a role with the necessary privileges required, with access via
 ONTAP API only, use the following command syntax to create the role and
-the cDOT ONTAP user:
+the ONTAP user:
 
 1. Create role with appropriate command directory permissions (note you
    will need to execute this command for each of the required access
@@ -198,7 +198,7 @@ Creating Role for SVM-Scoped Account
 
 To create a role with the necessary privileges required, with access via
 ONTAP API only, use the following command syntax to create the role and
-the cDOT ONTAP user:
+the ONTAP user:
 
 1. Create role with appropriate command directory permissions (note you
    will need to execute this command for each of the required access
@@ -220,12 +220,12 @@ the cDOT ONTAP user:
    role, and then assign the role to an administrative account, please
    refer to the `System Administration Guide for Cluster
    Administrators <http://support.netapp.com>`__ document in the
-   Clustered DATA ONTAP documentation.
+   ONTAP documentation.
 
 Storage Networking Considerations
 ---------------------------------
 
 1. Ensure there is segmented network connectivity between the hypervisor
-   nodes and the Data LIF interfaces from Data ONTAP.
+   nodes and the Data LIF interfaces from ONTAP.
 
 2. LIF assignment

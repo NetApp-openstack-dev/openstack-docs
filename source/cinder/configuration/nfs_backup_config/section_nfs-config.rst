@@ -39,7 +39,7 @@ Table 4.23. Configuration options for NFS backup service
 
 .. [2]
    Set HOST to the IP address via which the NFS share is exported (for
-   example, the address on the appropriate NFS data LIF on a Data ONTAP
+   example, the address on the appropriate NFS data LIF on an ONTAP
    storage system). Set PATH to the export path used to mount the share.
 
 .. [3]
@@ -53,5 +53,5 @@ Table 4.23. Configuration options for NFS backup service
    NetApp recommends that the ``backup_compression_algorithm`` option be
    set to ``None`` in order to avoid consuming excess CPU on the Cinder
    backup node, and that purpose-built deduplication and compression
-   features be enabled on the Data ONTAP storage system providing the
+   features be enabled on the ONTAP storage system providing the
    backup repository to achieve storage efficiency.

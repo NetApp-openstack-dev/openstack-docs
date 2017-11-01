@@ -122,10 +122,9 @@ NetApp specific extra specs described in
     | a564a421-55aa-238a-a4d3-e1438b4002d1 | encrypted |
     +--------------------------------------+-----------+
 
-::
-
     $ cinder type-key iscsi set storage_protocol=iSCSI
     $ cinder type-key nfs set storage_protocol=nfs
+
     $ cinder type-key gold set netapp_mirrored=true
     $ cinder type-key gold set netapp_disk_type=SSD
     $ cinder type-key gold set netapp_hybrid_aggregate="<is> False"
@@ -133,6 +132,7 @@ NetApp specific extra specs described in
     $ cinder type-key bronze set netapp_compression=true
     $ cinder type-key analytics set volume_backend_name=eseries-iscsi
     $ cinder type-key encrypted set netapp_flexvol_encryption=true
+
     $ cinder extra-specs-list
     +--------------------------------------+-----------+--------------------------------------------+
     |                  ID                  |    Name   |                extra_specs                 |
@@ -395,7 +395,7 @@ features enabled that matched the Cinder volume type definitions.
 Cinder Manage Usage
 -------------------
 
-In this section we import a Data ONTAP iSCSI LUN by specifying it by
+In this section we import an ONTAP iSCSI LUN by specifying it by
 name or UUID.
 
 ::
@@ -545,7 +545,7 @@ world-wide identifier.
     | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 
-In this section we import a Data ONTAP NFS file by specifying its path.::
+In this section we import an ONTAP NFS file by specifying its path.::
 
     $ cinder get-pools
     +----------+------------------------------+

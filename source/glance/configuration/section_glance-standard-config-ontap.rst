@@ -25,7 +25,7 @@ mounted from one or more ``glance-registry`` servers.
 
 .. tip::
 
-   Be sure to refer to the `Clustered Data ONTAP NFS Best Practices and
+   Be sure to refer to the `ONTAP NFS Best Practices and
    Implementation
    Guide <http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&m=tr-4067.pdf>`__
    for information on how to optimally set up the NFS export for use

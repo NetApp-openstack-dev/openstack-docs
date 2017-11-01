@@ -22,7 +22,7 @@ are desired and should be availed directly by the storage, the NetApp
 FAS product line is a natural fit for use within Cinder deployments.
 Massive scalability, nondisruptive operations, proven storage
 efficiencies, and a unified architecture (NAS and SAN) are key features
-offered by the Data ONTAP storage operating system. These capabilities
+offered by the ONTAP storage operating system. These capabilities
 are frequently leveraged in existing virtualization deployments and thus
 align naturally to OpenStack use cases.
 

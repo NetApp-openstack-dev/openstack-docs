@@ -1,12 +1,12 @@
 .. _data-ontap-config:
 
-Data ONTAP Configuration
-========================
+ONTAP Configuration
+===================
 
-The prerequisites for Data ONTAP (both clustered Data ONTAP and Data
+The prerequisites for ONTAP (both ONTAP and
 ONTAP operating in 7-Mode) are:
 
--  The driver requires a storage controller running Data ONTAP 8.1.1 or
+-  The driver requires a storage controller running ONTAP 8.1.1 or
    later.
 
 -  The storage system should have the following licenses applied:
@@ -21,5 +21,5 @@ ONTAP operating in 7-Mode) are:
 
    -  FlexClone
 
-   -  MultiStore (if vFiler units are used with Data ONTAP operating in
+   -  MultiStore (if vFiler units are used with ONTAP operating in
       7-Mode)
