@@ -51,7 +51,7 @@ OpenStack.
 **Authors and Contributors**
 
 Rushi Agrawal, Sajid Akhtar, Tom Barron, Jon Benedict, David Blackwell, 
-Bob Callaway,Robert Esker, Chuck Fouts, Jim Holl, Eric Johannes, Andrew Kerr, 
+Bob Callaway, Robert Esker, Chuck Fouts, Jim Holl, Eric Johannes, Andrew Kerr, 
 Clinton Knight, Yogesh Kshirsagar, Sumit Kumar, Alex Meade, Chad Morgenstern, 
 Jon Olby, Goutham Pacha Ravi, Akshai Parthasarathy, Jose Porrua, Michael Price, 
 Mike Rooney, Dustin Schoenbrun, Navneet Singh, Stan Skelton, Tim Snider, Ben
