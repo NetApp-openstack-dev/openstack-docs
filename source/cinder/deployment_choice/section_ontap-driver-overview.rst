@@ -3,7 +3,7 @@
 Theory of Operation: NetApp Unified Driver Overview
 ==================================================================
 
-NetApp drivers for ONTAP, ONTAP operating in 7-Mode, and E-Series
+NetApp drivers for ONTAP and E-Series
 are offered in a single, unified driver for the purpose of
 provisioning and maintaining OpenStack block storage volumes.
 
@@ -39,15 +39,6 @@ ought to be employed given varying use cases:
 
 -  :ref:`NetApp ONTAP with Fibre
    Channel <cdot-fc>`
-
--  :ref:`NetApp ONTAP operating in 7-Mode with
-   iSCSI <7mode-iscsi>`
-
--  :ref:`NetApp ONTAP operating in 7-Mode with
-   NFS <7mode-nfs>`
-
--  :ref:`NetApp ONTAP operating in 7-Mode with Fibre
-   Channel <7mode-fc>`
 
 -  :ref:`E-Series with iSCSI <eseries-iscsi>`
 

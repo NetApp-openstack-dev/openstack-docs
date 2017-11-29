@@ -5,8 +5,7 @@ NetApp’s ONTAP operating system delivers an industry-leading,
 unified storage platform for unprecedented levels of scalability, and
 data storage flexibility.
 
-ONTAP 8.x provides two operating modes, ONTAP and
-7-Mode. ONTAP operation enhances NetApp’s storage
+ONTAP operation enhances NetApp’s storage
 efficiency value by introducing massive scalability and nondisruptive
 operations. With ONTAP 8, two or more controllers (or
 nodes) operate as one shared resource pool or storage cluster. The
@@ -147,44 +146,3 @@ drives. Data can move nondisruptively between nodes or between different
 tiers of disk as performance requirements change. This capability makes
 sure that data center and IT administrators can maximize performance
 where needed while simultaneously improving capacity utilization.
-
-ONTAP operating in 7-Mode
--------------------------
-
-While ONTAP is the preferred operating mode for nearly
-all new ONTAP installations, and is NetApp’s focal point for future
-delivery of additional enhancement and innovation, there are a
-significant number of 7-Mode based systems in existence and a variety of
-valid operational considerations that require ongoing use. While NetApp
-has provided Cinder driver enablement for 7-Mode systems, NetApp
-recommends that ONTAP be used whenever possible.
-
-.. important:: The NetApp unified driver in Cinder currently provides
-   integration for two major generations of the ONTAP operating system:
-   the current “clustered” ONTAP and the legacy 7-mode. NetApp’s “full
-   support” for 7-mode ended in August of 2015 and the current “limited
-   support” period will end in February of 2017 [1]_.
-
-   In accordance with community policy [2]_, we are initiating the
-   deprecation process for the 7-mode components of the Cinder NetApp
-   unified driver set to conclude with their removal in the Queens
-   release. This will apply to all three protocols currently supported
-   in this driver: iSCSI, FC and NFS.
-
-   - What is being deprecated: Cinder drivers for NetApp
-     ONTAP 7-mode NFS, iSCSI, FC
-   - Period of deprecation: 7-mode drivers will be around in
-     stable/ocata and stable/pike and will be removed in the Queens
-     release (All milestones of this release)
-   - What should users/operators do: Follow the recommended
-     migration path to upgrade to ONTAP [3]_ or get in
-     touch with your NetApp support representative.
-
-   .. [1]
-      `Transition Fundamentals and Guidance <https://transition.netapp.com/>`_
- 
-   .. [2]
-      `OpenStack Deprecation Policy <https://governance.openstack.org/tc/reference/tags/assert_follows-standard-deprecation.html>`_
-
-   .. [3]
-      `ONTAP for 7-Mode Administrators <https://mysupport.netapp.com/info/web/ECMP1658253.html>`_

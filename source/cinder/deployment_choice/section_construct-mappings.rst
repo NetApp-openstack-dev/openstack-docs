@@ -123,8 +123,7 @@ file.
 .. note::
 
    The storage controller utilization metrics are reported by the
-   Mitaka Cinder drivers for ONTAP 8.2 or higher, operating in
-   either Cluster or 7-mode.
+   Mitaka Cinder drivers for ONTAP 8.2 or higher.
 
 Beginning with Newton, additional information such as aggregate name and
 aggregate space utilization is reported to the scheduler and may be used
@@ -145,8 +144,6 @@ shared block limit, a filter expression of
 | Driver                           | Scheduling Behavior (as of Juno)                                                                                                                                                                                                  | Scheduling Behavior (as of Mitaka)                                                                                                                                                                                    |
 +==================================+===================================================================================================================================================================================================================================+=======================================================================================================================================================================================================================+
 | ONTAP                            | Each FlexVol volume’s capacity and SSC data is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.               | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
-+----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ONTAP operating in 7-mode        | Each FlexVol volume’s capacity is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.                            | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | E-Series                         | -  Each dynamic disk pool's and volume group’s capacity is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.   | Same as Juno.                                                                                                                                                                                                         |
 |                                  |                                                                                                                                                                                                                                   |                                                                                                                                                                                                                       |
@@ -216,8 +213,8 @@ snapshots, consider FAS.
    created leveraging the FlexClone feature of ONTAP. As such, a
    license option for FlexClone must be enabled.
 
-CDOT and 7-mode Consistency Groups
-----------------------------------
+ONTAP Consistency Groups
+------------------------
 
 ONTAP currently has "Consistency Group" snapshot operations, but
 their semantics are not identical to Cinder CG operations. Cinder CGs

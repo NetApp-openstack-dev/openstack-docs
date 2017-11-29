@@ -3,8 +3,7 @@
 ONTAP Configuration
 ===================
 
-The prerequisites for ONTAP (both ONTAP and
-ONTAP operating in 7-Mode) are:
+The prerequisites for ONTAP are:
 
 -  The driver requires a storage controller running ONTAP 8.1.1 or
    later.
@@ -20,6 +19,3 @@ ONTAP operating in 7-Mode) are:
    -  FCP (if the Fibre Channel protocol is to be used)
 
    -  FlexClone
-
-   -  MultiStore (if vFiler units are used with ONTAP operating in
-      7-Mode)

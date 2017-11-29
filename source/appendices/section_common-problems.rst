@@ -19,9 +19,7 @@ problem.
    NetApp volume refers to a FlexVol volume inside the configured
    Storage Virtual Machine (SVM aka Vserver) for the ONTAP
    driver. It refers to NetApp volumes filtered in Cinder through
-   parameter ``netapp_pool_name_search_pattern`` or NetApp volumes in
-   the configured vFiler unit as parameter ``netapp_vfiler`` or system
-   wide NetApp volumes for 7-mode storage system.
+   parameter ``netapp_pool_name_search_pattern``.
 
 -  Cinder API service is down.
 
@@ -30,25 +28,19 @@ problem.
 -  Cinder scheduler reports sufficient available space on NetApp backend
    but Cinder volume fails to create backend:
 
-   -  The Grizzly-based iSCSI driver for ONTAP and 7-mode
-      driver report available space as infinite and hence failure may
+   -  The Grizzly-based iSCSI driver for ONTAP
+      reports available space as infinite and hence failure may
       occur when no NetApp volume can host the OpenStack volume.
 
-   -  The Grizzly-based NFS driver ONTAP and 7-mode
-      report available space as the sum of available space of all
+   -  The Grizzly-based NFS driver for ONTAP
+      reports available space as the sum of available space of all
       configured NFS exports and hence failure may occur when no single
       NetApp volume can host the OpenStack volume of the given size.
 
    -  The Havana-based iSCSI and NFS driver for ONTAP
-      report the available capacity for largest NetApp volume in the
+      reports the available capacity for largest NetApp volume in the
       configured Storage Virtual Machine (SVM aka Vserver). Capacity
       mismatch might fail volume creation.
-
-   -  The Havana-based iSCSI and NFS driver for 7-mode storage system
-      report the available capacity as sum of available space of all
-      configured NetApp volumes and hence failure may occur when no
-      single NetApp volume can host the OpenStack volume of the given
-      size.
 
 -  The Havana based NFS driver for ONTAP has the
    configuration option ``netapp_vserver`` to specify the Storage

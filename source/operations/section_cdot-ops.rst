@@ -37,7 +37,7 @@ configuration and leverage the migration feature to move existing
 volumes to the new backend and then retire the ONTAP operating in
 7-Mode system.
 
-Once the two storage systems to operate with Cinder, please verify that
+Once the two storage systems operate with Cinder, please verify that
 both backends have been enabled successfully and are ready to support
 the migration process.
 

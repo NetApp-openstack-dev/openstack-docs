@@ -46,8 +46,8 @@ terminated and a new iSCSI session is established.
 Configuration Options
 ---------------------
 
-To enable CHAP authentication for the NetApp ONTAP,
-7-mode, or E-Series iSCSI drivers, the following options should be added
+To enable CHAP authentication for the NetApp ONTAP
+or E-Series iSCSI drivers, the following options should be added
 to the appropriate NetApp stanza in the Cinder configuration file
 (cinder.conf). This configuration option is only relevant to iSCSI
 support.

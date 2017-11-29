@@ -61,14 +61,14 @@ E-Series based cluster). Additionally the number of attached Swift
 object storage nodes attached to the E-Series can be increased if
 additional object storage processing capacity is required.
 
-    **Tip**
+.. tip::
 
-    Swift may also be deployed in conjunction with the NetApp FAS
-    product line, as an iSCSI LUN could be used as a block device to
-    provide storage for object, container, or account data. This
-    deployment may be used in situations where the scale of an object
-    storage deployment is small, or if it is desirable to reuse existing
-    FAS systems.
+   Swift may also be deployed in conjunction with the NetApp FAS
+   product line, as an iSCSI LUN could be used as a block device to
+   provide storage for object, container, or account data. This
+   deployment may be used in situations where the scale of an object
+   storage deployment is small, or if it is desirable to reuse existing
+   FAS systems.
 
 E-Series storage can effectively serve as the storage medium for
 OpenStack Object Storage. The data reconstruction capabilities

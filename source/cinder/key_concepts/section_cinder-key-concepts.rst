@@ -42,8 +42,7 @@ create the necessary metadata within the Cinder database to allow it to
 be managed like any other Cinder volume. The operation will also rename
 the volume to a name appropriate to the particular Cinder driver in use.
 The imported storage object could be a file, LUN, or a volume depending
-on the protocol (iSCSI/FC/NFS) and driver (ONTAP operating in
-7-mode, ONTAP, or E-Series) in use. This feature is
+on the protocol (iSCSI/FC/NFS) and driver (ONTAP or E-Series) in use. This feature is
 useful in migration scenarios where virtual machines or other data need
 to be managed by Cinder; refer to the section called
 ":ref:`cinder-manage`" for an example of the ``cinder manage`` command.
@@ -263,7 +262,7 @@ protocol used:
 
 -  *iSCSI and Fibre Channel*: a Cinder pool is created for every FlexVol
    volume within the SVM specified by the configuration option
-   ``netapp_vserver``, or for ONTAP operating in c/7-mode, all
+   ``netapp_vserver``, or for ONTAP, all
    FlexVol volumes within the system unless limited by the configuration
    option ``netapp_pool_name_search_pattern``.
 
@@ -281,9 +280,9 @@ Consistency Groups
 ------------------
 
 With the Mitaka release of OpenStack, NetApp supports Cinder Consistency
-Groups when using E-series or 7-Mode/ONTAP iSCSI/Fibre
+Groups when using E-series or ONTAP iSCSI/Fibre
 Channel drivers. With the Newton release of OpenStack, NetApp supports
-Cinder Consistency Groups when using 7-Mode/ONTAP NFS
+Cinder Consistency Groups when using ONTAP NFS
 drivers. Consistency group support allows snapshots of multiple volumes
 in the same consistency group to be taken at the same point-in-time to
 ensure data consistency. To illustrate the usefulness of consistency
