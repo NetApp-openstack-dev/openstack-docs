@@ -19,9 +19,7 @@ To the application, a SVM presents a securely partitioned storage pool
 that can be dynamically deployed and redeployed according to changing
 business requirements.
 
-ONTAP powers NetApp’s fabric-attached storage (FAS) hardware line, the 
-Software Defines Stroage implementation called ONTAP Select, and the 
-AWS and Azure based ONTAP Cloud.
+ONTAP powers NetApp’s fabric-attached storage (FAS) hardware line.
 
 ONTAP
 -----
