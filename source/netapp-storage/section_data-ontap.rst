@@ -20,7 +20,7 @@ that can be dynamically deployed and redeployed according to changing
 business requirements.
 
 ONTAP powers NetApp’s fabric-attached storage (FAS) hardware line, the 
-Software Defined Storage implentation called ONTAP Select, and the AWS or 
+Software Defined Storage implementation called ONTAP Select, and the AWS or 
 Azure available ONTAP Cloud.
 
 ONTAP
