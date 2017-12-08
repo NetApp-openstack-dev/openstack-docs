@@ -1,0 +1,9 @@
+Code-Review+2: David <dblackwe@netapp.com>
+QA-Review+2: David <dblackwe@netapp.com>
+Release+1: David <dblackwe@netapp.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Fri, 08 Dec 2017 10:55:30 -0500
+Reviewed-on: https://review.openstack.netapp.com/517
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
