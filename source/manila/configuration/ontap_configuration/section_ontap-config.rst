@@ -71,11 +71,12 @@ considerations:
       `ONTAP 8 Product
       Documentation <https://mysupport.netapp.com/documentation/productlibrary/index.html?productID=30092>`__.
 
-7. Ensure that one or more aggregates are permitted to be used by the SVM. Use ``vserver show -vserver <vserver> 
-   -fields aggr-list`` to see which aggregates are all ready assigned.  You
-   can use ``vserver add-aggregates -vserver <vserver> -aggregates 
-   <first aggr,second aggr>`` to add aggregates to your SVM that Manila
-   will be able to use.
+7. If setting up Manila to no manage share server, ensure that one or 
+   more aggregates are permitted to be used by the SVM. Use ``vserver 
+   show -vserver <vserver> -fields aggr-list`` to see which aggregates 
+   are all ready assigned.  You can use ``vserver add-aggregates 
+   -vserver <vserver> -aggregates <first aggr,second aggr>`` to add 
+   aggregates to your SVM that Manila will be able to use.
 
 8. If you wish to assign QoS policies to Manila shares, do not assign the SVM
    used to a QoS policy group on ONTAP. Manila shares correspond to FlexVols
