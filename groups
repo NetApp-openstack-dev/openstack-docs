@@ -1,7 +1,15 @@
-# UUID                                  	Group Name
-#
-0fb3a2ae2e560beef0500afc8e2f6ee72b0da4b0	netapp-tme
-59296e1de601247e4ef496f93746d9bc44a65147	netapp-release-managers
+91fd7a4821a8d67bc95dd3b479867410b6f53055	Administrators
+20b6a3fd1c99387e7a8f33b3a35051eefe8f8161	Change Owners
 89398dd146fcc61bdea232763137ee3d78b90987	Continuous Integration Tools
+3a0b12940f1f7c92813f48407869b09eaffd5a61	Non-Interactive Users
+f47a17e7d9a6dfe79ffb8b2f8cea03966ddc42ec	netapp-ci-admin
 af372d8d79a065836e59e1195b3e818c8f14d8c1	netapp-core-devs
-global:Change-Owner                     	Change Owner
+ef37c47b42242e1e8fee7c56525ce07a4be25b6a	netapp-legal
+99fe4b944030d697c32ae399aeb80c080e5494d2	netapp-qa
+59296e1de601247e4ef496f93746d9bc44a65147	netapp-release-managers
+0fb3a2ae2e560beef0500afc8e2f6ee72b0da4b0	netapp-tme
+5d89add2977b9288f7154c869fbf600053d1aa90	testgroup
+global:Anonymous-Users	Anonymous Users
+global:Registered-Users	Registered Users
+global:Change-Owner	Change Owner
+global:Project-Owners	Project Owners
