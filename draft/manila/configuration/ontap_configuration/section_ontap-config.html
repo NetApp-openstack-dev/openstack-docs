@@ -202,11 +202,12 @@ and have unique names.</li>
 Documentation</a>.</li>
 </ol>
 </li>
-<li>Ensure that one or more aggregates are permitted to be used by the SVM. Use <code class="docutils literal"><span class="pre">vserver</span> <span class="pre">show</span> <span class="pre">-vserver</span> <span class="pre">&lt;vserver&gt;</span>
-<span class="pre">-fields</span> <span class="pre">aggr-list</span></code> to see which aggregates are all ready assigned.  You
-can use <code class="docutils literal"><span class="pre">vserver</span> <span class="pre">add-aggregates</span> <span class="pre">-vserver</span> <span class="pre">&lt;vserver&gt;</span> <span class="pre">-aggregates</span>
-<span class="pre">&lt;first</span> <span class="pre">aggr,second</span> <span class="pre">aggr&gt;</span></code> to add aggregates to your SVM that Manila
-will be able to use.</li>
+<li>If setting up Manila without share servers, ensure that one or
+more aggregates are permitted to be used by the SVM. Use <code class="docutils literal"><span class="pre">vserver</span>
+<span class="pre">show</span> <span class="pre">-vserver</span> <span class="pre">&lt;vserver&gt;</span> <span class="pre">-fields</span> <span class="pre">aggr-list</span></code> to see which aggregates
+are all ready assigned.  You can use <code class="docutils literal"><span class="pre">vserver</span> <span class="pre">add-aggregates</span>
+<span class="pre">-vserver</span> <span class="pre">&lt;vserver&gt;</span> <span class="pre">-aggregates</span> <span class="pre">&lt;first</span> <span class="pre">aggr,second</span> <span class="pre">aggr&gt;</span></code> to add
+aggregates to your SVM that Manila will be able to use.</li>
 <li>If you wish to assign QoS policies to Manila shares, do not assign the SVM
 used to a QoS policy group on ONTAP. Manila shares correspond to FlexVols
 on ONTAP and FlexVols are constituents of an SVM. ONTAP does not
@@ -566,7 +567,7 @@ nodes and the Data LIF interfaces from ONTAP.</li>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 5704afe390a71c36a582394ee7b5cc47c4facca6";
+    var gitSha = "SHA: 14cbbbbe0d639300b84287435fd4b99611c2da74";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "ONTAP Configuration in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
