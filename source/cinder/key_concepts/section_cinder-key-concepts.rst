@@ -346,6 +346,10 @@ Remove ``group:nobody`` to enable these APIs::
 Remember to restart the Block Storage API service after changing
 policies.
 
+The NetApp Driver creates consistency group LUN snapshots thick
+provisioned.  This can be changed on the backend after the snap
+is taken with no effect to Cinder.
+
 Backup and Restore
 ------------------
 
