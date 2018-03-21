@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -154,7 +154,7 @@ ga('send', 'pageview');
 <p>In this section, we use the Cinder CLI to verify that the configuration
 presented in the section called “<a class="reference internal" href="../../configuration/cinder_config_files/section_sample_cinder-conf.html#cinder-conf"><span class="std std-ref">Sample cinder.conf</span></a>”
 has been properly initialized by Cinder.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>stack@ostk-controller:~/$ cinder service-list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>stack@ostk-controller:~/$ cinder service-list
 +------------------+--------------------------------+------+---------+-------+------------------------+-----------------+
 |      Binary      |            Host                | Zone |  Status | State |         Updated_at     | Disabled Reason |
 +------------------+--------------------------------+------+---------+-------+------------------------+-----------------+
@@ -166,12 +166,12 @@ has been properly initialized by Cinder.</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">ostk-controller&#64;cdot-iscsi</span></code> is the backend defined by the configuration
-stanza <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">ostk-controller&#64;cdot-nfs</span></code> is the backend defined by the configuration
-stanza <code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>.</li>
-<li><code class="docutils literal"><span class="pre">ostk-controller&#64;eseries-iscsi</span></code> is the backend defined by the
-configuration stanza <code class="docutils literal"><span class="pre">[eseries-iscsi]</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ostk-controller&#64;cdot-iscsi</span></code> is the backend defined by the configuration
+stanza <code class="docutils literal notranslate"><span class="pre">[cdot-iscsi]</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ostk-controller&#64;cdot-nfs</span></code> is the backend defined by the configuration
+stanza <code class="docutils literal notranslate"><span class="pre">[cdot-nfs]</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">ostk-controller&#64;eseries-iscsi</span></code> is the backend defined by the
+configuration stanza <code class="docutils literal notranslate"><span class="pre">[eseries-iscsi]</span></code>.</li>
 </ul>
 </div>
 <div class="section" id="creating-and-defining-cinder-volume-types">
@@ -181,31 +181,31 @@ leverage both the default capabilities of each driver, as well as the
 NetApp specific extra specs described in
 <a class="reference internal" href="../../deployment_choice/section_service-catalog.html#table-4-11"><span class="std std-ref">Table 4.11, “NetApp supported Extra Specs for use with Cinder volume Types”</span></a></p>
 <ul class="simple">
-<li>The <code class="docutils literal"><span class="pre">iscsi</span></code> type provisions Cinder volumes onto any backend that
+<li>The <code class="docutils literal notranslate"><span class="pre">iscsi</span></code> type provisions Cinder volumes onto any backend that
 uses the iSCSI storage protocol (in this example, that would be
-<code class="docutils literal"><span class="pre">[cdot-iscsi]</span></code> and <code class="docutils literal"><span class="pre">[eseries-iscsi]</span></code>).</li>
-<li>The <code class="docutils literal"><span class="pre">nfs</span></code> type provisions Cinder volumes onto any backend that uses
+<code class="docutils literal notranslate"><span class="pre">[cdot-iscsi]</span></code> and <code class="docutils literal notranslate"><span class="pre">[eseries-iscsi]</span></code>).</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">nfs</span></code> type provisions Cinder volumes onto any backend that uses
 the NFS storage protocol (in this example, that would be
-<code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>).</li>
-<li>The <code class="docutils literal"><span class="pre">gold</span></code> type provisions Cinder volumes onto any pure-SSD pool on
+<code class="docutils literal notranslate"><span class="pre">[cdot-nfs]</span></code>).</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">gold</span></code> type provisions Cinder volumes onto any pure-SSD pool on
 any backend that has a SnapMirror relationship (in this example, that
-would be <code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports
-defined in <code class="docutils literal"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
-<li>The <code class="docutils literal"><span class="pre">silver</span></code> type provisions Cinder volumes onto any backend that
+would be <code class="docutils literal notranslate"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports
+defined in <code class="docutils literal notranslate"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">silver</span></code> type provisions Cinder volumes onto any backend that
 has deduplication enabled (in this example, that would be
-<code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports defined in
-<code class="docutils literal"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
-<li>The <code class="docutils literal"><span class="pre">bronze</span></code> type provisions Cinder volumes onto any backend that
+<code class="docutils literal notranslate"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports defined in
+<code class="docutils literal notranslate"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">bronze</span></code> type provisions Cinder volumes onto any backend that
 has compression enabled (in this example, that would be
-<code class="docutils literal"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports defined in
-<code class="docutils literal"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
-<li>The <code class="docutils literal"><span class="pre">analytics</span></code> type provisions Cinder volumes onto the
-<code class="docutils literal"><span class="pre">[eseries-iscsi]</span></code> backend.</li>
-<li>The <code class="docutils literal"><span class="pre">encrypted</span></code> type provisions Cinder volumes onto any backend
+<code class="docutils literal notranslate"><span class="pre">[cdot-nfs]</span></code>, although only one of the four NFS exports defined in
+<code class="docutils literal notranslate"><span class="pre">/etc/cinder/nfs_shares</span></code> has this support).</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">analytics</span></code> type provisions Cinder volumes onto the
+<code class="docutils literal notranslate"><span class="pre">[eseries-iscsi]</span></code> backend.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">encrypted</span></code> type provisions Cinder volumes onto any backend
 that has Flexvol encryption enabled (NVE) (in this example, that
-would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></code>).</li>
+would be <code class="docutils literal notranslate"><span class="pre">[cdot-iscsi]</span></code>).</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create iscsi
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create iscsi
 +--------------------------------------+-------+
 |                  ID                  |  Name |
 +--------------------------------------+-------+
@@ -213,7 +213,7 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+-------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create nfs
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create nfs
 +--------------------------------------+------+
 |                  ID                  | Name |
 +--------------------------------------+------+
@@ -221,7 +221,7 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create gold
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create gold
 +--------------------------------------+------+
 |                  ID                  | Name |
 +--------------------------------------+------+
@@ -229,7 +229,7 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create silver
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create silver
 +--------------------------------------+--------+
 |                  ID                  |  Name  |
 +--------------------------------------+--------+
@@ -237,7 +237,7 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+--------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create bronze
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create bronze
 +--------------------------------------+--------+
 |                  ID                  |  Name  |
 +--------------------------------------+--------+
@@ -245,7 +245,7 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+--------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create analytics
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create analytics
 +--------------------------------------+-----------+
 |                  ID                  |    Name   |
 +--------------------------------------+-----------+
@@ -253,7 +253,7 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+-----------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create encrypted
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create encrypted
 +--------------------------------------+-----------+
 |                  ID                  |    Name   |
 +--------------------------------------+-----------+
@@ -261,30 +261,30 @@ would be <code class="docutils literal"><span class="pre">[cdot-iscsi]</span></c
 +--------------------------------------+-----------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key iscsi set storage_protocol=iSCSI
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-key iscsi set storage_protocol=iSCSI
 $ cinder type-key nfs set storage_protocol=nfs
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key gold set netapp_mirrored=true
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-key gold set netapp_mirrored=true
 $ cinder type-key gold set netapp_disk_type=SSD
 $ cinder type-key gold set netapp_hybrid_aggregate=&quot;&lt;is&gt; False&quot;
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key silver set netapp_dedup=true
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-key silver set netapp_dedup=true
 </pre></div>
 </div>
 <dl class="docutils">
 <dt>::</dt>
 <dd>$ cinder type-key bronze set netapp_compression=true</dd>
 </dl>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key analytics set volume_backend_name=eseries-iscsi
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-key analytics set volume_backend_name=eseries-iscsi
 </pre></div>
 </div>
 <dl class="docutils">
 <dt>::</dt>
 <dd>$ cinder type-key encrypted set netapp_flexvol_encryption=true</dd>
 </dl>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder extra-specs-list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder extra-specs-list
 +--------------------------------------+-----------+--------------------------------------------+
 |                  ID                  |    Name   |                extra_specs                 |
 +--------------------------------------+-----------+--------------------------------------------+
@@ -305,7 +305,7 @@ $ cinder type-key gold set netapp_hybrid_aggregate=&quot;&lt;is&gt; False&quot;
 <h2>Creating Cinder Volumes with Volume Types<a class="headerlink" href="#creating-cinder-volumes-with-volume-types" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we create volumes with no type, as well as each of the
 previously defined volume types.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myGold --volume-type gold 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --display-name myGold --volume-type gold 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -331,7 +331,7 @@ previously defined volume types.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name mySilver --volume-type silver 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --display-name mySilver --volume-type silver 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -357,7 +357,7 @@ previously defined volume types.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myBronze --volume-type bronze 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --display-name myBronze --volume-type bronze 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -383,7 +383,7 @@ previously defined volume types.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myISCSI --volume-type iscsi 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --display-name myISCSI --volume-type iscsi 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -409,7 +409,7 @@ previously defined volume types.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myNFS --volume-type nfs 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --display-name myNFS --volume-type nfs 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -435,7 +435,7 @@ previously defined volume types.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myAnalytics --volume-type analytics 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --display-name myAnalytics --volume-type analytics 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -461,7 +461,7 @@ previously defined volume types.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --display-name myGenericVol 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --display-name myGenericVol 1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -487,7 +487,7 @@ previously defined volume types.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder list
 +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
 |                  ID                  |   Status  |     Name     | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
@@ -503,12 +503,12 @@ previously defined volume types.</p>
 </pre></div>
 </div>
 <p>We’ll now look at the local NFS mounts that are present on the node that
-is running <code class="docutils literal"><span class="pre">cinder-volume</span></code> and look for the volumes that were created
+is running <code class="docutils literal notranslate"><span class="pre">cinder-volume</span></code> and look for the volumes that were created
 on NFS backends. By mapping the mountpoints to the directories where the
 volume files exist, we are able to associate that the volumes were
 created in the appropriate FlexVol volume that had the NetApp specific
 features enabled that matched the Cinder volume type definitions.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ mount |grep cinder
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mount |grep cinder
 10.63.40.153:/vol2_dedup on /opt/stack/data/cinder/mnt/6fbcc46d69a86a6be25f3df3e6ae55ba type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
 10.63.40.153:/vol3_compressed on /opt/stack/data/cinder/mnt/aac4e6312b50b1fd6ddaf25d8dec8aaa type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
 10.63.40.153:/vol4_mirrored on /opt/stack/data/cinder/mnt/89af08204a543dd0985fa11b16f3d22f type nfs (rw,vers=4,addr=10.63.40.153,clientaddr=192.168.114.157)
@@ -522,21 +522,21 @@ $ find . -name volume-\*
 </pre></div>
 </div>
 <ol class="arabic simple">
-<li>This is the volume of type <code class="docutils literal"><span class="pre">gold</span></code> which was placed on
-<code class="docutils literal"><span class="pre">10.63.40.153:/vol4_mirrored</span></code>.</li>
-<li>This is the volume of type <code class="docutils literal"><span class="pre">bronze</span></code> which was placed on
-<code class="docutils literal"><span class="pre">10.63.40.153:/vol3_compressed</span></code>.</li>
-<li>This is the volume of type <code class="docutils literal"><span class="pre">silver</span></code> which was placed on
-<code class="docutils literal"><span class="pre">10.63.40.153:/vol2_dedup</span></code>.</li>
-<li>This is the volume of type <code class="docutils literal"><span class="pre">nfs</span></code> which was placed on
-<code class="docutils literal"><span class="pre">10.63.40.153:/vol2_dedup</span></code>. It could have been placed on
-<code class="docutils literal"><span class="pre">10.63.40.153:/vol3_compressed</span></code>, <code class="docutils literal"><span class="pre">10.63.40.153:/vol4_mirrored</span></code>,
-or <code class="docutils literal"><span class="pre">10.63.40.153:/vol5_plain</span></code> as any of those destinations would
-have fulfilled the volume type criteria of <code class="docutils literal"><span class="pre">storage_protocol=nfs</span></code>.</li>
+<li>This is the volume of type <code class="docutils literal notranslate"><span class="pre">gold</span></code> which was placed on
+<code class="docutils literal notranslate"><span class="pre">10.63.40.153:/vol4_mirrored</span></code>.</li>
+<li>This is the volume of type <code class="docutils literal notranslate"><span class="pre">bronze</span></code> which was placed on
+<code class="docutils literal notranslate"><span class="pre">10.63.40.153:/vol3_compressed</span></code>.</li>
+<li>This is the volume of type <code class="docutils literal notranslate"><span class="pre">silver</span></code> which was placed on
+<code class="docutils literal notranslate"><span class="pre">10.63.40.153:/vol2_dedup</span></code>.</li>
+<li>This is the volume of type <code class="docutils literal notranslate"><span class="pre">nfs</span></code> which was placed on
+<code class="docutils literal notranslate"><span class="pre">10.63.40.153:/vol2_dedup</span></code>. It could have been placed on
+<code class="docutils literal notranslate"><span class="pre">10.63.40.153:/vol3_compressed</span></code>, <code class="docutils literal notranslate"><span class="pre">10.63.40.153:/vol4_mirrored</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">10.63.40.153:/vol5_plain</span></code> as any of those destinations would
+have fulfilled the volume type criteria of <code class="docutils literal notranslate"><span class="pre">storage_protocol=nfs</span></code>.</li>
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Note that the volumes of type <code class="docutils literal"><span class="pre">analytics</span></code> and <code class="docutils literal"><span class="pre">iscsi</span></code>, as well
+<p class="last">Note that the volumes of type <code class="docutils literal notranslate"><span class="pre">analytics</span></code> and <code class="docutils literal notranslate"><span class="pre">iscsi</span></code>, as well
 as the volume created without a type did not appear under the NFS
 mount points because they were created as iSCSI LUNs within the
 E-Series and CDOT systems, respectively.</p>
@@ -546,7 +546,7 @@ E-Series and CDOT systems, respectively.</p>
 <span id="cinder-manage"></span><h2>Cinder Manage Usage<a class="headerlink" href="#cinder-manage-usage" title="Permalink to this headline">¶</a></h2>
 <p>In this section we import an ONTAP iSCSI LUN by specifying it by
 name or UUID.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder get-pools
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder get-pools
 +----------+-----------------------+
 | Property |         Value         |
 +----------+-----------------------+
@@ -554,7 +554,7 @@ name or UUID.</p>
 +----------+-----------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@iscsi#pool /vol/vol1/lun1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@iscsi#pool /vol/vol1/lun1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -580,7 +580,7 @@ name or UUID.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-id openstack9@iscsi#pool 013a7fe0-039b-459e-8cc2-7b59c693139d
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-id openstack9@iscsi#pool 013a7fe0-039b-459e-8cc2-7b59c693139d
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -606,7 +606,7 @@ name or UUID.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder list
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 |                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
@@ -618,7 +618,7 @@ name or UUID.</p>
 </div>
 <p>In this section we import an E-Series volume by specifying its label or
 world-wide identifier.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder get-pools
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder get-pools
 +----------+-------------------------+
 | Property |          Value          |
 +----------+-------------------------+
@@ -626,7 +626,7 @@ world-wide identifier.</p>
 +----------+-------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@eseries#pool WCAABGUIYJBAHKOYTNWKH5Y2NU
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@eseries#pool WCAABGUIYJBAHKOYTNWKH5Y2NU
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -652,7 +652,7 @@ world-wide identifier.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-id openstack9@eseries#pool 60:08:0e:50:00:23:c7:34:00:00:47:33:54:03:7f:b9
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-id openstack9@eseries#pool 60:08:0e:50:00:23:c7:34:00:00:47:33:54:03:7f:b9
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -678,7 +678,7 @@ world-wide identifier.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder list
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 |                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
@@ -689,7 +689,7 @@ world-wide identifier.</p>
 </pre></div>
 </div>
 <p>In this section we import an ONTAP NFS file by specifying its path.:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder get-pools
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder get-pools
 +----------+------------------------------+
 | Property |            Value             |
 +----------+------------------------------+
@@ -697,7 +697,7 @@ world-wide identifier.</p>
 +----------+------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@nfs#10.0.0.2:/nfs 10.0.0.2:/nfs/file1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder manage --id-type source-name openstack9@nfs#10.0.0.2:/nfs 10.0.0.2:/nfs/file1
 +--------------------------------+--------------------------------------+
 |            Property            |                Value                 |
 +--------------------------------+--------------------------------------+
@@ -723,7 +723,7 @@ world-wide identifier.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder list
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 |                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
@@ -735,7 +735,7 @@ world-wide identifier.</p>
 <div class="section" id="cinder-unmanage-usage">
 <span id="cinder-unmanage"></span><h2>Cinder Unmanage Usage<a class="headerlink" href="#cinder-unmanage-usage" title="Permalink to this headline">¶</a></h2>
 <p>In this section we unmanage a Cinder volume by specifying its ID.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder list
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 |                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
@@ -745,10 +745,10 @@ world-wide identifier.</p>
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder unmanage 206a6731-f23b-419d-8131-8bccbbd83647
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder unmanage 206a6731-f23b-419d-8131-8bccbbd83647
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder list
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 |                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
 +--------------------------------------+----------------+------+------+-------------+----------+-------------+
@@ -761,7 +761,7 @@ world-wide identifier.</p>
 <h2>Applying Cinder QoS via the Command Line<a class="headerlink" href="#applying-cinder-qos-via-the-command-line" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we will configure a Cinder volume type, a Cinder QoS
 spec, and lastly associate the QoS spec with the volume type.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create vol_type_qos_demo
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create vol_type_qos_demo
 +--------------------------------------+-------------------+
 |                  ID                  |        Name       |
 +--------------------------------------+-------------------+
@@ -769,7 +769,7 @@ spec, and lastly associate the QoS spec with the volume type.</p>
 +--------------------------------------+-------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder qos-create qos_demo maxIOPS=100
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder qos-create qos_demo maxIOPS=100
 +----------+--------------------------------------+
 | Property |                Value                 |
 +----------+--------------------------------------+
@@ -780,10 +780,10 @@ spec, and lastly associate the QoS spec with the volume type.</p>
 +----------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder qos-associate db081cde-1a9a-41bd-a8a3-a0259db7409b 7b060008-632c-412d-8fdc-a12351f7dfe4
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder qos-associate db081cde-1a9a-41bd-a8a3-a0259db7409b 7b060008-632c-412d-8fdc-a12351f7dfe4
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder qos-list
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder qos-list
 +--------------------------------------+----------+----------+----------------------+
 |                  ID                  |   Name   | Consumer |        specs         |
 +--------------------------------------+----------+----------+----------------------+
@@ -791,7 +791,7 @@ spec, and lastly associate the QoS spec with the volume type.</p>
 +--------------------------------------+----------+----------+----------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create 1 --volume-type vol_type_qos_demo
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create 1 --volume-type vol_type_qos_demo
 +---------------------------------------+--------------------------------------+
 |                Property               |                Value                 |
 +---------------------------------------+--------------------------------------+
@@ -827,7 +827,7 @@ volume type just as we did in the section called
 <a class="reference internal" href="#create-volume"><span class="std std-ref">“Creating and Defining Cinder volume Types”</span></a>.
 The example below shows how to verify that the QoS policy group has
 been created on the NetApp storage controller.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">qos</span> <span class="n">policy</span><span class="o">-</span><span class="n">group</span> <span class="n">show</span> <span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">group</span> <span class="o">*</span><span class="mi">66027</span><span class="n">b97</span><span class="o">-</span><span class="mi">11</span><span class="n">d1</span><span class="o">-</span><span class="mi">4399</span><span class="o">-</span><span class="n">b8c6</span><span class="o">-</span><span class="mi">031</span><span class="n">ad8e38da0</span><span class="o">*</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qos</span> <span class="n">policy</span><span class="o">-</span><span class="n">group</span> <span class="n">show</span> <span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">group</span> <span class="o">*</span><span class="mi">66027</span><span class="n">b97</span><span class="o">-</span><span class="mi">11</span><span class="n">d1</span><span class="o">-</span><span class="mi">4399</span><span class="o">-</span><span class="n">b8c6</span><span class="o">-</span><span class="mi">031</span><span class="n">ad8e38da0</span><span class="o">*</span>
 <span class="n">Name</span>             <span class="n">Vserver</span>     <span class="n">Class</span>        <span class="n">Wklds</span> <span class="n">Throughput</span>
 <span class="o">----------------</span> <span class="o">-----------</span> <span class="o">------------</span> <span class="o">-----</span> <span class="o">------------</span>
 <span class="n">openstack</span><span class="o">-</span><span class="mi">66027</span><span class="n">b97</span><span class="o">-</span><span class="mi">11</span><span class="n">d1</span><span class="o">-</span><span class="mi">4399</span><span class="o">-</span><span class="n">b8c6</span><span class="o">-</span><span class="mi">031</span><span class="n">ad8e38da0</span>
@@ -853,7 +853,7 @@ create a Cinder consistency group, create a Cinder volume within the
 consistency group, take a snapshot of the consistency group, and then
 finally create a second consistency group from the snapshot of the first
 consistency group.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create consistency-group-support
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create consistency-group-support
 +--------------------------------------+---------------------------+-----------+
 |                  ID                  |            Name           | Is_Public |
 +--------------------------------------+---------------------------+-----------+
@@ -861,10 +861,10 @@ consistency group.</p>
 +--------------------------------------+---------------------------+-----------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key consistency-group-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-key consistency-group-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-create consistency-group-support --name cg1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder consisgroup-create consistency-group-support --name cg1
 +-------------------+-------------------------------------------+
 |      Property     |                   Value                   |
 +-------------------+-------------------------------------------+
@@ -878,7 +878,7 @@ consistency group.</p>
 +-------------------+-------------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --name vol-in-cg1 --consisgroup-id 2cc3d172-af05-421b-babd-01d4cd91078d --volume-type consistency-group-support 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --name vol-in-cg1 --consisgroup-id 2cc3d172-af05-421b-babd-01d4cd91078d --volume-type consistency-group-support 1
 +---------------------------------------+-------------------------------------------+
 |                Property               |                   Value                   |
 +---------------------------------------+-------------------------------------------+
@@ -911,7 +911,7 @@ consistency group.</p>
 +---------------------------------------+-------------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder cgsnapshot-create 2cc3d172-af05-421b-babd-01d4cd91078d --name snap-of-cg1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder cgsnapshot-create 2cc3d172-af05-421b-babd-01d4cd91078d --name snap-of-cg1
 +---------------------+--------------------------------------+
 |       Property      |                Value                 |
 +---------------------+--------------------------------------+
@@ -924,7 +924,7 @@ consistency group.</p>
 +---------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-create-from-src --name cg2 --cgsnapshot cd3770e1-fa59-48a6-ba48-2f3581f2b03b
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder consisgroup-create-from-src --name cg2 --cgsnapshot cd3770e1-fa59-48a6-ba48-2f3581f2b03b
 +----------+--------------------------------------+
 | Property |                Value                 |
 +----------+--------------------------------------+
@@ -937,27 +937,27 @@ consistency group.</p>
 consistency group have first been deleted, and that any volumes in the
 consistency group have been removed via an update command on the
 consistency group.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-update cg2 --remove-volumes ddb31a53-6550-410c-ba48-a0a912c8ae95
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder consisgroup-update cg2 --remove-volumes ddb31a53-6550-410c-ba48-a0a912c8ae95
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder delete ddb31a53-6550-410c-ba48-a0a912c8ae95
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder delete ddb31a53-6550-410c-ba48-a0a912c8ae95
 Request to delete volume ddb31a53-6550-410c-ba48-a0a912c8ae95 has been accepted.
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-delete cg2
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder consisgroup-delete cg2
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder cgsnapshot-delete snap-of-cg1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder cgsnapshot-delete snap-of-cg1
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-update cg1 --remove-volumes 959e5f9f-67b9-4011-bd60-5dad2ee43200
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder consisgroup-update cg1 --remove-volumes 959e5f9f-67b9-4011-bd60-5dad2ee43200
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder delete 959e5f9f-67b9-4011-bd60-5dad2ee43200
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder delete 959e5f9f-67b9-4011-bd60-5dad2ee43200
 Request to delete volume 959e5f9f-67b9-4011-bd60-5dad2ee43200 has been accepted.
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder consisgroup-delete cg1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder consisgroup-delete cg1
 </pre></div>
 </div>
 </div>
@@ -973,8 +973,8 @@ snapshot of the first group.</p>
 <p class="last">Currently only the Block Storage V3 API supports group operations. The
 minimum version for group operations supported by the ONTAP drivers is
 3.14. The API version can be specified with the following CLI flag
-<code class="docutils literal"><span class="pre">--os-volume-api-version</span> <span class="pre">3.14</span></code>. Optionally an environment variable can
-be set: <code class="docutils literal"><span class="pre">export</span> <span class="pre">OS_VOLUME_API_VERSION=3.14</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">--os-volume-api-version</span> <span class="pre">3.14</span></code>. Optionally an environment variable can
+be set: <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">OS_VOLUME_API_VERSION=3.14</span></code></p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -987,12 +987,12 @@ release notes for upgrade instructions prior to using group operations.</p>
 <p class="last">The ONTAP volume drivers support the consistent_group_snapshot_enabled
 group type. By default Cinder group snapshots take individual snapshots
 of each Cinder volume in the group. To enable consistency group snapshots set
-<code class="docutils literal"><span class="pre">consistent_group_snapshot_enabled=&quot;&lt;is&gt;</span> <span class="pre">True&quot;</span></code> in the group type used.
+<code class="docutils literal notranslate"><span class="pre">consistent_group_snapshot_enabled=&quot;&lt;is&gt;</span> <span class="pre">True&quot;</span></code> in the group type used.
 Be aware that only one consistency group snapshot per storage pool (i.e.
 flexvol) can be performed at a time. Overlapping consistency group snapshot
 operations can fail.</p>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create volume-support
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create volume-support
 +--------------------------------------+----------------+-------------+-----------+
 | ID                                   | Name           | Description | Is_Public |
 +--------------------------------------+----------------+-------------+-----------+
@@ -1000,10 +1000,10 @@ operations can fail.</p>
 +--------------------------------------+----------------+-------------+-----------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-key volume-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-key volume-support set volume_backend_name=BACKEND_WITH_CG_SUPPORT
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-type-create group-support
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-type-create group-support
 +--------------------------------------+---------------+-------------+
 | ID                                   | Name          | Description |
 +--------------------------------------+---------------+-------------+
@@ -1011,10 +1011,10 @@ operations can fail.</p>
 +--------------------------------------+---------------+-------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-type-key group-support set consistent_group_snapshot_enabled=&quot;&lt;is&gt; True&quot;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-type-key group-support set consistent_group_snapshot_enabled=&quot;&lt;is&gt; True&quot;
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-create --name group1 group-support volume-support
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-create --name group1 group-support volume-support
 +-------------------+-------------------------------------------+
 | Property          | Value                                     |
 +-------------------+-------------------------------------------+
@@ -1031,7 +1031,7 @@ operations can fail.</p>
 +-------------------+-------------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 create --name vol-in-group1 --group-id 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 --volume-type volume-support 1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 create --name vol-in-group1 --group-id 68ea5b1d-0b09-44ae-ad9f-5e6d9672cc93 --volume-type volume-support 1
 +--------------------------------+--------------------------------------+
 | Property                       | Value                                |
 +--------------------------------+--------------------------------------+
@@ -1063,7 +1063,7 @@ operations can fail.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-snapshot-create group1 --name group1-snapshot1
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-snapshot-create group1 --name group1-snapshot1
 +---------------+--------------------------------------+
 | Property      | Value                                |
 +---------------+--------------------------------------+
@@ -1077,7 +1077,7 @@ operations can fail.</p>
 +---------------+--------------------------------------+
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-create-from-src --group-snapshot group1-snapshot1 --name group2
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder --os-volume-api-version 3.14 group-create-from-src --group-snapshot group1-snapshot1 --name group2
 +----------+--------------------------------------+
 | Property | Value                                |
 +----------+--------------------------------------+
@@ -1090,13 +1090,13 @@ operations can fail.</p>
 <div class="section" id="thin-provisioning">
 <h2>Thin Provisioning<a class="headerlink" href="#thin-provisioning" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we will configure a Cinder volume type, associate
-the <code class="docutils literal"><span class="pre">thin_provisioning_support</span></code> attribute and then create a thin
+the <code class="docutils literal notranslate"><span class="pre">thin_provisioning_support</span></code> attribute and then create a thin
 provisioned Cinder volume.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder type-create thin
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-create thin
 $ cinder type-key thin set thin_provisioning_support=&quot;&lt;is&gt; True&quot;
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --name cinder-vol-a --volume-type thin 5000
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --name cinder-vol-a --volume-type thin 5000
 </pre></div>
 </div>
 </div>
@@ -1117,7 +1117,7 @@ $ cinder type-key thin set thin_provisioning_support=&quot;&lt;is&gt; True&quot;
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -1248,7 +1248,7 @@ $ cinder type-key thin set thin_provisioning_support=&quot;&lt;is&gt; True&quot;
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: b529801362e0ce3c30033ffa8ad9dcbec0032005";
+    var gitSha = "SHA: 2115ffc4d924e23da10dc7a647a12cdf2f72dfd5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Cinder Command Line Interface (CLI) in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -1259,7 +1259,7 @@ $ cinder type-key thin set thin_provisioning_support=&quot;&lt;is&gt; True&quot;
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2018-01-08 16:23";
+    var buildstring = "Release: 2017.2 on 2018-03-21 15:06";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

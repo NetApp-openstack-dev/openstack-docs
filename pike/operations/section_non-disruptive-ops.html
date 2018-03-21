@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -154,7 +154,7 @@ volume that is in-use across two ONTAP hosts</li>
 <blockquote>
 <div><p>Nova instance with an attached cinder volume.  Pay particular attention to
 the value associated with the <strong>os-extended-volumes:volumes_attached</strong> field.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># nova show ubuntu-instance</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># nova show ubuntu-instance</span>
 <span class="o">+--------------------------------------+--------------------------------------------------------+</span>
 <span class="o">|</span> <span class="n">Property</span>                             <span class="o">|</span> <span class="n">Value</span>                                                  <span class="o">|</span>
 <span class="o">+--------------------------------------+--------------------------------------------------------+</span>
@@ -169,7 +169,7 @@ the value associated with the <strong>os-extended-volumes:volumes_attached</stro
 notice that the cinder volume is located at
 <a class="reference external" href="mailto:stlrx300s7-107&#37;&#52;&#48;cinder-lma#10&#46;250&#46;118&#46;49">stlrx300s7-107<span>&#64;</span>cinder-lma#10<span>&#46;</span>250<span>&#46;</span>118<span>&#46;</span>49</a>:/cinder_flexvol_OSTK02.
 This location is of the form <em>compute node&#64;backend#nfs server:/flexvol</em>.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e</span>
 <span class="o">+--------------------------------+----------------------------------------------------------------+</span>
 <span class="o">|</span>            <span class="n">Property</span>            <span class="o">|</span>                             <span class="n">Value</span>                              <span class="o">|</span>
 <span class="o">+--------------------------------+----------------------------------------------------------------+</span>
@@ -182,7 +182,7 @@ This location is of the form <em>compute node&#64;backend#nfs server:/flexvol</e
 </pre></div>
 </div>
 <p>Get the list of available cinder pools, the target pool will be taken from this list</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder get-pools</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder get-pools</span>
 <span class="o">+----------+------------------------------------------------------------------------------+</span>
 <span class="o">|</span> <span class="n">Property</span> <span class="o">|</span> <span class="n">Value</span>                                                                        <span class="o">|</span>
 <span class="o">+----------+------------------------------------------------------------------------------+</span>
@@ -196,12 +196,12 @@ This location is of the form <em>compute node&#64;backend#nfs server:/flexvol</e
 </pre></div>
 </div>
 <p>Migrate the cinder volume identified above to <strong>stlrx300s7-107&#64;cinder-lmb#10.250.118.51:/cinder_flexvol_OSTK09</strong>.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder migrate 195d2581-d650-4618-ad65-a93ea0c3a89e \</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder migrate 195d2581-d650-4618-ad65-a93ea0c3a89e \</span>
                                     <span class="n">stlrx300s7</span><span class="o">-</span><span class="mi">107</span><span class="nd">@cinder</span><span class="o">-</span><span class="n">lmb</span><span class="c1">#10.250.118.51:/cinder_flexvol_OSTK09</span>
 </pre></div>
 </div>
 <p>Upon Completion of migration, note that the cinder volume has migrated as specified.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">~</span><span class="p">(</span><span class="n">keystone_admin</span><span class="p">)]</span><span class="c1"># cinder show 195d2581-d650-4618-ad65-a93ea0c3a89e</span>
 <span class="o">+--------------------------------+----------------------------------------------------------------+</span>
 <span class="o">|</span>            <span class="n">Property</span>            <span class="o">|</span>                             <span class="n">Value</span>                              <span class="o">|</span>
 <span class="o">+--------------------------------+----------------------------------------------------------------+</span>
@@ -222,7 +222,7 @@ that updating the following packages will not affect your
 environment before proceeding. These packages are for Red
 Hat/CentOS. For other distributions, please update your hypervisor
 accordingly.
-<code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">qemu-kvm</span> <span class="pre">libvirt</span> <span class="pre">libvirt-python</span> <span class="pre">libguestfs-tools</span> <span class="pre">virt–install</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">qemu-kvm</span> <span class="pre">libvirt</span> <span class="pre">libvirt-python</span> <span class="pre">libguestfs-tools</span> <span class="pre">virt–install</span></code></p>
 </div>
 </div>
 
@@ -241,7 +241,7 @@ accordingly.
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -367,7 +367,7 @@ accordingly.
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: b529801362e0ce3c30033ffa8ad9dcbec0032005";
+    var gitSha = "SHA: 2115ffc4d924e23da10dc7a647a12cdf2f72dfd5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Non-Disruptive Operations in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -378,7 +378,7 @@ accordingly.
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2018-01-08 16:23";
+    var buildstring = "Release: 2017.2 on 2018-03-21 15:06";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

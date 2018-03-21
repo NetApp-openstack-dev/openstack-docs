@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -156,7 +156,7 @@ exported from the share server.</p>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
 <p class="last">An account with cluster administrator privileges must be used with
-the <code class="docutils literal"><span class="pre">netapp_login</span></code> option when using Share Server management.
+the <code class="docutils literal notranslate"><span class="pre">netapp_login</span></code> option when using Share Server management.
 Share Server management creates SVMs, thus SVM administrator
 privileges are insufficient.</p>
 </div>
@@ -165,8 +165,8 @@ privileges are insufficient.</p>
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
 <p>To set up the NetApp ONTAP driver with Share Server
 management, the following stanza should be added to the Manila
-configuration file (<code class="docutils literal"><span class="pre">manila.conf</span></code>):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[cdotMultipleSVM]
+configuration file (<code class="docutils literal notranslate"><span class="pre">manila.conf</span></code>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[cdotMultipleSVM]
 share_backend_name=cdotMultipleSVM
 share_driver=manila.share.drivers.netapp.common.NetAppDriver
 driver_handles_share_servers=True
@@ -181,11 +181,11 @@ netapp_aggregate_name_search_pattern=^((?!aggr0).)*$
 </pre></div>
 </div>
 <ul class="simple">
-<li>Be sure that the value of the <code class="docutils literal"><span class="pre">enabled_share_backends</span></code> option in
-the <code class="docutils literal"><span class="pre">[DEFAULT]</span></code> stanza includes the name of the stanza you chose
+<li>Be sure that the value of the <code class="docutils literal notranslate"><span class="pre">enabled_share_backends</span></code> option in
+the <code class="docutils literal notranslate"><span class="pre">[DEFAULT]</span></code> stanza includes the name of the stanza you chose
 for the backend.</li>
-<li>The value of <code class="docutils literal"><span class="pre">driver_handles_share_servers</span></code> <strong>MUST</strong> be set to
-<code class="docutils literal"><span class="pre">True</span></code> if you want the driver to manage share servers.</li>
+<li>The value of <code class="docutils literal notranslate"><span class="pre">driver_handles_share_servers</span></code> <strong>MUST</strong> be set to
+<code class="docutils literal notranslate"><span class="pre">True</span></code> if you want the driver to manage share servers.</li>
 </ul>
 <p>Table 6.16, “Configuration options for ONTAP with Share Server management”
 lists the configuration options available for the unified driver for an
@@ -205,119 +205,119 @@ ONTAP deployment that manages share servers.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">share_backend_name</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">share_backend_name</span></code></td>
 <td>Required</td>
 <td>&#160;</td>
 <td>The name used by Manila to refer to the Manila backend</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">share_driver</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">share_driver</span></code></td>
 <td>Required</td>
 <td>manila.share.drivers.generic.GenericShareDriver</td>
 <td>Set the value to manila.share.drivers.netapp.common.NetAppDriver</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">driver_handles_share_servers</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">driver_handles_share_servers</span></code></td>
 <td>Required</td>
 <td>&#160;</td>
-<td>Denotes whether the driver should handle the responsibility of managing share servers. This must be set to <code class="docutils literal"><span class="pre">true</span></code> if the driver is to manage share servers.</td>
+<td>Denotes whether the driver should handle the responsibility of managing share servers. This must be set to <code class="docutils literal notranslate"><span class="pre">true</span></code> if the driver is to manage share servers.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_server_hostname</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_server_hostname</span></code></td>
 <td>Required</td>
 <td>&#160;</td>
 <td>The hostname or IP address for the storage system or proxy server. <em>The value of this option should be the IP address of the cluster management LIF.</em></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_server_port</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_server_port</span></code></td>
 <td>Optional</td>
 <td>&#160;</td>
 <td>The TCP port to use for communication with the storage system or proxy server. If not specified, ONTAP drivers will use 80 for HTTP and 443 for HTTPS.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_login</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_login</span></code></td>
 <td>Required</td>
 <td>&#160;</td>
 <td>Administrative user account name used to access the storage system.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_password</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_password</span></code></td>
 <td>Required</td>
 <td>&#160;</td>
-<td>Password for the administrative user account specified in the <code class="docutils literal"><span class="pre">netapp_login</span></code> option.</td>
+<td>Password for the administrative user account specified in the <code class="docutils literal notranslate"><span class="pre">netapp_login</span></code> option.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_transport_type</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_transport_type</span></code></td>
 <td>Required</td>
-<td><code class="docutils literal"><span class="pre">http</span></code></td>
-<td>Transport protocol for communicating with the storage system or proxy server. Valid options include <code class="docutils literal"><span class="pre">http</span></code> and <code class="docutils literal"><span class="pre">https</span></code>.</td>
+<td><code class="docutils literal notranslate"><span class="pre">http</span></code></td>
+<td>Transport protocol for communicating with the storage system or proxy server. Valid options include <code class="docutils literal notranslate"><span class="pre">http</span></code> and <code class="docutils literal notranslate"><span class="pre">https</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_storage_family</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_storage_family</span></code></td>
 <td>Required</td>
-<td><code class="docutils literal"><span class="pre">ontap_cluster</span></code></td>
-<td>The storage family type used on the storage system; valid values are <code class="docutils literal"><span class="pre">ontap_cluster</span></code> for ONTAP.</td>
+<td><code class="docutils literal notranslate"><span class="pre">ontap_cluster</span></code></td>
+<td>The storage family type used on the storage system; valid values are <code class="docutils literal notranslate"><span class="pre">ontap_cluster</span></code> for ONTAP.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_root_volume_aggregate</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_root_volume_aggregate</span></code></td>
 <td>Required</td>
 <td>&#160;</td>
 <td>This option specifies name of the aggregate upon which the root volume should be placed when a new SVM is created to correspond to a Manila share server.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_root_volume_name</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_root_volume_name</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">root</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">root</span></code></td>
 <td>This option specifies name of the root volume that will be created when a new SVM is created to correspond to a Manila share server.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_vserver_name_template</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_vserver_name_template</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">os_%s</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">os_%s</span></code></td>
 <td>This option specifies a string replacement template that is applied when naming SVMs that are created to correspond to a Manila share server.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_lif_name_template</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_lif_name_template</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">os_%(net_allocation_id)s</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">os_%(net_allocation_id)s</span></code></td>
 <td>This option specifies a string replacement template that is applied when naming data LIFs that are created as a result of provisioning requests.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_volume_name_template</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_volume_name_template</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">share_%(share_id)s</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">share_%(share_id)s</span></code></td>
 <td>This option specifies a string replacement template that is applied when naming FlexVol volumes that are created as a result of provisioning requests.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_qos_policy_group_name_template</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_qos_policy_group_name_template</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">qos_share_%(share_id)s</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">qos_share_%(share_id)s</span></code></td>
 <td>This option specifies a string replacement template that is applied when naming QoS policies created for FlexVol volumes created by Manila.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_volume_snapshot_reserve_percent</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_volume_snapshot_reserve_percent</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">5</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">5</span></code></td>
 <td>This option specifies the percentage of share space set aside as reserve for snapshot usage. Valid values range from 0 to 90.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_aggregate_name_search_pattern</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_aggregate_name_search_pattern</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">(.*)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">(.*)</span></code></td>
 <td>This option specifies a regular expression that is applied against all available aggregates. This filtered list will be reported to the Manila scheduler as valid pools for provisioning new shares.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_port_name_search_pattern</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_port_name_search_pattern</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">(.*)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">(.*)</span></code></td>
 <td>This option allows you to specify a regular expression for overriding the selection of network ports on which to create Vserver LIFs.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">netapp_enabled_share_protocols</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_enabled_share_protocols</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">nfs3,nfs4.0</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">nfs3,nfs4.0</span></code></td>
 <td>This option specifies the NFS protocol versions that will be enabled on new SVMs created by the driver. Valid values include nfs3, nfs4.0, nfs4.1.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">filter_function</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">filter_function</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">(see</span> <span class="pre">description)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">(see</span> <span class="pre">description)</span></code></td>
 <td>This expression is used by the scheduler as a filter in determining share placement.  Using this expression, the scheduler is instructed to NOT place volumes on storage controllers that may become overutilized.  The default value is “capabilities.utilization &lt; 70”. Capabilities.utilization refers to ONTAP storage node headroom.   See “<a class="reference internal" href="../../deployment_choice/section_construct-mappings.html#manila-scheduling-and-resource-selection"><span class="std std-ref">Manila scheduling and resource pool selection</span></a>” for more information on filters and weighers.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">goodness_function</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">goodness_function</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">(see</span> <span class="pre">description)</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">(see</span> <span class="pre">description)</span></code></td>
 <td>This expression is used by the scheduler to assign weighting in determining share placement.  Using this expression, the scheduler places shares on lesser-utilized storage controllers.  The default value is “100 - capabilities.utilization”.  Capabilities.utilization refers to ONTAP storage node headroom.  See “<a class="reference internal" href="../../deployment_choice/section_construct-mappings.html#manila-scheduling-and-resource-selection"><span class="std std-ref">Manila scheduling and resource pool selection</span></a>” for more information on filters and weighers.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">netapp_trace_flags</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">netapp_trace_flags</span></code></td>
 <td>Optional</td>
 <td>&#160;</td>
-<td>This option is a comma-separated list of options (valid values include <code class="docutils literal"><span class="pre">method</span></code> and <code class="docutils literal"><span class="pre">api</span></code>) that controls which trace info is written to the Manila logs when the debug level is set to <code class="docutils literal"><span class="pre">True</span></code>.</td>
+<td>This option is a comma-separated list of options (valid values include <code class="docutils literal notranslate"><span class="pre">method</span></code> and <code class="docutils literal notranslate"><span class="pre">api</span></code>) that controls which trace info is written to the Manila logs when the debug level is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">migration_driver_continue_interval</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">migration_driver_continue_interval</span></code></td>
 <td>Optional</td>
-<td><code class="docutils literal"><span class="pre">60</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">60</span></code></td>
 <td>This option specifies the time interval in seconds at which Manila polls the backend for the progress and health of an ongoing migration.</td>
 </tr>
 </tbody>
@@ -342,7 +342,7 @@ management</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -473,7 +473,7 @@ management</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: b529801362e0ce3c30033ffa8ad9dcbec0032005";
+    var gitSha = "SHA: 2115ffc4d924e23da10dc7a647a12cdf2f72dfd5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "NetApp Unified Driver for ONTAP with Share Server management in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -484,7 +484,7 @@ management</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2018-01-08 16:23";
+    var buildstring = "Release: 2017.2 on 2018-03-21 15:06";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -154,12 +154,12 @@ ga('send', 'pageview');
 
   <div class="section" id="common-problems">
 <span id="common-probs"></span><h1>Common Problems<a class="headerlink" href="#common-problems" title="Permalink to this headline">¶</a></h1>
-<p>Common problems listed below are followed by the <code class="docutils literal"><span class="pre">cinder</span></code>, <code class="docutils literal"><span class="pre">manila</span></code>,
-or <code class="docutils literal"><span class="pre">nova</span></code> CLI command and possible reasons for the occurrence of the
+<p>Common problems listed below are followed by the <code class="docutils literal notranslate"><span class="pre">cinder</span></code>, <code class="docutils literal notranslate"><span class="pre">manila</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">nova</span></code> CLI command and possible reasons for the occurrence of the
 problem.</p>
 <div class="section" id="volume-create-operation-fails">
 <h2>1. Volume create operation fails<a class="headerlink" href="#volume-create-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create size_gb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create size_gb
 </pre></div>
 </div>
 <ul class="simple">
@@ -168,8 +168,8 @@ sufficient free space to host the specified OpenStack volume. Here
 NetApp volume refers to a FlexVol volume inside the configured
 Storage Virtual Machine (SVM aka Vserver) for the ONTAP
 driver. It refers to NetApp volumes filtered in Cinder through
-parameter <code class="docutils literal"><span class="pre">netapp_pool_name_search_pattern</span></code> or NetApp volumes in
-the configured vFiler unit as parameter <code class="docutils literal"><span class="pre">netapp_vfiler</span></code> or system
+parameter <code class="docutils literal notranslate"><span class="pre">netapp_pool_name_search_pattern</span></code> or NetApp volumes in
+the configured vFiler unit as parameter <code class="docutils literal notranslate"><span class="pre">netapp_vfiler</span></code> or system
 wide NetApp volumes for 7-mode storage system.</li>
 <li>Cinder API service is down.</li>
 <li>Cinder scheduler service is down.</li>
@@ -194,7 +194,7 @@ size.</li>
 </ul>
 </li>
 <li>The Havana based NFS driver for ONTAP has the
-configuration option <code class="docutils literal"><span class="pre">netapp_vserver</span></code> to specify the Storage
+configuration option <code class="docutils literal notranslate"><span class="pre">netapp_vserver</span></code> to specify the Storage
 Virtual Machine (SVM aka Vserver) to use for provisioning. It may so
 happen that the NFS exports specified in the configuration and the
 NetApp volumes in the SVM do not coincide.</li>
@@ -210,7 +210,7 @@ side applications.</li>
 </div>
 <div class="section" id="volume-create-with-volume-type-operation-fails">
 <h2>2. Volume create with volume-type operation fails<a class="headerlink" href="#volume-create-with-volume-type-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --volume-type volume_type size_gb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --volume-type volume_type size_gb
 </pre></div>
 </div>
 <ul class="simple">
@@ -233,14 +233,14 @@ but the volume-type support requires cluster wide API access.</li>
 </div>
 <div class="section" id="volume-create-from-image-id-operation-fails">
 <h2>3. Volume create from image-id operation fails<a class="headerlink" href="#volume-create-from-image-id-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --image-id image-id size_gb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --image-id image-id size_gb
 </pre></div>
 </div>
 <ul class="simple">
 <li>All the reasons mentioned under Item 1 in this appendix.</li>
 <li>The Grizzly-based NFS driver does not have the mentioned operation
 supported. It may be required to use the latest code from the NetApp
-git repository, from the <code class="docutils literal"><span class="pre">stable/grizzly</span></code> branch in order to get a
+git repository, from the <code class="docutils literal notranslate"><span class="pre">stable/grizzly</span></code> branch in order to get a
 supported version.</li>
 <li>Glance related services are down.</li>
 <li>The image could not be downloaded from glance because of download
@@ -253,7 +253,7 @@ by the driver.</li>
 </div>
 <div class="section" id="volume-create-from-image-id-with-volume-type-operation-fails">
 <h2>4. Volume create from image-id with volume-type operation fails<a class="headerlink" href="#volume-create-from-image-id-with-volume-type-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --image-id image-id --volume-type volume_type size_gb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --image-id image-id --volume-type volume_type size_gb
 </pre></div>
 </div>
 <ul class="simple">
@@ -262,7 +262,7 @@ by the driver.</li>
 </div>
 <div class="section" id="volume-snapshot-create-operation-fails">
 <h2>5. Volume snapshot create operation fails<a class="headerlink" href="#volume-snapshot-create-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">snapshot</span><span class="o">-</span><span class="n">create</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">snapshot</span><span class="o">-</span><span class="n">create</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -275,7 +275,7 @@ backend causing LUN or file unavailability.</li>
 </div>
 <div class="section" id="volume-create-from-snapshot-operation-fails">
 <h2>6. Volume create from snapshot operation fails<a class="headerlink" href="#volume-create-from-snapshot-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --snapshot-id snapshot-id size_gb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --snapshot-id snapshot-id size_gb
 </pre></div>
 </div>
 <ul class="simple">
@@ -284,7 +284,7 @@ backend causing LUN or file unavailability.</li>
 </div>
 <div class="section" id="create-cloned-volume-operation-fails">
 <h2>7. Create cloned volume operation fails<a class="headerlink" href="#create-cloned-volume-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --source-volid volume-id size_gb
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --source-volid volume-id size_gb
 </pre></div>
 </div>
 <ul class="simple">
@@ -293,13 +293,13 @@ backend causing LUN or file unavailability.</li>
 </div>
 <div class="section" id="volume-attach-operation-in-nova-fails">
 <h2>8. Volume attach operation in nova fails<a class="headerlink" href="#volume-attach-operation-in-nova-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nova</span> <span class="n">volume</span><span class="o">-</span><span class="n">attach</span> <span class="n">instance</span><span class="o">-</span><span class="nb">id</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">path</span> <span class="n">size_gb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nova</span> <span class="n">volume</span><span class="o">-</span><span class="n">attach</span> <span class="n">instance</span><span class="o">-</span><span class="nb">id</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">path</span> <span class="n">size_gb</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>iSCSI drivers:<ul>
 <li>The iSCSI license may not be installed.</li>
-<li>The iSCSI service on the <code class="docutils literal"><span class="pre">nova-compute</span></code> host may not be running.</li>
+<li>The iSCSI service on the <code class="docutils literal notranslate"><span class="pre">nova-compute</span></code> host may not be running.</li>
 <li>The iSCSI portal can not be found. No network interface of type
 iSCSI has been created.</li>
 <li>The network is not reachable due to firewall, configuration, or
@@ -310,7 +310,7 @@ transient issues.</li>
 </div>
 <div class="section" id="volume-extend-operation-fails-for-havana-based-drivers">
 <h2>9. Volume extend operation fails for Havana based drivers<a class="headerlink" href="#volume-extend-operation-fails-for-havana-based-drivers" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">extend</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">new_size_gb</span> <span class="n">size_gb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">extend</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">new_size_gb</span> <span class="n">size_gb</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -321,15 +321,15 @@ space.</li>
 </ul>
 </li>
 <li>NFS drivers<ul>
-<li>The disk image format of the Cinder volume is not <code class="docutils literal"><span class="pre">raw</span></code> or
-<code class="docutils literal"><span class="pre">qcow2</span></code>.</li>
+<li>The disk image format of the Cinder volume is not <code class="docutils literal notranslate"><span class="pre">raw</span></code> or
+<code class="docutils literal notranslate"><span class="pre">qcow2</span></code>.</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="volume-upload-to-image-operation-fails">
 <h2>10. Volume upload to image operation fails<a class="headerlink" href="#volume-upload-to-image-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">upload</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">image</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">image</span> <span class="n">size_gb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">upload</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">image</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">image</span> <span class="n">size_gb</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -339,7 +339,7 @@ space.</li>
 </div>
 <div class="section" id="volume-backup-and-restore-operation-fails">
 <h2>11. Volume backup and restore operation fails<a class="headerlink" href="#volume-backup-and-restore-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">backup</span><span class="o">-</span><span class="n">create</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">size_gb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">backup</span><span class="o">-</span><span class="n">create</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">size_gb</span>
 <span class="n">cinder</span> <span class="n">backup</span><span class="o">-</span><span class="n">restore</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">size_gb</span>
 </pre></div>
 </div>
@@ -350,7 +350,7 @@ space.</li>
 </div>
 <div class="section" id="volume-migration-operation-fails">
 <h2>12. Volume migration operation fails<a class="headerlink" href="#volume-migration-operation-fails" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">migrate</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">host</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">migrate</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">host</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -359,7 +359,7 @@ space.</li>
 </div>
 <div class="section" id="volume-extend-operation-fails-with-e-series-driver">
 <h2>13. Volume extend operation fails with E-Series driver<a class="headerlink" href="#volume-extend-operation-fails-with-e-series-driver" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">extend</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">new_size_gb</span> <span class="n">size_gb</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cinder</span> <span class="n">extend</span> <span class="n">volume</span><span class="o">-</span><span class="nb">id</span> <span class="n">new_size_gb</span> <span class="n">size_gb</span>
 </pre></div>
 </div>
 <p>The volume extend operation will fail on a Cinder volume that is defined
@@ -380,7 +380,7 @@ comparison of storage pool options.</p>
 </div>
 <div class="section" id="share-replica-fails-to-reach-in-sync-status">
 <h2>14. Share replica fails to reach in-sync status<a class="headerlink" href="#share-replica-fails-to-reach-in-sync-status" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">manila</span> <span class="n">share</span><span class="o">-</span><span class="n">replica</span><span class="o">-</span><span class="nb">list</span> <span class="o">--</span><span class="n">share</span><span class="o">-</span><span class="nb">id</span> <span class="nb">id</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">manila</span> <span class="n">share</span><span class="o">-</span><span class="n">replica</span><span class="o">-</span><span class="nb">list</span> <span class="o">--</span><span class="n">share</span><span class="o">-</span><span class="nb">id</span> <span class="nb">id</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -407,7 +407,7 @@ communicating with the share replica’s host via intercluster LIFs.</li>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -535,7 +535,7 @@ communicating with the share replica’s host via intercluster LIFs.</li>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: b529801362e0ce3c30033ffa8ad9dcbec0032005";
+    var gitSha = "SHA: 2115ffc4d924e23da10dc7a647a12cdf2f72dfd5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Common Problems in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -546,7 +546,7 @@ communicating with the share replica’s host via intercluster LIFs.</li>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2018-01-08 16:23";
+    var buildstring = "Release: 2017.2 on 2018-03-21 15:06";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

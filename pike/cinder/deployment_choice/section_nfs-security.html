@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -152,7 +152,7 @@ ga('send', 'pageview');
 <div class="section" id="options">
 <h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
 <p>Starting with the Kilo release of OpenStack, two NAS security options,
-<code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code>, were
+<code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code>, were
 introduced to improve NFS security.</p>
 <p>The Cinder design assumes that the connections from OpenStack nodes to NFS
 backends use trusted physical networks. Also, OpenStack services are assumed
@@ -182,12 +182,12 @@ supportability of this feature.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code></td>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code></td>
 <td>Optional</td>
 <td>“auto”</td>
 <td>Run operations on backing files for Cinder volumes as <em>cinder</em> user rather than <em>root</em> if ‘True’; as <em>root</em> if ‘False’. If ‘auto’, run as ‘True’ if in a “greenfield” environment and run as ‘False’ if existing volumes are found on startup.</td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code></td>
 <td>Optional</td>
 <td>“auto”</td>
 <td>Create backing files for Cinder volumes to only be readable and writable by owner and group if ‘True’; as readable and writable by owner, group, and world if ‘False’. If ‘auto’, run as ‘True’ if in a “greenfield” environment and run as ‘False’ if existing volumes are found on startup.</td>
@@ -195,14 +195,14 @@ supportability of this feature.</p>
 </tbody>
 </table>
 <p>Table 4.10. Configuration options for NFS Security</p>
-<p>When <code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> is set to ‘true’, Cinder operations run as
+<p>When <code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> is set to ‘true’, Cinder operations run as
 the dedicated <em>cinder</em> user rather than as <em>root</em>.</p>
-<p>When <code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code> is set to ‘true’, backing files for
+<p>When <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code> is set to ‘true’, backing files for
 Cinder volumes are only readable and writable by owner and group (mode 0660
 rather than 0666). Since Cinder creates these files with both owner and group
 <em>cinder</em>, only system processes running with UID or GID <em>cinder</em> are allowed
 to read or write these files.</p>
-<p>When both <code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code>
+<p>When both <code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code>
 are set to ‘true’ setting the <em>Superuser Security Type</em> (also known as
 “root squash”) to none on the ONTAP export policy is recommended.</p>
 <p>The default value of both of these options is ‘auto’. For backwards
@@ -213,8 +213,8 @@ the option is set to ‘true’ and a marker file <em>.cinderSecureEnvIndicator<
 is created under the mount directory. On startup, the marker file is
 checked so that the ‘true’ option will be persisted for subsequent
 startups after volumes have been created. It is recommended that the
-<code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code> are
-both specified in the <code class="docutils literal"><span class="pre">/etc/cinder.conf</span></code> as either ‘true’ or ‘false’.</p>
+<code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code> are
+both specified in the <code class="docutils literal notranslate"><span class="pre">/etc/cinder.conf</span></code> as either ‘true’ or ‘false’.</p>
 </div>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
@@ -239,7 +239,7 @@ It is recommended to use OnCommand System Manager when creating SVM users
 to avoid mistakes.</li>
 <li>Ensure that the exported ONTAP volume has owner <em>cinder</em> and group <em>cinder</em>.</li>
 <li>Set permissions on the exported share to 0755.</li>
-<li>Disable <code class="docutils literal"><span class="pre">Superuser</span> <span class="pre">Security</span> <span class="pre">Type</span></code> (i.e. root squash) and <code class="docutils literal"><span class="pre">SetUID</span></code> access
+<li>Disable <code class="docutils literal notranslate"><span class="pre">Superuser</span> <span class="pre">Security</span> <span class="pre">Type</span></code> (i.e. root squash) and <code class="docutils literal notranslate"><span class="pre">SetUID</span></code> access
 in export policies.</li>
 <li>See <a class="reference external" href="http://www.netapp.com/us/media/tr-3580.pdf">NetApp TR3850: NFSv4 Enhancements and Best Practices Guide: Data
 ONTAP Implementation</a>
@@ -333,11 +333,11 @@ on your environment.</p>
 <p>Table 4.11 Checklist to Enable NAS Security</p>
 <p>1) Change NAS security
 options.</p>
-<p>Set the <code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code> to specify
+<p>Set the <code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code> to specify
 the NAS security mode. Make changes to /etc/cinder/cinder.conf in the backend’s
 configuration stanza.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">nfs</span><span class="o">-</span><span class="n">backend</span><span class="p">]</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">nfs</span><span class="o">-</span><span class="n">backend</span><span class="p">]</span>
 <span class="o">...</span>
 <span class="n">nas_secure_file_operations</span> <span class="o">=</span> <span class="n">true</span>
 <span class="n">nas_secure_file_permissions</span> <span class="o">=</span> <span class="n">true</span>
@@ -348,7 +348,7 @@ configuration stanza.</p>
 <p>2) Determine the cinder user’s
 UID and GID.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span>$ id -u cinder
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ id -u cinder
 500
 $ id -g cinder
 510
@@ -361,7 +361,7 @@ group.</p>
 group as the Cinder user. This step needs to be performed on each node running
 Nova or Glance services.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span>...
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>...
 $ usermod -a -G replace-with-cinder-GID nova
 $ usermod -a -G replace-with-cinder-GID glance
 ...
@@ -379,7 +379,7 @@ configuration.</p>
 and KVM run as a user belonging to the correct group. Edit the
 /etc/libvirt/qemu.conf file and make the following changes.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">...</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="c1">#user = &quot;root&quot;</span>
 <span class="n">user</span> <span class="o">=</span> <span class="s2">&quot;nova&quot;</span>
 <span class="o">...</span>
@@ -406,7 +406,7 @@ the /etc/idmapd.conf must match the NFS server domain. The first step is to
 query ONTAP for the domain. The second step is to then edit the /etc/idmapd.conf
 file and restart the idmapd service. This step is not necessary if using NFSv3.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">...</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">vserver</span> <span class="n">nfs</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">fields</span> <span class="n">v4</span><span class="o">-</span><span class="nb">id</span><span class="o">-</span><span class="n">domain</span>
 <span class="o">...</span>
 <span class="n">vserver</span>  <span class="n">v4</span><span class="o">-</span><span class="nb">id</span><span class="o">-</span><span class="n">domain</span>
@@ -418,7 +418,7 @@ file and restart the idmapd service. This step is not necessary if using NFSv3.<
 </div></blockquote>
 <p>Edit the /etc/idmapd.conf on the Cinder node:</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">...</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="n">Domain</span> <span class="o">=</span> <span class="n">nfsv4domain</span><span class="o">.</span><span class="n">somewhere</span><span class="o">.</span><span class="n">com</span>
 <span class="o">...</span>
 </pre></div>
@@ -430,9 +430,9 @@ to cinder GID.</p>
 tables created for the specified SVM. The nova, glance, and cinder SVM users,
 if they exist, need to belong to the same cinder GID (510) as used by the
 cinder service. The nova and glance users can be created with the ONTAP CLI
-<code class="docutils literal"><span class="pre">unix-user</span> <span class="pre">create</span> <span class="pre">command</span></code> if needed.</p>
+<code class="docutils literal notranslate"><span class="pre">unix-user</span> <span class="pre">create</span> <span class="pre">command</span></code> if needed.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">...</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
 <span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">unix</span><span class="o">-</span><span class="n">group</span> <span class="n">create</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">name</span> <span class="n">cinder</span> <span class="o">-</span><span class="nb">id</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">cinder</span><span class="o">-</span><span class="n">GID</span>
 <span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">unix</span><span class="o">-</span><span class="n">group</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span>
 <span class="o">...</span>
@@ -468,7 +468,7 @@ node. The GID must match the cinder GID of the Cinder node.  In this example,
 the UID is 500 and the GID is 510. These values will be different on your cinder
 node and must be determined prior to running the following commands.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">volume</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">volume</span><span class="o">-</span><span class="n">name</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">volume</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">volume</span><span class="o">-</span><span class="n">name</span>
 <span class="o">...</span>
 <span class="n">User</span> <span class="n">ID</span><span class="p">:</span> <span class="mi">0</span>
 <span class="n">Group</span> <span class="n">ID</span><span class="p">:</span> <span class="mi">0</span>
@@ -488,7 +488,7 @@ permissions.</p>
 this example we set the Flexvol permissions, of the shared volume, to 0755. This
 step is optional.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">volume</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">volume</span><span class="o">-</span><span class="n">name</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">volume</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">volume</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">volume</span><span class="o">-</span><span class="n">name</span>
 <span class="o">...</span>
 <span class="n">UNIX</span> <span class="n">Permissions</span><span class="p">:</span> <span class="o">---</span><span class="n">rwxrwxrwx</span>
 <span class="o">...</span>
@@ -509,7 +509,7 @@ matches a LIF IP address of the correct SVM prior to executing the chmod and
 chown commands. Order of operations are stop Cinder services, run chmod and
 chown, and unmount mount points.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span>$ systemctl stop openstack-cinder-{api,scheduler,volume}
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl stop openstack-cinder-{api,scheduler,volume}
 $ mount
 ...
 192.168.100.10:/cinder_flexvol_1 on /var/lib/cinder/mnt/69809486d67b39d4baa19744ef3ef90c type nfs (rw,...,addr=192.168.100.10)
@@ -535,7 +535,7 @@ to the anonymous user, default UID is 65534, when superuser access is disabled.
 This step also disables set user ID (suid) access. The following example also
 disables set user ID (suid) and set group ID (sgid) access.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">vserver</span> <span class="n">export</span><span class="o">-</span><span class="n">policy</span> <span class="n">rule</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">policyname</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">fields</span> <span class="n">superuser</span><span class="p">,</span><span class="n">allow</span><span class="o">-</span><span class="n">suid</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">vserver</span> <span class="n">export</span><span class="o">-</span><span class="n">policy</span> <span class="n">rule</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">policyname</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">fields</span> <span class="n">superuser</span><span class="p">,</span><span class="n">allow</span><span class="o">-</span><span class="n">suid</span>
 <span class="o">...</span>
 <span class="n">vserver</span>  <span class="n">policyname</span> <span class="n">ruleindex</span> <span class="n">superuser</span> <span class="n">allow</span><span class="o">-</span><span class="n">suid</span>
 <span class="o">--------</span> <span class="o">----------</span> <span class="o">---------</span> <span class="o">---------</span> <span class="o">----------</span>
@@ -558,7 +558,7 @@ properly when the Cinder volume service starts. Verify this by starting Cinder
 services, examining the Cinder volume service log, creating a new Cinder
 volume, and listing the volume on the mount point.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span>$ systemctl start openstack-cinder-{api,scheduler,volume}
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl start openstack-cinder-{api,scheduler,volume}
 $ cinder create --name test-vol-01 1
 ...
 | id                             | 9c989cba-eff6-4847-b5fc-bff2ab5d35da |
@@ -614,11 +614,11 @@ on your environment.</p>
 <p>Table 4.12 Checklist to Disable NFS Security</p>
 <p>1) Update NAS Security
 options.</p>
-<p>Set the <code class="docutils literal"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal"><span class="pre">nas_secure_file_permissions</span></code> to
+<p>Set the <code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code> to
 specify the NAS security mode. Make changes to /etc/cinder/cinder.conf in the
 backend’s configuration stanza.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">nfs_backend</span><span class="p">]</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">nfs_backend</span><span class="p">]</span>
 <span class="o">...</span>
 <span class="n">nas_secure_file_operations</span> <span class="o">=</span> <span class="n">false</span>
 <span class="n">nas_secure_file_permissions</span> <span class="o">=</span> <span class="n">false</span>
@@ -629,7 +629,7 @@ backend’s configuration stanza.</p>
 <p>2) Enable Superuser access
 in the export policy.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">vserver</span> <span class="n">export</span><span class="o">-</span><span class="n">policy</span> <span class="n">rule</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">policyname</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">fields</span> <span class="n">superuser</span>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CDOT</span><span class="p">:</span><span class="o">&gt;</span> <span class="n">vserver</span> <span class="n">export</span><span class="o">-</span><span class="n">policy</span> <span class="n">rule</span> <span class="n">show</span> <span class="o">-</span><span class="n">vserver</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">vserver</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">policyname</span> <span class="n">replace</span><span class="o">-</span><span class="k">with</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">name</span> <span class="o">-</span><span class="n">fields</span> <span class="n">superuser</span>
 <span class="o">...</span>
 <span class="n">vserver</span>  <span class="n">policyname</span> <span class="n">ruleindex</span> <span class="n">superuser</span>
 <span class="o">--------</span> <span class="o">----------</span> <span class="o">---------</span> <span class="o">---------</span>
@@ -654,7 +654,7 @@ point, matches a LIF IP address of the correct SVM prior to executing the chmod
 and chown commands. Order of operations are stop Cinder services,
 run chmod, unmount mount points, and start Cinder services.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span>$ systemctl stop openstack-cinder-{api,scheduler,volume}
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl stop openstack-cinder-{api,scheduler,volume}
 $ mount
 ...
 192.168.100.10:/cinder_flexvol_1 on /var/lib/cinder/mnt/69809486d67b39d4baa19744ef3ef90c type nfs (rw,...,addr=192.168.100.10)
@@ -678,7 +678,7 @@ if it exists.</p>
 <p>The Cinder volume service, under certain conditions, creates the
 .cinderSecureEnvIndicator file as an indicator that NAS security is enabled.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span>$ mount
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mount
 ...
 192.168.100.10:/cinder_flexvol_1 on /var/lib/cinder/mnt/69809486d67b39d4baa19744ef3ef90c type nfs (rw,...,addr=192.168.100.10)
 192.168.100.10:/cinder_flexvol_2 on /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b type nfs (rw,...,addr=192.168.100.10)
@@ -698,7 +698,7 @@ Cinder volume service log, creating a new Cinder volume, and listing the volume
 on the mount point. It is recommended that Nova services be restarted followed
 by verification that attaching a volume to a compute instance works.</p>
 <blockquote>
-<div><div class="highlight-default"><div class="highlight"><pre><span></span>$ cinder create --name test-vol-01 1
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder create --name test-vol-01 1
 ...
 | id                             | 9c989cba-eff6-4847-b5fc-bff2ab5d35da |
 ...
@@ -728,7 +728,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2018-01-08 16:23</div>
+            <div class="docs-updated">updated: 2018-03-21 15:06</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -859,7 +859,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: b529801362e0ce3c30033ffa8ad9dcbec0032005";
+    var gitSha = "SHA: 2115ffc4d924e23da10dc7a647a12cdf2f72dfd5";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deployment Choices: NFS Security in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -870,7 +870,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2018-01-08 16:23";
+    var buildstring = "Release: 2017.2 on 2018-03-21 15:06";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
