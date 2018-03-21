@@ -42,6 +42,8 @@ alphabetically incremented. Hence, the release intended for March of
 +------------+------------------+
 | Pike       | September 2017   |
 +------------+------------------+
+| Queens     | February 2018    |
++------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
 
