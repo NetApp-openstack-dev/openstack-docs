@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2018-01-08 16:11</div>
+            <div class="docs-updated">updated: 2018-03-21 13:53</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -153,7 +153,7 @@ ga('send', 'pageview');
 and their corresponding CLI commands. It is not meant to be a
 comprehensive list that is representative of all functionality present
 in Manila; for more information, please refer to the help text from
-running <code class="docutils literal"><span class="pre">manila</span> <span class="pre">help</span></code>.</p>
+running <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">help</span></code>.</p>
 <div class="section" id="share-api">
 <h2>Share API<a class="headerlink" href="#share-api" title="Permalink to this headline">¶</a></h2>
 <p>Table 6.1, “Manila API Overview - Share” specifies the valid
@@ -174,39 +174,39 @@ names or UUID.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Create</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">create</span></code></td>
-<td>Create a Manila share of specified size; optional name, availability zone, share type, share network, source snapshot. The <code class="docutils literal"><span class="pre">create_share_from_snapshot_support</span></code> extra spec must be set to true for the associated share type in order to allow a snapshot to be the source of the new share</td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">create</span></code></td>
+<td>Create a Manila share of specified size; optional name, availability zone, share type, share network, source snapshot. The <code class="docutils literal notranslate"><span class="pre">create_share_from_snapshot_support</span></code> extra spec must be set to true for the associated share type in order to allow a snapshot to be the source of the new share</td>
 </tr>
 <tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">delete</span></code></td>
-<td>Delete an existing Manila share; the <code class="docutils literal"><span class="pre">manila</span> <span class="pre">force-delete</span></code> command may be required if the Manila share is in an error state</td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">delete</span></code></td>
+<td>Delete an existing Manila share; the <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">force-delete</span></code> command may be required if the Manila share is in an error state</td>
 </tr>
 <tr class="row-even"><td>Edit</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">metadata</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">metadata</span></code></td>
 <td>Set or unset metadata on a Manila share</td>
 </tr>
 <tr class="row-odd"><td>Extend</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">extend</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">extend</span></code></td>
 <td>Increase the size of a Manila share</td>
 </tr>
 <tr class="row-even"><td>List</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">list</span></code></td>
 <td>List all Manila shares</td>
 </tr>
 <tr class="row-odd"><td>Manage</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">manage</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">manage</span></code></td>
 <td>Bring an existing storage object under Manila management as a file share</td>
 </tr>
 <tr class="row-even"><td>Show</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">show</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">show</span></code></td>
 <td>Show details about a Manila share</td>
 </tr>
 <tr class="row-odd"><td>Shrink</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">shrink</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">shrink</span></code></td>
 <td>Decrease the size of a Manila share</td>
 </tr>
 <tr class="row-even"><td>Unmanage</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">unmanage</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">unmanage</span></code></td>
 <td>Cease management of an existing Manila share without deleting the backing storage object</td>
 </tr>
 </tbody>
@@ -238,15 +238,15 @@ the section called “<a class="reference internal" href="../key_concepts/sectio
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Allow</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">access-allow</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">access-allow</span></code></td>
 <td>Allow access to the specified share for the specified access type and value (IP address or IP network address in CIDR notation or Windows user name).</td>
 </tr>
 <tr class="row-odd"><td>Deny</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">access-deny</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">access-deny</span></code></td>
 <td>Deny access to the specified share for the specified access type and value (IP address or IP network address in CIDR notation or Windows user name).</td>
 </tr>
 <tr class="row-even"><td>List</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">access-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">access-list</span></code></td>
 <td>List all Manila share access rules</td>
 </tr>
 </tbody>
@@ -276,11 +276,11 @@ performance.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>List</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-export-location-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-export-location-list</span></code></td>
 <td>List export locations of the specified share.</td>
 </tr>
 <tr class="row-odd"><td>Show</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-export-location-show</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-export-location-show</span></code></td>
 <td>Show details for a specific export location.</td>
 </tr>
 </tbody>
@@ -297,22 +297,22 @@ display name or UUID.</p>
 <p class="first admonition-title">Important</p>
 <p>In the Mitaka and Newton release of OpenStack, snapshot support is
 enabled by default for a newly created share type. Starting with the
-Ocata release, the <code class="docutils literal"><span class="pre">snapshot_support</span></code> extra spec must be set to
-<code class="docutils literal"><span class="pre">True</span></code> in order to allow snapshots for a share type. If the
+Ocata release, the <code class="docutils literal notranslate"><span class="pre">snapshot_support</span></code> extra spec must be set to
+<code class="docutils literal notranslate"><span class="pre">True</span></code> in order to allow snapshots for a share type. If the
 ‘snapshot_support’ extra_spec is omitted or if it is set to False,
 users would not be able to create snapshots on shares of this share
 type.</p>
 <p>Other snapshot-related extra specs in the Ocata release (and later)
 include:</p>
 <ul class="simple">
-<li><code class="docutils literal"><span class="pre">create_share_from_snapshot_support</span></code>: Allow the creation of a
+<li><code class="docutils literal notranslate"><span class="pre">create_share_from_snapshot_support</span></code>: Allow the creation of a
 new share from a snapshot</li>
-<li><code class="docutils literal"><span class="pre">revert_to_snapshot_support</span></code>: Allow a share to be reverted to
+<li><code class="docutils literal notranslate"><span class="pre">revert_to_snapshot_support</span></code>: Allow a share to be reverted to
 the most recent snapshot</li>
 </ul>
 <p class="last">If an extra-spec is left unset, it will default to ‘False’, but a
 newly created share may or may not end up on a backend with the
-associated capability. Set the extra spec explicitly to <code class="docutils literal"><span class="pre">False</span></code>,
+associated capability. Set the extra spec explicitly to <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 if you would like your shares to be created only on backends that do
 not support the associated capabilities. For a table of NetApp
 supported extra specs, refer to
@@ -332,40 +332,40 @@ supported extra specs, refer to
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Create</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-create</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-create</span></code></td>
 <td>Create a Manila snapshot of a specific Manila share</td>
 </tr>
 <tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-delete</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-delete</span></code></td>
 <td>Delete a Manila snapshot</td>
 </tr>
 <tr class="row-even"><td>List</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-list</span></code></td>
 <td>List all Manila snapshots</td>
 </tr>
 <tr class="row-odd"><td>Manage</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-manage</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-manage</span></code></td>
 <td>Bring an existing storage object snapshot under Manila management, specifying the snapshot name as the provider location</td>
 </tr>
 <tr class="row-even"><td>Rename</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-rename</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-rename</span></code></td>
 <td>Change the display-name of a Manila snapshot</td>
 </tr>
 <tr class="row-odd"><td>Reset State</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-reset-state</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-reset-state</span></code></td>
 <td>Reset the state of a Manila snapshot</td>
 </tr>
 <tr class="row-even"><td>Show</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-show</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-show</span></code></td>
 <td>Show details about a Manila snapshot</td>
 </tr>
 <tr class="row-odd"><td>Unmanage</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">snapshot-unmanage</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">snapshot-unmanage</span></code></td>
 <td>Cease management of an existing Manila snapshot without deleting the backing storage object snapshot</td>
 </tr>
 <tr class="row-even"><td>Revert to SnapShot</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">revert-to-snapshot</span></code></td>
-<td>Revert a Manila share (in place) to the latest snapshot. The <code class="docutils literal"><span class="pre">snapshot_support</span></code> and <code class="docutils literal"><span class="pre">revert_to_snapshot_support</span></code> extra specs must be set to True for the associated share type</td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">revert-to-snapshot</span></code></td>
+<td>Revert a Manila share (in place) to the latest snapshot. The <code class="docutils literal notranslate"><span class="pre">snapshot_support</span></code> and <code class="docutils literal notranslate"><span class="pre">revert_to_snapshot_support</span></code> extra specs must be set to True for the associated share type</td>
 </tr>
 </tbody>
 </table>
@@ -392,15 +392,15 @@ requires administrative privileges.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Create</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">type-create</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">type-create</span></code></td>
 <td>Create a Manila share type</td>
 </tr>
 <tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">type-delete</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">type-delete</span></code></td>
 <td>Delete a Manila share type</td>
 </tr>
 <tr class="row-even"><td>List</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">type-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">type-list</span></code></td>
 <td>List existing Manila share type</td>
 </tr>
 </tbody>
@@ -429,15 +429,15 @@ administrative privileges.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>List extra specs</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">extra-specs-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">extra-specs-list</span></code></td>
 <td>Print the values of extra specs assigned to Manila share types</td>
 </tr>
 <tr class="row-odd"><td>Set extra specs</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">type-key</span> <span class="pre">stype</span> <span class="pre">set</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">type-key</span> <span class="pre">stype</span> <span class="pre">set</span></code></td>
 <td>Assign extra specs to Manila share type</td>
 </tr>
 <tr class="row-even"><td>Unset extra specs</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">type-key</span> <span class="pre">stype</span> <span class="pre">unset</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">type-key</span> <span class="pre">stype</span> <span class="pre">unset</span></code></td>
 <td>Remove extra specs from Manila share type</td>
 </tr>
 </tbody>
@@ -460,55 +460,55 @@ administrative privileges.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Create</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-create</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-create</span></code></td>
 <td>Create a Manila consistency group</td>
 </tr>
 <tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-delete</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-delete</span></code></td>
 <td>Delete a Manila consistency group</td>
 </tr>
 <tr class="row-even"><td>List</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-list</span></code></td>
 <td>List all Manila consistency groups</td>
 </tr>
 <tr class="row-odd"><td>Reset state</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-reset-state</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-reset-state</span></code></td>
 <td>Update the state of a Manila consistency group</td>
 </tr>
 <tr class="row-even"><td>Show</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-show</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-show</span></code></td>
 <td>Show details about a Manila consistency group</td>
 </tr>
 <tr class="row-odd"><td>Update</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-update</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-update</span></code></td>
 <td>Update details of a Manila consistency group</td>
 </tr>
 <tr class="row-even"><td>Create CG Snapshot</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-snapshot-create</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-snapshot-create</span></code></td>
 <td>Create a snapshot of a consistency group and all of it’s shares</td>
 </tr>
 <tr class="row-odd"><td>Delete CG Snapshot</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-snapshot-delete</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-snapshot-delete</span></code></td>
 <td>Delete a snapshot of a consistency group</td>
 </tr>
 <tr class="row-even"><td>List CG Snapshot</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-snapshot-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-snapshot-list</span></code></td>
 <td>List all consistency group snapshots</td>
 </tr>
 <tr class="row-odd"><td>Show CG Snapshot members</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-snapshot-members</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-snapshot-members</span></code></td>
 <td>Get member details for a consistency group snapshot.</td>
 </tr>
 <tr class="row-even"><td>Reset CG Snapshot state</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-snapshot-reset-state</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-snapshot-reset-state</span></code></td>
 <td>Update the state of a Manila consistency group snapshot</td>
 </tr>
 <tr class="row-odd"><td>Show CG Snapshot</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-snapshot-show</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-snapshot-show</span></code></td>
 <td>Show details about a consistency group snapshot.</td>
 </tr>
 <tr class="row-even"><td>Update CG Snapshot</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">cg-snapshot-update</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">cg-snapshot-update</span></code></td>
 <td>Update details of a consistency group snapshot.</td>
 </tr>
 </tbody>
@@ -531,35 +531,35 @@ administrative privileges.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Create Share Replica</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-create</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-create</span></code></td>
 <td>Create a Manila share replica.</td>
 </tr>
 <tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-delete</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-delete</span></code></td>
 <td>Delete a Manila share replica.</td>
 </tr>
 <tr class="row-even"><td>List</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-list</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-list</span></code></td>
 <td>List all Manila Share replicas.</td>
 </tr>
 <tr class="row-odd"><td>Show</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-show</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-show</span></code></td>
 <td>Show detailed information for the specified replica.</td>
 </tr>
 <tr class="row-even"><td>Promote</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-promote</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-promote</span></code></td>
 <td>Change the specified replica to the ACTIVE replica for the share.</td>
 </tr>
 <tr class="row-odd"><td>Resync</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-resync</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-resync</span></code></td>
 <td>Tell Manila to initiate an update for the replica.</td>
 </tr>
 <tr class="row-even"><td>Reset Replica Status</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-reset-state</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-reset-state</span></code></td>
 <td>Update the status attribute of a replica.</td>
 </tr>
 <tr class="row-odd"><td>Reset Replication State</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">share-replica-reset-replica-state</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-replica-reset-replica-state</span></code></td>
 <td>Update the replica_state attribute of a replica.</td>
 </tr>
 </tbody>
@@ -582,19 +582,19 @@ administrative privileges.</p>
 </thead>
 <tbody valign="top">
 <tr class="row-even"><td>Start</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">migration-start</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">migration-start</span></code></td>
 <td>Start the share-migration process.</td>
 </tr>
 <tr class="row-odd"><td>Get Progress</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">migration-get-progress</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">migration-get-progress</span></code></td>
 <td>Show the migration progress information for a share.</td>
 </tr>
 <tr class="row-even"><td>Complete</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">migration_complete</span></code></td>
-<td>Complete the migration process by removing the source share, and setting the destination share to <code class="docutils literal"><span class="pre">available</span></code>.</td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">migration_complete</span></code></td>
+<td>Complete the migration process by removing the source share, and setting the destination share to <code class="docutils literal notranslate"><span class="pre">available</span></code>.</td>
 </tr>
 <tr class="row-odd"><td>Cancel</td>
-<td><code class="docutils literal"><span class="pre">manila</span> <span class="pre">migration-cancel</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">migration-cancel</span></code></td>
 <td>Cancel the migration of a share.</td>
 </tr>
 </tbody>
@@ -604,11 +604,11 @@ administrative privileges.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">Several parameters need to be specified when starting migration for
 a share. For a list of supported parameters, refer to the help text
-from running <code class="docutils literal"><span class="pre">manila</span> <span class="pre">help</span> <span class="pre">migration-start</span></code>. For example, the
+from running <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">help</span> <span class="pre">migration-start</span></code>. For example, the
 NetApp driver supports preserving snapshots and file system
 metadata, and can perform in-Vserver migrations non-disruptively. In
-order to do so, <code class="docutils literal"><span class="pre">preserve_metadata</span></code>, <code class="docutils literal"><span class="pre">preserve_snapshots</span></code>, and
-<code class="docutils literal"><span class="pre">nondisruptive</span></code> must be set to <code class="docutils literal"><span class="pre">True</span></code>.</p>
+order to do so, <code class="docutils literal notranslate"><span class="pre">preserve_metadata</span></code>, <code class="docutils literal notranslate"><span class="pre">preserve_snapshots</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">nondisruptive</span></code> must be set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </div>
 </div>
 </div>
@@ -628,7 +628,7 @@ order to do so, <code class="docutils literal"><span class="pre">preserve_metada
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2018-01-08 16:11</div>
+            <div class="docs-updated">updated: 2018-03-21 13:53</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -759,7 +759,7 @@ order to do so, <code class="docutils literal"><span class="pre">preserve_metada
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 3c071e6bd9b11f2854a2f21957802ab83e11fe31";
+    var gitSha = "SHA: 2f3e52580a80932e773bfe737b72746110d212e9";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "API Overview in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -770,7 +770,7 @@ order to do so, <code class="docutils literal"><span class="pre">preserve_metada
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2018-01-08 16:11";
+    var buildstring = "Release: 2017.2 on 2018-03-21 13:53";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
