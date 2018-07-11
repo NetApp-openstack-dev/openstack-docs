@@ -1,7 +1,7 @@
 Theory of Operation: NetApp Unified Driver for E-Series with iSCSI
 ==================================================================
 
-* E-Series drivers are being deprecated and will be removed after the S 
+* E-Series drivers are being deprecated and will be removed after the S
   release
 
 As described in the section called ":ref:`theory-op`", Cinder

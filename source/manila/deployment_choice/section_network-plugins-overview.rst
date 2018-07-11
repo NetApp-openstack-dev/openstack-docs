@@ -25,7 +25,7 @@ Deployment Choice: Manila Network Plugins
 Neutron Overview
 ----------------
 
-OpenStack's networking-as-a-service project is codenamed Neutron.
+OpenStack's networking-as-a-service project is code-named Neutron.
 Neutron offers self service networking APIs to tenants. Tenant
 networks are typically segmented virtual networks that are isolated
 between each other and provide east-west network routing within the
