@@ -1,6 +1,9 @@
 Theory of Operation: NetApp Unified Driver for E-Series with Fibre Channel
 ==========================================================================
 
+* E-Series drivers are being deprecated and will be removed after the S
+  release
+
 In order for Fibre Channel to be set up correctly, you also need to set up
 Fibre Channel zoning for your backends. See the section called :ref:`fc-switch`
 for more details on configuring Fibre Channel zoning.
