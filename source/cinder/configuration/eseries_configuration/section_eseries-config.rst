@@ -1,6 +1,9 @@
 E-Series Configuration
 ======================
 
+* E-Series drivers are being deprecated and will be removed after the S
+  release
+
 E-Series Prerequisites
 ----------------------
 
