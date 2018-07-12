@@ -1,9 +1,6 @@
 Theory of Operation: NetApp Unified Driver for E-Series with iSCSI
 ==================================================================
 
-* E-Series drivers are being deprecated and will be removed after the S
-  release
-
 As described in the section called ":ref:`theory-op`", Cinder
 with NetApp E-Series requires the use of the NetApp SANtricity Web
 Services Proxy server deployed as an intermediary between Cinder and the
