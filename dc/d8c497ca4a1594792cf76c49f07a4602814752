@@ -1,0 +1,9 @@
+Release+1: David <dblackwe@netapp.com>
+Code-Review+2: Tiago Pasqualini da Silva <tiago.pasqualini@gmail.com>
+QA-Review+2: Tiago Pasqualini da Silva <tiago.pasqualini@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Thu, 12 Jul 2018 08:35:31 -0400
+Reviewed-on: https://review.openstack.netapp.com/740
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
