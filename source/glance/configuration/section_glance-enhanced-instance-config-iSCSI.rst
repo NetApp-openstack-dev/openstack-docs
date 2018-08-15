@@ -14,15 +14,13 @@ Channel:
 +-----+-------------------------------------------------------+---------+
 | 2   | Configure Image-Volume cache setting in cinder.conf   |         |
 +-----+-------------------------------------------------------+---------+
-| 3   | Change ``glance_api_version`` in cinder.conf          |         |
+| 3   | Restart Cinder and Glance services                    |         |
 +-----+-------------------------------------------------------+---------+
-| 4   | Restart Cinder and Glance services                    |         |
+| 4   | Upload a Glance Image                                 |         |
 +-----+-------------------------------------------------------+---------+
-| 5   | Upload a Glance Image                                 |         |
+| 5   | Boot from Cinder                                      |         |
 +-----+-------------------------------------------------------+---------+
-| 6   | Boot from Cinder                                      |         |
-+-----+-------------------------------------------------------+---------+
-| 7   | Verify functionality                                  |         |
+| 6   | Verify functionality                                  |         |
 +-----+-------------------------------------------------------+---------+
 
 Table 5.2: Checklist of Steps for Enhanced Instance Creation
@@ -86,22 +84,13 @@ Edit cinder.conf to contain the following entry in the DEFAULT stanza
     image_volume_cache_enabled = True
     ...
 
-3) Change ``glance_api_version`` in cinder.conf
-
-::
-
-    [DEFAULT]
-    ...
-    glance_api_version = 2
-    ...
-
-4) Restart Cinder services
+3) Restart Cinder services
 
 ::
 
     $ systemctl restart openstack-cinder-{api,scheduler,volume}
 
-5) Upload a Glance image
+4) Upload a Glance image
 
 The following command uses an image that is publicly available. Please
 use the image you prefer and replace the URL accordingly.
@@ -110,13 +99,13 @@ use the image you prefer and replace the URL accordingly.
 
     $ wget https://s3-us-west-2.amazonaws.com/testdrive-bucket/images/trusty-server-cloudimg-amd64-disk1-nfs-edit.img | glance image-create --name=ubuntu-nfs-image --container-format=bare --disk-format=qcow2 --file=trusty-server-cloudimg-amd64-disk1-nfs-edit.img –-progress
 
-6) Boot from Cinder
+5) Boot from Cinder
 
 ::
 
     $ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
 
-7) Verify functionality
+6) Verify functionality
 
 Please open /var/log/cinder/volume.log and look for a message similar to
 the following to confirm that the image-volume was cached successfully::
