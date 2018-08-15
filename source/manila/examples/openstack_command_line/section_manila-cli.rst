@@ -1032,12 +1032,13 @@ We'll now remove a share from Manila management using the admin-only
 
     $ manila unmanage 6e42c910-67a8-47fd-885f-b03d1756675f
 
-Creating Manila Consistency Groups
+Creating Manila Share Groups
 ----------------------------------
 
-In this section, we'll create and work with consistency groups and
-consistency group (CG) snapshots. First we'll list the share types and
-create a CG using one of the existing types.
+In this section, we'll create and work with share groups and
+share group (SG) snapshots. First we list the share types
+that are available and create a share group type. This will
+be subsequently used to create an SG.
 
 ::
 
@@ -1047,197 +1048,249 @@ create a CG using one of the existing types.
     +--------------------------------------+---------+------------+------------+--------------------------------------+
     | 08d3b20f-3685-4f83-ba4f-efe9276e922c | zoom    | public     | -          | driver_handles_share_servers : False |
     | 30abd1a6-0f5f-426b-adb4-13e0062d3183 | default | public     | YES        | driver_handles_share_servers : False |
-    | d7f70347-7464-4297-8d8e-12fa13e64775 | nope    | public     | -          | driver_handles_share_servers : False |
+    | d7f70347-7464-4297-8d8e-12fa13e64775 | ontap   | public     | -          | driver_handles_share_servers : False |
     +--------------------------------------+---------+------------+------------+--------------------------------------+
 
 ::
 
-    $ manila cg-create --name cg_1 --description "cg_1 consistency group" --share_type "type_1"
-    +----------------------+--------------------------------------+
-    | Property             | Value                                |
-    +----------------------+--------------------------------------+
-    | status               | creating                             |
-    | description          | cg_1 consistency group               |
-    | source_cgsnapshot_id | None                                 |
-    | created_at           | 2015-08-18T17:36:36.088532           |
-    | share_network_id     | None                                 |
-    | share_server_id      | None                                 |
-    | host                 | None                                 |
-    | project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
-    | share_types          | 45ff1d79-0dd7-4309-b259-652c5f9e3b41 |
-    | id                   | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
-    | name                 | cg_1                                 |
-    +----------------------+--------------------------------------+
+    $ manila share-group-type-create type1 ontap
+    +------------+--------------------------------------+
+    | Property   | Value                                |
+    +------------+--------------------------------------+
+    | is_default | -                                    |
+    | ID         | 516a089b-d9f6-40cf-8596-8b71feed9dba |
+    | Visibility | public                               |
+    | Name       | type1                                |
+    +------------+--------------------------------------+
 
 ::
 
-    $ manila cg-list
-    +--------------------------------------+------+------------------------+-----------+
-    | id                                   | name | description            | status    |
-    +--------------------------------------+------+------------------------+-----------+
-    | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 | cg_1 | cg_1 consistency group | available |
-    +--------------------------------------+------+------------------------+-----------+
+    $ manila share-group-type-list
+    +--------------------------------------+---------+------------+------------+
+    | ID                                   | Name    | visibility | is_default |
+    +--------------------------------------+---------+------------+------------+
+    | 516a089b-d9f6-40cf-8596-8b71feed9dba | sgtype1 | public     | -          |
+    +--------------------------------------+---------+------------+------------+
+
+Now we create a share group.
 
 ::
 
-    $ manila cg-show 9379f22c-a5c0-4455-bd25-ad373e93d7c3
-    +----------------------+--------------------------------------+
-    | Property             | Value                                |
-    +----------------------+--------------------------------------+
-    | status               | available                            |
-    | description          | cg_1 consistency group               |
-    | source_cgsnapshot_id | None                                 |
-    | created_at           | 2015-08-18T17:36:36.000000           |
-    | share_network_id     | None                                 |
-    | share_server_id      | None                                 |
-    | host                 | ubuntu@cmode_single_svm_nfs#aggr1    |
-    | project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
-    | share_types          | 45ff1d79-0dd7-4309-b259-652c5f9e3b41 |
-    | id                   | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
-    | name                 | cg_1                                 |
-    +----------------------+--------------------------------------+
+    $ manila share-group-create --name sg_1 --description "sg_1 share group" --share_group_type sgtype1 --share-type ontap
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | status                         | creating                             |
+    | description                    | sg_1 share group                     |
+    | availability_zone              | None                                 |
+    | created_at                     | 2018-08-15T18:52:14.285127           |
+    | source_share_group_snapshot_id | None                                 |
+    | share_network_id               | None                                 |
+    | share_server_id                | None                                 |
+    | host                           | None                                 |
+    | share_group_type_id            | 516a089b-d9f6-40cf-8596-8b71feed9dba |
+    | consistent_snapshot_support    | None                                 |
+    | project_id                     | 0694797dd8b94fe3b862e34782d3cf39     |
+    | share_types                    | e9ad1532-7592-4f73-b18c-93f67e7a6072 |
+    | id                             | 0c30788d-8139-4c8f-b351-94fdd81a62fd |
+    | name                           | sg_1                                 |
+    +--------------------------------+--------------------------------------+
+
+::
+
+    $ manila share-group-list
+    +--------------------------------------+------+-----------+------------------+
+    | ID                                   | Name | Status    | Description      |
+    +--------------------------------------+------+-----------+------------------+
+    | 0c30788d-8139-4c8f-b351-94fdd81a62fd | sg_1 | available | sg_1 share group |
+    +--------------------------------------+------+-----------+------------------+
+
+::
+
+    $ manila manila share-group-show 0c30788d-8139-4c8f-b351-94fdd81a62fd
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | status                         | available                            |
+    | description                    | sg_1 share group                     |
+    | availability_zone              | az1                                  |
+    | created_at                     | 2018-08-15T18:52:14.000000           |
+    | source_share_group_snapshot_id | None                                 |
+    | share_network_id               | None                                 |
+    | share_server_id                | None                                 |
+    | host                           | ubuntu@cmode_single_svm_nfs#aggr1    |
+    | share_group_type_id            | 516a089b-d9f6-40cf-8596-8b71feed9dba |
+    | consistent_snapshot_support    | host                                 |
+    | project_id                     | 0694797dd8b94fe3b862e34782d3cf39     |
+    | share_types                    | e9ad1532-7592-4f73-b18c-93f67e7a6072 |
+    | id                             | 0c30788d-8139-4c8f-b351-94fdd81a62fd |
+    | name                           | sg_1                                 |
+    +--------------------------------+--------------------------------------+
 
 Next we'll create two shares in the new consistency group.
 
 ::
 
-    $ manila create --name share_1 --consistency-group "cg_1" --share_type "type_1" NFS 1
-    +-----------------------------+--------------------------------------+
-    | Property                    | Value                                |
-    +-----------------------------+--------------------------------------+
-    | status                      | creating                             |
-    | description                 | None                                 |
-    | availability_zone           | nova                                 |
-    | share_network_id            | None                                 |
-    | share_server_id             | None                                 |
-    | host                        | None                                 |
-    | snapshot_id                 | None                                 |
-    | is_public                   | False                                |
-    | id                          | 01eab865-a15b-4443-84e9-68b9c5fc3634 |
-    | size                        | 1                                    |
-    | name                        | None                                 |
-    | share_type                  | type_1                               |
-    | created_at                  | 2015-08-18T17:40:16.996290           |
-    | share_proto                 | NFS                                  |
-    | consistency_group_id        | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
-    | source_cgsnapshot_member_id | None                                 |
-    | project_id                  | f55f22cc74b347f6992a9f969eeb40a1     |
-    | metadata                    | {}                                   |
-    +-----------------------------+--------------------------------------+
+    $ manila create --name share_1 --share-group "sg_1" --share_type "ontap" NFS 1
+    +---------------------------------------+--------------------------------------+
+    | Property                              | Value                                |
+    +---------------------------------------+--------------------------------------+
+    | status                                | creating                             |
+    | share_type_name                       | ontap                                |
+    | description                           | None                                 |
+    | availability_zone                     | az1                                  |
+    | share_network_id                      | None                                 |
+    | share_server_id                       | None                                 |
+    | share_group_id                        | 0c30788d-8139-4c8f-b351-94fdd81a62fd |
+    | host                                  | ubuntu@cmode_single_svm_nfs#aggr1    |
+    | revert_to_snapshot_support            | True                                 |
+    | access_rules_status                   | active                               |
+    | snapshot_id                           | None                                 |
+    | create_share_from_snapshot_support    | True                                 |
+    | is_public                             | False                                |
+    | task_state                            | None                                 |
+    | snapshot_support                      | True                                 |
+    | id                                    | 781442fe-aadb-41ae-9b01-43bac0513344 |
+    | size                                  | 1                                    |
+    | source_share_group_snapshot_member_id | None                                 |
+    | user_id                               | fb1433ad5aa844059b812cb07ac43e89     |
+    | name                                  | share_1                              |
+    | share_type                            | e9ad1532-7592-4f73-b18c-93f67e7a6072 |
+    | has_replicas                          | False                                |
+    | replication_type                      | None                                 |
+    | created_at                            | 2018-08-15T18:53:54.000000           |
+    | share_proto                           | NFS                                  |
+    | mount_snapshot_support                | False                                |
+    | project_id                            | 0694797dd8b94fe3b862e34782d3cf39     |
+    | metadata                              | {}                                   |
+    +---------------------------------------+--------------------------------------+
 
 ::
 
-    $ manila create --name share_2 --consistency-group "cg_1" --share_type "type_1" NFS 1
-    +-----------------------------+--------------------------------------+
-    | Property                    | Value                                |
-    +-----------------------------+--------------------------------------+
-    | status                      | creating                             |
-    | description                 | None                                 |
-    | availability_zone           | nova                                 |
-    | share_network_id            | None                                 |
-    | share_server_id             | None                                 |
-    | host                        | None                                 |
-    | snapshot_id                 | None                                 |
-    | is_public                   | False                                |
-    | id                          | f60520d9-73e4-4755-a4e7-cec027d0dbad |
-    | size                        | 1                                    |
-    | name                        | share_2                              |
-    | share_type                  | type_1                               |
-    | created_at                  | 2015-08-18T17:44:48.290880           |
-    | share_proto                 | NFS                                  |
-    | consistency_group_id        | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
-    | source_cgsnapshot_member_id | None                                 |
-    | project_id                  | f55f22cc74b347f6992a9f969eeb40a1     |
-    | metadata                    | {}                                   |
-    +-----------------------------+--------------------------------------+
+    $ manila create --name share_2 --share-group "sg_1" --share_type "ontap" NFS 1
+    +---------------------------------------+--------------------------------------+
+    | Property                              | Value                                |
+    +---------------------------------------+--------------------------------------+
+    | status                                | creating                             |
+    | share_type_name                       | ontap                                |
+    | description                           | None                                 |
+    | availability_zone                     | az1                                  |
+    | share_network_id                      | None                                 |
+    | share_server_id                       | None                                 |
+    | share_group_id                        | 0c30788d-8139-4c8f-b351-94fdd81a62fd |
+    | host                                  | ubuntu@cmode_single_svm_nfs#aggr1    |
+    | revert_to_snapshot_support            | True                                 |
+    | access_rules_status                   | active                               |
+    | snapshot_id                           | None                                 |
+    | create_share_from_snapshot_support    | True                                 |
+    | is_public                             | False                                |
+    | task_state                            | None                                 |
+    | snapshot_support                      | True                                 |
+    | id                                    | b60160f7-1b76-42e2-b9d7-e9bfd64d043c |
+    | size                                  | 1                                    |
+    | source_share_group_snapshot_member_id | None                                 |
+    | user_id                               | fb1433ad5aa844059b812cb07ac43e89     |
+    | name                                  | share_2                              |
+    | share_type                            | e9ad1532-7592-4f73-b18c-93f67e7a6072 |
+    | has_replicas                          | False                                |
+    | replication_type                      | None                                 |
+    | created_at                            | 2018-08-15T18:54:10.000000           |
+    | share_proto                           | NFS                                  |
+    | mount_snapshot_support                | False                                |
+    | project_id                            | 0694797dd8b94fe3b862e34782d3cf39     |
+    | metadata                              | {}                                   |
+    +---------------------------------------+--------------------------------------+
 
-Next we'll create two CG snapshots of the new consistency group.
-
-::
-
-    $ manila cg-snapshot-create --name snapshot_1 --description 'first snapshot of cg-1' 'cg_1'
-    +----------------------+--------------------------------------+
-    | Property             | Value                                |
-    +----------------------+--------------------------------------+
-    | status               | creating                             |
-    | name                 | snapshot_1                           |
-    | created_at           | 2015-08-18T17:49:11.441552           |
-    | consistency_group_id | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
-    | project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
-    | id                   | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc |
-    | description          | first snapshot of cg-1               |
-    +----------------------+--------------------------------------+
+Next we'll create two SG snapshots of the new share group.
 
 ::
 
-    $ manila cg-snapshot-list
-    +--------------------------------------+------------+------------------------+-----------+
-    | id                                   | name       | description            | status    |
-    +--------------------------------------+------------+------------------------+-----------+
-    | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc | snapshot_1 | first snapshot of cg-1 | available |
-    +--------------------------------------+------------+------------------------+-----------+
+    $ manila share-group-snapshot-create --name snapshot_1 --description 'first snapshot of sg-1' 'sg_1'
+    +----------------+--------------------------------------+
+    | Property       | Value                                |
+    +----------------+--------------------------------------+
+    | status         | creating                             |
+    | name           | snapshot_1                           |
+    | created_at     | 2018-08-15T18:55:03.250498           |
+    | share_group_id | 0c30788d-8139-4c8f-b351-94fdd81a62fd |
+    | project_id     | 0694797dd8b94fe3b862e34782d3cf39     |
+    | id             | a83e8c4b-435f-4185-aeb4-193448006d21 |
+    | description    | first snapshot of sg_1               |
+    +----------------+--------------------------------------+
 
 ::
 
-    $ manila cg-snapshot-show 'snapshot_1'
-    +----------------------+--------------------------------------+
-    | Property             | Value                                |
-    +----------------------+--------------------------------------+
-    | status               | available                            |
-    | name                 | snapshot_1                           |
-    | created_at           | 2015-08-18T17:49:12.000000           |
-    | consistency_group_id | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
-    | project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
-    | id                   | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc |
-    | description          | first snapshot of cg-1               |
-    +----------------------+--------------------------------------+
+    $ manila share-group-snapshot-list
+    +--------------------------------------+------------+-----------+------------------------+
+    | id                                   | name       | status    | description            |
+    +--------------------------------------+------------+-----------+------------------------+
+    | a83e8c4b-435f-4185-aeb4-193448006d21 | snapshot_1 | available | first snapshot of sg_1 |
+    +--------------------------------------+------------+-----------+------------------------+
 
 ::
 
-    $ manila cg-snapshot-create --name snapshot_2 --description 'second snapshot of cg-1' 'cg_1'
-    +----------------------+--------------------------------------+
-    | Property             | Value                                |
-    +----------------------+--------------------------------------+
-    | status               | creating                             |
-    | name                 | snapshot_2                           |
-    | created_at           | 2015-08-18T17:51:01.319632           |
-    | consistency_group_id | 9379f22c-a5c0-4455-bd25-ad373e93d7c3 |
-    | project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
-    | id                   | c671dcc5-10bf-4445-b96e-b12723ade738 |
-    | description          | second snapshot of cg-1              |
-    +----------------------+--------------------------------------+
+    $ manila share-group-snapshot-show a83e8c4b-435f-4185-aeb4-193448006d21
+    +----------------+--------------------------------------+
+    | Property       | Value                                |
+    +----------------+--------------------------------------+
+    | status         | available                            |
+    | name           | snapshot_1                           |
+    | created_at     | 2018-08-15T18:55:03.000000           |
+    | share_group_id | 0c30788d-8139-4c8f-b351-94fdd81a62fd |
+    | project_id     | 0694797dd8b94fe3b862e34782d3cf39     |
+    | id             | a83e8c4b-435f-4185-aeb4-193448006d21 |
+    | description    | first snapshot of sg_1               |
+    +----------------+--------------------------------------+
 
 ::
 
-    $ manila cg-snapshot-list
-    +--------------------------------------+------------+-------------------------+-----------+
-    | id                                   | name       | description             | status    |
-    +--------------------------------------+------------+-------------------------+-----------+
-    | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc | snapshot_1 | first snapshot of cg-1  | available |
-    | c671dcc5-10bf-4445-b96e-b12723ade738 | snapshot_2 | second snapshot of cg-1 | available |
-    +--------------------------------------+------------+-------------------------+-----------+
+    $ manila share-group-snapshot-create --name snapshot_2 --description 'second snapshot of sg-1' 'sg_1'
+    +----------------+--------------------------------------+
+    | Property       | Value                                |
+    +----------------+--------------------------------------+
+    | status         | creating                             |
+    | name           | snapshot_2                           |
+    | created_at     | 2018-08-15T18:57:40.225911           |
+    | share_group_id | 0c30788d-8139-4c8f-b351-94fdd81a62fd |
+    | project_id     | 0694797dd8b94fe3b862e34782d3cf39     |
+    | id             | 0b53bd61-309a-47df-8c07-91d14fa7f21f |
+    | description    | second snapshot of sg_1              |
+    +----------------+--------------------------------------+
 
-Finally we'll create a new CG from one of the CG snapshots we created
+::
+
+    $ manila share-group-snapshot-list
+    +--------------------------------------+------------+-----------+-------------------------+
+    | id                                   | name       | status    | description             |
+    +--------------------------------------+------------+-----------+-------------------------+
+    | 0b53bd61-309a-47df-8c07-91d14fa7f21f | snapshot_2 | available | second snapshot of sg_1 |
+    | a83e8c4b-435f-4185-aeb4-193448006d21 | snapshot_1 | available | first snapshot of sg_1  |
+    +--------------------------------------+------------+-----------+-------------------------+
+
+Finally we'll create a new SG from one of the SG snapshots we created
 above.
 
 ::
 
-    $ manila cg-create --name cg_3 --source-cgsnapshot-id 9fc2c246-b5dc-4cae-97b5-f136aff6abdc
-    +----------------------+--------------------------------------+
-    | Property             | Value                                |
-    +----------------------+--------------------------------------+
-    | status               | creating                             |
-    | description          | None                                 |
-    | source_cgsnapshot_id | 9fc2c246-b5dc-4cae-97b5-f136aff6abdc |
-    | created_at           | 2015-08-18T19:26:46.419836           |
-    | share_network_id     | None                                 |
-    | share_server_id      | None                                 |
-    | host                 | ubuntu@cmode_single_svm_nfs#aggr1    |
-    | project_id           | f55f22cc74b347f6992a9f969eeb40a1     |
-    | share_types          | 45ff1d79-0dd7-4309-b259-652c5f9e3b41 |
-    | id                   | d4a282dc-d28d-4d51-b0b0-64766cc099c6 |
-    | name                 | cg_3                                 |
-    +----------------------+--------------------------------------+
+    $  manila share-group-create --name sg_2 --source-share-group-snapshot 0b53bd61-309a-47df-8c07-91d14fa7f21f --share-group-type sgtype1
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | status                         | creating                             |
+    | description                    | None                                 |
+    | availability_zone              | az1                                  |
+    | created_at                     | 2018-08-15T18:59:47.844886           |
+    | source_share_group_snapshot_id | 0b53bd61-309a-47df-8c07-91d14fa7f21f |
+    | share_network_id               | None                                 |
+    | share_server_id                | None                                 |
+    | host                           | ubuntu@cmode_single_svm_nfs#aggr1    |
+    | share_group_type_id            | 516a089b-d9f6-40cf-8596-8b71feed9dba |
+    | consistent_snapshot_support    | None                                 |
+    | project_id                     | 0694797dd8b94fe3b862e34782d3cf39     |
+    | share_types                    | e9ad1532-7592-4f73-b18c-93f67e7a6072 |
+    | id                             | 5156c78b-a540-4d32-9249-70f7ccb7167d |
+    | name                           | sg_2                                 |
+    +--------------------------------+--------------------------------------+
 
 Creating Manila Share Replicas
 ------------------------------
