@@ -187,40 +187,40 @@ administrative privileges.
 
 Table 6.6. Manila API Overview - Share Type Extra Specs
 
-Consistency Group API
----------------------
+Share Group API
+---------------
 
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Operation                  | CLI Command                          | Description                                                       |
-+============================+======================================+===================================================================+
-| Create                     | ``manila cg-create``                 | Create a Manila consistency group                                 |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Delete                     | ``manila cg-delete``                 | Delete a Manila consistency group                                 |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| List                       | ``manila cg-list``                   | List all Manila consistency groups                                |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Reset state                | ``manila cg-reset-state``            | Update the state of a Manila consistency group                    |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Show                       | ``manila cg-show``                   | Show details about a Manila consistency group                     |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Update                     | ``manila cg-update``                 | Update details of a Manila consistency group                      |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Create CG Snapshot         | ``manila cg-snapshot-create``        | Create a snapshot of a consistency group and all of it's shares   |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Delete CG Snapshot         | ``manila cg-snapshot-delete``        | Delete a snapshot of a consistency group                          |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| List CG Snapshot           | ``manila cg-snapshot-list``          | List all consistency group snapshots                              |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Show CG Snapshot members   | ``manila cg-snapshot-members``       | Get member details for a consistency group snapshot.              |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Reset CG Snapshot state    | ``manila cg-snapshot-reset-state``   | Update the state of a Manila consistency group snapshot           |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Show CG Snapshot           | ``manila cg-snapshot-show``          | Show details about a consistency group snapshot.                  |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
-| Update CG Snapshot         | ``manila cg-snapshot-update``        | Update details of a consistency group snapshot.                   |
-+----------------------------+--------------------------------------+-------------------------------------------------------------------+
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Operation                  | CLI Command                                   | Description                                                   |
++============================+===============================================+===============================================================+
+| Create                     | ``manila share-group-create``                 | Create a Manila share group                                   |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Delete                     | ``manila share-group-delete``                 | Delete one or more Manila share groups                        |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| List                       | ``manila share-group-list``                   | List Manila share groups                                      |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Reset state                | ``manila share-group-reset-state``            | Update the state of a Manila share group                      |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Show                       | ``manila share-group-show``                   | Show details about a Manila share group                       |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Update                     | ``manila share-group-update``                 | Update details of a Manila share group                        |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Create SG Snapshot         | ``manila share-group-snapshot-create``        | Create a snapshot of a Manila share group                     |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Delete SG Snapshot         | ``manila share-group-snapshot-delete``        | Delete a snapshot of a Manila share group                     |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| List SG Snapshot           | ``manila share-group-snapshot-list``          | List Manila share group snapshots                             |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Show SG Snapshot members   | ``manila share-group-snapshot-list-members``  | Get member details for a share group snapshot.                |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Reset SG Snapshot state    | ``manila share-group-snapshot-reset-state``   | Update the state of a Manila share group snapshot             |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Show SG Snapshot           | ``manila share-group-snapshot-show``          | Show details about a share group snapshot.                    |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
+| Update SG Snapshot         | ``manila share-group-snapshot-update``        | Update details of a share group snapshot.                     |
++----------------------------+-----------------------------------------------+---------------------------------------------------------------+
 
-Table 6.7. Manila API Overview - Consistency Groups
+Table 6.7. Manila API Overview - Share Groups
 
 Share Replication API
 ---------------------
