@@ -17,7 +17,7 @@ format once stored on an ONTAP backend.
 .. note::
 
    Use of the ``QCOW2`` image format is recommended for ephemeral disks
-   due to its inherent benefits when taking instance snapshots. Use of
+   due to its inherent benefits when taking instance snapshots.
 
 .. note::
 
