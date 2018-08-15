@@ -22,11 +22,9 @@ for NFS:
 +------+------------------------------------------------------------+---------+
 | 6    | Make changes to the cinder.conf                            |         |
 +------+------------------------------------------------------------+---------+
-| 6a   | Change ``glance_api_version``                              |         |
+| 6a   | Change ``netapp_copy_offload_tool_path``                   |         |
 +------+------------------------------------------------------------+---------+
-| 6b   | Change ``netapp_copy_offload_tool_path``                   |         |
-+------+------------------------------------------------------------+---------+
-| 6c   | Add ``nfs_mount_options=lookupcache=pos`` in cinder.conf   |         |
+| 6b   | Add ``nfs_mount_options=lookupcache=pos`` in cinder.conf   |         |
 +------+------------------------------------------------------------+---------+
 | 7    | Create JSON file for Glance metadata                       |         |
 +------+------------------------------------------------------------+---------+
@@ -127,15 +125,10 @@ Set ownership for the FlexVol(s) backing Cinder accordingly
 6) Make changes to
 /etc/cinder/cinder.conf
 
-Set the following in each NFS backend stanza, paying attention to
-set glance_api_version to 2 in the DEFAULT stanza as well.
+Set the following in each NFS backend stanza.
 
 ::
 
-    [DEFAULT]
-    ...
-    glance_api_version = 2
-    ...
     ...
     [NetAppONTAPBackend]
     ...
