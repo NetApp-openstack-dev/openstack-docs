@@ -762,8 +762,10 @@ Manipulating Cinder Consistency Groups via the Command Line
 
 .. note::
 
-   There is a plan, in the Cinder community, to migrate existing consistency
-   group operations to use Cinder group operations in an upcoming release.
+   Support for Consistency groups has been deprecated in Block Storage V3
+   API. Only Block Storage V2 API supports consistency groups. Future
+   releases will involve a migration of existing consistency group operations
+   to use generic volume group operations.
 
 In this section, we will configure a Cinder volume type, associate the
 volume type with a backend capable of supporting consistency groups,
@@ -1030,7 +1032,8 @@ Thin Provisioning
 -----------------
 In this section, we will configure a Cinder volume type, associate
 the ``thin_provisioning_support`` attribute and then create a thin
-provisioned Cinder volume.
+provisioned Cinder volume. To check if the driver configuration
+supports Thin Provisioning, refer to ":ref:`over-subscription`" 
 
 ::
 
