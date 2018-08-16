@@ -276,6 +276,28 @@ protocol used:
 For additional information, refer to
 :ref:`cinder-schedule-resource-pool`.
 
+Generic Volume Groups
+---------------------
+
+With the Newton release of OpenStack, NetApp supports Volume Groups 
+when using E-series or ONTAP iSCSI/Fibre Channel and ONTAP NFS
+drivers. Existing consistency group operations will be migrated to
+use generic volume group operations in future releases. The existing
+Consistency group construct cannot be extended easily to serve 
+purposes such as consistent group snapshots across multiple 
+volumes. A generic volume group makes it possible to group volumes used
+in the same application and these volumes do not have to support 
+consistent group snapshot. It provides a means of managing volumes and 
+grouping them based on a common factor. Additional information about 
+volume groups and the proposed migration can be found at 
+`generic-volume-groups <https://docs.openstack.org/cinder/latest/admin/blockstorage-groups.html>`
+
+.. note::
+   Only Block Storage V3 API supports groups. The minimum version for 
+   group operations supported by the ONTAP drivers is 3.14. The API 
+   version can be specified with the following CLI flag 
+   ``--os-volume-api-version 3.14``
+
 Consistency Groups
 ------------------
 
@@ -348,6 +370,12 @@ policies.
 The NetApp Driver creates consistency group LUN snapshots thick
 provisioned.  This can be changed on the backend after the snap
 is taken with no effect to Cinder.
+
+.. note::
+   Consistency group operations support has been deprecated in 
+   Block Storage V3 API. Only Block Storage V2 API supports consistency
+   groups. Future releases will involve a migration of existing 
+   consistency group operations to use generic volume group operations. 
 
 Backup and Restore
 ------------------

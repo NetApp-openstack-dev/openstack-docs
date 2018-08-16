@@ -762,6 +762,11 @@ Manipulating Cinder Consistency Groups via the Command Line
 
 .. note::
 
+   Support for Consistency groups has been deprecated in Block Storage V3
+   API. 
+
+.. note::
+
    There is a plan, in the Cinder community, to migrate existing consistency
    group operations to use Cinder group operations in an upcoming release.
 
