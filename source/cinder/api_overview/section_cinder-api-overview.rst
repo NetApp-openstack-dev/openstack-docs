@@ -50,6 +50,12 @@ names or UUID.
 
 Table 4.2. Cinder API Overview - Volume
 
+.. note::
+
+   Cinder supports extension of attached volumes from the Rocky release. It
+   is now possible to extend the size of a volume that is in the ``in-use``
+   state.
+
 Snapshot API
 ------------
 
