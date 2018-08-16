@@ -17,6 +17,8 @@ and one for an E-Series deployment (leveraging iSCSI).
     rpc_backend=cinder.openstack.common.rpc.impl_kombu
     notification_driver=cinder.openstack.common.notifier.rpc_notifier
     periodic_interval=60
+    enable_v2_api=false
+    enable_v3_api=true
     lock_path=/opt/stack/data/cinder
     state_path=/opt/stack/data/cinder
     osapi_volume_extension=cinder.api.contrib.standard_extensions

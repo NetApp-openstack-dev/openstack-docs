@@ -10,6 +10,12 @@ in Cinder; for more information, please refer to the `OpenStack
 Configuration
 Reference. <http://docs.openstack.org/icehouse/config-reference/content/config_overview.html>`__
 
+.. note::
+
+   Block Storage V2 API has been deprecated. To ensure Cinder does not
+   use the V2 API, update ``enable_v2_api=false`` and ``enable_v3_api=true``
+   in your cinder.conf file.
+
 Volume API
 ----------
 
@@ -81,9 +87,10 @@ Table 4.4, “Cinder API Overview - Consistency Groups” specifies the
 valid operations that can be performed on Cinder consistency groups.
 Please note that Cinder consistency groups and cgsnapshots are
 identified as CLI command arguments by either their display name or
-UUID. There is a plan, in the Cinder community, to migrate existing
-consistency group operations to use Cinder group operations in an
-OpenStack release after Pike.
+UUID. Consistency group operations support has been deprecated in
+Block Storage V3 API. Only Block Storage V2 API supports consistency
+groups. Future releases will involve a migration of existing
+consistency group operations to use generic volume group operations.
 
 +-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
 | Operation                                                                   | CLI Command                              | Description                                                                                                                        |

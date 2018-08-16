@@ -19,6 +19,12 @@ a particular Cinder backend should be placed in a separate stanza.
 
 .. note::
 
+   Block Storage V2 API has been deprecated. To ensure Cinder does not
+   use the V2 API, update ``enable_v2_api=false`` and ``enable_v3_api=true``
+   in your cinder.conf file.
+
+.. note::
+
    While it is possible to specify driver-specific configuration
    options within the ``[DEFAULT]`` stanza, you are unable to define
    multiple Cinder backends within the ``[DEFAULT]`` stanza. NetApp
