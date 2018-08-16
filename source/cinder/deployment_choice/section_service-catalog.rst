@@ -9,6 +9,12 @@ technology. It is meant to abstract away the actual technical
 implementations of the features at a storage backend into a set of
 simplified configuration options.
 
+.. important::
+
+   For the complete list of features supported by NetApp drivers, refer
+   to the
+   `Cinder Driver Support Matrix <https://docs.openstack.org/cinder/rocky/reference/support-matrix.html>`_ 
+
 The storage features are organized or combined into groups based on the
 customer needs to achieve a particular scenario or use case. Based on
 the catalog of the storage features, intelligent provisioning decisions
@@ -69,6 +75,8 @@ volume types with the ``cinder type-key`` command.
 +-----------------------------------------+-----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp_thin_provisioned``             | Boolean   | ONTAP, E-Series                  | Limit the candidate volume list to only the ones that support thin provisioning on the storage controller.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 +-----------------------------------------+-----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``netapp_enable_multiattach``           | Boolean   | E-Series                         | Support multi-attachment of volumes. This enables a volume to be attached to multiple servers simultaneously. For ONTAP and SolidFire, multi-attachment is configured by default.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
++-----------------------------------------+-----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.11. NetApp supported Extra Specs for use with Cinder volume Type
 
@@ -76,4 +84,4 @@ Table 4.11. NetApp supported Extra Specs for use with Cinder volume Type
    Note that RAID3 is a deprecated RAID type on E-Series storage controllers and operates as RAID5.
 
 .. [2]
-   Please note that this extra spec has a colon (:) in its name because it is used by the driver to assign the QoS policy group to the OpenStack Block Storage volume after it has been provisioned.
+   Please note that this extra spec has a colon (:) in its name because it is used by the driver to assign the QoS policy group to the OpenStack Block Storage volume after it has been provisioned.``
