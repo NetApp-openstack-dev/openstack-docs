@@ -28,8 +28,7 @@ request shares of a particular share type, they are created on storage
 backends that meet the list of requirements (e.g. available space, extra
 specs, etc). You can use the specs in
 :ref:`Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”<table-6.10>`
-later in this section when defining Manila share types with the
-``manila type-key`` command.
+when defining Manila share types with the ``manila type-key`` command.
 
 .. _table-6.10:
 
@@ -58,6 +57,8 @@ later in this section when defining Manila share types with the
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp:snapshot_policy``               | String    | Apply the specified snapshot policy to the created FlexVol volume. *Note that the snapshots created by applying a policy will not have corresponding Manila snapshot records.*                                                                                                                                                                                                   |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``netapp:hide_snapdir``                  | Boolean   | Control visibility of the ``.snapshot`` directory for each newly created share. By default, each share allows access to its ``.snapshot`` directory, which contains files of each snapshot that is taken. To restrict access to the directory, this option should be set to ``True``. For shares that have already been created, refer [#f2]_.                                   |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp:language``                      | String    | Apply the specified language to the FlexVol volume that corresponds to the Manila share. The language of the FlexVol volume determines the character set ONTAP uses to display file names and data for that volume. The default value for the language of the volume is the language of the SVM.                                                                                 |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp:max_files``                     | String    | Change the maximum number of files for the FlexVol volume that corresponds to the Manila share. By default, the maximum number of files is proportional to the size of the share. This spec can be used to increase the number of files for very large shares (greater than 1TB), or to place a smaller limit on the number of files on a given share.                           |
@@ -72,12 +73,10 @@ later in this section when defining Manila share types with the
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp_flexvol_encryption``            | Boolean   | Create FlexVol with NVE encryption at rest enabled.                                                                                                                                                                                                                                                                                                                              |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``qos``                          | Boolean   | Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in [#f1]_. See the NetApp driver specific QoS extra-specs in :ref:`Table 6.11, “NetApp QoS Specs for use with Manila Share Types”<table-6.11>`.                                                                                                                             |
+| ``qos``                                  | Boolean   | Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in [#f1]_. See the NetApp driver specific QoS extra-specs in :ref:`Table 6.11, ?~@~\NetApp QoS Specs for use with Manila Share Types?~@~]<table-6.11>`.                                                                                                             |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
-
-
 
 .. _table-6.11:
 
@@ -122,3 +121,12 @@ Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that
          (See ":ref:`account-perm`"). Be aware that ONTAP Users with Vsadmin
          (SVM administrator) role do not have permission to create or
          modify QoS policy groups.
+
+.. [#f2] To hide the ``.snapshot`` directory of shares that have already been
+         created, the ``netapp_reset_snapdir_visibility`` config option can be
+         set to ``hidden`` for the associated backend in ``manila.conf``. Upon
+	 restarting the Manila service, the changes will take effect. The config
+         option may be set to ``visible`` to make the ``.snapshot`` directory of
+         shares visible. The config option can be set to ``default`` to retain the
+         current value for existing Manila shares on subsequent restarts of the Manila
+         service.
