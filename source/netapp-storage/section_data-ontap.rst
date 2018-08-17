@@ -21,7 +21,7 @@ business requirements.
 
 ONTAP powers NetApp’s fabric-attached storage (FAS) hardware line, the 
 Software Defined Storage implementation called ONTAP Select, and the AWS or 
-Azure available ONTAP Cloud.
+Azure available Cloud Volumes ONTAP .
 
 ONTAP
 -----
@@ -148,3 +148,35 @@ drives. Data can move nondisruptively between nodes or between different
 tiers of disk as performance requirements change. This capability makes
 sure that data center and IT administrators can maximize performance
 where needed while simultaneously improving capacity utilization.
+
+ONTAP SELECT
+------------
+
+NetApp ONTAP Select provides the flexibility for customers to leverage the benefits of 
+Software Defined Storage (SDS) economics, while enjoying enterprise-grade features 
+and efficient data protection. ONTAP Select offers robust enterprise storage
+services that are deployed on commodity hardware from the comfort of a data center. It 
+combines the best of the cloud, in terms of agility and granular capacity scaling, with 
+the flexibility, resilience, and locality of on-premises storage. ONTAP Select software 
+can be deployed in a data center or a remote office, with a flexible capacity-based 
+license structure. Key benefits include:
+
+**Flexible Deployment**
+
+It is possible to deploy on your desired choice of commodity server, hypervisor, and media.
+You can also leverage your existing server infrastructure, HCI configurations,
+and external arrays for enterprise data services. Simplify operations and lower 
+training requirements with uniform management across all storage based on ONTAP.
+
+**Cloudlike Agility**
+
+Spin up storage resources with cloudlike agility, from procurement to deployment 
+in a day. It is also possible to easily move and replicate data non-
+disruptively across the hybrid cloud.
+
+**Enterprise Level Functionality**
+
+By using SDS built on ONTAP, the industry-leading data management platform, enterprise-class
+data reduction and data protection for NAS and SAN workloads can be obtained.
+Non-disruptive scaling and balancing of workloads can be done dynamically.
+ 
