@@ -1,12 +1,12 @@
 # Please sort this file always:
 # sort source/spelling_wordlist.txt -o source/spelling_wordlist.txt
-API
-AWS
 Admin
 Agrawal
 Akhtar
 Akshai
+API
 Automator
+AWS
 Backend
 Backends
 Bexar
@@ -127,6 +127,7 @@ cgsnapshots
 chmod
 chown
 cinderSecureEnvIndicator
+cloudlike
 codenamed
 conf
 config
