@@ -4,8 +4,8 @@ Enhanced Instance Creation with ONTAP NFS as a Cinder Backend
 =============================================================
 
 The following checklist provides the steps necessary for configuration
-of Enhanced Instance Creation and Copy Offload with NetApp FAS (ONTAP)
-for NFS:
+of Enhanced Instance Creation and Copy Offload with NetApp FAS and/or
+AFF (ONTAP) for NFS:
 
 +------+------------------------------------------------------------+---------+
 | #    | Description of Step                                        | Done?   |

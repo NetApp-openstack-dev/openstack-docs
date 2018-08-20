@@ -64,10 +64,10 @@ host. OVS creates the tunnel bridges necessary to route packets
 between these VLAN networks. When combined with a hardware plugin
 such as the Cisco Nexus plugin, VLANs are allocated on the external
 hardware as well. Typically storage devices like NetApp ONTAP
-Fabric-Attached Storage (FAS) are configured on these hardware
-devices in a trunk configuration. VLANs are then created and managed
-with the help of the hardware switch vendor's ML2 plugin mechanism
-driver in Neutron.
+Fabric-Attached Storage (FAS) and All Flash FAS (AFF) are configured
+on these hardware devices in a trunk configuration. VLANs are then
+created and managed with the help of the hardware switch vendor's
+ML2 plugin mechanism driver in Neutron.
 
 Keep in mind that VLANs are limited to the range of 1 to 4094. When
 using VLANs, no more than 4092 isolated networks can exist. Keep
