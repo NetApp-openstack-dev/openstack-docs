@@ -4,8 +4,8 @@ Enhanced Instance Creation with ONTAP iSCSI/FC as a Cinder Backend
 ==================================================================
 
 The following checklist provides the steps necessary for configuration
-of Enhanced Instance Creation with NetApp FAS (ONTAP) for iSCSI or Fibre
-Channel:
+of Enhanced Instance Creation with NetApp FAS and/or AFF (ONTAP) for 
+iSCSI or Fibre Channel:
 
 +-----+-------------------------------------------------------+---------+
 | Step| Description of Step                                   | Done?   |
