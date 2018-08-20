@@ -76,8 +76,8 @@ ONTAP Setup
 -  If you are using an identity service (i.e. NIS, LDAP, etc...) with ONTAP,
    ensure that there are *cinder*, *nova*, and *glance* user and group
    identities with *UID* and *GID* that match the corresponding users on the
-   OpenStack Cinder, Nova, and Glance nodes. See `NetApp TR4067: Clustered Data
-   ONTAP NFS Best Practice and Implementation Guide
+   OpenStack Cinder, Nova, and Glance nodes. See `NetApp TR4067: ONTAP NFS
+   Best Practice and Implementation Guide
    <http://www.netapp.com/us/media/tr-4067.pdf>`__ for additional information.
 
 -  In ONTAP, put the *cinder*, *nova*, and *glance* users in the *cinder* group.
@@ -93,8 +93,8 @@ ONTAP Setup
 
 -  See `NetApp TR3850: NFSv4 Enhancements and Best Practices Guide: Data
    ONTAP Implementation <http://www.netapp.com/us/media/tr-3580.pdf>`__
-   and `NetApp TR4067: Clustered Data ONTAP NFS Best Practice and
-   Implementation Guide <http://www.netapp.com/us/media/tr-4067.pdf>`__,
+   and `NetApp TR4067: ONTAP NFS Best Practice and Implementation Guide
+   <http://www.netapp.com/us/media/tr-4067.pdf>`__,
    as well as the File Access and Protocols Management Guides available
    from the NetApp NOW site for additional setup information.
 

@@ -40,8 +40,8 @@ LUNs, etc.) that is abstracted from physical elements (for example:
 individual disks, and RAID groups). A Cinder volume is a block device.
 Most commonly, these block devices are made available to OpenStack
 Compute instances. NetApp’s various driver options for deployment of FAS
-as a provider of Cinder storage place Cinder volumes, snapshot copies,
-and clones within FlexVol volumes.
+and All Flash FAS (AFF) as a provider of Cinder storage place Cinder volumes,
+snapshot copies, and clones within FlexVol volumes.
 
 .. important::
 
@@ -205,7 +205,7 @@ required by the backend.
 
 E-Series snapshots are typically used for relatively brief operations,
 such as making a backup. If you require many snapshots or long-lasting
-snapshots, consider FAS.
+snapshots, consider FAS or All Flash FAS (AFF).
 
 .. important::
 
