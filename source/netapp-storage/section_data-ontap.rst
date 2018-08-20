@@ -7,11 +7,13 @@ data storage flexibility.
 
 ONTAP operation enhances NetApp’s storage
 efficiency value by introducing massive scalability and nondisruptive
-operations. With ONTAP 8, two or more controllers (or
-nodes) operate as one shared resource pool or storage cluster. The
-storage cluster can be expanded, contracted, and subdivided
-nondisruptively into one or more secure partitions, or NetApp Storage
-Virtual Machine (SVM). A SVM is a logical storage container that
+operations. ONTAP 9 introduced support for encryption of data at rest
+with NetApp Volume Encryption (NVE). NVE is a software-based technology
+which makes it possible to encrypt data at rest, one volume at a time.
+It is also easier to form peering relationships between clusters and
+SVMs; ONTAP 9.3 provides an option to generate a passphrase, which
+can be used to create a peer relationship with a cluster without knowing
+its intercluster LIF address. A SVM is a logical storage container that
 includes allocated storage resources from within the cluster as well as
 security parameters, such as rights and permissions. Logical interfaces
 allow clients to access data within a SVM from anywhere in the cluster.
@@ -19,9 +21,11 @@ To the application, a SVM presents a securely partitioned storage pool
 that can be dynamically deployed and redeployed according to changing
 business requirements.
 
-ONTAP powers NetApp’s fabric-attached storage (FAS) hardware line, the
-Software Defined Storage implementation called ONTAP Select, and the AWS or
-Azure available Cloud Volumes ONTAP.
+ONTAP powers NetApp’s fabric-attached storage (FAS) and All Flash FAS
+(AFF) storage arrays, FlexPod Converged Infrastructure solutions, FlexArray
+storage virtualization for heterogeneous environments, NetApp Private Storage
+for Cloud,the Software Defined Storage implementation called ONTAP Select,
+and the AWS or Azure available Cloud Volumes ONTAP.
 
 ONTAP
 -----
@@ -50,6 +54,12 @@ ONTAP is an operating system from NetApp that includes:
 
 -  Nondisruptive operations based on a clustered file system hosted on
    interconnected nodes
+
+-  Support for deployment across a wide range of architectures, such as
+   All Flash FAS (AFF) systems and hybrid-flash FAS systems, converged
+   infrastructure solutions (FlexPod), on commodity servers as SDS (ONTAP
+   Select), using third-party arrays (FlexArrays), near cloud deployments
+   (NetApp Private Storage) and in cloud deployments (ONTAP Cloud)
 
 -  Multinode scaling with global namespacing technologies
 
@@ -137,11 +147,11 @@ power, and/or throughput is added.
 
 ONTAP is configured for continuous operation with the use
 of high-performance and modular NetApp storage components. Each system
-consists of one or more FAS building blocks where each building block is
+consists of one or more FAS/AFF building blocks where each building block is
 a high-availability pair of controllers (storage nodes). Multiple
 controller pairs form a single, integrated cluster. ONTAP
 uses Ethernet technology — Gigabit(Gb) and 10Gb — for server connections
-and for interconnecting FAS controllers. Servers can also be connected
+and for interconnecting controllers. Servers can also be connected
 through InfiniBand through the use of a gateway device. Each controller
 can support any mix of high-performance SAS and cost-effective SATA disk
 drives. Data can move nondisruptively between nodes or between different
@@ -149,26 +159,33 @@ tiers of disk as performance requirements change. This capability makes
 sure that data center and IT administrators can maximize performance
 where needed while simultaneously improving capacity utilization.
 
+**Integrated Data Protection**
+
+ONTAP makes it possible to provide data protection to safeguard business operations
+and keep them running smoothly. Space-efficient Snapshots ensure business continuity
+and near-instant recovery from disasters. Asynchronous mirroring of volumes from one
+SVM to another, even across different clusters is provided using SnapMirror. Encryption
+of data at-rest is easy and efficient using NetApp Volume Encryption that is built into
+ONTAP. There is no requirement for special encrypting disks.
+
 ONTAP Select
 ------------
 
-NetApp ONTAP Select provides the flexibility for customers to leverage the
-benefits of Software Defined Storage (SDS) economics, while enjoying
-enterprise-grade features and efficient data protection. ONTAP Select offers
-robust enterprise storage services that are deployed on commodity hardware from
-the comfort of a data center. It combines the best of the cloud, in terms of
-agility and granular capacity scaling, with the flexibility, resilience, and
-locality of on-premises storage. ONTAP Select software can be deployed in a
-data center or a remote office, with a flexible capacity-based license
-structure. Key benefits include:
+NetApp ONTAP Select provides the flexibility for customers to leverage the benefits of
+Software Defined Storage (SDS) economics, while enjoying enterprise-grade features
+and efficient data protection. ONTAP Select offers robust enterprise storage
+services that are deployed on commodity hardware from the comfort of a data center. It
+combines the best of the cloud, in terms of agility and granular capacity scaling, with
+the flexibility, resilience, and locality of on-premises storage. ONTAP Select software
+can be deployed in a data center or a remote office, with a flexible capacity-based
+license structure. Key benefits include:
 
 **Flexible Deployment**
 
-It is possible to deploy on your desired choice of commodity server, hypervisor,
-and media. You can also leverage your existing server infrastructure, HCI
-configurations, and external arrays for enterprise data services. Simplify
-operations and lower training requirements with uniform management across all
-storage based on ONTAP.
+It is possible to deploy on your desired choice of commodity server, hypervisor, and media.
+You can also leverage your existing server infrastructure, HCI configurations,
+and external arrays for enterprise data services. Simplify operations and lower
+training requirements with uniform management across all storage based on ONTAP.
 
 **Cloudlike Agility**
 

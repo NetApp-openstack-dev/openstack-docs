@@ -3,7 +3,7 @@ Deployment Choices: NFS vs. iSCSI
 
 A frequent question from customers and partners is whether to utilize
 NFS or iSCSI as the storage protocol with a Cinder deployment on top of
-the NetApp FAS product line. Both protocol options are TCP/IP-based,
+the NetApp FAS/AFF product line. Both protocol options are TCP/IP-based,
 deliver similar throughputs and latencies, support Cinder features,
 snapshot copies and cloning are supported to similar degrees, as well as
 advertisement of other storage efficiency, data protection, and high
@@ -12,7 +12,7 @@ availability features.
 **iSCSI**
 
 -  At the time of publishing, the maximum number of iSCSI LUNs per
-   NetApp cluster is either 8,192 or 49,152 - dependent on the FAS model
+   NetApp cluster is either 8,192 or 49,152 - dependent on the FAS/AFF model
    number (refer to `Hardware Universe <http://hwu.netapp.com>`__ for
    detailed information for a particular model). Cinder can be
    configured to operate with multiple NetApp clusters via multi-backend
