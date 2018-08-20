@@ -127,6 +127,7 @@ cgsnapshots
 chmod
 chown
 cinderSecureEnvIndicator
+cloudlike
 codenamed
 conf
 config
