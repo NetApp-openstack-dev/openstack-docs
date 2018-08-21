@@ -10,6 +10,12 @@ format once stored on an ONTAP backend.
 
 .. note::
 
+   The conversion of images from the ``QCOW2`` to ``raw`` format 
+   requires the ``qemu-img`` package. This must be installed on all 
+   OpenStack hosts.
+
+.. note::
+
    Use of the ``QCOW2`` image format is recommended for ephemeral disks
    due to its inherent benefits when taking instance snapshots.
 
