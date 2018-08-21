@@ -6,7 +6,13 @@ and ``QCOW2`` are the most common. While ``QCOW2`` does provide
 some benefits (supports copy-on-write, snapshots, dynamic expansion)
 over the ``raw`` format, it should be noted that when images
 are copied into Cinder volumes, they are converted into the ``raw``
-format once stored on an ONTAP backend. 
+format once stored on an ONTAP backend.
+
+.. note::
+
+   The conversion of images from the ``QCOW2`` to ``raw`` format
+   requires the ``qemu-img`` package. This must be installed on all
+   OpenStack Controller hosts.
 
 .. note::
 
