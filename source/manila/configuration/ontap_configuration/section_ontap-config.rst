@@ -68,14 +68,14 @@ considerations:
       and have unique names.
 
    3. For more information about ONTAP data protection, please see the
-      `ONTAP 8 Product
-      Documentation <https://mysupport.netapp.com/documentation/productlibrary/index.html?productID=30092>`__.
+      `ONTAP 9 Product
+      Documentation <https://mysupport.netapp.com/documentation/productlibrary/index.html?productID=62286>`__.
 
-7. If setting up Manila without share servers, ensure that one or 
-   more aggregates are permitted to be used by the SVM. Use ``vserver 
-   show -vserver <vserver> -fields aggr-list`` to see which aggregates 
-   are all ready assigned.  You can use ``vserver add-aggregates 
-   -vserver <vserver> -aggregates <first aggr,second aggr>`` to add 
+7. If setting up Manila without share servers, ensure that one or
+   more aggregates are permitted to be used by the SVM. Use ``vserver
+   show -vserver <vserver> -fields aggr-list`` to see which aggregates
+   are all ready assigned.  You can use ``vserver add-aggregates
+   -vserver <vserver> -aggregates <first aggr,second aggr>`` to add
    aggregates to your SVM that Manila will be able to use.
 
 8. If you wish to assign QoS policies to Manila shares, do not assign the SVM
@@ -106,12 +106,16 @@ Cluster-wide Administrative Account”<table-6.18>`, and :ref:`Table 6.19, “Ac
 Permissions Required For Manila Driver for ONTAP without
 share server management - with Cluster-wide Administrative Account”<table-6.19>`.
 
+.. note::
+
+   The commands listed in the tables below are for ONTAP 9 releases.
+
 .. _table-6.17:
 
 +-----------------------------+----------------+
 | Command                     | Access Level   |
 +=============================+================+
-| ``cifs share``              | ``all``        |
+| ``vserver cifs share``      | ``all``        |
 +-----------------------------+----------------+
 | ``event``                   | ``all``        |
 +-----------------------------+----------------+
@@ -125,8 +129,6 @@ share server management - with Cluster-wide Administrative Account”<table-6.19
 +-----------------------------+----------------+
 | ``system node``             | ``readonly``   |
 +-----------------------------+----------------+
-| ``version``                 | ``readonly``   |
-+-----------------------------+----------------+
 | ``volume``                  | ``all``        |
 +-----------------------------+----------------+
 | ``vserver``                 | ``readonly``   |
@@ -138,35 +140,35 @@ Table 6.17. Common Access Level Permissions Required with Any Manila Driver
 
 .. _table-6.18:
 
-+-------------------------+----------------+
-| Command                 | Access Level   |
-+=========================+================+
-| ``cifs create``         | ``all``        |
-+-------------------------+----------------+
-| ``cifs delete``         | ``all``        |
-+-------------------------+----------------+
-| ``kerberos-config``     | ``all``        |
-+-------------------------+----------------+
-| ``kerberos-realm``      | ``all``        |
-+-------------------------+----------------+
-| ``ldap client``         | ``all``        |
-+-------------------------+----------------+
-| ``ldap create``         | ``all``        |
-+-------------------------+----------------+
-| ``license``             | ``readonly``   |
-+-------------------------+----------------+
-| ``dns create``          | ``all``        |
-+-------------------------+----------------+
-| ``network interface``   | ``all``        |
-+-------------------------+----------------+
-| ``network port``        | ``readonly``   |
-+-------------------------+----------------+
-| ``network port vlan``   | ``all``        |
-+-------------------------+----------------+
-| ``vserver``             | ``all``        |
-+-------------------------+----------------+
-| ``qos policy-group``    | ``all``        |
-+-------------------------+----------------+
++-------------------------------------------------------+----------------+
+| Command                                               | Access Level   |
++=======================================================+================+
+| ``vserver cifs create``                               | ``all``        |
++-------------------------------------------------------+----------------+
+| ``vserver cifs delete``                               | ``all``        |
++-------------------------------------------------------+----------------+
+| ``vserver nfs kerberos interface``                    | ``all``        |
++-------------------------------------------------------+----------------+
+| ``vserver nfs kerberos realm``                        | ``all``        |
++-------------------------------------------------------+----------------+
+| ``vserver services name-service ldap client``         | ``all``        |
++-------------------------------------------------------+----------------+
+| ``vserver services name-service ldap create``         | ``all``        |
++-------------------------------------------------------+----------------+
+| ``license``                                           | ``readonly``   |
++-------------------------------------------------------+----------------+
+| ``vserver services name-service dns create``          | ``all``        |
++-------------------------------------------------------+----------------+
+| ``network interface``                                 | ``all``        |
++-------------------------------------------------------+----------------+
+| ``network port``                                      | ``readonly``   |
++-------------------------------------------------------+----------------+
+| ``network port vlan``                                 | ``all``        |
++-------------------------------------------------------+----------------+
+| ``vserver``                                           | ``all``        |
++-------------------------------------------------------+----------------+
+| ``qos policy-group``                                  | ``all``        |
++-------------------------------------------------------+----------------+
 
 Table 6.18. Access Level Permissions Required For Manila Driver for
 ONTAP with share server management - with Cluster-wide
@@ -239,6 +241,12 @@ the ONTAP user:
    refer to the `System Administration Guide for Cluster
    Administrators <http://support.netapp.com>`__ document in the
    ONTAP documentation.
+
+.. note::
+
+   SVM-Scoped user accounts do not support the configuration of the
+   ``reserved_share_percentage`` config option. SVM-Scoped user
+   accounts can only work if the option is set to ``0``.
 
 Storage Networking Considerations
 ---------------------------------
