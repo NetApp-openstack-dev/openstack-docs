@@ -37,26 +37,11 @@ If using Cinder, the following processes log into individual files:
 .. note::
 
    When using ONTAP as your block storage back end, you can add the following
-   lines to your NetApp backend stanza(s) in cinder.conf to capture more
+   line to your NetApp backend stanza(s) in cinder.conf to capture more
    debug logging around the driver’s interaction with ONTAP in the
    cinder-volume log::
 
     trace_flags = method,api
-
-.. note::
-
-   To trace specific ONTAP APIs, add the following line to your NetApp backend
-   stanza(s) in cinder.conf. The following line lists all APIs beginning with
-   ``volume``::
-
-    netapp_api_trace_pattern = ^volume-.*$
-
-.. note::
-
-   To trace all ONTAP APIs with exception of those beginning with ``perf``
-   add the following line to your NetApp backend stanza(s) in cinder.conf::
-
-    netapp_api_trace_pattern = ^(?!(perf)).*$
 
 If using Manila, the following processes log into individual files:
 
@@ -81,16 +66,15 @@ If using Manila, the following processes log into individual files:
 
    To trace specific ONTAP APIs, add the following line to your NetApp
    backend stanza(s) in manila.conf::
-
+ 
     netapp_api_trace_pattern  =  ^volume-.*$
 
 .. note::
 
-   To trace all ONTAP APIs with exception of those that start with
-   ``perf``, add the following line to your NetApp backend
-   stanza(s) in manila.conf::
+   To trace all ONTAP APIs with exception of (X), add the following
+   line to your NetApp backend stanza(s) in manila.conf::
 
-    netapp_api_trace_pattern  =  ^(?!(perf)).*$
+    netapp_api_trace_pattern  =  ^(?!(perf|aggr-get-iter)).*$
 
 If using Nova, the following processes log into individual files:
 
