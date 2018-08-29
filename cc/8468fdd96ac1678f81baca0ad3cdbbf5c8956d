@@ -1,0 +1,10 @@
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Code-Review+2: Rodrigo Barbieri <rodrigob@netapp.com>
+QA-Review+2: Rodrigo Barbieri <rodrigob@netapp.com>
+Code-Review+2: Erlon R. Cruz <sombrafam@gmail.com>
+Release+1: Balasubramanian Ramesh Babu <b.ramesh07@live.com>
+Submitted-by: Balasubramanian Ramesh Babu <b.ramesh07@live.com>
+Submitted-at: Wed, 29 Aug 2018 09:36:47 -0400
+Reviewed-on: https://review.openstack.netapp.com/787
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
