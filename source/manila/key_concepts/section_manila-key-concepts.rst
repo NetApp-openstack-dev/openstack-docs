@@ -171,18 +171,28 @@ specified.
    supported extra specs, refer to Table 6.10,
    ":ref:`NetApp supported Extra Specs for use with Manila Share Types<table-6.10>`".
 
-Consistency Group
------------------
+Share Group
+-----------
 
-A Manila consistency group is a mechanism to group shares so that
-consistent, point-in-time snapshots can be taken of all the shares
-simultaneously. CGSnapshots can be created from an existing Manila
-consistency group. All shares stored in a CGSnapshot can be restored by
-creating a CG from a CGSnapshot.
+A Manila share group is a grouping construct that makes it possible
+to group shares. Share groups make it possible to perform actions
+on a group of shares, such as generating consistent, point-in-time
+snapshots simultaneously. Share group snapshots can be created from
+an existing Manila share group. All shares stored in a share group
+snapshot can be restored by creating a share group from a share group
+snapshot.
 
 .. note::
 
-   All shares in a consistency group must be on the same share network
+   When using NetApp's Manila drivers, Share Groups are synonymous
+   with the conventional ``Consistency Group`` construct. Beginning
+   with the Rocky release, OpenStack recommends the usage of Share
+   Groups to create a grouping construct which operates on groups
+   of shares.
+
+.. note::
+
+   All shares in a share group must be on the same share network
    and share server.
 
 .. _share-access-rules:
