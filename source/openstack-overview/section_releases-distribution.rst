@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Pike release date is
+months starting with the Essex release. The Stein release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for March of
-2018, by convention, will start with the letter “Q.”
+alphabetically incremented. Hence, the release intended for April of
+2019, by convention, will start with the letter “S.”
 
 +------------+------------------+
 | Release    | Date             |
@@ -43,6 +43,10 @@ alphabetically incremented. Hence, the release intended for March of
 | Pike       | September 2017   |
 +------------+------------------+
 | Queens     | February 2018    |
++------------+------------------+
+| Rocky      | August 2018      |
++------------+------------------+
+| Stein      | April 2019       |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
