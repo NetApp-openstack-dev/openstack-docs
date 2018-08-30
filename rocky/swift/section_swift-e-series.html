@@ -1,0 +1,384 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Swift Zones and NetApp E-Series Storage</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/swift/section_swift-e-series.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/glance/pike">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/nova/pike">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/cinder/pike">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/draft/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/draft/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Swift Zones and NetApp E-Series Storage</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_swift-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Overview"></i></a>
+    
+    
+    <a href="section_swift-disk-pools.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Disk Pools, Volumes, and Mapping"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2018-08-30 18:42</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Swift Zones and NetApp E-Series Storage</a><ul>
+<li><a class="reference internal" href="#controller-subsystem-based-zoning">Controller-subsystem Based Zoning</a></li>
+<li><a class="reference internal" href="#controller-based-zoning">Controller Based Zoning</a></li>
+<li><a class="reference internal" href="#drive-tray-or-enclosure-based-zoning">Drive-tray or Enclosure-based Zoning</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="swift-zones-and-netapp-e-series-storage">
+<h1>Swift Zones and NetApp E-Series Storage<a class="headerlink" href="#swift-zones-and-netapp-e-series-storage" title="Permalink to this headline">¶</a></h1>
+<p>Swift uses zoning to isolate the cluster into separate partitions to
+isolate the cluster from failures. Swift data is replicated across the
+cluster in zones that are as unique as possible. A zone is an arbitrary
+grouping of nodes; typically zones are established that use physical
+attributes of the cluster, such as geographical locations, separate
+networks, equipment racks, storage subsystems, or even single drives.
+Zoning allows the cluster to tolerate equipment failures within the
+cluster without data loss or loss of connectivity to the remaining
+cluster.</p>
+<p>By default, Swift replicates data 3 times across the cluster. Swift
+replicates data across zones in a unique pattern that attempts to ensure
+high availability and high durability for data. Swift chooses to place a
+replica of data in a server in an unused zone before placing it into an
+unused server in a zone that already has a replica of the data.</p>
+<p>The data reconstruction feature of E-Series ensures that clients always
+have access to their data - regardless of drive or other component
+failures within the storage subsystem. When E-Series storage is used
+Swift data replication counts specified when rings are built can be
+reduced from 3 to 1.</p>
+<p>E-Series storage offers flexible configuration options that satisfy
+practically all Swift zoning requirements. DDP reconstruction also
+eliminates the requirement of Swift data replication within a single
+storage array. Zoning based on E-Series storage can be done on a storage
+subsystem, individual controller, or drive tray basis.</p>
+<div class="section" id="controller-subsystem-based-zoning">
+<h2>Controller-subsystem Based Zoning<a class="headerlink" href="#controller-subsystem-based-zoning" title="Permalink to this headline">¶</a></h2>
+<p>In a cluster that contains several E-Series storage subsystems zoning
+may be done through the use of 1 or more E-Series subsystems as a zone.
+An example of this is shown in
+Figure 8.2, “Controller-subsystem based zoning”.</p>
+<div class="figure" id="id1">
+<img alt="Controller-subsystem based zoning" src="../_images/swift_controller_subsystem_zoning.png" />
+<p class="caption"><span class="caption-text">Figure 8.2. Controller-subsystem based zoning</span></p>
+</div>
+</div>
+<div class="section" id="controller-based-zoning">
+<h2>Controller Based Zoning<a class="headerlink" href="#controller-based-zoning" title="Permalink to this headline">¶</a></h2>
+<p>E-Series storage subsystems contain two independently configurable
+controller modules (shown in
+Figure 8.3, “E-Series Controller Layout”) which in turn communicate
+with drives contained within the storage subsystem and optionally other
+externally attached E-Series drive enclosures.</p>
+<div class="figure" id="id2">
+<img alt="E-Series Controller Layout" src="../_images/swift_controller_layout.png" />
+<p class="caption"><span class="caption-text">Figure 8.3. E-Series Controller Layout</span></p>
+</div>
+<p>For controller based zoning, each E-Series storage controller supports 2
+Swift object storage nodes. Each node is connected to a single
+controller in the storage array. LUNs for each Swift node are configured
+separately on drives located within the enclosure. Additional drive
+enclosures may also be attached to the controller module for added
+storage capacity.</p>
+</div>
+<div class="section" id="drive-tray-or-enclosure-based-zoning">
+<h2>Drive-tray or Enclosure-based Zoning<a class="headerlink" href="#drive-tray-or-enclosure-based-zoning" title="Permalink to this headline">¶</a></h2>
+<p>If Swift cluster requirements require unique zones for each object node
+E-Series storage arrays can effectively provide storage capacity for
+multiple Swift object nodes. Disk pools are created according to desired
+capacity. Individual drives which comprise a disk pool are preselected
+by the system. Automated drive selection helps ensure that:</p>
+<ul class="simple">
+<li>Subsystem I/O performance is maximized.</li>
+<li>The impact of hardware failures within a drive enclosure or tray is
+minimized.</li>
+<li>I/O load on the subsystem is distributed as evenly as possible across
+all the drive channels in the subsystem.</li>
+</ul>
+<p>If unique zoning is not required, node connectivity is only limited by
+the host connectivity capacity of the E-Series storage subsystem being
+used.</p>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_swift-overview.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Overview"></i></a>
+          
+          
+            <a href="section_swift-disk-pools.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Disk Pools, Volumes, and Mapping"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2018-08-30 18:42</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2018.1</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="section_swift-overview.html">Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Swift Zones and NetApp E-Series Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-disk-pools.html">Disk Pools, Volumes, and Mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-partitioning.html">Partitioning and File System Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-ring-considerations.html">Swift Ring Considerations with DDP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documentation</a></li>
+          <li><a href="http://www.netapp.com/us/media/tr-4620.pdf">NetApp SolidFire Storage Config Guide</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Community Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">GitHub</a></li>
+          <li><a href="http://netapp.io/slack">Slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">Twitter @openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">Youtube NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "swift/section_swift-e-series" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: 467a95dc62840d6c3cc24556a1bfa34e104d7c8c";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Swift Zones and NetApp E-Series Storage in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "ROCKY"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2018.1 on 2018-08-30 18:42";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+  </body>
+</html>
