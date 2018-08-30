@@ -62,7 +62,7 @@ master_doc = 'index'
 releases = [
     'austin', 'bexar', 'cactus', 'diablo', 'essex', 'folsom', 'grizzly',
     'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
-    'ocata', 'pike', 'queens', 'rocky',
+    'ocata', 'pike', 'queens', 'rocky', 'stein',
 ]
 unnamed = list(string.ascii_lowercase[len(releases) % 26:])
 releases += unnamed
