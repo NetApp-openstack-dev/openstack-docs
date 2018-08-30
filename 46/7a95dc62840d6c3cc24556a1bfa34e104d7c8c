@@ -1,0 +1,9 @@
+Code-Review+2: Balasubramanian Ramesh Babu <b.ramesh07@live.com>
+QA-Review+2: Balasubramanian Ramesh Babu <b.ramesh07@live.com>
+Release+1: Balasubramanian Ramesh Babu <b.ramesh07@live.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Thu, 30 Aug 2018 14:54:33 -0400
+Reviewed-on: https://review.openstack.netapp.com/829
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/stable/rocky
