@@ -44,6 +44,8 @@ alphabetically incremented. Hence, the release intended for March of
 +------------+------------------+
 | Queens     | February 2018    |
 +------------+------------------+
+| Rocky      | September 2018   |
++------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
 
