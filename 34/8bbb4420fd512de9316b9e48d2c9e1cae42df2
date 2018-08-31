@@ -1,0 +1,9 @@
+Code-Review+2: Rodrigo Barbieri <rodrigob@netapp.com>
+QA-Review+2: Rodrigo Barbieri <rodrigob@netapp.com>
+Release+1: Balasubramanian Ramesh Babu <b.ramesh07@live.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Fri, 31 Aug 2018 13:24:57 -0400
+Reviewed-on: https://review.openstack.netapp.com/814
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
