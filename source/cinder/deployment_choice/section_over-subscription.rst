@@ -162,24 +162,24 @@ Thin provisioning is ``True`` in the following scenarios
 ::
 
     NFS Backend
-    +==================================================+============+
-    | Config Option: nfs_sparsed_volumes               |   True     |
-    +--------------------------------------------------+------------+
-    | ONTAP Volume Setting: netapp_thin_provisioned    |   True     |
-    +--------------------------------------------------+------------+
-    | Config Option: max_over_subscription_ratio       |    > 1.0   |
-    +--------------------------------------------------+------------+
+    +==================================================+====================+
+    | Config Option: nfs_sparsed_volumes               |         True       |
+    +--------------------------------------------------+--------------------+
+    | ONTAP Volume Setting: netapp_thin_provisioned    |         True       |
+    +--------------------------------------------------+--------------------+
+    | Config Option: max_over_subscription_ratio       |    > 1.0 or auto   |
+    +--------------------------------------------------+--------------------+
 
 ::
 
     iSCSI or FCP Backend
-    +==================================================+===============+
-    | Config Option: netapp_lun_space_reservation      |   disabled    |
-    +--------------------------------------------------+---------------+
-    | ONTAP Volume Setting: netapp_thin_provisioned    |   True        |
-    +--------------------------------------------------+---------------+
-    | Config Option: max_over_subscription_ratio       |    > 1.0      |
-    +--------------------------------------------------+---------------+
+    +==================================================+======================+
+    | Config Option: netapp_lun_space_reservation      |        disabled      |
+    +--------------------------------------------------+----------------------+
+    | ONTAP Volume Setting: netapp_thin_provisioned    |        True          |
+    +--------------------------------------------------+----------------------+
+    | Config Option: max_over_subscription_ratio       |    > 1.0 or auto     |
+    +--------------------------------------------------+----------------------+
 
 
 E-Series Thin Provisioning
@@ -207,13 +207,13 @@ reported to the scheduler for the same storage pool.
 SolidFire Thin Provisioning
 ---------------------------
 
-All SolidFire volumes are provisioned thin, space is consumed
+All SolidFire volumes are provisioned thin by default; space is consumed
 on write but only after passing through a series of inline
 data reduction processes within the SolidFire cluster. The
-SolidFire Cinder driver does not support Cinder managed
-thin or thick_provisioning, the SolidFire cluster maintains total
+SolidFire Cinder driver does not comply with the Cinder over-subscription
+framework and the SolidFire cluster maintains total
 control over space usage. SolidFire free space is considered
-during Cinder volume creation, free space is predicated upon
+during Cinder volume creation; free space is predicted upon
 used space rather than allocated space.
 
 Please see the `SolidFire Data Efficiencies Brief <http://www.netapp.com/us/media/ds-solidfire-data-efficiencies-breif.pdf>`__ 
