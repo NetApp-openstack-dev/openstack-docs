@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2018-09-14 19:19</div>
+            <div class="docs-updated">updated: 2018-09-15 11:41</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -275,23 +275,23 @@ By default, the option is <code class="docutils literal notranslate"><span class
 provisioned.</p>
 <p>Thin provisioning is <code class="docutils literal notranslate"><span class="pre">True</span></code> in the following scenarios</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NFS</span> <span class="n">Backend</span>
-<span class="o">+==================================================+============+</span>
-<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">nfs_sparsed_volumes</span>               <span class="o">|</span>   <span class="kc">True</span>     <span class="o">|</span>
-<span class="o">+--------------------------------------------------+------------+</span>
-<span class="o">|</span> <span class="n">ONTAP</span> <span class="n">Volume</span> <span class="n">Setting</span><span class="p">:</span> <span class="n">netapp_thin_provisioned</span>    <span class="o">|</span>   <span class="kc">True</span>     <span class="o">|</span>
-<span class="o">+--------------------------------------------------+------------+</span>
-<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">max_over_subscription_ratio</span>       <span class="o">|</span>    <span class="o">&gt;</span> <span class="mf">1.0</span>   <span class="o">|</span>
-<span class="o">+--------------------------------------------------+------------+</span>
+<span class="o">+==================================================+====================+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">nfs_sparsed_volumes</span>               <span class="o">|</span>         <span class="kc">True</span>       <span class="o">|</span>
+<span class="o">+--------------------------------------------------+--------------------+</span>
+<span class="o">|</span> <span class="n">ONTAP</span> <span class="n">Volume</span> <span class="n">Setting</span><span class="p">:</span> <span class="n">netapp_thin_provisioned</span>    <span class="o">|</span>         <span class="kc">True</span>       <span class="o">|</span>
+<span class="o">+--------------------------------------------------+--------------------+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">max_over_subscription_ratio</span>       <span class="o">|</span>    <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="ow">or</span> <span class="n">auto</span>   <span class="o">|</span>
+<span class="o">+--------------------------------------------------+--------------------+</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iSCSI</span> <span class="ow">or</span> <span class="n">FCP</span> <span class="n">Backend</span>
-<span class="o">+==================================================+===============+</span>
-<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">netapp_lun_space_reservation</span>      <span class="o">|</span>   <span class="n">disabled</span>    <span class="o">|</span>
-<span class="o">+--------------------------------------------------+---------------+</span>
-<span class="o">|</span> <span class="n">ONTAP</span> <span class="n">Volume</span> <span class="n">Setting</span><span class="p">:</span> <span class="n">netapp_thin_provisioned</span>    <span class="o">|</span>   <span class="kc">True</span>        <span class="o">|</span>
-<span class="o">+--------------------------------------------------+---------------+</span>
-<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">max_over_subscription_ratio</span>       <span class="o">|</span>    <span class="o">&gt;</span> <span class="mf">1.0</span>      <span class="o">|</span>
-<span class="o">+--------------------------------------------------+---------------+</span>
+<span class="o">+==================================================+======================+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">netapp_lun_space_reservation</span>      <span class="o">|</span>        <span class="n">disabled</span>      <span class="o">|</span>
+<span class="o">+--------------------------------------------------+----------------------+</span>
+<span class="o">|</span> <span class="n">ONTAP</span> <span class="n">Volume</span> <span class="n">Setting</span><span class="p">:</span> <span class="n">netapp_thin_provisioned</span>    <span class="o">|</span>        <span class="kc">True</span>          <span class="o">|</span>
+<span class="o">+--------------------------------------------------+----------------------+</span>
+<span class="o">|</span> <span class="n">Config</span> <span class="n">Option</span><span class="p">:</span> <span class="n">max_over_subscription_ratio</span>       <span class="o">|</span>    <span class="o">&gt;</span> <span class="mf">1.0</span> <span class="ow">or</span> <span class="n">auto</span>     <span class="o">|</span>
+<span class="o">+--------------------------------------------------+----------------------+</span>
 </pre></div>
 </div>
 </div>
@@ -315,13 +315,13 @@ reported to the scheduler for the same storage pool.</p>
 </div>
 <div class="section" id="solidfire-thin-provisioning">
 <span id="id1"></span><h2>SolidFire Thin Provisioning<a class="headerlink" href="#solidfire-thin-provisioning" title="Permalink to this headline">¶</a></h2>
-<p>All SolidFire volumes are provisioned thin, space is consumed
+<p>All SolidFire volumes are provisioned thin by default; space is consumed
 on write but only after passing through a series of inline
 data reduction processes within the SolidFire cluster. The
-SolidFire Cinder driver does not support Cinder managed
-thin or thick_provisioning, the SolidFire cluster maintains total
+SolidFire Cinder driver does not comply with the Cinder over-subscription
+framework and the SolidFire cluster maintains total
 control over space usage. SolidFire free space is considered
-during Cinder volume creation, free space is predicated upon
+during Cinder volume creation; free space is predicted upon
 used space rather than allocated space.</p>
 <p>Please see the <a class="reference external" href="http://www.netapp.com/us/media/ds-solidfire-data-efficiencies-breif.pdf">SolidFire Data Efficiencies Brief</a>
 for more information on SolidFire space management.</p>
@@ -343,7 +343,7 @@ for more information on SolidFire space management.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2018-09-14 19:19</div>
+            <div class="docs-updated">updated: 2018-09-15 11:41</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -474,7 +474,7 @@ for more information on SolidFire space management.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 4ed671b9ea7d82d7ae21e198ba3391a8bd4620d0";
+    var gitSha = "SHA: d7caa1218677b35f8f8fedde8d3d469bf8d56063";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Theory of Operation: Over-Subscription and Thin-Provisioning in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -485,7 +485,7 @@ for more information on SolidFire space management.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2018-09-14 19:19";
+    var buildstring = "Release: 2018.1 on 2018-09-15 11:41";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
