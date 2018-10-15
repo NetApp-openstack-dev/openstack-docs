@@ -63,7 +63,8 @@ Snapshots can be created from an existing Cinder volume that is
 operational and either attached to an instance or in a detached state. A
 Cinder snapshot can serve as the content source for a new Cinder volume
 when the Cinder volume is created with the *create from snapshot* option
-specified.
+specified or can be used to revert a volume to the most recent snapshot
+using the *revert to snapshot* feature (as of the Pike release).
 
 Backend
 -------
@@ -406,3 +407,14 @@ way to configure one or more disaster recovery partner storage systems
 for your Cinder backend. For more details on the configuration and
 failover process, refer to `Cinder Replication with
 NetApp <http://netapp.io/2016/10/14/cinder-replication-netapp-perfect-cheesecake-recipe/>`__
+
+Revert to Snapshot
+------------------
+
+As of Pike release, Cinder supports revert to snapshot feature. This feature
+can be used to overwrite the current state and data of a volume to the most
+recent snapshot taken. The volume can not be reverted if it was extended after
+taking the snapshot.
+Despite ONTAP driver not implementing revert to snapshot with an optimized
+approach (using backend operations), this feature has a generic implementation
+that works for every ONTAP driver mode (NFS/iSCSI/FC).

@@ -1040,3 +1040,62 @@ provisioned Cinder volume.
 ::
 
     $ cinder create --name cinder-vol-a --volume-type thin 5000
+
+
+Revert to Snapshot
+------------------
+In this section, we will create a new volume, take a snapshot from it and
+revert to that last snapshot.
+
+::
+
+    $ cinder create --name cinder-vol-1 --volume-type cmodeNFS 1
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | attachments                    | []                                   |
+    | availability_zone              | nova                                 |
+    | bootable                       | false                                |
+    | consistencygroup_id            | None                                 |
+    | created_at                     | 2018-10-15T11:49:59.000000           |
+    | description                    | None                                 |
+    | encrypted                      | False                                |
+    | id                             | c4913fc6-1dc9-4380-8372-9d290c23f32e |
+    | metadata                       | {}                                   |
+    | migration_status               | None                                 |
+    | multiattach                    | False                                |
+    | name                           | cinder-vol-1                         |
+    | os-vol-host-attr:host          | None                                 |
+    | os-vol-mig-status-attr:migstat | None                                 |
+    | os-vol-mig-status-attr:name_id | None                                 |
+    | os-vol-tenant-attr:tenant_id   | 3810b2bf356f430d9a06019cd9e56cc2     |
+    | replication_status             | None                                 |
+    | size                           | 1                                    |
+    | snapshot_id                    | None                                 |
+    | source_volid                   | None                                 |
+    | status                         | creating                             |
+    | updated_at                     | None                                 |
+    | user_id                        | 90d2c8d154594c2eb51929a89474c753     |
+    | volume_type                    | cmodeNFS                             |
+    +--------------------------------+--------------------------------------+
+
+::
+
+    $ cinder snapshot-create --name cinder-snapshot-1 cinder-vol-1
+    +-------------+--------------------------------------+
+    | Property    | Value                                |
+    +-------------+--------------------------------------+
+    | created_at  | 2018-10-20T11:51:11.943346           |
+    | description | None                                 |
+    | id          | a2dee3cd-d14a-4920-8a73-17a3a8ca8fdc |
+    | metadata    | {}                                   |
+    | name        | cinder-snapshot-1                    |
+    | size        | 1                                    |
+    | status      | creating                             |
+    | updated_at  | None                                 |
+    | volume_id   | c4913fc6-1dc9-4380-8372-9d290c23f32e |
+    +-------------+--------------------------------------+
+
+::
+
+    $ cinder --os-volume-api-version=3.40 revert-to-snapshot a2dee3cd-d14a-4920-8a73-17a3a8ca8fdc

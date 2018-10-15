@@ -41,6 +41,8 @@ names or UUID.
 +-------------------+------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 | Unmanage          | ``cinder unmanage``          | Cease management of an existing Cinder volume without deleting the backing storage object                                         |
 +-------------------+------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
+| Revert to snapshot| ``cinder revert-to-snapshot``| Revert a volume to a previous snapshot, restoring the volume to the state at the time the snapshot was created.                   |
++-------------------+------------------------------+-----------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.2. Cinder API Overview - Volume
 
