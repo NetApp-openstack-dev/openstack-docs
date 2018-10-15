@@ -183,6 +183,7 @@ maxBPSperGiB
 maxIOPS
 maxIOPSperGiB
 metadata
+microversion
 minIOPS
 mitaka
 mountpoints
