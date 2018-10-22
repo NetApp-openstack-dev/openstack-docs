@@ -151,23 +151,6 @@ are created on storage backends that meet the specified criteria.
    For a table of NetApp supported extra specs, refer to
    :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder volume Types”<table-4.11>`.
 
-.. note::
-
-   NetApp drivers support multi-attachment of volumes for NFS, iSCSI
-   and FC protocols from the Rocky release. This enables attaching a
-   volume to multiple servers simultaneously and can be configured
-   by creating an extra-spec ``multiattach=True`` for the associated
-   Cinder volume type. For E-Series systems, multi-attach requires the
-   addition of ``netapp_enable_multiattach=True`` config option to the
-   backend stanza in ``cinder.conf``.
-
-.. note::
-
-   In-use volume extension is not supported by NetApp drivers.
-   Currently, it is not possible to extend the size of a volume that
-   is attached to a server and uses a NetApp backend. Extension can
-   only be done by detaching the volume from the server.
-
 Quality of Service
 ------------------
 
