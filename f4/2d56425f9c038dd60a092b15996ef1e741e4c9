@@ -1,0 +1,10 @@
+Code-Review+2: NetApp-CI <ng-openstack-ci@netapp.com>
+QA-Review+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Release+1: NetApp-CI <ng-openstack-ci@netapp.com>
+Release+1: Balasubramanian Ramesh Babu <b.ramesh07@live.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Fri, 16 Nov 2018 15:31:28 -0500
+Reviewed-on: https://review.openstack.netapp.com/923
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/gh-pages
