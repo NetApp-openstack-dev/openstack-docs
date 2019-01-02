@@ -9,7 +9,7 @@ operations:
 
 -  The movement of Manila shares between different aggregates
 
-In addition, using NetApp ONTAP or E-Series, OpenStack
+In addition, using NetApp ONTAP, OpenStack
 environments gain these two key differentiators that would not be
 possible with volumes residing on Compute nodes:
 
