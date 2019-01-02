@@ -9,8 +9,8 @@ NetApp has provided enhancements to the OpenStack Compute Service (Nova)
 and OpenStack Image Service (Glance) projects to enhance instance
 creation and storage efficiency as well. NetApp has also published a
 reference architecture for deploying OpenStack Object Storage (Swift) on
-top of NetApp's E-Series storage solutions that reduces the overall
-deployment footprint and replication overhead.
+top of NetApp's E-Series storage solutions (deprecated from Rocky release)
+that reduces the overall deployment footprint and replication overhead.
 
 NetApp additionally leads a development effort within the OpenStack
 community to introduce a new core storage service developed under the

@@ -7,10 +7,6 @@ Installation and Uninstallation
 Refer to the following link for install/uninstall-related information:
 http://wiki.openstack.org/Getopenstack
 
-Refer to the following link for documentation on the E-Series SANtricity
-software:
-http://support.netapp.com/documentation/productlibrary/index.html?productID=61197
-
 Refer to the following link for documentation on configuring
 ``dm-multipath`` on Linux:
 https://library.netapp.com/ecmdocs/ECMP1217221/html/GUID-34FA2578-0A83-4ED3-B4B3-8401703D65A6.html
@@ -19,7 +15,7 @@ Upgrading and Reverting
 =======================
 
 Refer to the following link for upgrading/reverting-related information:
-http://wiki.openstack.org/Getopenstack
+https://docs.openstack.org/operations-guide/ops-upgrades.html
 
 Licensing
 =========
