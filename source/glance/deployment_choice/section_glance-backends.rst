@@ -6,5 +6,4 @@ backends (called stores).
 
 .. note::
 
-  NetApp supports storing server images in both ONTAP NFS exports
-  as well as E-Series LUNS.
+  NetApp supports storing server images in ONTAP NFS exports.

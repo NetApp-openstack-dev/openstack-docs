@@ -33,7 +33,7 @@ a particular Cinder backend should be placed in a separate stanza.
    should be enabled as the value for the configuration option
    ``enabled_backends``; for example::
 
-       enabled_backends=myNfsBackend,myIscsiBackend,myFCBackend,myESeriesBackend
+       enabled_backends=myNfsBackend,myIscsiBackend,myFCBackend
 
    The ``enabled_backends`` option should be specified within the
    ``[DEFAULT]`` configuration stanza.
