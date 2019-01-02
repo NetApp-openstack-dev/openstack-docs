@@ -1,3 +1,5 @@
+.. _solidfire:
+
 NetApp Driver for SolidFire
 ===========================
 

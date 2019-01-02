@@ -145,10 +145,6 @@ shared block limit, a filter expression of
 +==================================+===================================================================================================================================================================================================================================+=======================================================================================================================================================================================================================+
 | ONTAP                            | Each FlexVol volume’s capacity and SSC data is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.               | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| E-Series                         | -  Each dynamic disk pool's and volume group’s capacity is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.   | Same as Juno.                                                                                                                                                                                                         |
-|                                  |                                                                                                                                                                                                                                   |                                                                                                                                                                                                                       |
-|                                  | -  E-Series volume groups are supported as of the Liberty release.                                                                                                                                                                |                                                                                                                                                                                                                       |
-+----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.9. Behavioral Differences in Cinder volume Placement
 
@@ -186,27 +182,6 @@ way they do in the parent FlexVol volume. In fact, all the FlexClone
 entities and their parents share the same underlying physical data
 blocks, minimizing physical disk space usage.
 
-E-Series Snapshots
-------------------
-
-The Cinder driver can create hardware-based snapshots on E-Series.
-E-Series uses copy-on-write snapshots, which can be created within
-seconds. Snapshots on E-Series do not require an additional license.
-
-Each volume may support up to 96 snapshots. Snapshots are defined in
-groups of 32 and share a common copy-on-write repository for performance
-reasons; older snapshots are dependent on the newer snapshots within the
-same group. The E-Series backend does not allow Snapshots on E-Series to
-be deleted out of order for this reason (only the oldest snapshot in the
-group may be deleted and the storage capacity reclaimed). The Cinder
-driver will track snapshots that have been removed from Cinder, and will
-purge them from the backend automatically once they are no longer
-required by the backend.
-
-E-Series snapshots are typically used for relatively brief operations,
-such as making a backup. If you require many snapshots or long-lasting
-snapshots, consider FAS or All Flash FAS (AFF).
-
 .. important::
 
    When Cinder is deployed with ONTAP, Cinder snapshots are
@@ -225,14 +200,3 @@ on ONTAP volumes, flexvols, which are themselves containers of the
 backing files or LUNs for Cinder volumes. In effect, so long as there is
 room in a Cinder pool to fit a snapshot or a copy of a consistency
 group, that operation will be permitted without any further restriction.
-
-E-Series Consistency Groups
----------------------------
-
-E-Series consistency groups share a 1:1 mapping with Cinder consistency
-groups. Each consistency group may have up to 32 snapshots defined; up
-to 64 independent snapshots may be defined on a volume if a volume is a
-part of a consistency group. The create-from-source operation is
-implemented using full volume copies, and such an operation based on a
-consistency group containing large volumes may take a long time to
-complete.

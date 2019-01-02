@@ -222,31 +222,7 @@ problem.
 
 -  All reasons mentioned under Item 8 in this appendix.
 
-13. Volume extend operation fails with E-Series driver
-------------------------------------------------------
-
-::
-
-    cinder extend volume-id new_size_gb size_gb
-
-The volume extend operation will fail on a Cinder volume that is defined
-on a Volume Group (as opposed to a DDP), if any of the following
-conditions are true:
-
--  Another volume on the pool is currently being initialized.
-
--  Another volume extend operation is in progress.
-
-If any of the previous conditions are true, then the extend will result
-in an error state for the volume. The error condition can be cleared by
-using cinder reset-state. The operation can be retried successfully once
-the conflicting operations on the pool are completed. It is recommended
-that DDP be used in place of Volume Groups if this is a commonly
-utilized operation in your environment, in order to avoid the previously
-ascribed limitations. See ":ref:`volume_groups_vs_ddp` for a
-comparison of storage pool options.
-
-14. Share replica fails to reach in-sync status
+13. Share replica fails to reach in-sync status
 -----------------------------------------------
 
 ::
