@@ -19,7 +19,6 @@ has been properly initialized by Cinder.
     | cinder-scheduler |         ostk-controller        | nova | enabled |   up  | 2014-05-20T17:14:12.00 |       None      |
     |  cinder-volume   |   ostk-controller@cdot-iscsi   | nova | enabled |   up  | 2014-05-20T17:14:10.00 |       None      |
     |  cinder-volume   |    ostk-controller@cdot-nfs    | nova | enabled |   up  | 2014-05-20T17:14:11.00 |       None      |
-    |  cinder-volume   | ostk-controller@eseries-iscsi  | nova | enabled |   up  | 2014-05-20T17:14:06.00 |       None      |
     +------------------+--------------------------------+------+---------+-------+------------------------+-----------------+
 
 -  ``ostk-controller@cdot-iscsi`` is the backend defined by the configuration
@@ -27,9 +26,6 @@ has been properly initialized by Cinder.
 
 -  ``ostk-controller@cdot-nfs`` is the backend defined by the configuration
    stanza ``[cdot-nfs]``.
-
--  ``ostk-controller@eseries-iscsi`` is the backend defined by the
-   configuration stanza ``[eseries-iscsi]``.
 
 .. _create-volume:
 
@@ -43,7 +39,7 @@ NetApp specific extra specs described in
 
 -  The ``iscsi`` type provisions Cinder volumes onto any backend that
    uses the iSCSI storage protocol (in this example, that would be
-   ``[cdot-iscsi]`` and ``[eseries-iscsi]``).
+   ``[cdot-iscsi]``).
 
 -  The ``nfs`` type provisions Cinder volumes onto any backend that uses
    the NFS storage protocol (in this example, that would be
@@ -63,9 +59,6 @@ NetApp specific extra specs described in
    has compression enabled (in this example, that would be
    ``[cdot-nfs]``, although only one of the four NFS exports defined in
    ``/etc/cinder/nfs_shares`` has this support).
-
--  The ``analytics`` type provisions Cinder volumes onto the
-   ``[eseries-iscsi]`` backend.
 
 -  The ``encrypted`` type provisions Cinder volumes onto any backend
    that has Flexvol encryption enabled (NVE) (in this example, that
@@ -118,15 +111,6 @@ NetApp specific extra specs described in
 
 ::
 
-    $ cinder type-create analytics
-    +--------------------------------------+-----------+
-    |                  ID                  |    Name   |
-    +--------------------------------------+-----------+
-    | 66459c78-5cb5-4a15-a476-f1138a4022bc | analytics |
-    +--------------------------------------+-----------+
-
-::
-
     $ cinder type-create encrypted
     +--------------------------------------+-----------+
     |                  ID                  |    Name   |
@@ -153,10 +137,6 @@ NetApp specific extra specs described in
     $ cinder type-key bronze set netapp_compression=true
 
 ::
-
-    $ cinder type-key analytics set volume_backend_name=eseries-iscsi
-
-::
     $ cinder type-key encrypted set netapp_flexvol_encryption=true
 
 ::
@@ -169,7 +149,6 @@ NetApp specific extra specs described in
     |                                      |           |         'netapp_mirrored': 'true',         |
     |                                      |           |           'netapp_disk_type': 'SSD'}       |
     | 46cecec0-a040-476c-9475-036ca5577e6a |   iscsi   |      {u'storage_protocol': u'iSCSI'}       |
-    | 66459c78-5cb5-4a15-a476-f1138a4022bc | analytics | {u'volume_backend_name': u'eseries-iscsi'} |
     | a564a421-55aa-238a-a4d3-e1438b4002d1 | encrypted | {u'netapp_flexvol_encryption': u'true'}    |
     | 7564ec5c-a81b-4c62-8376-fdcab62037a2 |    nfs    |       {u'storage_protocol': u'nfs'}        |
     | ae110bfc-0f5a-4e93-abe1-1a31856c0ec7 |   bronze  |      {u'netapp_compression': u'true'}      |
@@ -319,33 +298,6 @@ previously defined volume types.
 
 ::
 
-    $ cinder create --display-name myAnalytics --volume-type analytics 1
-    +--------------------------------+--------------------------------------+
-    |            Property            |                Value                 |
-    +--------------------------------+--------------------------------------+
-    |          attachments           |                  []                  |
-    |       availability_zone        |                 nova                 |
-    |            bootable            |                false                 |
-    |           created_at           |      2014-05-20T17:26:17.000000      |
-    |          description           |                 None                 |
-    |           encrypted            |                False                 |
-    |               id               | 55d0bbfa-6792-406d-8dc8-2bf1fb94b0dc |
-    |            metadata            |                  {}                  |
-    |              name              |             myAnalytics              |
-    |     os-vol-host-attr:host      |                 None                 |
-    | os-vol-mig-status-attr:migstat |                 None                 |
-    | os-vol-mig-status-attr:name_id |                 None                 |
-    |  os-vol-tenant-attr:tenant_id  |   f42d5597fb084480a9626c2ca844db3c   |
-    |              size              |                  1                   |
-    |          snapshot_id           |                 None                 |
-    |          source_volid          |                 None                 |
-    |             status             |               creating               |
-    |            user_id             |   a9ef3a9f935f4761861afb003986bdab   |
-    |          volume_type           |              analytics               |
-    +--------------------------------+--------------------------------------+
-
-::
-
     $ cinder create --display-name myGenericVol 1
     +--------------------------------+--------------------------------------+
     |            Property            |                Value                 |
@@ -382,7 +334,6 @@ previously defined volume types.
     | 3678281e-3924-4512-952a-5b89713fac4d | available |    myGold    |  1   |     gold    |  false   |             |
     | 459b388f-ae1d-49bf-9c1d-3fe3b18afad3 | available |   myBronze   |  1   |    bronze   |  false   |             |
     | 4ccf1a4c-cfe0-4b35-8435-400547cabcdd | available |    myNFS     |  1   |     nfs     |  false   |             |
-    | 55d0bbfa-6792-406d-8dc8-2bf1fb94b0dc | available | myAnalytics  |  1   |  analytics  |  false   |             |
     | 6dd3e64d-ca02-4156-8532-24294db89329 | available |   mySilver   |  1   |    silver   |  false   |             |
     | 93ef9627-ac75-46ae-820b-f722765d7828 | available |   myISCSI    |  1   |    iscsi    |  false   |             |
     +--------------------------------------+-----------+--------------+------+-------------+----------+-------------+
@@ -425,10 +376,10 @@ features enabled that matched the Cinder volume type definitions.
 
 .. note::
 
-   Note that the volumes of type ``analytics`` and ``iscsi``, as well
+   Note that the volumes of type ``iscsi``, as well
    as the volume created without a type did not appear under the NFS
    mount points because they were created as iSCSI LUNs within the
-   E-Series and CDOT systems, respectively.
+   NetApp ONTAP systems.
 
 .. _cinder-manage:
 
@@ -512,84 +463,9 @@ name or UUID.
     | f2c94f4d-adb3-4c3c-a6aa-cb4c52bd2e39 |   available    | None |  1   |     None    |  false   |             |
     +--------------------------------------+----------------+------+------+-------------+----------+-------------+
 
-In this section we import an E-Series volume by specifying its label or
-world-wide identifier.
+In this section we import an ONTAP NFS file by specifying its path.
 
 ::
-
-    $ cinder get-pools
-    +----------+-------------------------+
-    | Property |          Value          |
-    +----------+-------------------------+
-    |   name   | openstack9@eseries#pool |
-    +----------+-------------------------+
-
-::
-
-    $ cinder manage --id-type source-name openstack9@eseries#pool WCAABGUIYJBAHKOYTNWKH5Y2NU
-    +--------------------------------+--------------------------------------+
-    |            Property            |                Value                 |
-    +--------------------------------+--------------------------------------+
-    |          attachments           |                  []                  |
-    |       availability_zone        |                 nova                 |
-    |            bootable            |                false                 |
-    |           created_at           |      2014-08-25T15:21:18.000000      |
-    |          description           |                 None                 |
-    |           encrypted            |                False                 |
-    |               id               | 206a6731-f23b-419d-8131-8bccbbd83647 |
-    |            metadata            |                  {}                  |
-    |              name              |                 None                 |
-    |     os-vol-host-attr:host      |        openstack9@eseries#pool       |
-    | os-vol-mig-status-attr:migstat |                 None                 |
-    | os-vol-mig-status-attr:name_id |                 None                 |
-    |  os-vol-tenant-attr:tenant_id  |   8b4ef3cd82f145738ad8195e6bd3942c   |
-    |              size              |                  0                   |
-    |          snapshot_id           |                 None                 |
-    |          source_volid          |                 None                 |
-    |             status             |               creating               |
-    |            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
-    |          volume_type           |                 None                 |
-    +--------------------------------+--------------------------------------+
-
-::
-
-    $ cinder manage --id-type source-id openstack9@eseries#pool 60:08:0e:50:00:23:c7:34:00:00:47:33:54:03:7f:b9
-    +--------------------------------+--------------------------------------+
-    |            Property            |                Value                 |
-    +--------------------------------+--------------------------------------+
-    |          attachments           |                  []                  |
-    |       availability_zone        |                 nova                 |
-    |            bootable            |                false                 |
-    |           created_at           |      2014-08-25T15:25:18.000000      |
-    |          description           |                 None                 |
-    |           encrypted            |                False                 |
-    |               id               | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |
-    |            metadata            |                  {}                  |
-    |              name              |                 None                 |
-    |     os-vol-host-attr:host      |        openstack9@eseries#pool       |
-    | os-vol-mig-status-attr:migstat |                 None                 |
-    | os-vol-mig-status-attr:name_id |                 None                 |
-    |  os-vol-tenant-attr:tenant_id  |   8b4ef3cd82f145738ad8195e6bd3942c   |
-    |              size              |                  0                   |
-    |          snapshot_id           |                 None                 |
-    |          source_volid          |                 None                 |
-    |             status             |               creating               |
-    |            user_id             |   1b1c9e72e33f4a35b73a8e2d43354d1c   |
-    |          volume_type           |                 None                 |
-    +--------------------------------+--------------------------------------+
-
-::
-
-    $ cinder list
-    +--------------------------------------+----------------+------+------+-------------+----------+-------------+
-    |                  ID                  |     Status     | Name | Size | Volume Type | Bootable | Attached to |
-    +--------------------------------------+----------------+------+------+-------------+----------+-------------+
-    | 206a6731-f23b-419d-8131-8bccbbd83647 |   available    | None |  1   |     None    |  false   |             |
-    +--------------------------------------+----------------+------+------+-------------+----------+-------------+
-    | ad0262e0-bbe6-4b4d-8c36-ea6a361d777a |   available    | None |  1   |     None    |  false   |             |
-    +--------------------------------------+----------------+------+------+-------------+----------+-------------+
-
-In this section we import an ONTAP NFS file by specifying its path.::
 
     $ cinder get-pools
     +----------+------------------------------+
