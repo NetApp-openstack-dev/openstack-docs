@@ -159,8 +159,6 @@ Cinder when using the iSCSI or FC as the ``storage_protocol``.
 By default, the option is ``Enabled`` and LUNS are thickly
 provisioned.
 
-Thin provisioning is ``True`` in the following scenarios
-
 ::
 
     NFS Backend
@@ -182,27 +180,6 @@ Thin provisioning is ``True`` in the following scenarios
     +--------------------------------------------------+----------------------+
     | Config Option: max_over_subscription_ratio       |    > 1.0 or auto     |
     +--------------------------------------------------+----------------------+
-
-
-E-Series Thin Provisioning
---------------------------
-
-E-Series thin-provisioned volumes may only be created on Dynamic Disk
-Pools (DDP). They have 2 different capacities that are relevant: virtual
-capacity, and physical capacity. Virtual capacity is the capacity that
-is reported by the volume, while physical (repository), capacity is the
-actual storage capacity of the pool being utilized by the volume.
-Physical capacity must be defined/increased in 4GB increments. Thin
-volumes have two different growth options for physical capacity:
-automatic and manual. Automatically expanding thin volumes will increase
-in capacity in 4GB increments, as needed. A thin volume configured as
-manually expanding must be manually expanded using the appropriate
-storage management software.
-
-With E-series, thin-provisioned volumes and thick-provisioned volumes
-may be created in the same storage pool, so the
-*thin-provisioning-support* and *thick-provisioning-support* may both be
-reported to the scheduler for the same storage pool.
 
 .. _solidfire_thin_provisioning:
 
