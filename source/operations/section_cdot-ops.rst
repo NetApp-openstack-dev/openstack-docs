@@ -26,7 +26,7 @@ Volume Migration
 ----------------
 
 Volume migration for Cinder has been available since the Havana release
-for ONTAP and the Icehouse release for E-Series.
+for ONTAP.
 
 The volume migration feature of Cinder can be used to aid in the
 transition from ONTAP operating in 7-Mode to ONTAP
@@ -88,9 +88,3 @@ Current support for live migration, a Nova feature, is available in the
 Nova Feature Support Matrix. Details on using live migration for Nova
 instances are available in the OpenStack Admin Guide and the Instance
 Storage Options at the Hypervisor section.
-
-.. note::
-
-   In order to use live migration with E-Series it is necessary to set
-   netapp\_enable\_multiattach in ``cinder.conf``. Please refer to Nova
-   Live Migration of Instances with Attached E-Series Volumes.

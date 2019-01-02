@@ -150,6 +150,7 @@ filesystem
 flexclone
 flexvol
 flexvols
+freenode
 geo
 gid
 handoff
@@ -157,6 +158,7 @@ hostname
 hostnames
 hotspots
 hpux
+html
 hypervisor
 hypervisors
 iSCSI

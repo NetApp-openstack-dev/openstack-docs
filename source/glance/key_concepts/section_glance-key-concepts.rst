@@ -22,11 +22,7 @@ and ``swift``.
     -  locally attached storage
 
     -  a remote, shared filesystem (e.g. NFS) - see
-       the section called ":ref:`glance-ontap-config`", or
-
-    -  a remote block device that has been partitioned and a filesystem
-       created within a partition - see
-       the section called ":ref:`glance-eseries-config`"`
+       the section called ":ref:`glance-ontap-config`"
 
 ``swift``
     This store refers to an instance of the OpenStack Object Storage
