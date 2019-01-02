@@ -24,10 +24,6 @@ and ``swift``.
     -  a remote, shared filesystem (e.g. NFS) - see
        the section called ":ref:`glance-ontap-config`", or
 
-    -  a remote block device that has been partitioned and a filesystem
-       created within a partition - see
-       the section called ":ref:`glance-eseries-config`"`
-
 ``swift``
     This store refers to an instance of the OpenStack Object Storage
     service (Swift).
