@@ -1,11 +1,12 @@
 .. _netapp_ontap_unified_driver_overview:
 
-Theory of Operation: NetApp Unified Driver Overview
+Theory of Operation: NetApp Cinder Drivers Overview
 ==================================================================
 
-NetApp drivers for ONTAP and E-Series
-are offered in a single, unified driver for the purpose of
-provisioning and maintaining OpenStack block storage volumes.
+NetApp's Cinder Drivers enable the usage of ONTAP and SolidFire
+backends for provisioning and maintaining OpenStack block
+storage volumes. NetApp ONTAP drivers for iSCSI, NFS and FC are
+offered as a single, unified driver.
 
 Where to Obtain the Drivers
 ---------------------------
@@ -40,6 +41,4 @@ ought to be employed given varying use cases:
 -  :ref:`NetApp ONTAP with Fibre
    Channel <cdot-fc>`
 
--  :ref:`E-Series with iSCSI <eseries-iscsi>`
-
--  :ref:`E-Series with FCP <eseries-fc>`
+-  :ref:`SolidFire <solidfire>`

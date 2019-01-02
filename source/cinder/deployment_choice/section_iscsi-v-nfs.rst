@@ -28,15 +28,7 @@ availability features.
    Cinder is utilized in bare-metal or non-virtualized environments, the
    NFS storage protocol is not an option.
 
--  The number of volumes on E-Series varies based on platform. The E5x00
-   series supports 2048 volume per system while the E2x00 series
-   supports 512. In both cases, the number of cinder volumes is limited
-   to 256 per physical server. If live migration is enabled, E-Series is
-   limited to 256 volumes. See the netapp\_enable\_multiattach option
-   for more information.
-
 **NFS**
-
 
 -  The maximum number of files in a single FlexVol volume exported
    through NFS is dependent on the size of the FlexVol volume; a 1TB

@@ -7,10 +7,6 @@ Installation and Uninstallation
 Refer to the following link for install/uninstall-related information:
 http://wiki.openstack.org/Getopenstack
 
-Refer to the following link for documentation on the E-Series SANtricity
-software:
-http://support.netapp.com/documentation/productlibrary/index.html?productID=61197
-
 Refer to the following link for documentation on configuring
 ``dm-multipath`` on Linux:
 https://library.netapp.com/ecmdocs/ECMP1217221/html/GUID-34FA2578-0A83-4ED3-B4B3-8401703D65A6.html
@@ -19,7 +15,7 @@ Upgrading and Reverting
 =======================
 
 Refer to the following link for upgrading/reverting-related information:
-http://wiki.openstack.org/Getopenstack
+https://docs.openstack.org/operations-guide/ops-upgrades.html
 
 Licensing
 =========
@@ -90,6 +86,18 @@ driver: iSCSI, FC and NFS.
    path to upgrade to ONTAP [3]_ or get in touch with your
    NetApp support representative.
 
+OpenStack Stein
+---------------
+
+Cinder drivers for NetApp E-Series are removed from the Stein release, in
+accordance with community policy [2]_. This will apply for the following
+protocols: iSCSI and FC.
+Any Cinder E-series deployers are encouraged to get in touch with NetApp
+via the community #openstack-netapp IRC channel on freenode or via the
+#OpenStack Slack channel on http://netapp.io. We encourage migration to
+the LVM driver for continued use of E-series systems in most cases via
+Cinder’s migrate facility [4]_.
+
 .. [1]
    `Transition Fundamentals and
    Guidance <https://transition.netapp.com/>`__
@@ -101,3 +109,7 @@ driver: iSCSI, FC and NFS.
 .. [3]
    `ONTAP for 7-Mode
    Administrators <https://mysupport.netapp.com/info/web/ECMP1658253.html>`__
+
+.. [4]
+   'OpenStack Cinder Volume Migration guide
+   https://docs.openstack.org/admin-guide/blockstorage-volume-migration.html`__
