@@ -20,8 +20,8 @@ cloud SLAs by combining the power and ingenuity of OpenStack cloud
 management with proven data integrity and fully-developed storage
 provisioning, data protection, and efficiency.
 
-By leveraging the power of the NetApp SolidFire, NetApp ONTAP,
-or NetApp E-Series systems, enterprise organizations and service
+By leveraging the power of the NetApp SolidFire or NetApp ONTAP
+systems, enterprise organizations and service
 providers can build a cloud storage platform with an agile data
 infrastructure that delivers high-performing, efficient, and
 scalable open-source cloud services.  NetApp provides storage
