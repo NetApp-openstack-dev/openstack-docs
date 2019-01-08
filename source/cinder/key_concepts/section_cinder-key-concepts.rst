@@ -442,10 +442,11 @@ Revert to Snapshot
 
 As of Pike release, Cinder supports revert to snapshot feature. This feature
 can be used to overwrite the current state and data of a volume to the most
-recent snapshot taken. The volume can not be reverted if it was extended after
-taking the snapshot.
+recent snapshot taken. If you need to revert to an earlier snapshot, you have
+to delete snapshots until that one is the most recent. The snapshot being
+reverted must have the same size of the volume, the volume can not be reverted
+if it was extended after taking the snapshot.
 
-Despite ONTAP and SolidFire drivers not implementing revert to snapshot with
+Despite ONTAP driver is  not implementing revert to snapshot with
 an optimized approach (using backend operations), this feature has a generic
-implementation that works for both ONTAP (NFS/iSCSI/FC driver modes) and
-SolidFire drivers.
+implementation that works for ONTAP (NFS/iSCSI/FC driver modes) driver.
