@@ -447,6 +447,6 @@ to delete snapshots until that one is the most recent. The snapshot being
 reverted must have the same size of the volume, the volume can not be reverted
 if it was extended after taking the snapshot.
 
-Despite ONTAP driver is  not implementing revert to snapshot with
-an optimized approach (using backend operations), this feature has a generic
-implementation that works for ONTAP (NFS/iSCSI/FC driver modes) driver.
+An optimized implementation of the revert to snapshot operation is used for the
+SolidFire driver. For ONTAP backends, the feature works by using a generic
+implementation that works for NFS/iSCSI/FC driver modes.
