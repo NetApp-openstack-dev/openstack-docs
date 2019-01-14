@@ -167,7 +167,7 @@ Thin provisioning is ``True`` in the following scenarios
     +==================================================+====================+
     | Config Option: nfs_sparsed_volumes               |         True       |
     +--------------------------------------------------+--------------------+
-    | ONTAP Volume Setting: netapp_thin_provisioned    |         True       |
+    | ONTAP Volume Setting: thin_provisioning_support  |     '<is> True'    |
     +--------------------------------------------------+--------------------+
     | Config Option: max_over_subscription_ratio       |    > 1.0 or auto   |
     +--------------------------------------------------+--------------------+
@@ -178,7 +178,7 @@ Thin provisioning is ``True`` in the following scenarios
     +==================================================+======================+
     | Config Option: netapp_lun_space_reservation      |        disabled      |
     +--------------------------------------------------+----------------------+
-    | ONTAP Volume Setting: netapp_thin_provisioned    |        True          |
+    | ONTAP Volume Setting: thin_provisioning_support  |     '<is> True'      |
     +--------------------------------------------------+----------------------+
     | Config Option: max_over_subscription_ratio       |    > 1.0 or auto     |
     +--------------------------------------------------+----------------------+
