@@ -293,6 +293,13 @@ services, please refer to :ref:`figure-6.2` and :ref:`figure-6.3`.
       all shares hosted from a backend - this is referred to as the
       :ref:`NetApp Manila driver without share server management<without-share>`.
 
+.. important::
+
+   Starting from the Stein release, Manila supports managing and unmanaging share
+   servers. This makes it possible to import share servers and manage them using
+   Manila. For a detailed example, refer to the
+   :ref:`Importing and exporting Manila Share servers<manage-share-server>`.
+
 Share Replicas
 --------------
 
@@ -332,3 +339,38 @@ migration process using the ``manila migration-start`` command, and then
 completing the process using the ``manila migration-complete`` command.
 For the list of migration commands, refer to
 ":ref:`Table 6.9, “Manila API Overview - Share Migration<table-6.9>`".
+
+Share Management
+----------------
+
+Managing and unmanaging of shares is an admin-only operation that makes it
+possible to control the visibility of shared filesystem storage with respect
+to Manila. Managing a share refers to registering a non-Manila share with its
+size, shared filesystem protocol, share-server and export path into Manila
+management. Unmanaging a share refers to unregistering a Manila share and
+removing it from Manila's database. The unmanage option can be reverted, thus
+making it possible to import the share to Manila control if desired.
+
+.. important::
+
+   When managing a share, Manila assigns a new UUID to the share and renames
+   the share on the storage backend to the following format: ``share_<share_instance_id>``.
+   This ensures that the same share cannot be managed twice.
+
+Share-server Management
+-----------------------
+
+Since share-servers are logical containers that associate shares with share-networks,
+there is also a provision to manage and unmanage them. Admin users can manage
+share-servers by specifying the host, share-network and the driver-specific identifier
+that are used to uniquely identify the share-server. This functionality helps in
+importing share-servers and their associated shares and snapshots that were created
+in another system/deployment. Similarly, share-servers can also be unmanaged and
+removed from Manila's database.
+
+.. important::
+
+   When managing a share-server, Manila assigns a new UUID to the share-server
+   and renames the share-server on the storage backend to the following format:
+   ``os_<id>``, where ``<id>`` is the newly assigned UUID. This ensures that the
+   same share-server cannot be managed twice.
