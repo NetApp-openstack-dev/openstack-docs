@@ -590,7 +590,6 @@ Notice that there are two share-servers for the three shares.
 
 ::
 
-    +----------------------+-------------------------------------------------+
     $ manila share-server-show c3c6bbfb-c71d-416d-84f3-600575746a36
     +----------------------+-------------------------------------------------+
     | Property             | Value                                           |
@@ -1031,6 +1030,220 @@ We'll now remove a share from Manila management using the admin-only
 ::
 
     $ manila unmanage 6e42c910-67a8-47fd-885f-b03d1756675f
+
+.. _manage-share-server:
+
+Importing and exporting Manila Share Servers
+--------------------------------------------
+
+Beginning with the Stein release, Manila supports importing and
+exporting share servers. Using the admin-only ``manila share-server-manage``
+command, share servers can be brought under Manila management.
+For NetApp backends, each share server is analogous with a SVM. In
+order to manage a share server, the end user should specify the host
+which will house the share server. This would be of the
+format ``host@backend``. The end user is also required to specify the
+share network ID and the driver-specific identifier when managing a share
+server. The example given below highlights how the command is invoked.
+
+First, we obtain a list of the available hosts for Manila services.
+
+::
+
+    $ manila service-list
+    +----+------------------+----------------------------+------+---------+-------+----------------------------+
+    | Id | Binary           | Host                       | Zone | Status  | State | Updated_at                 |
+    +----+------------------+----------------------------+------+---------+-------+----------------------------+
+    | 1  | manila-scheduler | openstack                  | nova | enabled | up    | 2019-03-14T18:01:23.000000 |
+    | 2  | manila-data      | openstack                  | nova | enabled | up    | 2019-03-14T18:01:27.000000 |
+    | 3  | manila-share     | openstack@tripleo_netapp   | nova | enabled | up    | 2019-03-14T18:01:26.000000 |
+    | 4  | manila-share     | openstack@tripleo_netapp_2 | nova | enabled | up    | 2019-03-14T18:01:26.000000 |
+    +----+------------------+----------------------------+------+---------+-------+----------------------------+
+
+Now, let us attempt to manage a share-server to the ``openstack@tripleo_netapp``
+host. Given below is a list of SVMs present on the cluster that is defined
+in the ``tripleo_netapp`` backend stanza.
+
+::
+
+    cluster1::> vserver show
+                               Admin      Operational Root
+    Vserver     Type    Subtype    State      State       Volume     Aggregate
+    ----------- ------- ---------- ---------- ----------- ---------- ----------
+    cluster1    admin   -          -          -           -          -
+    cluster1-01 node    -          -          -           -          -
+    openstack   data    default    running    running     openstack_ aggr1
+                                                        root
+    openstack_iscsi
+                data    default    running    running     openstack_ aggr1
+                                                          iscsi_root
+    test_manage_share_server
+                data    default    running    running     root       aggr1
+    5 entries were displayed.
+
+In order to migrate the ``test_manage_share_server`` SVM as a Manila share server,
+it is important to ensure that the SVM has a LIF in the required share network.
+
+::
+
+    $ manila share-network-show 61bf7b38-d9fe-4776-bbf0-172cad2c789e
+    +-------------------+--------------------------------------+
+    | Property          | Value                                |
+    +-------------------+--------------------------------------+
+    | network_type      | flat                                 |
+    | name              | Engg                                 |
+    | segmentation_id   | None                                 |
+    | created_at        | 2019-03-14T14:31:54.000000           |
+    | neutron_subnet_id | None                                 |
+    | updated_at        | 2019-03-14T17:56:26.000000           |
+    | mtu               | 1500                                 |
+    | gateway           | 100.250.116.1                        |
+    | neutron_net_id    | None                                 |
+    | ip_version        | 4                                    |
+    | cidr              | 100.250.116.0/22                     |
+    | project_id        | 08633ba3317a45a1a46e90380e0e2ee0     |
+    | id                | 61bf7b38-d9fe-4776-bbf0-172cad2c789e |
+    | description       | None                                 |
+    +-------------------+--------------------------------------+
+
+We will use the ``Engg`` share network. As a result, the SVM should have a LIF
+with an IP address in this network.
+
+::
+
+    cluster1::> net int show -vserver test_manage_share_server
+      (network interface show)
+                Logical    Status     Network            Current       Current Is
+    Vserver     Interface  Admin/Oper Address/Mask       Node          Port    Home
+    ----------- ---------- ---------- ------------------ ------------- ------- ----
+    test_manage_share_server
+                data_lif_1   up/up    100.250.119.21/22  cluster1-01   e0a     true
+
+We can now manage the share server using the ``manila share-server-manage``
+command as follows:
+
+::
+
+    $ manila share-server-manage openstack@tripleo_netapp Engg test_manage_share_server
+    +--------------------+--------------------------------------+
+    | Property           | Value                                |
+    +--------------------+--------------------------------------+
+    | status             | manage_starting                      |
+    | project_id         | 08633ba3317a45a1a46e90380e0e2ee0     |
+    | backend_details    | {}                                   |
+    | created_at         | 2019-03-14T18:17:11.000000           |
+    | updated_at         | None                                 |
+    | share_network_name | Engg                                 |
+    | host               | openstack@tripleo_netapp             |
+    | share_network_id   | 61bf7b38-d9fe-4776-bbf0-172cad2c789e |
+    | identifier         | test_manage_share_server             |
+    | id                 | b69be361-9dc9-446c-bd93-eb7050e7734d |
+    | is_auto_deletable  | False                                |
+    +--------------------+--------------------------------------+
+
+::
+
+    $ manila share-server-list
+    +--------------------------------------+--------------------------+--------+---------------+----------------------------------+----------------------------+
+    | Id                                   | Host                     | Status | Share Network | Project Id                       | Updated_at                 |
+    +--------------------------------------+--------------------------+--------+---------------+----------------------------------+----------------------------+
+    | b69be361-9dc9-446c-bd93-eb7050e7734d | openstack@tripleo_netapp | active | Engg          | 08633ba3317a45a1a46e90380e0e2ee0 | 2019-03-14T18:17:11.000000 |
+    +--------------------------------------+--------------------------+--------+---------------+----------------------------------+----------------------------+
+
+The share server has been imported to Manila management. It is now available to
+create shares. Let us now create a share on the newly managed share server. By
+specifying the ``Engg`` share network, we ensure that the share will be created
+on the newly managed share server.
+
+::
+
+    $ manila create --share-type dhss_true --share-network Engg NFS 1
+    +---------------------------------------+--------------------------------------+
+    | Property                              | Value                                |
+    +---------------------------------------+--------------------------------------+
+    | status                                | creating                             |
+    | share_type_name                       | dhss_true                            |
+    | description                           | None                                 |
+    | availability_zone                     | None                                 |
+    | share_network_id                      | 61bf7b38-d9fe-4776-bbf0-172cad2c789e |
+    | share_server_id                       | None                                 |
+    | share_group_id                        | None                                 |
+    | host                                  |                                      |
+    | revert_to_snapshot_support            | False                                |
+    | access_rules_status                   | active                               |
+    | snapshot_id                           | None                                 |
+    | create_share_from_snapshot_support    | False                                |
+    | is_public                             | False                                |
+    | task_state                            | None                                 |
+    | snapshot_support                      | False                                |
+    | id                                    | e5bb02a6-966e-4941-9bbc-2c353af3a09d |
+    | size                                  | 1                                    |
+    | source_share_group_snapshot_member_id | None                                 |
+    | user_id                               | 3ba400f4c7cd428aad09594d2bd6b6b9     |
+    | name                                  | None                                 |
+    | share_type                            | 63e41034-29cb-413f-96fe-7e9156993864 |
+    | has_replicas                          | False                                |
+    | replication_type                      | None                                 |
+    | created_at                            | 2019-03-14T18:22:54.000000           |
+    | share_proto                           | NFS                                  |
+    | mount_snapshot_support                | False                                |
+    | project_id                            | 08633ba3317a45a1a46e90380e0e2ee0     |
+    | metadata                              | {}                                   |
+    +---------------------------------------+--------------------------------------+
+
+    $ manila show e5bb02a6-966e-4941-9bbc-2c353af3a09d
+    +---------------------------------------+-------------------------------------------------------------------+
+    | Property                              | Value                                                             |
+    +---------------------------------------+-------------------------------------------------------------------+
+    | status                                | available                                                         |
+    | share_type_name                       | dhss_true                                                         |
+    | description                           | None                                                              |
+    | availability_zone                     | nova                                                              |
+    | share_network_id                      | 61bf7b38-d9fe-4776-bbf0-172cad2c789e                              |
+    | export_locations                      |                                                                   |
+    |                                       | path = 100.250.119.21:/share_51fd3b96_5e66_4369_a725_d575b759d1ce |
+    |                                       | preferred = True                                                  |
+    |                                       | is_admin_only = False                                             |
+    |                                       | id = 533718d0-4ac1-41e1-b482-0a92590fe974                         |
+    |                                       | share_instance_id = 51fd3b96-5e66-4369-a725-d575b759d1ce          |
+    | share_server_id                       | b69be361-9dc9-446c-bd93-eb7050e7734d                              |
+    | share_group_id                        | None                                                              |
+    | host                                  | openstack@tripleo_netapp#aggr1                                    |
+    | revert_to_snapshot_support            | False                                                             |
+    | access_rules_status                   | active                                                            |
+    | snapshot_id                           | None                                                              |
+    | create_share_from_snapshot_support    | False                                                             |
+    | is_public                             | False                                                             |
+    | task_state                            | None                                                              |
+    | snapshot_support                      | False                                                             |
+    | id                                    | e5bb02a6-966e-4941-9bbc-2c353af3a09d                              |
+    | size                                  | 1                                                                 |
+    | source_share_group_snapshot_member_id | None                                                              |
+    | user_id                               | 3ba400f4c7cd428aad09594d2bd6b6b9                                  |
+    | name                                  | None                                                              |
+    | share_type                            | 63e41034-29cb-413f-96fe-7e9156993864                              |
+    | has_replicas                          | False                                                             |
+    | replication_type                      | None                                                              |
+    | created_at                            | 2019-03-14T18:22:54.000000                                        |
+    | share_proto                           | NFS                                                               |
+    | mount_snapshot_support                | False                                                             |
+    | project_id                            | 08633ba3317a45a1a46e90380e0e2ee0                                  |
+    | metadata                              | {}                                                                |
+    +---------------------------------------+-------------------------------------------------------------------+
+
+The created share is available and we see the ``share_server_id``
+corresponds to the managed share server.
+
+To unmanage a share server, all shares present on the share
+server should either be unmanaged or deleted. Once all the
+shares present on the share server have been removed from
+the Manila database, the share server can be unmanaged. It
+can be done by calling the ``manila share-server-unmanage``
+command, which is an admin-only operation.
+
+::
+
+    $ manila share-server-unmanage b69be361-9dc9-446c-bd93-eb7050e7734d
 
 Creating Manila Share Groups
 ----------------------------
