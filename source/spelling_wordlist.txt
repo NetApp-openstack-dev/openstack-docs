@@ -1,12 +1,12 @@
 # Please sort this file always:
 # sort source/spelling_wordlist.txt -o source/spelling_wordlist.txt
+API
+AWS
 Admin
 Agrawal
 Akhtar
 Akshai
-API
 Automator
-AWS
 Backend
 Backends
 Bexar
@@ -242,7 +242,10 @@ unconfigured
 uninstall
 unix
 unmanage
+unmanaged
+unmanaging
 unmount
+unregistering
 vFiler
 vStorage
 vSwitch
