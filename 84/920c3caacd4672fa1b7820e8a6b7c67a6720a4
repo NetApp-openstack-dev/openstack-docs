@@ -1,0 +1,9 @@
+Code-Review+2: NetApp-CI <ng-openstack-ci@netapp.com>
+QA-Review+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Release+1: NetApp-CI <ng-openstack-ci@netapp.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Mon, 18 Mar 2019 10:47:48 -0400
+Reviewed-on: https://review.openstack.netapp.com/1015
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/gh-pages
