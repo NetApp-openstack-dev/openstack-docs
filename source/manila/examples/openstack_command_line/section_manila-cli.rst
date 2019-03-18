@@ -1030,7 +1030,7 @@ the backend as ``share_<share_instance_id>``.
     | share_server_id                       | None                                                              |
     | share_group_id                        | None                                                              |
     | host                                  | openstack@manila_dhssfalse#aggr1                                  |
-    | revedrt_to_snapshot_support            | False                                                             |
+    | revert_to_snapshot_support            | False                                                             |
     | access_rules_status                   | active                                                            |
     | snapshot_id                           | None                                                              |
     | create_share_from_snapshot_support    | False                                                             |
