@@ -135,6 +135,8 @@ share server management - with Cluster-wide Administrative Account”<table-6.19
 +-----------------------------+----------------+
 | ``security``                | ``readonly``   |
 +-----------------------------+----------------+
+| ``statistics``              | ``all``        |
++-----------------------------+----------------+
 
 Table 6.17. Common Access Level Permissions Required with Any Manila Driver
 
