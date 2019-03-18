@@ -1,0 +1,10 @@
+Code-Review+2: Carlos Eduardo <ces.eduardo98@gmail.com>
+Code-Review+2: Lucio Seki <lucioseki@gmail.com>
+QA-Review+2: Lucio Seki <lucioseki@gmail.com>
+Release+1: Lucio Seki <lucioseki@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Mon, 18 Mar 2019 10:46:58 -0400
+Reviewed-on: https://review.openstack.netapp.com/1012
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
