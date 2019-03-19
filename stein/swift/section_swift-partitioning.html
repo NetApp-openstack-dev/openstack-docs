@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Partitioning and File System Considerations</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/swift/section_swift-partitioning.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/glance/pike">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/nova/pike">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/cinder/pike">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/draft/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/draft/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Partitioning and File System Considerations</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_swift-disk-pools.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Disk Pools, Volumes, and Mapping"></i></a>
+    
+    
+    <a href="section_swift-ring-considerations.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Swift Ring Considerations with DDP"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2019-03-19 18:11</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Partitioning and File System Considerations</a><ul>
+<li><a class="reference internal" href="#partitioning-with-multipath">Partitioning with Multipath</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="partitioning-and-file-system-considerations">
+<h1>Partitioning and File System Considerations<a class="headerlink" href="#partitioning-and-file-system-considerations" title="Permalink to this headline">¶</a></h1>
+<p>After volumes are created and mapped to Swift nodes, they need to be
+partitioned and have a file system created on them. For each LUN that
+was created on the E-Series storage array create a single, new primary
+partition that utilizes the entire capacity available on the LUN.</p>
+<p>NetApp recommends the use of <code class="docutils literal notranslate"><span class="pre">dm-multipath</span></code> to provide support for
+redundant paths between an object storage node and the E-Series storage
+controller. For details on how to configure <code class="docutils literal notranslate"><span class="pre">dm-multipath</span></code>, refer to
+the NetApp E-Series Storage Systems Failover Drivers Guide, located at
+<a class="reference external" href="https://library.netapp.com/ecm/ecm_get_file/ECMP1394845">https://library.netapp.com/ecm/ecm_get_file/ECMP1394845</a>.</p>
+<div class="section" id="partitioning-with-multipath">
+<h2>Partitioning with Multipath<a class="headerlink" href="#partitioning-with-multipath" title="Permalink to this headline">¶</a></h2>
+<p>Assuming that three volumes were created from the disk pool, and if
+multipath is enabled, you should see a total of 6 mapped devices, as in
+the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># ls -l /dev/mapper</span>
+<span class="n">total</span> <span class="mi">0</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>       <span class="mi">7</span> <span class="n">May</span>  <span class="mi">5</span> <span class="mi">15</span><span class="p">:</span><span class="mi">20</span> <span class="mf">360080e50003220</span><span class="n">a80000017353450e3f</span> <span class="o">-&gt;</span> <span class="o">../</span><span class="n">dm</span><span class="o">-</span><span class="mi">0</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>       <span class="mi">7</span> <span class="n">May</span>  <span class="mi">5</span> <span class="mi">15</span><span class="p">:</span><span class="mi">20</span> <span class="mf">360080e50003222300000019153450</span><span class="n">e18</span> <span class="o">-&gt;</span> <span class="o">../</span><span class="n">dm</span><span class="o">-</span><span class="mi">1</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>       <span class="mi">7</span> <span class="n">May</span>  <span class="mi">5</span> <span class="mi">15</span><span class="p">:</span><span class="mi">20</span> <span class="mf">360080e50003222300000019053450</span><span class="n">e18</span> <span class="o">-&gt;</span> <span class="o">../</span><span class="n">dm</span><span class="o">-</span><span class="mi">2</span>
+<span class="n">crw</span><span class="o">-------</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">236</span> <span class="n">May</span>  <span class="mi">5</span> <span class="mi">15</span><span class="p">:</span><span class="mi">20</span> <span class="n">control</span>
+</pre></div>
+</div>
+<p>Get into the /dev/mapper folder and use the <code class="docutils literal notranslate"><span class="pre">parted</span></code> command to partition the mapped devices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># luns=`ls|grep -v control`
+# for i in $luns
+&gt; do
+&gt; parted -a optimal -s --  /dev/mapper/$i mklabel gpt mkpart primary xfs 0% 100%
+&gt; done
+# ls -l /dev/dm-
+dm-0  dm-1  dm-2  dm-3  dm-4  dm-5  dm-6  dm-7  dm-8
+# ls -l /dev/mapper
+total 0
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003220a80000017353450e3f -&gt; ../dm-0
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003220a80000017353450e3f1 -&gt; ../dm-3
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003220a80000017353450e3f-part1 -&gt; ../dm-4
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003222300000019053450e18 -&gt; ../dm-2
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003222300000019053450e18p1 -&gt; ../dm-5
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003222300000019053450e18-part1 -&gt; ../dm-6
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003222300000019153450e18 -&gt; ../dm-1
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003222300000019153450e18p1 -&gt; ../dm-7
+lrwxrwxrwx 1 root root       7 May  5 15:29 360080e50003222300000019153450e18-part1 -&gt; ../dm-8
+crw------- 1 root root 10, 236 May  5 15:20 control
+</pre></div>
+</div>
+<p>Swift currently requires that the underlying filesystem have support for
+extended attributes of the file system. While this requirement may be
+removed in a future release of Swift, as of the Havana release the
+recommended filesystem type is XFS.</p>
+<p>Internal volumes created in a DDP layout resemble a traditional RAID 6
+volume with the following parameters:</p>
+<ul class="simple">
+<li>Configuration: 8+2 RAID 6</li>
+<li>Segment Size: 128K</li>
+<li>Stripe Width: 1MB</li>
+</ul>
+<p>These parameters can be leveraged to configure the file system for
+optimal performance with the LUN. When a file system is created on a
+logical volume device, <code class="docutils literal notranslate"><span class="pre">mkfs.xfs</span></code> automatically queries the logical
+volume to determine appropriate stripe unit and stripe width values,
+unless values are passed at the time of filesystem creation; for
+example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># ls -l /dev/mapper/|grep part|awk &#39;{print $9}&#39;
+360080e50003220a80000017353450e3f-part1
+360080e50003222300000019053450e18-part1
+360080e50003222300000019153450e18-part1
+# parts=`ls -l /dev/mapper/|grep part|awk &#39;{print $9}&#39;`
+# for i in $parts
+&gt; do
+&gt; mkfs.xfs -d su=131072,sw=8 -i size=1024 $i
+&gt; done
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can verify that the partition was successfully created and is
+properly aligned by using the <code class="docutils literal notranslate"><span class="pre">parted</span></code> command:</p>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># parted /dev/mapper/360a9800043346852563444717a513571 align-check optimal 1</span>
+<span class="mi">1</span> <span class="n">aligned</span>
+</pre></div>
+</div>
+</div>
+<p>You can verify that the underlying filesystem has the correct values for
+stripe unit and stripe width by using the <code class="docutils literal notranslate"><span class="pre">xfs_info</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mount</span> <span class="o">-</span><span class="n">t</span> <span class="n">xfs</span> <span class="o">-</span><span class="n">o</span> <span class="n">nobarrier</span><span class="p">,</span><span class="n">noatime</span><span class="p">,</span><span class="n">nodiratime</span><span class="p">,</span><span class="n">inode64</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="mf">360080e50003220</span><span class="n">a80000017353450e3f</span><span class="o">-</span><span class="n">part1</span> <span class="o">/</span><span class="n">disk1</span>
+<span class="c1"># xfs_info /disk1</span>
+<span class="n">meta</span><span class="o">-</span><span class="n">data</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="mf">360080e50003220</span><span class="n">a80000017353450e3f</span><span class="o">-</span><span class="n">part1</span> <span class="n">isize</span><span class="o">=</span><span class="mi">1024</span>   <span class="n">agcount</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">agsize</span><span class="o">=</span><span class="mi">83623808</span> <span class="n">blks</span>
+         <span class="o">=</span>                       <span class="n">sectsz</span><span class="o">=</span><span class="mi">512</span>   <span class="n">attr</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">data</span>     <span class="o">=</span>                       <span class="n">bsize</span><span class="o">=</span><span class="mi">4096</span>   <span class="n">blocks</span><span class="o">=</span><span class="mi">334495232</span><span class="p">,</span> <span class="n">imaxpct</span><span class="o">=</span><span class="mi">5</span>
+         <span class="o">=</span>                       <span class="n">sunit</span><span class="o">=</span><span class="mi">32</span>     <span class="n">swidth</span><span class="o">=</span><span class="mi">256</span> <span class="n">blks</span>
+<span class="n">naming</span>   <span class="o">=</span><span class="n">version</span> <span class="mi">2</span>              <span class="n">bsize</span><span class="o">=</span><span class="mi">4096</span>   <span class="n">ascii</span><span class="o">-</span><span class="n">ci</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">log</span>      <span class="o">=</span><span class="n">internal</span>               <span class="n">bsize</span><span class="o">=</span><span class="mi">4096</span>   <span class="n">blocks</span><span class="o">=</span><span class="mi">163328</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">2</span>
+         <span class="o">=</span>                       <span class="n">sectsz</span><span class="o">=</span><span class="mi">512</span>   <span class="n">sunit</span><span class="o">=</span><span class="mi">32</span> <span class="n">blks</span><span class="p">,</span> <span class="n">lazy</span><span class="o">-</span><span class="n">count</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">realtime</span> <span class="o">=</span><span class="n">none</span>                   <span class="n">extsz</span><span class="o">=</span><span class="mi">4096</span>   <span class="n">blocks</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">rtextents</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">sunit</span></code> and <code class="docutils literal notranslate"><span class="pre">swidth</span></code> are shown in <code class="docutils literal notranslate"><span class="pre">bsize</span></code> (block size) units in
+the <code class="docutils literal notranslate"><span class="pre">xfs_info</span></code> command output.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stripe</span> <span class="n">unit</span><span class="o">=</span> <span class="mi">32</span> <span class="n">sunits</span> <span class="o">*</span> <span class="mi">4096</span> <span class="n">bsize</span> <span class="p">(</span><span class="n">block</span> <span class="n">size</span><span class="p">)</span><span class="o">=</span> <span class="mi">131072</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="mi">128</span><span class="n">K</span>
+<span class="n">stripe</span> <span class="n">width</span><span class="o">=</span> <span class="mi">256</span> <span class="n">blocks</span> <span class="o">*</span> <span class="mi">4096</span> <span class="n">bsize</span> <span class="o">=</span> <span class="mi">1</span><span class="n">M</span> <span class="o">=</span> <span class="mi">128</span><span class="n">K</span> <span class="o">*</span> <span class="mi">8</span> <span class="n">drives</span>
+</pre></div>
+</div>
+<p>The sysctl <code class="docutils literal notranslate"><span class="pre">fs.xfs.rotorstep</span></code> can be used to change how many files are
+put into an XFS allocation group. Increasing the default number from 1
+to 255 reduces seeks to multiple allocation groups. NetApp has observed
+improved performance in some cases by increasing this number. You can
+put the following line in <code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code> to ensure this change is
+affected on each boot of the system:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fs</span><span class="o">.</span><span class="n">xfs</span><span class="o">.</span><span class="n">rotorstep</span> <span class="o">=</span> <span class="mi">255</span>
+</pre></div>
+</div>
+<p>When mounting the XFS filesystem that resides on the LUNs offered from
+the E-Series storage, be sure to use the following mount options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mount –t xfs –o “nobarrier,noatime,nodiratime,inode64” \
+/dev/mapper/nodeX /srv/node/sdb1
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The mount points for the account, container, and object storage are
+not managed by Swift; therefore, you must use the standard Linux
+mechanisms (e.g. <code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code>) to ensure that the mount points
+exist and are mounted before Swift starts.</p>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_swift-disk-pools.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Disk Pools, Volumes, and Mapping"></i></a>
+          
+          
+            <a href="section_swift-ring-considerations.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Swift Ring Considerations with DDP"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2019-03-19 18:11</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2018.1</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ch_swift.html">Object Storage (Swift)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="section_swift-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-e-series.html">Swift Zones and NetApp E-Series Storage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-disk-pools.html">Disk Pools, Volumes, and Mapping</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Partitioning and File System Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="section_swift-ring-considerations.html">Swift Ring Considerations with DDP</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documentation</a></li>
+          <li><a href="http://www.netapp.com/us/media/tr-4620.pdf">NetApp SolidFire Storage Config Guide</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Community Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">GitHub</a></li>
+          <li><a href="http://netapp.io/slack">Slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">Twitter @openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">Youtube NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "swift/section_swift-partitioning" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: e14d1a9348bb073c7b5d10d87ec20a455aad6cfa";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Partitioning and File System Considerations in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "STEIN"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2018.1 on 2019-03-19 18:11";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+<script src="../_static/language_data.js" type="text/javascript"></script>
+  </body>
+</html>
