@@ -62,7 +62,7 @@ master_doc = 'index'
 releases = [
     'austin', 'bexar', 'cactus', 'diablo', 'essex', 'folsom', 'grizzly',
     'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
-    'ocata', 'pike', 'queens', 'rocky', 'stein',
+    'ocata', 'pike', 'queens', 'rocky', 'stein', 'train',
 ]
 unnamed = list(string.ascii_lowercase[len(releases) % 26:])
 releases += unnamed
@@ -70,6 +70,7 @@ releases += unnamed
 
 # If CI, Can we determine if we're on a stable branch via ZUUL_BRANCH?
 zuul_branch = os.getenv('ZUUL_BRANCH') or ''
+print("This is my Zuul branch " + zuul_branch)
 zuul_branch = zuul_branch if zuul_branch.startswith('stable') else ''
 
 watermark = None
@@ -105,7 +106,7 @@ if watermark == '':
             watermark = "DRAFT"
         else:
             watermark = "%s DRAFT" % releases[rel_index + 1].upper()
-
+print ("This is my watermark " + watermark)
 # -- Options for sphinxmark -----------------------------------------------
 sphinxmark_enable = True
 sphinxmark_div = 'docs-body'
