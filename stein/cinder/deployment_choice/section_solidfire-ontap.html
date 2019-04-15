@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Basic Configuration of Glance Using ONTAP as a Glance Backing Store</title>
+    <title>OpenStack Docs: Deployment Choices: SolidFire and ONTAP</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -47,7 +47,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/glance/configuration/section_glance-standard-config-ontap.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/deployment_choice/section_solidfire-ontap.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -107,15 +107,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Basic Configuration of Glance Using ONTAP as a Glance Backing Store</h2>
+      <h2>Deployment Choices: SolidFire and ONTAP</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="../ch_glance-configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuration"></i></a>
+    <a href="section_over-subscription.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: Over-Subscription and Thin-Provisioning"></i></a>
     
     
-    <a href="section_glance-enhanced-instance-config-NFS.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Enhanced Instance Creation with ONTAP NFS as a Cinder Backend"></i></a>
+    <a href="section_iscsi-v-nfs.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: NFS vs. iSCSI"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -131,36 +131,28 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="basic-configuration-of-glance-using-ontap-as-a-glance-backing-store">
-<span id="glance-ontap-config"></span><h1>Basic Configuration of Glance Using ONTAP as a Glance Backing Store<a class="headerlink" href="#basic-configuration-of-glance-using-ontap-as-a-glance-backing-store" title="Permalink to this headline">¶</a></h1>
-<p>By specifying the value of <code class="docutils literal notranslate"><span class="pre">filesystem_store_datadir</span></code> to be a
-directory that is the mount point for an NFS share that is served from a
-NetApp FlexVol volume, you can have a single filesystem that can be
-mounted from one or more <code class="docutils literal notranslate"><span class="pre">glance-registry</span></code> servers.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vim /etc/glance/glance-api.conf
-...
-...
-filesystem_store_datadir=/var/lib/glance/images/
-...
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">The NFS mount for the <code class="docutils literal notranslate"><span class="pre">filesystem_store_datadir</span></code> is not managed by
-Glance; therefore, you must use the standard Linux mechanisms (e.g.
-<code class="docutils literal notranslate"><span class="pre">/etc/fstab</span></code> or NFS automounter) to ensure that the NFS mount
-exists before Glance starts.</p>
-</div>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">Be sure to refer to the <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-61288-16&amp;m=tr-4067.pdf">ONTAP NFS Best Practices and
-Implementation
-Guide</a>
-for information on how to optimally set up the NFS export for use
-with Glance, and <a class="reference external" href="http://www.netapp.com/us/system/pdf-reader.aspx?pdfuri=tcm:10-60107-16&amp;m=tr-3958.pdf">NetApp Data Compression and Deduplication
-Deployment and Implementation
-Guide</a>.</p>
-</div>
+  <div class="section" id="deployment-choices-solidfire-and-ontap">
+<h1>Deployment Choices: SolidFire and ONTAP<a class="headerlink" href="#deployment-choices-solidfire-and-ontap" title="Permalink to this headline">¶</a></h1>
+<p><strong>SolidFire</strong></p>
+<p>Guaranteeing performance, high availability, and unsurpassed scale,
+SolidFire is the industry’s most comprehensive OpenStack block
+storage integration. SolidFire benefits include Quality of Service
+(QoS), which guarantees performance to every cloud application, and
+Helix data protection, which ensures that data is available and
+protected against loss and corruption. SolidFire also allows the
+incremental and non-disruptive addition of nodes and has a full-featured
+API that enables complete automation. Fully compatible with object storage
+for integrated backup and restore, SolidFire has unsurpassed knowledge
+of the Cinder block storage services within OpenStack.</p>
+<p><strong>ONTAP</strong></p>
+<p>If rich data management, deep data protection, and storage efficiency
+are desired and should be availed directly by the storage, the NetApp
+FAS and the All Flash FAS (AFF) product line is a natural fit for use
+within Cinder deployments. Massive scalability, nondisruptive operations,
+proven storage efficiencies, and a unified architecture (NAS and SAN)
+are key features offered by the ONTAP storage operating system. These
+capabilities are frequently leveraged in existing virtualization deployments
+and thus align naturally to OpenStack use cases.</p>
 </div>
 
 
@@ -169,10 +161,10 @@ Guide</a>.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="../ch_glance-configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Configuration"></i></a>
+            <a href="section_over-subscription.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: Over-Subscription and Thin-Provisioning"></i></a>
           
           
-            <a href="section_glance-enhanced-instance-config-NFS.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Enhanced Instance Creation with ONTAP NFS as a Cinder Backend"></i></a>
+            <a href="section_iscsi-v-nfs.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deployment Choices: NFS vs. iSCSI"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -212,15 +204,18 @@ Guide</a>.</p>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_openstack-overview.html">OpenStack Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../../ch_glance-image-service.html">Image Service (Glance)</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../overview/section_glance-overview.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_glance-key-concepts.html">Key Concepts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ch_glance-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../ch_glance-configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview/section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_cinder-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../process_structure/section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_overview/section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_cinder-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_cinder-examples.html">Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_manila.html">Shared Filesystems (Manila)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">Object Storage (Swift)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Day two operations</a></li>
@@ -302,13 +297,13 @@ Guide</a>.</p>
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "glance/configuration/section_glance-standard-config-ontap" + ".rst";
+        var sourceFile = "cinder/deployment_choice/section_solidfire-ontap" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 6015e3a0f8728ca662623bd671dd34e109a8281c";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Basic Configuration of Glance Using ONTAP as a Glance Backing Store in NetApp OpenStack Docs";
+        var bugTitle = "Deployment Choices: SolidFire and ONTAP in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "STEIN"
         var useStoryboard = "";
