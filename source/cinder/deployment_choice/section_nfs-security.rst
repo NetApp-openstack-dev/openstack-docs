@@ -25,6 +25,8 @@ mounted the NFS backend shares.
    Consult with the OpenStack distribution documentation to determine
    supportability of this feature.
 
+.. _table-4.15:
+
 +-----------------------------------+------------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Option                            | Type       | Default Value   | Description                                                                                                                                                                                                                                                                                     |
 +===================================+============+=================+=================================================================================================================================================================================================================================================================================================+
@@ -33,7 +35,7 @@ mounted the NFS backend shares.
 | ``nas_secure_file_permissions``   | Optional   | "auto"          | Create backing files for Cinder volumes to only be readable and writable by owner and group if 'True'; as readable and writable by owner, group, and world if 'False'. If 'auto', run as 'True' if in a "greenfield" environment and run as 'False' if existing volumes are found on startup.   |
 +-----------------------------------+------------+-----------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table 4.10. Configuration options for NFS Security
+Table 4.15. Configuration options for NFS Security
 
 When ``nas_secure_file_operations`` is set to 'true', Cinder operations run as
 the dedicated *cinder* user rather than as *root*.
@@ -128,6 +130,8 @@ The following checklist provides a reference for enabling NFS security. Be
 advised that some of the commands, shown in the examples, may differ depending
 on your environment.
 
+.. _table-4.16:
+
 +------+------------------------------------------------------------+---------+
 | #    | Description of Step                                        | Done?   |
 +======+============================================================+=========+
@@ -154,7 +158,7 @@ on your environment.
 | 11   | Cinder: Verify mounts and permissions                      |         |
 +------+------------------------------------------------------------+---------+
 
-Table 4.11 Checklist to Enable NAS Security
+Table 4.16. Checklist to Enable NAS Security
 
 1) Change NAS security
 options.
@@ -426,7 +430,7 @@ on your environment.
 | 5    | Cinder: Verify mounts and permissions                      |         |
 +------+------------------------------------------------------------+---------+
 
-Table 4.12 Checklist to Disable NFS Security
+Table 4.17. Checklist to Disable NFS Security
 
 1) Update NAS Security
 options.

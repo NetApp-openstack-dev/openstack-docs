@@ -13,8 +13,10 @@ the SF-Series cluster to configure the driver by modifying the
 For more information on the configuration and best practices please visit
 the following link: http://www.netapp.com/us/media/tr-4620.pdf
 
-Table 4.13 lists the required storage system attributes used in the
+Table 4.18 lists the required storage system attributes used in the
 ``/etc/cinder/cinder.conf`` configuration file.
+
+.. _table-4.18:
 
 +--------------------------------------+----------------------------+---------------------------------------------+
 | SolidFire Attribute                  | Default                    | Description                                 |
@@ -26,7 +28,7 @@ Table 4.13 lists the required storage system attributes used in the
 | ``san_password``                     | None                       | SolidFire cluster administrative password   |
 +--------------------------------------+----------------------------+---------------------------------------------+
 
-Table 4.13. Required SolidFire Attributes
+Table 4.18. Required SolidFire Attributes
 
 Add the following lines to the file, replacing login and password with
 the cluster admin login credentials
@@ -48,7 +50,9 @@ Optional Cinder Configuration Attributes
 You can optionally use the following attributes specific to SolidFire
 in the ``[solidfire]`` section of the ``/etc/cinder/cinder.conf``
 configuration file to control the interaction between the storage
-system and the OpenStack Cinder service. (See Table 4.14.)
+system and the OpenStack Cinder service. (See Table 4.19.)
+
+.. _table-4.19:
 
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | SolidFire Attribute                  | Default                    | Description                                                                                                                                                                                                     |
@@ -74,7 +78,7 @@ system and the OpenStack Cinder service. (See Table 4.14.)
 | ``sf_volume_prefix``                 | ``UUID-``                  | Create volumes on the cluster with this prefix. Volumes use the prefix format ``<sf_volume_prefix><cindervolume-id>``. The default is to use the prefix ``UUID-``.                                              |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table 4.14 Optional SolidFire Attributes
+Table 4.19. Optional SolidFire Attributes
 
 .. note::
 
