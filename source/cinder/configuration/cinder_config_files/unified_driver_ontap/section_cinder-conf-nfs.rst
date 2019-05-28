@@ -57,11 +57,11 @@ following stanza should be added to the Cinder configuration file
    driver, please refer to
    http://docs.openstack.org/trunk/config-reference/content/nfs-driver-options.html.
 
-Table 4.14, “Configuration options for ONTAP with NFS” below lists
+Table 4.20, “Configuration options for ONTAP with NFS” below lists
 the configuration options available for the unified driver for an
 ONTAP deployment that uses the NFS storage protocol.
 
-.. _table-4.14:
+.. _table-4.20:
 
 +------------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Option                             | Type       | Default Value                | Description                                                                                                                                                                                                                                                                                                                                                                                                             |
@@ -113,7 +113,7 @@ ONTAP deployment that uses the NFS storage protocol.
 | ``goodness_function``              | Optional   | (see description)            | This option may be used to override the default goodness function, which allows Cinder to place new volumes on lesser-utilized storage controllers. The default value is "100 - capabilities.utilization".                                                                                                                                                                                                              |
 +------------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table 4.14. Configuration options for ONTAP with NFS
+Table 4.20. Configuration options for ONTAP with NFS
 
 .. caution::
 

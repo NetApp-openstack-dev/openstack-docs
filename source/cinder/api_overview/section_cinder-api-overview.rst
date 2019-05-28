@@ -24,6 +24,8 @@ operations that can be performed on Cinder volumes. Please note that
 Cinder volumes are identified as CLI command arguments by either their
 names or UUID.
 
+.. _table-4.2:
+
 +--------------------+-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 | Operation          | CLI Command                   | Description                                                                                                                               |
 +====================+===============================+===========================================================================================================================================+
@@ -60,6 +62,8 @@ operations that can be performed on Cinder snapshots. Please note that
 Cinder snapshots are identified as CLI command arguments by either their
 display name or UUID.
 
+.. _table-4.3:
+
 +---------------+-----------------------------------+--------------------------------------------------------+
 | Operation     | CLI Command                       | Description                                            |
 +===============+===================================+========================================================+
@@ -91,6 +95,8 @@ UUID. Consistency group operations support has been deprecated in
 Block Storage V3 API. Only Block Storage V2 API supports consistency
 groups. Future releases will involve a migration of existing
 consistency group operations to use generic volume group operations.
+
+.. _table-4.4:
 
 +-----------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------+
 | Operation                                                                   | CLI Command                              | Description                                                                                                                        |
@@ -129,6 +135,8 @@ Table 4.5, “Cinder API Overview - Backup” specifies the valid
 operations that can be performed on Cinder backups. Please note that
 Cinder backups are identified as CLI command arguments by either their
 display name or UUID.
+
+.. _table-4.5:
 
 +-------------+-----------------------------+------------------------------------------------+
 | Operation   | CLI Command                 | Description                                    |
@@ -177,6 +185,8 @@ display name or UUID.
    Be aware that only one consistency group snapshot per storage pool (i.e.
    flexvol) can be performed at a time. Overlapping consistency group snapshot
    operations can fail.
+
+.. _table-4.6:
 
 +-------------------------------------+-----------------------------------+---------------------------------------------------------------------+
 | Operation                           | CLI Command                       | Description                                                         |
@@ -230,6 +240,8 @@ operations that can be performed on Cinder volume types. Please note
 that Cinder volume types are identified as CLI command arguments by
 either their display name or UUID.
 
+.. _table-4.7:
+
 +-------------+--------------------------+------------------------------------+
 | Operation   | CLI Command              | Description                        |
 +=============+==========================+====================================+
@@ -250,6 +262,8 @@ the valid operations that can be performed on Cinder volume type extra
 specs. Please note that Cinder volume type extra specs are properties of
 Cinder volume types and are identified by their parent object.
 
+.. _table-4.8:
+
 +---------------------+-----------------------------------+----------------------------------------------+
 | Operation           | CLI Command                       | Description                                  |
 +=====================+===================================+==============================================+
@@ -268,6 +282,8 @@ valid operations that can be performed on Cinder volume type QoS specs.
 Please note that Cinder volume type QoS specs are created independently
 of Cinder volume types and are subsequently associated with a Cinder
 volume type.
+
+.. _table-4.9:
 
 +--------------------------+-------------------------------+------------------------------------------------------------+
 | Operation                | CLI Command                   | Description                                                |
