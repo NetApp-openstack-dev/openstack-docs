@@ -188,6 +188,8 @@ QoS support for the SolidFire drivers includes the ability to set the
 following capabilities in the OpenStack Block Storage API
 ``cinder.api.contrib.qos_specs_manage`` qos specs extension module:
 
+.. _table-4.1:
+
 +-----------------+-------------------------------------------------------------------------------------+
 | Option          | Description                                                                         |
 +=================+=====================================================================================+

@@ -77,8 +77,8 @@ Cinder Scheduling and Resource Pool Selection
 When Cinder volumes are created, the Cinder scheduler selects a resource
 pool from the available storage pools: see
 :ref:`storage-pools` for an overview.
-:ref:`Table 4.9, “Behavioral Differences in Cinder volume Placement”
-<cinder-theory-table-4.9>` details the behavioral changes in NetApp's
+:ref:`Table 4.10, “Behavioral Differences in Cinder volume Placement”
+<table-4.10>` details the behavioral changes in NetApp's
 Cinder drivers when scheduling the provisioning of new Cinder volumes.
 
 Beginning with Juno, each of NetApp's Cinder drivers report per-pool
@@ -138,7 +138,7 @@ example, to steer new Cinder volumes away from a FlexVol nearing its
 shared block limit, a filter expression of
 "capabilities.netapp_dedupe_used_percent < 90" might be used.
 
-.. _cinder-theory-table-4.9:
+.. _table-4.10:
 
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Driver                           | Scheduling Behavior (as of Juno)                                                                                                                                                                                                  | Scheduling Behavior (as of Mitaka)                                                                                                                                                                                    |
@@ -146,7 +146,7 @@ shared block limit, a filter expression of
 | ONTAP                            | Each FlexVol volume’s capacity and SSC data is reported separately as a pool to the Cinder scheduler. The Cinder filters and weighers decide which pool a new volume goes into, and the driver honors that request.               | Same as Juno. Also, per-pool storage controller utilization is reported to the scheduler, along with filter and goodness expressions that take controller utilization into account when making placement decisions.   |
 +----------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-Table 4.9. Behavioral Differences in Cinder volume Placement
+Table 4.10. Behavioral Differences in Cinder volume Placement
 
 Cinder Snapshots versus NetApp Snapshots
 ----------------------------------------
