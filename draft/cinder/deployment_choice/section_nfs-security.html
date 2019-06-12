@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2019-04-15 01:01</div>
+            <div class="docs-updated">updated: 2019-06-12 18:23</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -167,7 +167,7 @@ mounted the NFS backend shares.</p>
 <p class="last">Consult with the OpenStack distribution documentation to determine
 supportability of this feature.</p>
 </div>
-<table border="1" class="docutils">
+<table border="1" class="docutils" id="table-4-15">
 <colgroup>
 <col width="10%" />
 <col width="3%" />
@@ -194,7 +194,7 @@ supportability of this feature.</p>
 </tr>
 </tbody>
 </table>
-<p>Table 4.10. Configuration options for NFS Security</p>
+<p>Table 4.15. Configuration options for NFS Security</p>
 <p>When <code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> is set to ‘true’, Cinder operations run as
 the dedicated <em>cinder</em> user rather than as <em>root</em>.</p>
 <p>When <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code> is set to ‘true’, backing files for
@@ -270,7 +270,7 @@ Disabling or enabling NAS security is disruptive to OpenStack processes.</p>
 <p>The following checklist provides a reference for enabling NFS security. Be
 advised that some of the commands, shown in the examples, may differ depending
 on your environment.</p>
-<table border="1" class="docutils">
+<table border="1" class="docutils" id="table-4-16">
 <colgroup>
 <col width="8%" />
 <col width="80%" />
@@ -329,7 +329,7 @@ on your environment.</p>
 </tr>
 </tbody>
 </table>
-<p>Table 4.11 Checklist to Enable NAS Security</p>
+<p>Table 4.16. Checklist to Enable NAS Security</p>
 <p>1) Change NAS security
 options.</p>
 <p>Set the <code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code> to specify
@@ -610,7 +610,7 @@ on your environment.</p>
 </tr>
 </tbody>
 </table>
-<p>Table 4.12 Checklist to Disable NFS Security</p>
+<p>Table 4.17. Checklist to Disable NFS Security</p>
 <p>1) Update NAS Security
 options.</p>
 <p>Set the <code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code> and <code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code> to
@@ -727,7 +727,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2019-04-15 01:01</div>
+            <div class="docs-updated">updated: 2019-06-12 18:23</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -858,7 +858,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: b82b55854cebf02c300a351a9c212c87fe1e13e4";
+    var gitSha = "SHA: 253273a08b9fa80b939ad38cb54619c7f4e13fae";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deployment Choices: NFS Security in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -869,7 +869,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2019-04-15 01:01";
+    var buildstring = "Release: 2018.1 on 2019-06-12 18:23";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
