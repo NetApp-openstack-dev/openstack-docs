@@ -139,6 +139,7 @@ dedupe
 deduplication
 deployers
 dev
+dhss
 differentiators
 dm
 efficiencies
@@ -233,6 +234,7 @@ sgid
 solaris
 stl
 subnet
+subnets
 suid
 supportability
 svc
