@@ -315,6 +315,104 @@ Neutron Subnet configured in the /etc/manila/manila.conf.
     | description       | None                                 |
     +-------------------+--------------------------------------+
 
+
+.. important::
+    Since Train release, a share network is able to span multiple subnets
+    in different availability zones. All the neutron information will no
+    longer pertain to the share network, since they were moved to the share
+    network subnet entity. Each subnet will be directly related to a single
+    share network. In addition to the possibility to specify an availability
+    zone while creating a share network, the shared file systems as a service
+    will automatically create a share network subnet when creating a share
+    network. When showing a share network, manila will also show the list of
+    subnets created under the specified share network.
+    When deleting a share network, you must make sure that it does not contain
+    more than one share network subnet attached and all its subnets can not
+    contain any related resource such as shares, share servers and so on.
+
+Creating Manila Share Network Subnet Objects
+--------------------------------------------
+
+In this section, we create a manila share network subnet object in the
+previously created share network. This feature is available since Train
+release. Tt demonstrates that the usage of the introduced
+share-network-subnet-objects.
+
+::
+
+    $ manila share-network-subnet-create storage-provider-network \
+                    --neutron-net-id 51615112-b7c1-4e66-9f9b-bd3dd2dc711b \
+                    --neutron-subnet-id c2a30101-52f9-4634-ac68-875f37583714 \
+                    --availability-zone nova2
+    +--------------------+--------------------------------------+
+    | Property           | Value                                |
+    +--------------------+--------------------------------------+
+    | id                 | 8240a732-1713-4070-b863-042e794cc852 |
+    | availability_zone  | nova2                                |
+    | share_network_id   | d9e443b6-a6fe-4443-a1ef-661af09e4a66 |
+    | share_network_name | storage-provider-network             |
+    | created_at         | 2020-01-22T19:07:22.000000           |
+    | segmentation_id    | None                                 |
+    | neutron_subnet_id  | c2a30101-52f9-4634-ac68-875f37583714 |
+    | updated_at         | None                                 |
+    | neutron_net_id     | 51615112-b7c1-4e66-9f9b-bd3dd2dc711b |
+    | ip_version         | None                                 |
+    | cidr               | None                                 |
+    | network_type       | None                                 |
+    | mtu                | None                                 |
+    | gateway            | None                                 |
+    +--------------------+--------------------------------------+
+
+Let's show the share network. We can see in the below output that it contains
+a field called ``share_network_subnets`` which consists in a list of all the
+share network subnets created under the 'storage-provider-network'.
+
+::
+
+    $ manila share-network-show storage-provider-network
+    +-----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Property              | Value                                                                                                                                                                                                                                                                                                                                                                                                        |
+    +-----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | id                    | d9e443b6-a6fe-4443-a1ef-661af09e4a66                                                                                                                                                                                                                                                                                                                                                                         |
+    | name                  | storage-provider-network                                                                                                                                                                                                                                                                                                                                                                                     |
+    | project_id            | 4040a74271824f34a7bde610dcd705d1                                                                                                                                                                                                                                                                                                                                                                             |
+    | created_at            | 2020-01-20T19:16:13.000000                                                                                                                                                                                                                                                                                                                                                                                   |
+    | updated_at            | None                                                                                                                                                                                                                                                                                                                                                                                                         |
+    | description           | None                                                                                                                                                                                                                                                                                                                                                                                                         |
+    | share_network_subnets | [{'id': '8240a732-1713-4070-b863-042e794cc852', 'availability_zone': 'nova2', 'created_at': '2020-01-22T19:07:22.000000', 'updated_at': '2020-01-22T19:07:36.000000', 'segmentation_id': None, 'neutron_net_id': '51615112-b7c1-4e66-9f9b-bd3dd2dc711b', 'neutron_subnet_id': 'c2a30101-52f9-4634-ac68-875f37583714', 'ip_version': None, 'cidr': None, 'network_type': None, 'mtu': None, 'gateway': None}] |
+    +-----------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Then, let's show the created share network subnet.
+
+::
+
+    $ manila share-network-subnet-show storage-provider-network \
+                                        8240a732-1713-4070-b863-042e794cc852
+
+    +--------------------+--------------------------------------+
+    | Property           | Value                                |
+    +--------------------+--------------------------------------+
+    | id                 | 8240a732-1713-4070-b863-042e794cc852 |
+    | availability_zone  | nova2                                |
+    | share_network_id   | d9e443b6-a6fe-4443-a1ef-661af09e4a66 |
+    | share_network_name | storage-provider-network             |
+    | created_at         | 2020-01-22T19:07:22.000000           |
+    | segmentation_id    | None                                 |
+    | neutron_subnet_id  | c2a30101-52f9-4634-ac68-875f37583714 |
+    | updated_at         | 2020-01-22T19:07:36.000000           |
+    | neutron_net_id     | 51615112-b7c1-4e66-9f9b-bd3dd2dc711b |
+    | ip_version         | None                                 |
+    | cidr               | None                                 |
+    | network_type       | None                                 |
+    | mtu                | None                                 |
+    | gateway            | None                                 |
+    +--------------------+--------------------------------------+
+
+Then, we can delete a share network subnet running the below command.
+
+    $ manila share-network-subnet-delete storage-provider-network \
+                                        8240a732-1713-4070-b863-042e794cc852
+
 Creating Manila Shares with Share Types
 ---------------------------------------
 
@@ -1377,6 +1475,13 @@ command, which is an admin-only operation.
 
     $ manila share-server-unmanage b69be361-9dc9-446c-bd93-eb7050e7734d
 
+
+.. important::
+    Since Train release, the Neutron network information that pertained to the
+    share network entity was moved to the share network subnet entity. So you
+    will also need to specify a share network subnet while managing a share
+    server.
+
 Creating Manila Share Groups
 ----------------------------
 
@@ -1640,8 +1745,17 @@ above.
 Creating Manila Share Replicas
 ------------------------------
 
-In this section, we'll create and work with share replicas. First we'll
-create a share type that supports replication.
+Starting from Train release, manila allows the creation of share replicas in
+both `driver_handles_share_servers` True and False modes. In this section,
+we'll create and work with share replicas. Only the creation of the share
+differ for both modes. All other operations are equal for both modes.
+
+Creating a Share Replica Without Share Server management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We'll start creating a share replica
+operating under `driver_handles_share_server=False` mode. Then, we'll start
+creating a share type.
 
 ::
 
@@ -1817,7 +1931,186 @@ become in-sync, refer to the section called :ref:`common-probs`.
     | b3191744-cee9-478b-b906-c5a7a3934adb | available | in_sync       | f49d7f1f-15e7-484a-83d9-5eb5fb6ad7fc | openstack2@cmodeSSVMNFS2#aggr4      | nova              | 2016-03-23T18:27:57.000000 |
     +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
 
-Finally, let us failover to our other replica.
+Creating a Share Rewplica With Share Server management
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now, let's see how it works when manila is operating under
+``driver_handles_share_server=True`` mode. So in this example, a share replica
+will be created on the availability zone ``nova2`` moreover there is no need to
+specify an availability zone. In order to make this operation work when you are
+specifying an availability zone, you must make sure that the parent's share
+share network contains a default share network subnet, or that it contains a
+share network subnet in the availability zone which you're willing to create
+the share replica. So let's start creating a compatible share type.
+
+::
+    $ manila type-create replication_dhss_true true
+    +----------------------+--------------------------------------+
+    | Property             | Value                                |
+    +----------------------+--------------------------------------+
+    | ID                   | c228657c-49e6-4649-80d2-24fa025c4984 |
+    | Name                 | replication_dhss_true                |
+    | Visibility           | public                               |
+    | is_default           | -                                    |
+    | required_extra_specs | driver_handles_share_servers : True  |
+    | optional_extra_specs |                                      |
+    | Description          | None                                 |
+    +----------------------+--------------------------------------+
+
+Assign replication_type and snapshot_support attributes to the
+replication_dhss_true share-type
+
+::
+
+    $ manila type-key replication_dhss_true set replication_type=dr \
+                                                snapshot_support=True
+
+Next we'll create a share.
+
+::
+
+    $ manila create NFS 1 --share-type replication_dhss_true \
+                            --name source_share \
+                            --share-network storage-provider-network
+    +---------------------------------------+--------------------------------------+
+    | Property                              | Value                                |
+    +---------------------------------------+--------------------------------------+
+    | id                                    | e903ea09-46fa-4f25-98d1-4d12634325e6 |
+    | size                                  | 1                                    |
+    | availability_zone                     | None                                 |
+    | created_at                            | 2020-01-22T17:32:58.000000           |
+    | status                                | creating                             |
+    | name                                  | source_share                         |
+    | description                           | None                                 |
+    | project_id                            | 3d1d93550b1448f094389d6b5df9659e     |
+    | snapshot_id                           | None                                 |
+    | share_network_id                      | d9e443b6-a6fe-4443-a1ef-661af09e4a66 |
+    | share_proto                           | NFS                                  |
+    | metadata                              | {}                                   |
+    | share_type                            | c228657c-49e6-4649-80d2-24fa025c4984 |
+    | is_public                             | False                                |
+    | snapshot_support                      | False                                |
+    | task_state                            | None                                 |
+    | share_type_name                       | replication_dhss_true                |
+    | access_rules_status                   | active                               |
+    | replication_type                      | dr                                   |
+    | has_replicas                          | False                                |
+    | user_id                               | 2a828565129b4949aaf7e692fc9b1ad8     |
+    | create_share_from_snapshot_support    | False                                |
+    | revert_to_snapshot_support            | False                                |
+    | share_group_id                        | None                                 |
+    | source_share_group_snapshot_member_id | None                                 |
+    | mount_snapshot_support                | False                                |
+    | share_server_id                       | None                                 |
+    | host                                  |                                      |
+    +---------------------------------------+--------------------------------------+
+
+Next, we'll create a new share network subnet under the parent's share share
+network, specifying the desired availability zone, which is `nova2`.
+
+::
+
+    $ manila share-network-subnet-create storage-provider-network \
+                --neutron-net-id 51615112-b7c1-4e66-9f9b-bd3dd2dc711b \
+                --neutron-subnet-id c2a30101-52f9-4634-ac68-875f37583714 \
+                --availability-zone nova2
+    +--------------------+--------------------------------------+
+    | Property           | Value                                |
+    +--------------------+--------------------------------------+
+    | id                 | a98e815e-4c86-4e97-846c-36b449079cd9 |
+    | availability_zone  | nova2                                |
+    | share_network_id   | d9e443b6-a6fe-4443-a1ef-661af09e4a66 |
+    | share_network_name | storage-provider-network             |
+    | created_at         | 2020-01-22T17:36:13.000000           |
+    | segmentation_id    | None                                 |
+    | neutron_subnet_id  | c2a30101-52f9-4634-ac68-875f37583714 |
+    | updated_at         | None                                 |
+    | neutron_net_id     | 51615112-b7c1-4e66-9f9b-bd3dd2dc711b |
+    | ip_version         | None                                 |
+    | cidr               | None                                 |
+    | network_type       | None                                 |
+    | mtu                | None                                 |
+    | gateway            | None                                 |
+    +--------------------+--------------------------------------+
+
+Now, let's create the share replica specifying the availability zone we want
+the replica to be placed.
+
+::
+
+    $ manila share-replica-create source_share --availability-zone nova2
+    +------------------------+--------------------------------------+
+    | Property               | Value                                |
+    +------------------------+--------------------------------------+
+    | id                     | d053c972-e171-4550-92ce-09b77567102f |
+    | share_id               | e903ea09-46fa-4f25-98d1-4d12634325e6 |
+    | availability_zone      | nova2                                |
+    | created_at             | 2020-01-22T19:07:33.152431           |
+    | status                 | creating                             |
+    | share_network_id       | d9e443b6-a6fe-4443-a1ef-661af09e4a66 |
+    | replica_state          | None                                 |
+    | updated_at             | None                                 |
+    | share_server_id        | None                                 |
+    | host                   |                                      |
+    | cast_rules_to_readonly | False                                |
+    +------------------------+--------------------------------------+
+
+::
+
+    $ manila share-replica-show d053c972-e171-4550-92ce-09b77567102f
+    +------------------------+--------------------------------------+
+    | Property               | Value                                |
+    +------------------------+--------------------------------------+
+    | id                     | d053c972-e171-4550-92ce-09b77567102f |
+    | share_id               | e903ea09-46fa-4f25-98d1-4d12634325e6 |
+    | availability_zone      | nova2                                |
+    | created_at             | 2020-01-22T19:07:33.000000           |
+    | status                 | available                            |
+    | share_network_id       | d9e443b6-a6fe-4443-a1ef-661af09e4a66 |
+    | replica_state          | out_of_sync                          |
+    | updated_at             | 2020-01-22T19:10:05.000000           |
+    | share_server_id        | 343ff007-d399-4ede-b8ea-d43c5a516544 |
+    | host                   | openstack2@cmodeMSVMNFS2#aggr1       |
+    | cast_rules_to_readonly | False                                |
+    | export_locations       | []                                   |
+    +------------------------+--------------------------------------+
+
+Now, we will list all the replicas of the 'source_share'. We will realize that
+the new replica is located on 'openstack2@cmodeMSVMNFS2#aggr1' pool. The brand
+new replica has a replica state of 'out\_of\_sync', this means that the share
+data has not been synchronized within the replication window, which is one
+hour for the cDOT driver.
+
+::
+
+    $ manila share-replica-list
+    +--------------------------------------+-----------+---------------+--------------------------------------+--------------------------------+-------------------+----------------------------+
+    | ID                                   | Status    | Replica State | Share ID                             | Host                           | Availability Zone | Updated At                 |
+    +--------------------------------------+-----------+---------------+--------------------------------------+--------------------------------+-------------------+----------------------------+
+    | 3bdc6dad-0470-4b9b-bb05-80d8e412c8ba | available | active        | e903ea09-46fa-4f25-98d1-4d12634325e6 | openstack2@cmodeMSVMNFS1#aggr1 | nova              | 2020-01-22T17:33:01.000000 |
+    | d053c972-e171-4550-92ce-09b77567102f | creating  | out_of_sync   | e903ea09-46fa-4f25-98d1-4d12634325e6 | openstack2@cmodeMSVMNFS2#aggr1 | nova2             | 2020-01-22T19:07:34.000000 |
+    +--------------------------------------+-----------+---------------+--------------------------------------+--------------------------------+-------------------+----------------------------+
+
+Manila checks the status of a replica based on the
+``replica_state_update_interval`` configuration option. If we wait a
+short while, the replica will become in sync. If the replica does not
+become in-sync, refer to the section called :ref:`common-probs`.
+
+::
+
+    $ manila share-replica-list --share-id e903ea09-46fa-4f25-98d1-4d12634325e6
+    +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------+-------------------+----------------------------+
+    | ID                                   | Status    | Replica State | Share ID                             | Host                          | Availability Zone | Updated At                 |
+    +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------+-------------------+----------------------------+
+    | 3bdc6dad-0470-4b9b-bb05-80d8e412c8ba | available | active        | e903ea09-46fa-4f25-98d1-4d12634325e6 | devstack2@cmodeMSVMNFS1#aggr1 | nova              | 2020-01-22T17:33:01.000000 |
+    | d053c972-e171-4550-92ce-09b77567102f | available | in_sync       | e903ea09-46fa-4f25-98d1-4d12634325e6 | devstack2@cmodeMSVMNFS2#aggr1 | nova2             | 2020-01-22T19:10:05.000000 |
+    +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------+-------------------+----------------------------+
+
+Failing over a share replica
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Finally, let's see the failover process for the share replica. This operation
+is the same for both 'driver_handles_share_servers' True and False modes.
 
 ::
 
