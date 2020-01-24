@@ -77,6 +77,8 @@ system and the OpenStack Cinder service. (See Table 4.19.)
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``sf_volume_prefix``                 | ``UUID-``                  | Create volumes on the cluster with this prefix. Volumes use the prefix format ``<sf_volume_prefix><cindervolume-id>``. The default is to use the prefix ``UUID-``.                                              |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``replication_device``               | None                       | SolidFire Target Cluster for Replication. This option uses the format ``backend_id:<backend-id>,mvip:<target-mvip>,login:<target-login>,password:<target-password>``                                            |
++--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.19. Optional SolidFire Attributes
 
@@ -145,3 +147,88 @@ instance with a unique cluster admin account.
    ``[solidfire]`` section of the ``/etc/cinder/cinder.conf`` file for that
    OpenStack cloud instance to the IP address you want the iSCSI
    initiator to use to access volumes on the storage system.
+
+SolidFire Replication Setup
+---------------------------
+
+In order to use SolidFire with Replication enabled you must have a secondary
+target backend configured and being referenced by primary host under
+``replication_device`` attribute. Example:
+
+::
+
+    [solidfire]
+    volume_backend_name=solidfire
+    volume_driver=cinder.volume.drivers.solidfire.SolidFireDriver
+    san_ip=172.17.1.182
+    san_login=login
+    san_password=password
+    replication_device=backend_id:solidfire2,mvip:172.17.1.142,login:login2,password:password2
+
+    [solidfire-2]
+    volume_backend_name=solidfire2
+    volume_driver=cinder.volume.drivers.solidfire.SolidFireDriver
+    san_ip=172.17.1.142
+    san_login=login2
+    san_password=password2
+
+    [DEFAULT]
+    enabled_backends=solidfire
+
+.. note::
+
+   The secondary cluster is not required to be in the ``enabled_backends``
+   like in the example above.
+
+You also need a volume type with ``replication_enabled=<is> True`` set as an
+extra-spec:
+
+::
+
+    stack@netapp-solidfire:~$ cinder type-show solidfire
+
++---------------------------------+--------------------------------------+
+| Property                        | Value                                |
++---------------------------------+--------------------------------------+
+| description                     | None                                 |
+| extra_specs                     | replication_enabled : <is> True      |
+|                                 | volume_backend_name : solidfire      |
+| id                              | 6910843e-0d49-4f8b-84f5-288d3672699d |
+| is_public                       | True                                 |
+| name                            | solidfire                            |
+| os-volume-type-access:is_public | True                                 |
+| qos_specs_id                    | None                                 |
++---------------------------------+--------------------------------------+
+
+When using SolidFire with Replication enabled you can use three different
+replication modes, these are:
+
+- Real-time (Asynchronous): Writes are acknowledged to the client after they
+  are committed on the source cluster.
+- Real-time (Synchronous): Writes are acknowledged to the client after they
+  are committed on both the source and target clusters.
+- Snapshot-Only: Only snapshots created on the source cluster are replicated.
+  Active writes from the source volume are not replicated.
+
+The default mode is ``Real-time (Asynchronous)``, a new volume type extra-spec
+must be set in order to change it. This extras-spec is
+``solidfire:replication_mode`` and its possible values are ``Sync``, ``Async``
+and ``SnapshotsOnly``. Example:
+
+::
+
+    stack@netapp-solidfire:~$ cinder type-show solidfire
+
++---------------------------------+--------------------------------------+
+| Property                        | Value                                |
++---------------------------------+--------------------------------------+
+| description                     | None                                 |
+| extra_specs                     | replication_enabled : <is> True      |
+|                                 | solidfire:replication_mode : Sync    |
+|                                 | volume_backend_name : solidfire      |
+| id                              | 6910843e-0d49-4f8b-84f5-288d3672699d |
+| is_public                       | True                                 |
+| name                            | solidfire                            |
+| os-volume-type-access:is_public | True                                 |
+| qos_specs_id                    | None                                 |
++---------------------------------+--------------------------------------+
