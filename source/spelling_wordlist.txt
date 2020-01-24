@@ -212,6 +212,7 @@ online
 ontap
 openstack
 optimizations
+os
 oversubscription
 overutilized
 pNFS
@@ -232,6 +233,7 @@ scalability
 scalable
 sgid
 solaris
+solidfire
 stl
 subnet
 subnets
