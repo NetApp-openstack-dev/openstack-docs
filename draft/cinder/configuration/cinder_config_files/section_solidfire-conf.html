@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2020-03-18 17:37</div>
+            <div class="docs-updated">updated: 2020-03-18 17:48</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -134,6 +134,7 @@ ga('send', 'pageview');
 <li><a class="reference internal" href="#solidfire-cinder-driver-configuration">SolidFire Cinder Driver Configuration</a></li>
 <li><a class="reference internal" href="#optional-cinder-configuration-attributes">Optional Cinder Configuration Attributes</a></li>
 <li><a class="reference internal" href="#multiple-openstack-cloud-instances">Multiple OpenStack Cloud Instances</a></li>
+<li><a class="reference internal" href="#solidfire-replication-setup">SolidFire Replication Setup</a></li>
 </ul>
 </li>
 </ul>
@@ -254,6 +255,10 @@ system and the OpenStack Cinder service. (See Table 4.19.)</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">UUID-</span></code></p></td>
 <td><p>Create volumes on the cluster with this prefix. Volumes use the prefix format <code class="docutils literal notranslate"><span class="pre">&lt;sf_volume_prefix&gt;&lt;cindervolume-id&gt;</span></code>. The default is to use the prefix <code class="docutils literal notranslate"><span class="pre">UUID-</span></code>.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">replication_device</span></code></p></td>
+<td><p>None</p></td>
+<td><p>SolidFire Target Cluster for Replication. This option uses the format <code class="docutils literal notranslate"><span class="pre">backend_id:&lt;backend-id&gt;,mvip:&lt;target-mvip&gt;,login:&lt;target-login&gt;,password:&lt;target-password&gt;</span></code></p></td>
+</tr>
 </tbody>
 </table>
 <p>Table 4.19. Optional SolidFire Attributes</p>
@@ -320,6 +325,85 @@ OpenStack cloud instance to the IP address you want the iSCSI
 initiator to use to access volumes on the storage system.</p>
 </div>
 </div>
+<div class="section" id="solidfire-replication-setup">
+<h2>SolidFire Replication Setup<a class="headerlink" href="#solidfire-replication-setup" title="Permalink to this headline">¶</a></h2>
+<p>In order to use SolidFire with Replication enabled you must have a secondary
+target backend configured and being referenced by primary host under
+<code class="docutils literal notranslate"><span class="pre">replication_device</span></code> attribute. Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">solidfire</span><span class="p">]</span>
+<span class="n">volume_backend_name</span><span class="o">=</span><span class="n">solidfire</span>
+<span class="n">volume_driver</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">volume</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">solidfire</span><span class="o">.</span><span class="n">SolidFireDriver</span>
+<span class="n">san_ip</span><span class="o">=</span><span class="mf">172.17</span><span class="o">.</span><span class="mf">1.182</span>
+<span class="n">san_login</span><span class="o">=</span><span class="n">login</span>
+<span class="n">san_password</span><span class="o">=</span><span class="n">password</span>
+<span class="n">replication_device</span><span class="o">=</span><span class="n">backend_id</span><span class="p">:</span><span class="n">solidfire2</span><span class="p">,</span><span class="n">mvip</span><span class="p">:</span><span class="mf">172.17</span><span class="o">.</span><span class="mf">1.142</span><span class="p">,</span><span class="n">login</span><span class="p">:</span><span class="n">login2</span><span class="p">,</span><span class="n">password</span><span class="p">:</span><span class="n">password2</span>
+
+<span class="p">[</span><span class="n">solidfire</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">volume_backend_name</span><span class="o">=</span><span class="n">solidfire2</span>
+<span class="n">volume_driver</span><span class="o">=</span><span class="n">cinder</span><span class="o">.</span><span class="n">volume</span><span class="o">.</span><span class="n">drivers</span><span class="o">.</span><span class="n">solidfire</span><span class="o">.</span><span class="n">SolidFireDriver</span>
+<span class="n">san_ip</span><span class="o">=</span><span class="mf">172.17</span><span class="o">.</span><span class="mf">1.142</span>
+<span class="n">san_login</span><span class="o">=</span><span class="n">login2</span>
+<span class="n">san_password</span><span class="o">=</span><span class="n">password2</span>
+
+<span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">enabled_backends</span><span class="o">=</span><span class="n">solidfire</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The secondary cluster is not required to be in the <code class="docutils literal notranslate"><span class="pre">enabled_backends</span></code>
+like in the example above.</p>
+</div>
+<p>You also need a volume type with <code class="docutils literal notranslate"><span class="pre">replication_enabled=&lt;is&gt;</span> <span class="pre">True</span></code> set as an
+extra-spec:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-show solidfire
+
++---------------------------------+--------------------------------------+
+| Property                        | Value                                |
++---------------------------------+--------------------------------------+
+| description                     | None                                 |
+| extra_specs                     | replication_enabled : &lt;is&gt; True      |
+|                                 | volume_backend_name : solidfire      |
+| id                              | 6910843e-0d49-4f8b-84f5-288d3672699d |
+| is_public                       | True                                 |
+| name                            | solidfire                            |
+| os-volume-type-access:is_public | True                                 |
+| qos_specs_id                    | None                                 |
++---------------------------------+--------------------------------------+
+</pre></div>
+</div>
+<p>When using SolidFire with Replication enabled you can use three different
+replication modes:</p>
+<ul class="simple">
+<li><p>Real-time (Asynchronous): Writes are acknowledged to the client after they
+are committed on the source cluster.</p></li>
+<li><p>Real-time (Synchronous): Writes are acknowledged to the client after they
+are committed on both the source and target clusters.</p></li>
+<li><p>Snapshot-Only: Only snapshots created on the source cluster are replicated.
+Active writes from the source volume are not replicated.</p></li>
+</ul>
+<p>The default mode is <code class="docutils literal notranslate"><span class="pre">Real-time</span> <span class="pre">(Asynchronous)</span></code>, and a new volume type extra-spec
+must be set in order to change it. This extras-spec is
+<code class="docutils literal notranslate"><span class="pre">solidfire:replication_mode</span></code> and its possible values are <code class="docutils literal notranslate"><span class="pre">Sync</span></code>, <code class="docutils literal notranslate"><span class="pre">Async</span></code>
+and <code class="docutils literal notranslate"><span class="pre">SnapshotsOnly</span></code>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cinder type-show solidfire
+
++---------------------------------+--------------------------------------+
+| Property                        | Value                                |
++---------------------------------+--------------------------------------+
+| description                     | None                                 |
+| extra_specs                     | replication_enabled : &lt;is&gt; True      |
+|                                 | solidfire:replication_mode : Sync    |
+|                                 | volume_backend_name : solidfire      |
+| id                              | 6910843e-0d49-4f8b-84f5-288d3672699d |
+| is_public                       | True                                 |
+| name                            | solidfire                            |
+| os-volume-type-access:is_public | True                                 |
+| qos_specs_id                    | None                                 |
++---------------------------------+--------------------------------------+
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -337,7 +421,7 @@ initiator to use to access volumes on the storage system.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2020-03-18 17:37</div>
+            <div class="docs-updated">updated: 2020-03-18 17:48</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -468,7 +552,7 @@ initiator to use to access volumes on the storage system.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 16cbab92d26af993562817e6d12428f2fa2cb939";
+    var gitSha = "SHA: bd8fb992ac21c2aba315d487b958b962e68df52c";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "NetApp Driver for SolidFire in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -479,7 +563,7 @@ initiator to use to access volumes on the storage system.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2020-03-18 17:37";
+    var buildstring = "Release: 2018.1 on 2020-03-18 17:48";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
