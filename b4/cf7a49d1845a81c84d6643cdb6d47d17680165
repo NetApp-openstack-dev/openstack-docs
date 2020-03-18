@@ -1,0 +1,9 @@
+Code-Review+2: Douglas Viroel <viroel@gmail.com>
+QA-Review+2: Douglas Viroel <viroel@gmail.com>
+Release+1: Douglas Viroel <viroel@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Wed, 18 Mar 2020 18:03:29 -0300
+Reviewed-on: https://review.openstack.netapp.com/1258
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/stable/train
