@@ -246,8 +246,8 @@ can be associated to multiple security services.
 Share Networks
 --------------
 
-A share network is an object that defines a relationship between a
-tenant's network/subnet (as defined in an OpenStack network service
+A share network is an object that defines a relationship between a set of
+tenant's networks/subnets (as defined in an OpenStack network service
 (Neutron or Nova-network)) and the Manila shares created by the same
 tenant; that is, a tenant may find it desirable to provision shares such
 that only instances connected to a particular OpenStack-defined network
@@ -257,6 +257,17 @@ have access to the share.
 
    As of Kilo, share networks are no longer required arguments when
    creating shares.
+
+Share Network Subnets
+---------------------
+
+A share network subnet is an entity that defines a relationship between a
+single tenant's network/subnet (as defined in an OpenStack network
+service (Neutron)) and the Manila share instance created by the same.
+Since Train release, such information that once belonged to the share network
+entity, is now under the share network subnet management.
+This change led to another change in the share server object, which is now
+associated to a share network subnet instead of a share network.
 
 Share Servers
 -------------
@@ -300,6 +311,10 @@ services, please refer to :ref:`figure-6.2` and :ref:`figure-6.3`.
    Manila. For a detailed example, refer to the
    :ref:`Importing and exporting Manila Share servers<manage-share-server>`.
 
+.. note::
+   From Train release, the share server is no longer associated to a share
+   network, but with the share network subnet instead.
+
 Share Replicas
 --------------
 
@@ -321,10 +336,10 @@ writable, readable, and DR.
 
 .. important::
 
-   The NetApp Unified Driver for ONTAP *without* Share
-   Server management currently supports DR style replication. The
-   NetApp Unified Driver for ONTAP *with* Share Server
-   management does not support replication.
+   The NetApp Unified Driver for ONTAP provides DR replication only if you are
+   operating *without* Share Server management until Stein Release. From Train
+   release, the NetApp Unified Driver for ONTAP *with* Share Server
+   management does support DR style replication.
 
 Share Migration
 ---------------
