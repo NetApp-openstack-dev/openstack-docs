@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -155,8 +155,8 @@ in Cinder; for more information, please refer to the <a class="reference externa
 Configuration
 Reference.</a></p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Block Storage V2 API has been deprecated. To ensure Cinder does not
+<p class="admonition-title">Note</p>
+<p>Block Storage V2 API has been deprecated. To ensure Cinder does not
 use the V2 API, update <code class="docutils literal notranslate"><span class="pre">enable_v2_api=false</span></code> and <code class="docutils literal notranslate"><span class="pre">enable_v3_api=true</span></code>
 in your cinder.conf file.</p>
 </div>
@@ -166,62 +166,62 @@ in your cinder.conf file.</p>
 operations that can be performed on Cinder volumes. Please note that
 Cinder volumes are identified as CLI command arguments by either their
 names or UUID.</p>
-<table border="1" class="docutils" id="table-4-2">
+<table class="docutils align-default" id="table-4-2">
 <colgroup>
-<col width="11%" />
-<col width="16%" />
-<col width="73%" />
+<col style="width: 11%" />
+<col style="width: 16%" />
+<col style="width: 73%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Create</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">create</span></code></td>
-<td>Create a Cinder volume of specified size; optional name, availability zone, volume type</td>
+<tbody>
+<tr class="row-even"><td><p>Create</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">create</span></code></p></td>
+<td><p>Create a Cinder volume of specified size; optional name, availability zone, volume type</p></td>
 </tr>
-<tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">delete</span></code></td>
-<td>Delete an existing Cinder volume; the <code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">force-delete</span></code> command may be required if the Cinder volume is in an error state</td>
+<tr class="row-odd"><td><p>Delete</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">delete</span></code></p></td>
+<td><p>Delete an existing Cinder volume; the <code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">force-delete</span></code> command may be required if the Cinder volume is in an error state</p></td>
 </tr>
-<tr class="row-even"><td>Edit</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">metadata</span></code></td>
-<td>Set or unset metadata on a Cinder volume</td>
+<tr class="row-even"><td><p>Edit</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">metadata</span></code></p></td>
+<td><p>Set or unset metadata on a Cinder volume</p></td>
 </tr>
-<tr class="row-odd"><td>Extend</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">extend</span></code></td>
-<td>Increase the capacity of a Cinder volume to the specified size</td>
+<tr class="row-odd"><td><p>Extend</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">extend</span></code></p></td>
+<td><p>Increase the capacity of a Cinder volume to the specified size</p></td>
 </tr>
-<tr class="row-even"><td>List</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">list</span></code></td>
-<td>List all Cinder volumes</td>
+<tr class="row-even"><td><p>List</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">list</span></code></p></td>
+<td><p>List all Cinder volumes</p></td>
 </tr>
-<tr class="row-odd"><td>Migrate</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">migrate</span></code></td>
-<td>Move a Cinder volume to a new Cinder backend (specified by name)</td>
+<tr class="row-odd"><td><p>Migrate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">migrate</span></code></p></td>
+<td><p>Move a Cinder volume to a new Cinder backend (specified by name)</p></td>
 </tr>
-<tr class="row-even"><td>Show</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">show</span></code></td>
-<td>Show details about a Cinder volume</td>
+<tr class="row-even"><td><p>Show</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">show</span></code></p></td>
+<td><p>Show details about a Cinder volume</p></td>
 </tr>
-<tr class="row-odd"><td>Upload as image</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">upload-to-image</span></code></td>
-<td>Upload a Cinder volume to the OpenStack Image Service</td>
+<tr class="row-odd"><td><p>Upload as image</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">upload-to-image</span></code></p></td>
+<td><p>Upload a Cinder volume to the OpenStack Image Service</p></td>
 </tr>
-<tr class="row-even"><td>Manage</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">manage</span></code></td>
-<td>Bring an existing storage object under Cinder management</td>
+<tr class="row-even"><td><p>Manage</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">manage</span></code></p></td>
+<td><p>Bring an existing storage object under Cinder management</p></td>
 </tr>
-<tr class="row-odd"><td>Unmanage</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">unmanage</span></code></td>
-<td>Cease management of an existing Cinder volume without deleting the backing storage object</td>
+<tr class="row-odd"><td><p>Unmanage</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">unmanage</span></code></p></td>
+<td><p>Cease management of an existing Cinder volume without deleting the backing storage object</p></td>
 </tr>
-<tr class="row-even"><td>Revert to snapshot</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">revert-to-snapshot</span></code></td>
-<td>Restore a Cinder volume to the state and data of the most recent snapshot. This command is only available in microversion 3.40 and above.</td>
+<tr class="row-even"><td><p>Revert to snapshot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">revert-to-snapshot</span></code></p></td>
+<td><p>Restore a Cinder volume to the state and data of the most recent snapshot. This command is only available in microversion 3.40 and above.</p></td>
 </tr>
 </tbody>
 </table>
@@ -233,46 +233,46 @@ names or UUID.</p>
 operations that can be performed on Cinder snapshots. Please note that
 Cinder snapshots are identified as CLI command arguments by either their
 display name or UUID.</p>
-<table border="1" class="docutils" id="table-4-3">
+<table class="docutils align-default" id="table-4-3">
 <colgroup>
-<col width="14%" />
-<col width="33%" />
-<col width="53%" />
+<col style="width: 14%" />
+<col style="width: 33%" />
+<col style="width: 53%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Create</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-create</span></code></td>
-<td>Create a Cinder snapshot of a specific Cinder volume</td>
+<tbody>
+<tr class="row-even"><td><p>Create</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-create</span></code></p></td>
+<td><p>Create a Cinder snapshot of a specific Cinder volume</p></td>
 </tr>
-<tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-delete</span></code></td>
-<td>Delete a Cinder snapshot</td>
+<tr class="row-odd"><td><p>Delete</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-delete</span></code></p></td>
+<td><p>Delete a Cinder snapshot</p></td>
 </tr>
-<tr class="row-even"><td>Edit</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-metadata</span></code></td>
-<td>Set or unset metadata on a Cinder snapshot</td>
+<tr class="row-even"><td><p>Edit</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-metadata</span></code></p></td>
+<td><p>Set or unset metadata on a Cinder snapshot</p></td>
 </tr>
-<tr class="row-odd"><td>List</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-list</span></code></td>
-<td>List all Cinder snapshots</td>
+<tr class="row-odd"><td><p>List</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-list</span></code></p></td>
+<td><p>List all Cinder snapshots</p></td>
 </tr>
-<tr class="row-even"><td>Rename</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-rename</span></code></td>
-<td>Change the display-name of a Cinder snapshot</td>
+<tr class="row-even"><td><p>Rename</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-rename</span></code></p></td>
+<td><p>Change the display-name of a Cinder snapshot</p></td>
 </tr>
-<tr class="row-odd"><td>Reset State</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-reset-state</span></code></td>
-<td>Reset the state of a Cinder snapshot</td>
+<tr class="row-odd"><td><p>Reset State</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-reset-state</span></code></p></td>
+<td><p>Reset the state of a Cinder snapshot</p></td>
 </tr>
-<tr class="row-even"><td>Show</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-show</span></code></td>
-<td>Show details about a Cinder snapshot</td>
+<tr class="row-even"><td><p>Show</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">snapshot-show</span></code></p></td>
+<td><p>Show details about a Cinder snapshot</p></td>
 </tr>
 </tbody>
 </table>
@@ -288,66 +288,66 @@ UUID. Consistency group operations support has been deprecated in
 Block Storage V3 API. Only Block Storage V2 API supports consistency
 groups. Future releases will involve a migration of existing
 consistency group operations to use generic volume group operations.</p>
-<table border="1" class="docutils" id="table-4-4">
+<table class="docutils align-default" id="table-4-4">
 <colgroup>
-<col width="31%" />
-<col width="17%" />
-<col width="53%" />
+<col style="width: 31%" />
+<col style="width: 17%" />
+<col style="width: 53%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Create</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-create</span></code></td>
-<td>Create a consistency group with support for at least one volume type</td>
+<tbody>
+<tr class="row-even"><td><p>Create</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-create</span></code></p></td>
+<td><p>Create a consistency group with support for at least one volume type</p></td>
 </tr>
-<tr class="row-odd"><td>Show</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-show</span></code></td>
-<td>Display details for a specified consistency group</td>
+<tr class="row-odd"><td><p>Show</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-show</span></code></p></td>
+<td><p>Display details for a specified consistency group</p></td>
 </tr>
-<tr class="row-even"><td>List</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-list</span></code></td>
-<td>Show a list of all created consistency groups</td>
+<tr class="row-even"><td><p>List</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-list</span></code></p></td>
+<td><p>Show a list of all created consistency groups</p></td>
 </tr>
-<tr class="row-odd"><td>Create a volume and add it to a consistency group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">create</span></code></td>
-<td>Expand a consistency group to have another volume by creating a volume with the <code class="docutils literal notranslate"><span class="pre">--consisgroup-id</span></code> parameter</td>
+<tr class="row-odd"><td><p>Create a volume and add it to a consistency group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">create</span></code></p></td>
+<td><p>Expand a consistency group to have another volume by creating a volume with the <code class="docutils literal notranslate"><span class="pre">--consisgroup-id</span></code> parameter</p></td>
 </tr>
-<tr class="row-even"><td>Create a cgsnapshot</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-create</span></code></td>
-<td>Generate a snapshot of a consistency group</td>
+<tr class="row-even"><td><p>Create a cgsnapshot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-create</span></code></p></td>
+<td><p>Generate a snapshot of a consistency group</p></td>
 </tr>
-<tr class="row-odd"><td>Show a snapshot of a consistency group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-show</span></code></td>
-<td>Display details for the cgsnapshot of consistency group</td>
+<tr class="row-odd"><td><p>Show a snapshot of a consistency group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-show</span></code></p></td>
+<td><p>Display details for the cgsnapshot of consistency group</p></td>
 </tr>
-<tr class="row-even"><td>List consistency group snapshots</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-list</span></code></td>
-<td>Display all cgsnapshots for a consistency group</td>
+<tr class="row-even"><td><p>List consistency group snapshots</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-list</span></code></p></td>
+<td><p>Display all cgsnapshots for a consistency group</p></td>
 </tr>
-<tr class="row-odd"><td>Delete a snapshot of a consistency group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-delete</span></code></td>
-<td>Remove a cgsnapshot</td>
+<tr class="row-odd"><td><p>Delete a snapshot of a consistency group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">cgsnapshot-delete</span></code></p></td>
+<td><p>Remove a cgsnapshot</p></td>
 </tr>
-<tr class="row-even"><td>Delete a consistency group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-delete</span></code></td>
-<td>The <code class="docutils literal notranslate"><span class="pre">--force</span></code> flag is required when volumes are inside the consistency group</td>
+<tr class="row-even"><td><p>Delete a consistency group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-delete</span></code></p></td>
+<td><p>The <code class="docutils literal notranslate"><span class="pre">--force</span></code> flag is required when volumes are inside the consistency group</p></td>
 </tr>
-<tr class="row-odd"><td>Modify a consistency group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-update</span></code></td>
-<td>Add or remove volumes from a consistency group with <code class="docutils literal notranslate"><span class="pre">--add-volumes</span> <span class="pre">[UUID-list]</span></code> or <code class="docutils literal notranslate"><span class="pre">--remove-volumes</span> <span class="pre">[UUID-list]</span></code> parameters</td>
+<tr class="row-odd"><td><p>Modify a consistency group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-update</span></code></p></td>
+<td><p>Add or remove volumes from a consistency group with <code class="docutils literal notranslate"><span class="pre">--add-volumes</span> <span class="pre">[UUID-list]</span></code> or <code class="docutils literal notranslate"><span class="pre">--remove-volumes</span> <span class="pre">[UUID-list]</span></code> parameters</p></td>
 </tr>
-<tr class="row-even"><td>Create a consistency group from the snapshot of another consistency group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-create-from-src</span></code></td>
-<td>Use a cgsnapshot to generate a new consistency group</td>
+<tr class="row-even"><td><p>Create a consistency group from the snapshot of another consistency group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-create-from-src</span></code></p></td>
+<td><p>Use a cgsnapshot to generate a new consistency group</p></td>
 </tr>
-<tr class="row-odd"><td>Create a consistency group from a source consistency group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-create-from-src</span></code></td>
-<td>Copy a consistency group</td>
+<tr class="row-odd"><td><p>Create a consistency group from a source consistency group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">consisgroup-create-from-src</span></code></p></td>
+<td><p>Copy a consistency group</p></td>
 </tr>
 </tbody>
 </table>
@@ -359,38 +359,38 @@ consistency group operations to use generic volume group operations.</p>
 operations that can be performed on Cinder backups. Please note that
 Cinder backups are identified as CLI command arguments by either their
 display name or UUID.</p>
-<table border="1" class="docutils" id="table-4-5">
+<table class="docutils align-default" id="table-4-5">
 <colgroup>
-<col width="14%" />
-<col width="32%" />
-<col width="53%" />
+<col style="width: 14%" />
+<col style="width: 32%" />
+<col style="width: 53%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Create</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-create</span></code></td>
-<td>Create a Cinder backup</td>
+<tbody>
+<tr class="row-even"><td><p>Create</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-create</span></code></p></td>
+<td><p>Create a Cinder backup</p></td>
 </tr>
-<tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-delete</span></code></td>
-<td>Delete a Cinder backup</td>
+<tr class="row-odd"><td><p>Delete</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-delete</span></code></p></td>
+<td><p>Delete a Cinder backup</p></td>
 </tr>
-<tr class="row-even"><td>List</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-list</span></code></td>
-<td>List all Cinder backups</td>
+<tr class="row-even"><td><p>List</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-list</span></code></p></td>
+<td><p>List all Cinder backups</p></td>
 </tr>
-<tr class="row-odd"><td>Restore</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-restore</span></code></td>
-<td>Restore a Cinder backup into a Cinder volume</td>
+<tr class="row-odd"><td><p>Restore</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-restore</span></code></p></td>
+<td><p>Restore a Cinder backup into a Cinder volume</p></td>
 </tr>
-<tr class="row-even"><td>Show</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-show</span></code></td>
-<td>Show details about a Cinder backup</td>
+<tr class="row-even"><td><p>Show</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">backup-show</span></code></p></td>
+<td><p>Show details about a Cinder backup</p></td>
 </tr>
 </tbody>
 </table>
@@ -403,21 +403,21 @@ operations that can be performed on Cinder groups. Please note that
 Cinder groups are identified as CLI command arguments by either their
 display name or UUID.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Currently only the Block Storage V3 API supports group operations. The
+<p class="admonition-title">Note</p>
+<p>Currently only the Block Storage V3 API supports group operations. The
 minimum version for group operations supported by the ONTAP drivers is
 3.14. The API version can be specified with the following CLI flag
 <code class="docutils literal notranslate"><span class="pre">--os-volume-api-version</span> <span class="pre">3.14</span></code></p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The Cinder community plans to migrate existing consistency group operations
+<p class="admonition-title">Note</p>
+<p>The Cinder community plans to migrate existing consistency group operations
 to group operations in an upcoming release. Please review Cinder
 release notes for upgrade instructions prior to using group operations.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The ONTAP volume drivers support the consistent_group_snapshot_enabled
+<p class="admonition-title">Note</p>
+<p>The ONTAP volume drivers support the consistent_group_snapshot_enabled
 group type. By default Cinder group snapshots take individual snapshots
 of each Cinder volume in the group. To enable consistency group snapshots set
 <code class="docutils literal notranslate"><span class="pre">consistent_group_snapshot_enabled=&quot;&lt;is&gt;</span> <span class="pre">True&quot;</span></code> in the group type used.
@@ -425,90 +425,90 @@ Be aware that only one consistency group snapshot per storage pool (i.e.
 flexvol) can be performed at a time. Overlapping consistency group snapshot
 operations can fail.</p>
 </div>
-<table border="1" class="docutils" id="table-4-6">
+<table class="docutils align-default" id="table-4-6">
 <colgroup>
-<col width="26%" />
-<col width="25%" />
-<col width="49%" />
+<col style="width: 26%" />
+<col style="width: 25%" />
+<col style="width: 49%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Create</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-create</span></code></td>
-<td>Creates a group.</td>
+<tbody>
+<tr class="row-even"><td><p>Create</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-create</span></code></p></td>
+<td><p>Creates a group.</p></td>
 </tr>
-<tr class="row-odd"><td>Create a group from a source group</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-create-from-src</span></code></td>
-<td>Creates a group from a group snapshot or a source group.</td>
+<tr class="row-odd"><td><p>Create a group from a source group</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-create-from-src</span></code></p></td>
+<td><p>Creates a group from a group snapshot or a source group.</p></td>
 </tr>
-<tr class="row-even"><td>Delete</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-delete</span></code></td>
-<td>Removes one or more groups.</td>
+<tr class="row-even"><td><p>Delete</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-delete</span></code></p></td>
+<td><p>Removes one or more groups.</p></td>
 </tr>
-<tr class="row-odd"><td>List</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-list</span></code></td>
-<td>Lists all groups.</td>
+<tr class="row-odd"><td><p>List</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-list</span></code></p></td>
+<td><p>Lists all groups.</p></td>
 </tr>
-<tr class="row-even"><td>Show</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-show</span></code></td>
-<td>Shows details of a group.</td>
+<tr class="row-even"><td><p>Show</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-show</span></code></p></td>
+<td><p>Shows details of a group.</p></td>
 </tr>
-<tr class="row-odd"><td>Update</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-update</span></code></td>
-<td>Updates a group.</td>
+<tr class="row-odd"><td><p>Update</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-update</span></code></p></td>
+<td><p>Updates a group.</p></td>
 </tr>
-<tr class="row-even"><td>Create group snapshot</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-create</span></code></td>
-<td>Creates a group snapshot.</td>
+<tr class="row-even"><td><p>Create group snapshot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-create</span></code></p></td>
+<td><p>Creates a group snapshot.</p></td>
 </tr>
-<tr class="row-odd"><td>Delete group snapshot</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-delete</span></code></td>
-<td>Removes one or more group snapshots.</td>
+<tr class="row-odd"><td><p>Delete group snapshot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-delete</span></code></p></td>
+<td><p>Removes one or more group snapshots.</p></td>
 </tr>
-<tr class="row-even"><td>List group snapshot</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-list</span></code></td>
-<td>Lists all group snapshots.</td>
+<tr class="row-even"><td><p>List group snapshot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-list</span></code></p></td>
+<td><p>Lists all group snapshots.</p></td>
 </tr>
-<tr class="row-odd"><td>Show group snapshot</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-show</span></code></td>
-<td>Shows group snapshot details.</td>
+<tr class="row-odd"><td><p>Show group snapshot</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-snapshot-show</span></code></p></td>
+<td><p>Shows group snapshot details.</p></td>
 </tr>
-<tr class="row-even"><td>Create group type</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-create</span></code></td>
-<td>Creates a group type.</td>
+<tr class="row-even"><td><p>Create group type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-create</span></code></p></td>
+<td><p>Creates a group type.</p></td>
 </tr>
-<tr class="row-odd"><td>Delete group type</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-delete</span></code></td>
-<td>Deletes group type or types.</td>
+<tr class="row-odd"><td><p>Delete group type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-delete</span></code></p></td>
+<td><p>Deletes group type or types.</p></td>
 </tr>
-<tr class="row-even"><td>List default group type</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-default</span></code></td>
-<td>List the default group type.</td>
+<tr class="row-even"><td><p>List default group type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-default</span></code></p></td>
+<td><p>List the default group type.</p></td>
 </tr>
-<tr class="row-odd"><td>List group types</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-list</span></code></td>
-<td>Lists available ‘group types’. (Admin only will see private types)</td>
+<tr class="row-odd"><td><p>List group types</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-list</span></code></p></td>
+<td><p>Lists available ‘group types’. (Admin only will see private types)</p></td>
 </tr>
-<tr class="row-even"><td>Show group type</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-show</span></code></td>
-<td>Show group type details.</td>
+<tr class="row-even"><td><p>Show group type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-show</span></code></p></td>
+<td><p>Show group type details.</p></td>
 </tr>
-<tr class="row-odd"><td>Update group type</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-update</span></code></td>
-<td>Updates group type name, description, and/or is_public.</td>
+<tr class="row-odd"><td><p>Update group type</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-update</span></code></p></td>
+<td><p>Updates group type name, description, and/or is_public.</p></td>
 </tr>
-<tr class="row-even"><td>List group specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-specs-list</span></code></td>
-<td>Lists current group types and specs.</td>
+<tr class="row-even"><td><p>List group specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-specs-list</span></code></p></td>
+<td><p>Lists current group types and specs.</p></td>
 </tr>
-<tr class="row-odd"><td>Set group specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-key</span></code></td>
-<td>Set or unset group_spec for a group type.</td>
+<tr class="row-odd"><td><p>Set group specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">group-type-key</span></code></p></td>
+<td><p>Set or unset group_spec for a group type.</p></td>
 </tr>
 </tbody>
 </table>
@@ -520,30 +520,30 @@ operations can fail.</p>
 operations that can be performed on Cinder volume types. Please note
 that Cinder volume types are identified as CLI command arguments by
 either their display name or UUID.</p>
-<table border="1" class="docutils" id="table-4-7">
+<table class="docutils align-default" id="table-4-7">
 <colgroup>
-<col width="17%" />
-<col width="35%" />
-<col width="48%" />
+<col style="width: 17%" />
+<col style="width: 35%" />
+<col style="width: 48%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Create</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-create</span></code></td>
-<td>Create a Cinder volume type</td>
+<tbody>
+<tr class="row-even"><td><p>Create</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-create</span></code></p></td>
+<td><p>Create a Cinder volume type</p></td>
 </tr>
-<tr class="row-odd"><td>Delete</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-delete</span></code></td>
-<td>Delete a Cinder volume type</td>
+<tr class="row-odd"><td><p>Delete</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-delete</span></code></p></td>
+<td><p>Delete a Cinder volume type</p></td>
 </tr>
-<tr class="row-even"><td>List</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-list</span></code></td>
-<td>List existing Cinder volume type</td>
+<tr class="row-even"><td><p>List</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-list</span></code></p></td>
+<td><p>List existing Cinder volume type</p></td>
 </tr>
 </tbody>
 </table>
@@ -555,26 +555,26 @@ either their display name or UUID.</p>
 the valid operations that can be performed on Cinder volume type extra
 specs. Please note that Cinder volume type extra specs are properties of
 Cinder volume types and are identified by their parent object.</p>
-<table border="1" class="docutils" id="table-4-8">
+<table class="docutils align-default" id="table-4-8">
 <colgroup>
-<col width="21%" />
-<col width="34%" />
-<col width="45%" />
+<col style="width: 21%" />
+<col style="width: 34%" />
+<col style="width: 45%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Set extra specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-key</span> <span class="pre">vtype</span> <span class="pre">set</span></code></td>
-<td>Assign extra specs to Cinder volume type</td>
+<tbody>
+<tr class="row-even"><td><p>Set extra specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-key</span> <span class="pre">vtype</span> <span class="pre">set</span></code></p></td>
+<td><p>Assign extra specs to Cinder volume type</p></td>
 </tr>
-<tr class="row-odd"><td>Unset extra specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-key</span> <span class="pre">vtype</span> <span class="pre">unset</span></code></td>
-<td>Remove extra specs from Cinder volume type</td>
+<tr class="row-odd"><td><p>Unset extra specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">type-key</span> <span class="pre">vtype</span> <span class="pre">unset</span></code></p></td>
+<td><p>Remove extra specs from Cinder volume type</p></td>
 </tr>
 </tbody>
 </table>
@@ -587,46 +587,46 @@ valid operations that can be performed on Cinder volume type QoS specs.
 Please note that Cinder volume type QoS specs are created independently
 of Cinder volume types and are subsequently associated with a Cinder
 volume type.</p>
-<table border="1" class="docutils" id="table-4-9">
+<table class="docutils align-default" id="table-4-9">
 <colgroup>
-<col width="22%" />
-<col width="26%" />
-<col width="51%" />
+<col style="width: 22%" />
+<col style="width: 26%" />
+<col style="width: 51%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Operation</th>
-<th class="head">CLI Command</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>Create QoS specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-create</span></code></td>
-<td>Create a Cinder QoS Spec</td>
+<tbody>
+<tr class="row-even"><td><p>Create QoS specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-create</span></code></p></td>
+<td><p>Create a Cinder QoS Spec</p></td>
 </tr>
-<tr class="row-odd"><td>Delete QoS specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-delete</span></code></td>
-<td>Delete a Cinder QoS Spec</td>
+<tr class="row-odd"><td><p>Delete QoS specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-delete</span></code></p></td>
+<td><p>Delete a Cinder QoS Spec</p></td>
 </tr>
-<tr class="row-even"><td>List QoS specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-list</span></code></td>
-<td>List existing Cinder QoS Specs</td>
+<tr class="row-even"><td><p>List QoS specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-list</span></code></p></td>
+<td><p>List existing Cinder QoS Specs</p></td>
 </tr>
-<tr class="row-odd"><td>Show</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-show</span></code></td>
-<td>Show details about a Cinder QoS Spec</td>
+<tr class="row-odd"><td><p>Show</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-show</span></code></p></td>
+<td><p>Show details about a Cinder QoS Spec</p></td>
 </tr>
-<tr class="row-even"><td>Associate QoS specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-associate</span></code></td>
-<td>Associate a Cinder QoS Spec with a Cinder volume type</td>
+<tr class="row-even"><td><p>Associate QoS specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-associate</span></code></p></td>
+<td><p>Associate a Cinder QoS Spec with a Cinder volume type</p></td>
 </tr>
-<tr class="row-odd"><td>Disassociate QoS specs</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-disassociate</span></code></td>
-<td>Disassociate a Cinder QoS Spec from a Cinder volume type</td>
+<tr class="row-odd"><td><p>Disassociate QoS specs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-disassociate</span></code></p></td>
+<td><p>Disassociate a Cinder QoS Spec from a Cinder volume type</p></td>
 </tr>
-<tr class="row-even"><td>Edit QoS spec</td>
-<td><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-key</span></code></td>
-<td>Set or unset specifications for a Cinder QoS Spec</td>
+<tr class="row-even"><td><p>Edit QoS spec</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cinder</span> <span class="pre">qos-key</span></code></p></td>
+<td><p>Set or unset specifications for a Cinder QoS Spec</p></td>
 </tr>
 </tbody>
 </table>
@@ -649,7 +649,7 @@ volume type.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -780,7 +780,7 @@ volume type.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 253273a08b9fa80b939ad38cb54619c7f4e13fae";
+    var gitSha = "SHA: 59e76bd153841a1a24795c1e8a5d434c6c74726b";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "API Overview in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -791,7 +791,7 @@ volume type.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2019-06-12 18:23";
+    var buildstring = "Release: 2018.1 on 2020-03-18 14:19";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

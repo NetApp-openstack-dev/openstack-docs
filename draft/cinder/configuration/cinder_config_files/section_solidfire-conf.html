@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -153,30 +153,30 @@ For more information on the configuration and best practices please visit
 the following link: <a class="reference external" href="http://www.netapp.com/us/media/tr-4620.pdf">http://www.netapp.com/us/media/tr-4620.pdf</a></p>
 <p>Table 4.18 lists the required storage system attributes used in the
 <code class="docutils literal notranslate"><span class="pre">/etc/cinder/cinder.conf</span></code> configuration file.</p>
-<table border="1" class="docutils" id="table-4-18">
+<table class="docutils align-default" id="table-4-18">
 <colgroup>
-<col width="34%" />
-<col width="25%" />
-<col width="41%" />
+<col style="width: 34%" />
+<col style="width: 25%" />
+<col style="width: 41%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">SolidFire Attribute</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>SolidFire Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">san_ip</span></code></td>
-<td>None</td>
-<td>SolidFire cluster MVIP</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">san_ip</span></code></p></td>
+<td><p>None</p></td>
+<td><p>SolidFire cluster MVIP</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">san_login</span></code></td>
-<td>None</td>
-<td>SolidFire cluster administrative user</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">san_login</span></code></p></td>
+<td><p>None</p></td>
+<td><p>SolidFire cluster administrative user</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">san_password</span></code></td>
-<td>None</td>
-<td>SolidFire cluster administrative password</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">san_password</span></code></p></td>
+<td><p>None</p></td>
+<td><p>SolidFire cluster administrative password</p></td>
 </tr>
 </tbody>
 </table>
@@ -201,71 +201,71 @@ the cluster admin login credentials</p>
 in the <code class="docutils literal notranslate"><span class="pre">[solidfire]</span></code> section of the <code class="docutils literal notranslate"><span class="pre">/etc/cinder/cinder.conf</span></code>
 configuration file to control the interaction between the storage
 system and the OpenStack Cinder service. (See Table 4.19.)</p>
-<table border="1" class="docutils" id="table-4-19">
+<table class="docutils align-default" id="table-4-19">
 <colgroup>
-<col width="14%" />
-<col width="10%" />
-<col width="76%" />
+<col style="width: 14%" />
+<col style="width: 10%" />
+<col style="width: 76%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">SolidFire Attribute</th>
-<th class="head">Default</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>SolidFire Attribute</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">sf_account_prefix</span></code></td>
-<td>None</td>
-<td>Create storage system accounts with this prefix. The default is no prefix.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_account_prefix</span></code></p></td>
+<td><p>None</p></td>
+<td><p>Create storage system accounts with this prefix. The default is no prefix.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">sf_allow_template_caching</span></code></td>
-<td>True</td>
-<td>Create an internal cache of image copies when a bootable volume is created to eliminate the fetch from OpenStack Glance and QEMU conversion on subsequent calls.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_allow_template_caching</span></code></p></td>
+<td><p>True</p></td>
+<td><p>Create an internal cache of image copies when a bootable volume is created to eliminate the fetch from OpenStack Glance and QEMU conversion on subsequent calls.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">sf_allow_tenant_qos</span></code></td>
-<td>False</td>
-<td>Allow individual tenants to specify QoS on volume creation. Setting this value to True disables dynamic QOS as well as administrative control over QOS. Changing from the default is not recommended.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_allow_tenant_qos</span></code></p></td>
+<td><p>False</p></td>
+<td><p>Allow individual tenants to specify QoS on volume creation. Setting this value to True disables dynamic QOS as well as administrative control over QOS. Changing from the default is not recommended.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">sf_api_port</span></code></td>
-<td>443</td>
-<td>The SolidFire storage system API port. Change this value if the device API is behind a proxy on a different port.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_api_port</span></code></p></td>
+<td><p>443</p></td>
+<td><p>The SolidFire storage system API port. Change this value if the device API is behind a proxy on a different port.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">sf_emulate_512</span></code></td>
-<td>True</td>
-<td>Set 512-byte emulation on volume creation. Note: The default is to enable 512 emulation. Required for KVM hypervisors.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_emulate_512</span></code></p></td>
+<td><p>True</p></td>
+<td><p>Set 512-byte emulation on volume creation. Note: The default is to enable 512 emulation. Required for KVM hypervisors.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">sf_enable_vag</span></code></td>
-<td>False</td>
-<td>Use volume access groups on a per tenant basis instead of using CHAP secrets.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_enable_vag</span></code></p></td>
+<td><p>False</p></td>
+<td><p>Use volume access groups on a per tenant basis instead of using CHAP secrets.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">sf_enable_volume_mapping</span></code></td>
-<td>True</td>
-<td>Create an internal mapping of volume IDs and accounts. This option optimizes look-ups and performance at the expense of memory. Use with caution. For very large deployments, this can cause performance issues.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_enable_volume_mapping</span></code></p></td>
+<td><p>True</p></td>
+<td><p>Create an internal mapping of volume IDs and accounts. This option optimizes look-ups and performance at the expense of memory. Use with caution. For very large deployments, this can cause performance issues.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">sf_svip</span></code></td>
-<td>None</td>
-<td>Overrides the default cluster SVIP with the one specified. This option should only be used when multiple OpenStack instances are accessing the storage cluster from non-default VLANs.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_svip</span></code></p></td>
+<td><p>None</p></td>
+<td><p>Overrides the default cluster SVIP with the one specified. This option should only be used when multiple OpenStack instances are accessing the storage cluster from non-default VLANs.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">sf_template_account_name</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">openstack-vtemplate</span></code></td>
-<td>The account name on the SF-Series cluster to use as the owner of the template and cache volumes.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_template_account_name</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openstack-vtemplate</span></code></p></td>
+<td><p>The account name on the SF-Series cluster to use as the owner of the template and cache volumes.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">sf_volume_prefix</span></code></td>
-<td><code class="docutils literal notranslate"><span class="pre">UUID-</span></code></td>
-<td>Create volumes on the cluster with this prefix. Volumes use the prefix format <code class="docutils literal notranslate"><span class="pre">&lt;sf_volume_prefix&gt;&lt;cindervolume-id&gt;</span></code>. The default is to use the prefix <code class="docutils literal notranslate"><span class="pre">UUID-</span></code>.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_volume_prefix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">UUID-</span></code></p></td>
+<td><p>Create volumes on the cluster with this prefix. Volumes use the prefix format <code class="docutils literal notranslate"><span class="pre">&lt;sf_volume_prefix&gt;&lt;cindervolume-id&gt;</span></code>. The default is to use the prefix <code class="docutils literal notranslate"><span class="pre">UUID-</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
 <p>Table 4.19. Optional SolidFire Attributes</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Set sf_allow_template_caching to False and use the
+<p class="admonition-title">Note</p>
+<p>Set sf_allow_template_caching to False and use the
 generalized Cinder global caching feature instead
 of the SolidFire internal image caching feature.</p>
 </div>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">NetApp recommends the use of the generalized Cinder global caching
+<p class="admonition-title">Tip</p>
+<p>NetApp recommends the use of the generalized Cinder global caching
 feature over the SolidFire internal image cache.  As of the Queens
 release, the default value of sf_allow_template_caching will be
 set to False.  Also in the Queens release, the SolidFire internal
@@ -296,8 +296,8 @@ OpenStack cloud instances attached to a single SolidFire system,
 NetApp recommends that you change this variable for each instance
 using the SolidFire system.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">The variable <code class="docutils literal notranslate"><span class="pre">sf_volume_prefix</span></code> should not be changed within a
+<p class="admonition-title">Note</p>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">sf_volume_prefix</span></code> should not be changed within a
 cloud after a volume has been provisioned on the SolidFire storage
 system with OpenStack.</p>
 </div>
@@ -308,8 +308,8 @@ instance accesses the storage system through the shared management
 port. NetApp recommends that you configure each OpenStack cloud
 instance with a unique cluster admin account.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">When you use a single SVIP with OpenStack, the SolidFire
+<p class="admonition-title">Note</p>
+<p>When you use a single SVIP with OpenStack, the SolidFire
 driver acquires the SVIP by querying the cluster. If multiple SVIP
 addresses are configured, the query returns the default SVIP on
 the native virtual network. You can configure an alternate virtual
@@ -337,7 +337,7 @@ initiator to use to access volumes on the storage system.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -468,7 +468,7 @@ initiator to use to access volumes on the storage system.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 253273a08b9fa80b939ad38cb54619c7f4e13fae";
+    var gitSha = "SHA: 59e76bd153841a1a24795c1e8a5d434c6c74726b";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "NetApp Driver for SolidFire in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -479,7 +479,7 @@ initiator to use to access volumes on the storage system.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2019-06-12 18:23";
+    var buildstring = "Release: 2018.1 on 2020-03-18 14:19";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -175,18 +175,17 @@ bandwidth and CPU cycles on the host(s) running Glance and Cinder.
 This is due to the copy operation being performed completely within
 the storage cluster.</p>
 <div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">For maximum Enhanced Instance Creation performance, it is recommended
+<p class="admonition-title">Tip</p>
+<p>For maximum Enhanced Instance Creation performance, it is recommended
 to use the NetApp Copy Offload tool with NFS.</p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>The NetApp Copy Offload tool requires that:</p>
-<ul class="last">
-<li><p class="first">The storage system must have ONTAP v8.2 or greater
-installed.</p>
-</li>
-<li><p class="first">The vStorage feature must be enabled on each storage virtual
+<ul>
+<li><p>The storage system must have ONTAP v8.2 or greater
+installed.</p></li>
+<li><p>The vStorage feature must be enabled on each storage virtual
 machine (SVM, also known as a Vserver) that is permitted to
 interact with the copy offload client. To set this feature:</p>
 <p><code class="docutils literal notranslate"><span class="pre">nfs</span> <span class="pre">modify</span> <span class="pre">-vserver</span> <span class="pre">openstack_vs1</span> <span class="pre">-vstorage</span> <span class="pre">enabled</span></code></p>
@@ -199,17 +198,17 @@ Instance Cloning capability of the NetApp NFS driver when using the
 NetApp Copy Offload tool.</p>
 <div class="figure align-center" id="id1">
 <a class="reference internal image-reference" href="../../_images/rapid_cloning_flowchart.png"><img alt="Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart" src="../../_images/rapid_cloning_flowchart.png" style="width: 5.75000in;" /></a>
-<p class="caption"><span class="caption-text">Figure 5.1. Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart</span></p>
+<p class="caption"><span class="caption-text">Figure 5.1. Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>In the second decision point in the flowchart described in
 the figure above, Cinder determines if the source image from Glance
 and the destination volume would reside in the same FlexVol volume.
 This can be achieved by creating a directory structure within the
 NFS export to segment the Glance images from Cinder volumes, and
 appropriately setting the <code class="docutils literal notranslate"><span class="pre">filesystem_datastore_dir</span></code> and <code class="docutils literal notranslate"><span class="pre">nfs_shares_config</span></code>.</p>
-<p class="last">This is not a best practice.</p>
+<p>This is not a best practice.</p>
 </div>
 </div>
 </div>
@@ -229,7 +228,7 @@ appropriately setting the <code class="docutils literal notranslate"><span class
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -357,7 +356,7 @@ appropriately setting the <code class="docutils literal notranslate"><span class
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 253273a08b9fa80b939ad38cb54619c7f4e13fae";
+    var gitSha = "SHA: 59e76bd153841a1a24795c1e8a5d434c6c74726b";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Theory of Operation:  Enhanced Instance Creation in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -368,7 +367,7 @@ appropriately setting the <code class="docutils literal notranslate"><span class
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2019-06-12 18:23";
+    var buildstring = "Release: 2018.1 on 2020-03-18 14:19";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

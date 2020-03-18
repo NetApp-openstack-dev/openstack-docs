@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -136,42 +136,42 @@ ga('send', 'pageview');
 <p>The following checklist provides the steps necessary for configuration
 of Enhanced Instance Creation with NetApp FAS and/or AFF (ONTAP) for
 iSCSI or Fibre Channel:</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="7%" />
-<col width="80%" />
-<col width="13%" />
+<col style="width: 7%" />
+<col style="width: 80%" />
+<col style="width: 13%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Step</th>
-<th class="head">Description of Step</th>
-<th class="head">Done?</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Step</p></th>
+<th class="head"><p>Description of Step</p></th>
+<th class="head"><p>Done?</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>1</td>
-<td>Configure internal tenant settings in cinder.conf</td>
-<td>&#160;</td>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Configure internal tenant settings in cinder.conf</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>2</td>
-<td>Configure Image-Volume cache setting in cinder.conf</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Configure Image-Volume cache setting in cinder.conf</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>3</td>
-<td>Restart Cinder and Glance services</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Restart Cinder and Glance services</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>4</td>
-<td>Upload a Glance Image</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Upload a Glance Image</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>5</td>
-<td>Boot from Cinder</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Boot from Cinder</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>6</td>
-<td>Verify functionality</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>Verify functionality</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -180,7 +180,7 @@ iSCSI or Fibre Channel:</p>
 <div class="line"><br /></div>
 </div>
 <ol class="arabic simple">
-<li>Configure internal tenant settings in cinder.conf</li>
+<li><p>Configure internal tenant settings in cinder.conf</p></li>
 </ol>
 <p>Obtain the <code class="docutils literal notranslate"><span class="pre">cinder_internal_tenant_project_id</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ openstack service list
@@ -221,7 +221,7 @@ iSCSI or Fibre Channel:</p>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
-<li>Configure Image-Volume cache settings in cinder.conf</li>
+<li><p>Configure Image-Volume cache settings in cinder.conf</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
 <span class="o">...</span>
@@ -230,13 +230,13 @@ iSCSI or Fibre Channel:</p>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
-<li>Restart Cinder services</li>
+<li><p>Restart Cinder services</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ systemctl restart openstack-cinder-{api,scheduler,volume}
 </pre></div>
 </div>
 <ol class="arabic simple" start="4">
-<li>Upload a Glance image</li>
+<li><p>Upload a Glance image</p></li>
 </ol>
 <p>The following command uses an image that is publicly available. Please
 use the image you prefer and replace the URL accordingly.</p>
@@ -244,13 +244,13 @@ use the image you prefer and replace the URL accordingly.</p>
 </pre></div>
 </div>
 <ol class="arabic simple" start="5">
-<li>Boot from Cinder</li>
+<li><p>Boot from Cinder</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nova boot --flavor m1.medium --key-name openstack_key --nic net-id=replace-with-neutron-net-id --block-device source=image,id=replace-with-glance-image-id,dest=volume,shutdown=preserve,bootindex=0,size=5  ubuntu-vm
 </pre></div>
 </div>
 <ol class="arabic simple" start="6">
-<li>Verify functionality</li>
+<li><p>Verify functionality</p></li>
 </ol>
 <p>Please open /var/log/cinder/volume.log and look for a message similar to
 the following to confirm that the image-volume was cached successfully:</p>
@@ -276,7 +276,7 @@ the following to confirm that the image-volume was cached successfully:</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -404,7 +404,7 @@ the following to confirm that the image-volume was cached successfully:</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 253273a08b9fa80b939ad38cb54619c7f4e13fae";
+    var gitSha = "SHA: 59e76bd153841a1a24795c1e8a5d434c6c74726b";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Enhanced Instance Creation with ONTAP iSCSI/FC as a Cinder Backend in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -415,7 +415,7 @@ the following to confirm that the image-volume was cached successfully:</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2019-06-12 18:23";
+    var buildstring = "Release: 2018.1 on 2020-03-18 14:19";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

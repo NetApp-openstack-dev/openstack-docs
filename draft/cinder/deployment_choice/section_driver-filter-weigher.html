@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -174,8 +174,8 @@ or vice-versa. The filter and weigher working together, however,
 create the most benefits when helping the scheduler choose an
 ideal back end.</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">The GoodnessWeigher can be used along with CapacityWeigher
+<p class="admonition-title">Important</p>
+<p>The GoodnessWeigher can be used along with CapacityWeigher
 and others, but must be used with caution as it might
 obfuscate the CapacityWeigher.</p>
 </div>
@@ -187,217 +187,217 @@ filter and goodness weigher to customize the scheduling mechanism.</p>
 <p>There exist three property sets that can be referenced in the
 <code class="docutils literal notranslate"><span class="pre">filter_funtion</span></code> and <code class="docutils literal notranslate"><span class="pre">goodness_function</span></code> definitions:</p>
 <ul class="simple">
-<li><strong>Host stats for a backend</strong>: These refer to the parameters
+<li><p><strong>Host stats for a backend</strong>: These refer to the parameters
 that are specific for the host containing a defined
 backend. This would be analogous to an ONTAP/SolidFire
 cluster. They can be invoked as <code class="docutils literal notranslate"><span class="pre">stats.&lt;property&gt;</span></code>.
 For example: <code class="docutils literal notranslate"><span class="pre">stats.allocated_capacity_gb</span></code>.
 “<a class="reference internal" href="#table-4-12"><span class="std std-ref">Table 4.12</span></a>” lists the
-host stats that can be used for ONTAP and SolidFire systems.</li>
+host stats that can be used for ONTAP and SolidFire systems.</p></li>
 </ul>
-<table border="1" class="docutils" id="table-4-12">
+<table class="docutils align-default" id="table-4-12">
 <colgroup>
-<col width="5%" />
-<col width="1%" />
-<col width="4%" />
-<col width="89%" />
+<col style="width: 5%" />
+<col style="width: 1%" />
+<col style="width: 4%" />
+<col style="width: 89%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Property</th>
-<th class="head">Type</th>
-<th class="head">Products Supported</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Products Supported</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">host</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The name of the host.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">host</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The name of the host.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">volume_backend_name</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The volume backend name as defined in <code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">volume_backend_name</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The volume backend name as defined in <code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code></p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">vendor_name</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The name of the vendor. For ONTAP systems, this is <code class="docutils literal notranslate"><span class="pre">NetApp</span></code>. For SolidFire systems, this is <code class="docutils literal notranslate"><span class="pre">SolidFire</span> <span class="pre">Inc</span></code></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">vendor_name</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The name of the vendor. For ONTAP systems, this is <code class="docutils literal notranslate"><span class="pre">NetApp</span></code>. For SolidFire systems, this is <code class="docutils literal notranslate"><span class="pre">SolidFire</span> <span class="pre">Inc</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">driver_version</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The Cinder driver version.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">driver_version</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The Cinder driver version.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">storage_protocol</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The storage protocol supported. For ONTAP pools, this depends on the protocol enabled for the storage pool (can be iSCSI, NFS or FC). For SolidFire pools, this is <code class="docutils literal notranslate"><span class="pre">iSCSI</span></code>.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">storage_protocol</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The storage protocol supported. For ONTAP pools, this depends on the protocol enabled for the storage pool (can be iSCSI, NFS or FC). For SolidFire pools, this is <code class="docutils literal notranslate"><span class="pre">iSCSI</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">QoS_support</span></code></td>
-<td>Boolean</td>
-<td>ONTAP,SolidFire</td>
-<td>Boolean signifying whether QoS is supported. This is reported as <code class="docutils literal notranslate"><span class="pre">True</span></code> for ONTAP and SolidFire systems.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">QoS_support</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>Boolean signifying whether QoS is supported. This is reported as <code class="docutils literal notranslate"><span class="pre">True</span></code> for ONTAP and SolidFire systems.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">total_capacity_gb</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The total capacity of each pool in GB.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">total_capacity_gb</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The total capacity of each pool in GB.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">allocated_capacity_gb</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The capacity that has been allocated for Cinder volumes on the cluster. This value is reported in GB.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">allocated_capacity_gb</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The capacity that has been allocated for Cinder volumes on the cluster. This value is reported in GB.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">free_capacity_gb</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The amount of free capacity of each pool in GB.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">free_capacity_gb</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The amount of free capacity of each pool in GB.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">reserved_percentage</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The reserved percentage for each pool. This specifies how much space is to be reduced from total_capacity when performing over subscription calculations.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">reserved_percentage</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The reserved percentage for each pool. This specifies how much space is to be reduced from total_capacity when performing over subscription calculations.</p></td>
 </tr>
 </tbody>
 </table>
 <p>Table 4.12 Host statistics for ONTAP and SolidFire systems</p>
 <ul class="simple">
-<li><strong>Requested volume properties</strong>: These statistics are used
+<li><p><strong>Requested volume properties</strong>: These statistics are used
 to control scheduling based on the specifications
 of the volume requested during creation. These parameters
 can be referenced as <code class="docutils literal notranslate"><span class="pre">volume.&lt;property&gt;</span></code>. For example,
 the size of the requested volume is returned by <code class="docutils literal notranslate"><span class="pre">volume.size</span></code>.
 “<a class="reference internal" href="#table-4-13"><span class="std std-ref">Table 4.13</span></a>” contains a list of statistics
 that can be queried from a volume request. These
-statistics would be supported for all NetApp backends.</li>
+statistics would be supported for all NetApp backends.</p></li>
 </ul>
-<table border="1" class="docutils" id="table-4-13">
+<table class="docutils align-default" id="table-4-13">
 <colgroup>
-<col width="5%" />
-<col width="95%" />
+<col style="width: 5%" />
+<col style="width: 95%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Property</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">size</span></code></td>
-<td>The size of the volume requested.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">size</span></code></p></td>
+<td><p>The size of the volume requested.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">volume_type_id</span></code></td>
-<td>The UUID of the volume type.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">volume_type_id</span></code></p></td>
+<td><p>The UUID of the volume type.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">display_name</span></code></td>
-<td>Name of the volume.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">display_name</span></code></p></td>
+<td><p>Name of the volume.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">volume_metadata</span></code></td>
-<td>Metadata associated with the volume.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">volume_metadata</span></code></p></td>
+<td><p>Metadata associated with the volume.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">user_id</span></code></td>
-<td>User ID of the user that creates the volume.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">user_id</span></code></p></td>
+<td><p>User ID of the user that creates the volume.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">display_description</span></code></td>
-<td>Display description for the volume.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">display_description</span></code></p></td>
+<td><p>Display description for the volume.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">source_volid</span></code></td>
-<td>ID of the source volume, if the volume is cloned.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">source_volid</span></code></p></td>
+<td><p>ID of the source volume, if the volume is cloned.</p></td>
 </tr>
 </tbody>
 </table>
 <p>Table 4.13 Volume properties available for Filter and Goodness functions</p>
 <div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">The most commonly used <code class="docutils literal notranslate"><span class="pre">volume.&lt;property&gt;</span></code> is <code class="docutils literal notranslate"><span class="pre">volume.size</span></code>. This enables
+<p class="admonition-title">Important</p>
+<p>The most commonly used <code class="docutils literal notranslate"><span class="pre">volume.&lt;property&gt;</span></code> is <code class="docutils literal notranslate"><span class="pre">volume.size</span></code>. This enables
 admins to schedule volume placement based on the size of the volume that is
 requested.</p>
 </div>
 <ul class="simple">
-<li><strong>Backend specific capabilities</strong>: The following table
+<li><p><strong>Backend specific capabilities</strong>: The following table
 contains a list of capabilities reported by the ONTAP
-and SolidFire Cinder drivers.</li>
+and SolidFire Cinder drivers.</p></li>
 </ul>
-<table border="1" class="docutils" id="table-4-14">
+<table class="docutils align-default" id="table-4-14">
 <colgroup>
-<col width="5%" />
-<col width="1%" />
-<col width="4%" />
-<col width="89%" />
+<col style="width: 5%" />
+<col style="width: 1%" />
+<col style="width: 4%" />
+<col style="width: 89%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Property</th>
-<th class="head">Type</th>
-<th class="head">Products Supported</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Products Supported</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_aggregate_used_percent</span></code></td>
-<td>String</td>
-<td>ONTAP</td>
-<td>The percentage of usage for the aggregate.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_aggregate_used_percent</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP</p></td>
+<td><p>The percentage of usage for the aggregate.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">utilization</span></code></td>
-<td>String</td>
-<td>ONTAP</td>
-<td>Node utilization percentage per pool (FlexVol).</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">utilization</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP</p></td>
+<td><p>Node utilization percentage per pool (FlexVol).</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">netapp_dedupe_used_percent</span></code></td>
-<td>String</td>
-<td>ONTAP</td>
-<td>The percentage of shared block limit that has been consumed by dedupe and cloning operations.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_dedupe_used_percent</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP</p></td>
+<td><p>The percentage of shared block limit that has been consumed by dedupe and cloning operations.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">max_over_subscription_ratio</span></code></td>
-<td>String</td>
-<td>ONTAP,SolidFire</td>
-<td>The over-provisioning factor when thin provisioning is being used in the storage pool.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_over_subscription_ratio</span></code></p></td>
+<td><p>String</p></td>
+<td><p>ONTAP,SolidFire</p></td>
+<td><p>The over-provisioning factor when thin provisioning is being used in the storage pool.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">thin_provision_percent</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>The percentage of thin provisioning performed on the SolidFire cluster.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">thin_provision_percent</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>The percentage of thin provisioning performed on the SolidFire cluster.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">compression_percent</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>The percentage of compression performed on the SolidFire cluster.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">compression_percent</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>The percentage of compression performed on the SolidFire cluster.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">deduplicaton_percent</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>The percentage of deduplication achieved on the SolidFire cluster.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">deduplicaton_percent</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>The percentage of deduplication achieved on the SolidFire cluster.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">provisioned_capacity_gb</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>Amount of capacity that has been provisioned on the entire SolidFire cluster (not limited to storage consumed by Cinder volumes). Reported in GB.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">provisioned_capacity_gb</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>Amount of capacity that has been provisioned on the entire SolidFire cluster (not limited to storage consumed by Cinder volumes). Reported in GB.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">provisioned_iops</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>The amount of provisioned IOPS for the entire SolidFire cluster.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">provisioned_iops</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>The amount of provisioned IOPS for the entire SolidFire cluster.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">current_iops</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>Current active IOPS for the entire SolidFire cluster.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">current_iops</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>Current active IOPS for the entire SolidFire cluster.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">average_iops</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>Average IOPS returned for the entire SolidFire cluster.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">average_iops</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>Average IOPS returned for the entire SolidFire cluster.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">max_iops</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>Maximum IOPS value for the SolidFire cluster.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">max_iops</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>Maximum IOPS value for the SolidFire cluster.</p></td>
 </tr>
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">peak_iops</span></code></td>
-<td>String</td>
-<td>SolidFire</td>
-<td>Peak IOPS value for the SolidFire cluster.</td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">peak_iops</span></code></p></td>
+<td><p>String</p></td>
+<td><p>SolidFire</p></td>
+<td><p>Peak IOPS value for the SolidFire cluster.</p></td>
 </tr>
 </tbody>
 </table>
@@ -448,11 +448,11 @@ as shown below.</p>
 </div>
 <p>This <code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code> file will schedule the creation of volumes as follows:</p>
 <ul class="simple">
-<li>Cinder volumes that are of size &lt; 5GB will be placed on the <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code>
-backend.</li>
-<li>Cinder volumes that are of size &gt;= 5GB will be placed on the <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-2</span></code>
+<li><p>Cinder volumes that are of size &lt; 5GB will be placed on the <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code>
+backend.</p></li>
+<li><p>Cinder volumes that are of size &gt;= 5GB will be placed on the <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-2</span></code>
 backend, if the aggregate has a usage percent of lesser than 45%. Otherwise,
-volume creation will fail.</li>
+volume creation will fail.</p></li>
 </ul>
 <p><strong>Example2: Using Goodness Weigher</strong></p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[default]</span>
@@ -494,16 +494,16 @@ volume creation will fail.</li>
 backends. For every volume request, the goodness function is
 calculated and used as follows:</p>
 <ul class="simple">
-<li>If the node utilization for both backends <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code> and
+<li><p>If the node utilization for both backends <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code> and
 <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-2</span></code> are lesser than 60%, the goodness weigher is
 set to 60 and 75 respectively. <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-2</span></code> would be preferred
-for the Cinder volume.</li>
-<li>If the node utilization for <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code> is greater than 60%
+for the Cinder volume.</p></li>
+<li><p>If the node utilization for <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code> is greater than 60%
 and is lesser than 60 % for <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-2</span></code>, the good weigher is
-higher (75%) for <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-2</span></code> than for <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code> (30%).</li>
-<li>If both backends have node utilization greater than 60%, then
+higher (75%) for <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-2</span></code> than for <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code> (30%).</p></li>
+<li><p>If both backends have node utilization greater than 60%, then
 <code class="docutils literal notranslate"><span class="pre">ontap-iscsi-1</span></code> would be preferred as it has a higher goodness
-weigher value (30 over 25)</li>
+weigher value (30 over 25)</p></li>
 </ul>
 <p><strong>Example3: Using Driver Filter and Goodness Weigher</strong></p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[default]</span>
@@ -537,12 +537,12 @@ can be combined together. The <code class="docutils literal notranslate"><span c
 evaluates if creating a requested volume can be performed without
 exceeding <code class="docutils literal notranslate"><span class="pre">10</span> <span class="pre">*</span> <span class="pre">total</span> <span class="pre">capacity</span></code>.</p>
 <ul class="simple">
-<li>If this check passes, the <code class="docutils literal notranslate"><span class="pre">goodness_function</span></code> is evaluated for
+<li><p>If this check passes, the <code class="docutils literal notranslate"><span class="pre">goodness_function</span></code> is evaluated for
 both backends based on node utilization. The backend with the higher value
-is ultimately selected.</li>
-<li>If the <code class="docutils literal notranslate"><span class="pre">filter_function</span></code> check fails, the Driver Filter returns only
+is ultimately selected.</p></li>
+<li><p>If the <code class="docutils literal notranslate"><span class="pre">filter_function</span></code> check fails, the Driver Filter returns only
 one host, <code class="docutils literal notranslate"><span class="pre">sf-2</span></code>. The Goodness Weigher is calculated and the
-Cinder volume is placed on <code class="docutils literal notranslate"><span class="pre">sf-2</span></code>.</li>
+Cinder volume is placed on <code class="docutils literal notranslate"><span class="pre">sf-2</span></code>.</p></li>
 </ul>
 </div>
 </div>
@@ -562,7 +562,7 @@ Cinder volume is placed on <code class="docutils literal notranslate"><span clas
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -693,7 +693,7 @@ Cinder volume is placed on <code class="docutils literal notranslate"><span clas
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 253273a08b9fa80b939ad38cb54619c7f4e13fae";
+    var gitSha = "SHA: 59e76bd153841a1a24795c1e8a5d434c6c74726b";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Theory of Operation: Driver Filter and Weigher for Scheduler in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -704,7 +704,7 @@ Cinder volume is placed on <code class="docutils literal notranslate"><span clas
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2019-06-12 18:23";
+    var buildstring = "Release: 2018.1 on 2020-03-18 14:19";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

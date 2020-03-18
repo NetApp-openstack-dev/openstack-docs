@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -163,34 +163,34 @@ on the backing files, for Cinder volumes, only ran as <em>root</em> and the file
 themselves were readable and writable by any user on OpenStack nodes that
 mounted the NFS backend shares.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Consult with the OpenStack distribution documentation to determine
+<p class="admonition-title">Note</p>
+<p>Consult with the OpenStack distribution documentation to determine
 supportability of this feature.</p>
 </div>
-<table border="1" class="docutils" id="table-4-15">
+<table class="docutils align-default" id="table-4-15">
 <colgroup>
-<col width="10%" />
-<col width="3%" />
-<col width="5%" />
-<col width="82%" />
+<col style="width: 10%" />
+<col style="width: 3%" />
+<col style="width: 5%" />
+<col style="width: 82%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Option</th>
-<th class="head">Type</th>
-<th class="head">Default Value</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default Value</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code></td>
-<td>Optional</td>
-<td>“auto”</td>
-<td>Run operations on backing files for Cinder volumes as <em>cinder</em> user rather than <em>root</em> if ‘True’; as <em>root</em> if ‘False’. If ‘auto’, run as ‘True’ if in a “greenfield” environment and run as ‘False’ if existing volumes are found on startup.</td>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>“auto”</p></td>
+<td><p>Run operations on backing files for Cinder volumes as <em>cinder</em> user rather than <em>root</em> if ‘True’; as <em>root</em> if ‘False’. If ‘auto’, run as ‘True’ if in a “greenfield” environment and run as ‘False’ if existing volumes are found on startup.</p></td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code></td>
-<td>Optional</td>
-<td>“auto”</td>
-<td>Create backing files for Cinder volumes to only be readable and writable by owner and group if ‘True’; as readable and writable by owner, group, and world if ‘False’. If ‘auto’, run as ‘True’ if in a “greenfield” environment and run as ‘False’ if existing volumes are found on startup.</td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>“auto”</p></td>
+<td><p>Create backing files for Cinder volumes to only be readable and writable by owner and group if ‘True’; as readable and writable by owner, group, and world if ‘False’. If ‘auto’, run as ‘True’ if in a “greenfield” environment and run as ‘False’ if existing volumes are found on startup.</p></td>
 </tr>
 </tbody>
 </table>
@@ -229,35 +229,35 @@ UID and GID.</p>
 <div class="section" id="ontap-setup">
 <h2>ONTAP Setup<a class="headerlink" href="#ontap-setup" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>If you are using an identity service (i.e. NIS, LDAP, etc…) with ONTAP,
+<li><p>If you are using an identity service (i.e. NIS, LDAP, etc…) with ONTAP,
 ensure that there are <em>cinder</em>, <em>nova</em>, and <em>glance</em> user and group
 identities with <em>UID</em> and <em>GID</em> that match the corresponding users on the
 OpenStack Cinder, Nova, and Glance nodes. See <a class="reference external" href="http://www.netapp.com/us/media/tr-4067.pdf">NetApp TR4067: ONTAP NFS
-Best Practice and Implementation Guide</a> for additional information.</li>
-<li>In ONTAP, put the <em>cinder</em>, <em>nova</em>, and <em>glance</em> users in the <em>cinder</em> group.
+Best Practice and Implementation Guide</a> for additional information.</p></li>
+<li><p>In ONTAP, put the <em>cinder</em>, <em>nova</em>, and <em>glance</em> users in the <em>cinder</em> group.
 It is recommended to use OnCommand System Manager when creating SVM users
-to avoid mistakes.</li>
-<li>Ensure that the exported ONTAP volume has owner <em>cinder</em> and group <em>cinder</em>.</li>
-<li>Set permissions on the exported share to 0755.</li>
-<li>Disable <code class="docutils literal notranslate"><span class="pre">Superuser</span> <span class="pre">Security</span> <span class="pre">Type</span></code> (i.e. root squash) and <code class="docutils literal notranslate"><span class="pre">SetUID</span></code> access
-in export policies.</li>
-<li>See <a class="reference external" href="http://www.netapp.com/us/media/tr-3580.pdf">NetApp TR3850: NFSv4 Enhancements and Best Practices Guide: Data
+to avoid mistakes.</p></li>
+<li><p>Ensure that the exported ONTAP volume has owner <em>cinder</em> and group <em>cinder</em>.</p></li>
+<li><p>Set permissions on the exported share to 0755.</p></li>
+<li><p>Disable <code class="docutils literal notranslate"><span class="pre">Superuser</span> <span class="pre">Security</span> <span class="pre">Type</span></code> (i.e. root squash) and <code class="docutils literal notranslate"><span class="pre">SetUID</span></code> access
+in export policies.</p></li>
+<li><p>See <a class="reference external" href="http://www.netapp.com/us/media/tr-3580.pdf">NetApp TR3850: NFSv4 Enhancements and Best Practices Guide: Data
 ONTAP Implementation</a>
 and <a class="reference external" href="http://www.netapp.com/us/media/tr-4067.pdf">NetApp TR4067: ONTAP NFS Best Practice and Implementation Guide</a>,
 as well as the File Access and Protocols Management Guides available
-from the NetApp NOW site for additional setup information.</li>
+from the NetApp NOW site for additional setup information.</p></li>
 </ul>
 </div>
 <div class="section" id="openstack-setup">
 <h2>OpenStack Setup<a class="headerlink" href="#openstack-setup" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>For NFSv4 only, set the <em>Domain</em> in <em>/etc/idmapd.conf</em> on both storage and
-compute nodes to match that of the NFS server. Restart idmapd service.</li>
-<li>On Nova nodes, add the <em>nova</em> user to the <em>cinder</em> group.</li>
-<li>On Nova nodes, set “user = ‘nova’”, “group = ‘cinder’”, and
-“dynamic_ownership = 0” in <em>/etc/libvirt/qemu.conf</em>.</li>
-<li>On Nova nodes, restart libvirt, qemu, and kvm processes or reboot the
-hypervisor. Also, restart Nova services.</li>
+<li><p>For NFSv4 only, set the <em>Domain</em> in <em>/etc/idmapd.conf</em> on both storage and
+compute nodes to match that of the NFS server. Restart idmapd service.</p></li>
+<li><p>On Nova nodes, add the <em>nova</em> user to the <em>cinder</em> group.</p></li>
+<li><p>On Nova nodes, set “user = ‘nova’”, “group = ‘cinder’”, and
+“dynamic_ownership = 0” in <em>/etc/libvirt/qemu.conf</em>.</p></li>
+<li><p>On Nova nodes, restart libvirt, qemu, and kvm processes or reboot the
+hypervisor. Also, restart Nova services.</p></li>
 </ul>
 </div>
 <div class="section" id="nfs-security-checklists">
@@ -270,62 +270,62 @@ Disabling or enabling NAS security is disruptive to OpenStack processes.</p>
 <p>The following checklist provides a reference for enabling NFS security. Be
 advised that some of the commands, shown in the examples, may differ depending
 on your environment.</p>
-<table border="1" class="docutils" id="table-4-16">
+<table class="docutils align-default" id="table-4-16">
 <colgroup>
-<col width="8%" />
-<col width="80%" />
-<col width="12%" />
+<col style="width: 8%" />
+<col style="width: 80%" />
+<col style="width: 12%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">#</th>
-<th class="head">Description of Step</th>
-<th class="head">Done?</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Description of Step</p></th>
+<th class="head"><p>Done?</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>1</td>
-<td>Cinder: Change NAS security options</td>
-<td>&#160;</td>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Cinder: Change NAS security options</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>2</td>
-<td>Cinder: Determine cinder user’s UID and GID</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Cinder: Determine cinder user’s UID and GID</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>3</td>
-<td>Nova &amp; Glance: Add users to cinder group</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Nova &amp; Glance: Add users to cinder group</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>4</td>
-<td>QEMU: Change QEMU configuration</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>QEMU: Change QEMU configuration</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>5</td>
-<td>Idmapd: Edit the Domain setting (NFSv4.x only)</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Idmapd: Edit the Domain setting (NFSv4.x only)</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>6</td>
-<td>ONTAP: Add nova, glance, and cinder users to cinder GID</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>ONTAP: Add nova, glance, and cinder users to cinder GID</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>7</td>
-<td>ONTAP: Disable superuser access in export policy</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>7</p></td>
+<td><p>ONTAP: Disable superuser access in export policy</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>8</td>
-<td>ONTAP: Set exported Flexvol owner and group (Optional)</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>ONTAP: Set exported Flexvol owner and group (Optional)</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>9</td>
-<td>ONTAP: Set exported Flexvol permissions (Optional)</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>ONTAP: Set exported Flexvol permissions (Optional)</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>10</td>
-<td>Cinder: Update file permissions</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>Cinder: Update file permissions</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>11</td>
-<td>Cinder: Verify mounts and permissions</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>Cinder: Verify mounts and permissions</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -392,8 +392,8 @@ and KVM run as a user belonging to the correct group. Edit the
 </div>
 </div></blockquote>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">After making the configuration changes restart the needed libvirt, QEMU,
+<p class="admonition-title">Note</p>
+<p>After making the configuration changes restart the needed libvirt, QEMU,
 KVM processes or restart the hypervisor. The Nova services also need to
 be restarted. This is a disruptive operation that may require planning
 depending on your environment.</p>
@@ -455,8 +455,8 @@ cinder service. The nova and glance users can be created with the ONTAP CLI
 </div>
 </div></blockquote>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">NetApp recommends leveraging either NIS or LDAP for name services in larger
+<p class="admonition-title">Note</p>
+<p>NetApp recommends leveraging either NIS or LDAP for name services in larger
 environments.</p>
 </div>
 <p>7) Set exported Flexvol
@@ -575,38 +575,38 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
 <p>The following checklist provides a reference for disabling NFS security. Be
 advised that some of the commands, shown in the examples, may differ depending
 on your environment.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="8%" />
-<col width="80%" />
-<col width="12%" />
+<col style="width: 8%" />
+<col style="width: 80%" />
+<col style="width: 12%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">#</th>
-<th class="head">Description of Step</th>
-<th class="head">Done?</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Description of Step</p></th>
+<th class="head"><p>Done?</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>1</td>
-<td>Cinder: Update NAS security options</td>
-<td>&#160;</td>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>Cinder: Update NAS security options</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>2</td>
-<td>ONTAP: Allow Superuser access in export policy</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>ONTAP: Allow Superuser access in export policy</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>3</td>
-<td>Cinder: Update file permissions</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>Cinder: Update file permissions</p></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td>4</td>
-<td>Cinder: Delete .cinderSecureEnvIndicator file</td>
-<td>&#160;</td>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>Cinder: Delete .cinderSecureEnvIndicator file</p></td>
+<td></td>
 </tr>
-<tr class="row-even"><td>5</td>
-<td>Cinder: Verify mounts and permissions</td>
-<td>&#160;</td>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Cinder: Verify mounts and permissions</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -727,7 +727,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2019-06-12 18:23</div>
+            <div class="docs-updated">updated: 2020-03-18 14:19</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -858,7 +858,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 253273a08b9fa80b939ad38cb54619c7f4e13fae";
+    var gitSha = "SHA: 59e76bd153841a1a24795c1e8a5d434c6c74726b";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deployment Choices: NFS Security in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -869,7 +869,7 @@ $ ls -l /var/lib/cinder/mnt/5821d3908bfae68920f0c7be2dfc0c7b/volume-9c989cba-eff
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2018.1 on 2019-06-12 18:23";
+    var buildstring = "Release: 2018.1 on 2020-03-18 14:19";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
