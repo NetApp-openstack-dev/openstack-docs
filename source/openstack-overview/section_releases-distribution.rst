@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Stein release date is
+months starting with the Essex release. The Ussuri release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for April of
-2019, by convention, will start with the letter “S.”
+alphabetically incremented. Hence, the release intended for May of
+2020, by convention, will start with the letter “U.”
 
 +------------+------------------+
 | Release    | Date             |
@@ -47,6 +47,10 @@ alphabetically incremented. Hence, the release intended for April of
 | Rocky      | August 2018      |
 +------------+------------------+
 | Stein      | April 2019       |
++------------+------------------+
+| Train      | October 2019     |
++------------+------------------+
+| Ussuri     | May 2020         |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
