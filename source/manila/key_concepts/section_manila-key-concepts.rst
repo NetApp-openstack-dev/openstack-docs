@@ -171,6 +171,17 @@ specified.
    supported extra specs, refer to Table 6.10,
    ":ref:`NetApp supported Extra Specs for use with Manila Share Types<table-6.10>`".
 
+.. important::
+    From Ussuri release, a share can be created from a snapshot and be placed
+    in a pool or backend different from the parent share. To allow shares to
+    be placed in other pools or backends, make sure to set
+    ``use_scheduler_creating_share_from_snapshot=True`` in the manila
+    configuration file.
+    To perform the operation across clusters, the replication feature must be
+    enabled and the back end property ``replication_domain`` must be
+    configured. More details are available
+    `here <https://netapp-openstack-dev.github.io/openstack-docs/train/manila/configuration/manila_config_files/section_sample_manila-conf.html#with-replication>`_.
+
 Share Group
 -----------
 
