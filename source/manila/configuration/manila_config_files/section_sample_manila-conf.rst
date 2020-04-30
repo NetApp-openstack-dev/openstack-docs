@@ -39,6 +39,7 @@ management.
     scheduler_driver = manila.scheduler.drivers.filter.FilterScheduler
     debug = True
     auth_strategy = keystone
+    use_scheduler_creating_share_from_snapshot = True
 
     [DATABASE]
     connection = mysql://root:stackdb@127.0.0.1/manila?charset=utf8
@@ -85,6 +86,8 @@ management.
     netapp_root_volume_aggregate = aggr1
     netapp_aggregate_name_search_pattern = ^((?!aggr0).)*$
 
+.. _manila-conf-with-replication:
+
 With Replication
 --------------------------------
 
@@ -128,6 +131,7 @@ Only the backend ``cdotSingleSVM01`` is enabled.
     debug = True
     auth_strategy = keystone
     replica_state_update_interval = 300
+    use_scheduler_creating_share_from_snapshot = True
 
     [DATABASE]
     connection = mysql://root:stackdb@127.0.0.1/manila?charset=utf8
