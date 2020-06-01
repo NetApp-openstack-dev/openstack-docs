@@ -210,6 +210,11 @@ replication modes:
 - Snapshot-Only: Only snapshots created on the source cluster are replicated.
   Active writes from the source volume are not replicated.
 
+.. important::
+    From Ussuri release, the support for Active/Active (including replication)
+    was added to the SolidFire driver. So the replication can also happen in
+    clustered environments.
+
 The default mode is ``Real-time (Asynchronous)``, and a new volume type extra-spec
 must be set in order to change it. This extras-spec is
 ``solidfire:replication_mode`` and its possible values are ``Sync``, ``Async``
