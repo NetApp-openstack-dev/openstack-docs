@@ -1,0 +1,10 @@
+Code-Review+2: Thiago Correa <thg.ecorrea@gmail.com>
+Code-Review+2: Lucio Seki <lucioseki@gmail.com>
+QA-Review+2: Lucio Seki <lucioseki@gmail.com>
+Release+1: Lucio Seki <lucioseki@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Mon, 01 Jun 2020 20:56:12 -0300
+Reviewed-on: https://review.openstack.netapp.com/1323
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
