@@ -95,6 +95,7 @@ Ussuri
 VMware
 VServers
 Versioning
+Victoria
 Virtualization
 Vsadmin
 Vserver

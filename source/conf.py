@@ -62,7 +62,7 @@ master_doc = 'index'
 releases = [
     'austin', 'bexar', 'cactus', 'diablo', 'essex', 'folsom', 'grizzly',
     'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
-    'ocata', 'pike', 'queens', 'rocky', 'stein', 'train', 'ussuri',
+    'ocata', 'pike', 'queens', 'rocky', 'stein', 'train', 'ussuri', 'victoria',
 ]
 unnamed = list(string.ascii_lowercase[len(releases) % 26:])
 releases += unnamed
@@ -121,16 +121,16 @@ sphinxmark_text_size = 100
 # General information about the project.
 project = u'NetApp OpenStack Docs'
 bug_tag = u'docs, dog'
-copyright = u'2018, NetApp'
+copyright = u'2020, NetApp'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '2018.1'
+version = '2020.1'
 # The full version, including alpha/beta/rc tags.
-release = '2018.1'
+release = '2020.1'
 
 # A few variables have to be set for the log-a-bug feature.
 #   giturl: The location of conf.py on Git. Must be set manually.
