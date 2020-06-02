@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Ussuri release date is
+months starting with the Essex release. The Victoria release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for May of
-2020, by convention, will start with the letter “U.”
+alphabetically incremented. Hence, the release intended for October of
+2020, by convention, will start with the letter “V.”
 
 +------------+------------------+
 | Release    | Date             |
@@ -51,6 +51,8 @@ alphabetically incremented. Hence, the release intended for May of
 | Train      | October 2019     |
 +------------+------------------+
 | Ussuri     | May 2020         |
++------------+------------------+
+| Victoria   | October 2020     |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
