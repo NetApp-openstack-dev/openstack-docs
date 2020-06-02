@@ -1,0 +1,498 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Theory of Operation: Storage Service Catalog and Manila Share Types</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/manila/deployment_choice/section_creating_service_catalog.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/glance/pike">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/nova/pike">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/cinder/pike">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/draft/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/draft/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Theory of Operation: Storage Service Catalog and Manila Share Types</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_construct-mappings.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: Mapping NetApp to OpenStack Terminology"></i></a>
+    
+    
+    <a href="section_manila-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Manila.conf"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2020-06-02 00:52</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="theory-of-operation-storage-service-catalog-and-manila-share-types">
+<h1>Theory of Operation: Storage Service Catalog and Manila Share Types<a class="headerlink" href="#theory-of-operation-storage-service-catalog-and-manila-share-types" title="Permalink to this headline">¶</a></h1>
+<p>The Storage Service Catalog (SSC) is a concept that describes a set of
+capabilities that enables efficient, repeated, and consistent use and
+management of storage resources by the definition of policy-based
+services and the mapping of those services to the backend storage
+technology. It is meant to abstract away the actual technical
+implementations of the features at a storage backend into a set of
+simplified configuration options.</p>
+<p>The storage features are organized or combined into groups based on the
+customer needs to achieve a particular scenario or use case. Based on
+the catalog of the storage features, intelligent provisioning decisions
+are made by infrastructure or software enabling the storage service
+catalog. In OpenStack, this is achieved together by the Manila filter
+scheduler and the NetApp driver by making use of share type extra-specs
+support together with the filter scheduler.</p>
+<p>When the NetApp unified driver is used with an ONTAP
+storage system, you can leverage extra specs with Manila share types to
+ensure that Manila shares are created on storage backends that have
+certain properties (e.g. thin provisioning, disk type, RAID type, QoS Support)
+configured.</p>
+<p>Extra specs are associated with Manila share types, so that when users
+request shares of a particular share type, they are created on storage
+backends that meet the list of requirements (e.g. available space, extra
+specs, etc). You can use the specs in
+<a class="reference internal" href="#table-6-10"><span class="std std-ref">Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”</span></a>
+when defining Manila share types with the <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">type-key</span></code> command.</p>
+<table class="docutils align-default" id="table-6-10">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 3%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Extra spec</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_aggregate</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Limit the candidate aggregate (pool) list to a specific aggregate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_raid_type</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Limit the candidate aggregate (pool) list based on one of the following raid types: <code class="docutils literal notranslate"><span class="pre">raid4</span></code>, <code class="docutils literal notranslate"><span class="pre">raid_dp</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_disk_type</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Limit the candidate aggregate (pool) list based on one of the following disk types: <code class="docutils literal notranslate"><span class="pre">ATA</span></code>, <code class="docutils literal notranslate"><span class="pre">BSAS</span></code>, <code class="docutils literal notranslate"><span class="pre">EATA</span></code>, <code class="docutils literal notranslate"><span class="pre">FCAL</span></code>, <code class="docutils literal notranslate"><span class="pre">FSAS</span></code>, <code class="docutils literal notranslate"><span class="pre">LUN</span></code>, <code class="docutils literal notranslate"><span class="pre">MSATA</span></code>, <code class="docutils literal notranslate"><span class="pre">SAS</span></code>, <code class="docutils literal notranslate"><span class="pre">SATA</span></code>, <code class="docutils literal notranslate"><span class="pre">SCSI</span></code>, <code class="docutils literal notranslate"><span class="pre">XATA</span></code>, <code class="docutils literal notranslate"><span class="pre">XSAS</span></code>, or <code class="docutils literal notranslate"><span class="pre">SSD</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_hybrid_aggregate</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Limit the candidate aggregate (pool) list to hybrid aggregates.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:dedup</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Enable deduplication on the share. <em>Note that this option is deprecated in favor of the standard Manila extra spec ‘dedupe’.</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dedupe</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Enable deduplication on the share. This value should be set to <code class="docutils literal notranslate"><span class="pre">&quot;&lt;is&gt;</span> <span class="pre">True&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&lt;is&gt;</span> <span class="pre">False&quot;</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:compression</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Enable compression on the share. When compression is enabled on a share, deduplication is also automatically enabled on that share. <em>Note that this option is deprecated in favor of the standard Manila extra spec ‘compression’.</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">compression</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Enable compression on the share. When compression is enabled on a share, deduplication is also automatically enabled on that share. This value should be set to <code class="docutils literal notranslate"><span class="pre">&quot;&lt;is&gt;</span> <span class="pre">True&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&lt;is&gt;</span> <span class="pre">False&quot;</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:thin_provisioned</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Enable thin provisioning (a space guarantee of <code class="docutils literal notranslate"><span class="pre">None</span></code>) on the share. <em>Note that this option is deprecated in favor of the standard Manila extra spec ‘thin_provisioning’.</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">thin_provisioning</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Enable thin provisioning (a space guarantee of <code class="docutils literal notranslate"><span class="pre">None</span></code>) on the share. This value should be set to <code class="docutils literal notranslate"><span class="pre">&quot;&lt;is&gt;</span> <span class="pre">True&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;&lt;is&gt;</span> <span class="pre">False&quot;</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:snapshot_policy</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Apply the specified snapshot policy to the created FlexVol volume. <em>Note that the snapshots created by applying a policy will not have corresponding Manila snapshot records.</em></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:hide_snapdir</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Control visibility of the <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory for each newly created share. By default, each share allows access to its <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory, which contains files of each snapshot that is taken. To restrict access to the directory, this option should be set to <code class="docutils literal notranslate"><span class="pre">True</span></code>. For shares that have already been created, refer <a class="footnote-reference brackets" href="#f2" id="id1">2</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:language</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Apply the specified language to the FlexVol volume that corresponds to the Manila share. The language of the FlexVol volume determines the character set ONTAP uses to display file names and data for that volume. The default value for the language of the volume is the language of the SVM.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:max_files</span></code></p></td>
+<td><p>String</p></td>
+<td><p>Change the maximum number of files for the FlexVol volume that corresponds to the Manila share. By default, the maximum number of files is proportional to the size of the share. This spec can be used to increase the number of files for very large shares (greater than 1TB), or to place a smaller limit on the number of files on a given share.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:split_clone_on_create</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Choose whether a FlexVol volume that corresponds to the Manila share is immediately split from its parent when creating a share from a snapshot. By default, the FlexVol is not split so that no additional space is consumed. Setting this value to ‘true’ may be appropriate for shares that are created from a template share and that will encounter high rates of change.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">snapshot_support</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Choose whether to allow the creation of snapshots for a share type.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">create_share_from_snapshot_support</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Enable the creation of a share from a snapshot.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">revert_to_snapshot_support</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Allow a share to be reverted to the most recent snapshot.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_flexvol_encryption</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Create FlexVol with NVE encryption at rest enabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qos</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in <a class="footnote-reference brackets" href="#f1" id="id2">1</a>. See the NetApp driver specific QoS extra-specs in <a class="reference internal" href="#table-6-11"><span class="std std-ref">Table 6.11, ?~&#64;~NetApp QoS Specs for use with Manila Share Types?~&#64;~]</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table 6.10. NetApp supported Extra Specs for use with Manila Share Types</p>
+<table class="docutils align-default" id="table-6-11">
+<colgroup>
+<col style="width: 34%" />
+<col style="width: 9%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>QoS Extra spec</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:maxiops</span></code></p></td>
+<td><p>String</p></td>
+<td><p>The maximum IOPS allowed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:maxbps</span></code></p></td>
+<td><p>String</p></td>
+<td><p>The maximum bytes per second allowed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:maxiopspergib</span></code></p></td>
+<td><p>String</p></td>
+<td><p>The maximum IOPS allowed per GiB of the Manila share size.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:maxbpspergib</span></code></p></td>
+<td><p>String</p></td>
+<td><p>The maximum bytes per second allowed per GiB of the Manila share size.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that have <code class="docutils literal notranslate"><span class="pre">qos=True</span></code>.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>When using the Manila driver without share server management, you
+can specify a value for the <code class="docutils literal notranslate"><span class="pre">netapp_login</span></code> option that only has
+SVM administration privileges (rather than cluster administration
+privileges); you should note some advanced features of the driver
+may not work and you may see warnings in the Manila logs, unless
+appropriate permissions are set. See the section called
+“<a class="reference internal" href="../configuration/ontap_configuration/section_ontap-config.html#account-perm"><span class="std std-ref">Account Permission Considerations</span></a>” for more details on the required access level
+permissions for an SVM admin account.</p>
+</div>
+<p class="rubric">Footnotes</p>
+<dl class="footnote brackets">
+<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">qos</span></code> is reported as a capability by the Manila driver to
+the Manila scheduler for each ONTAP aggregate (Manila storage pool).
+This value will either be True (QoS is supported) or
+False (QoS is not supported) for all aggregates belonging
+to a backend.</p>
+<p>Defining QoS throughput limits is supported by all platforms
+running ONTAP &gt; 8.2 with no additional license.
+However, you must configure the Manila ONTAP driver with an ONTAP user
+that has permissions to create and modify ONTAP QoS policy groups if
+you want the driver to support Manila QoS.
+(See “<a class="reference internal" href="../configuration/ontap_configuration/section_ontap-config.html#account-perm"><span class="std std-ref">Account Permission Considerations</span></a>”). Be aware that ONTAP Users with Vsadmin
+(SVM administrator) role do not have permission to create or
+modify QoS policy groups.</p>
+</dd>
+<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
+<dd><p>To hide the <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory of shares that have already been
+created, the <code class="docutils literal notranslate"><span class="pre">netapp_reset_snapdir_visibility</span></code> config option can be
+set to <code class="docutils literal notranslate"><span class="pre">hidden</span></code> for the associated backend in <code class="docutils literal notranslate"><span class="pre">manila.conf</span></code>. Upon
+restarting the Manila service, the changes will take effect. The config
+option may be set to <code class="docutils literal notranslate"><span class="pre">visible</span></code> to make the <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory of
+shares visible. The config option can be set to <code class="docutils literal notranslate"><span class="pre">default</span></code> to retain the
+current value for existing Manila shares on subsequent restarts of the Manila
+service.</p>
+</dd>
+</dl>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_construct-mappings.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Theory of Operation: Mapping NetApp to OpenStack Terminology"></i></a>
+          
+          
+            <a href="section_manila-conf.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Theory of Operation: Manila.conf"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2020-06-02 00:52</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2020.1</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../ch_manila.html">Shared Filesystems (Manila)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../overview/section_manila-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_manila-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../process_structure/section_manila-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_overview/section_manila-api-overview.html">API Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_manila-theory-and-deployment-choices.html">Theory of Operation &amp; Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_manila-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_manila-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documentation</a></li>
+          <li><a href="http://www.netapp.com/us/media/tr-4620.pdf">NetApp SolidFire Storage Config Guide</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Community Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">GitHub</a></li>
+          <li><a href="http://netapp.io/slack">Slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">Twitter @openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">Youtube NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "manila/deployment_choice/section_creating_service_catalog" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: c50cddba090b173bd4f106f17e5a7bda55526b44";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Theory of Operation: Storage Service Catalog and Manila Share Types in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "USSURI"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2020.1 on 2020-06-02 00:52";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+<script src="../../_static/language_data.js" type="text/javascript"></script>
+  </body>
+</html>
