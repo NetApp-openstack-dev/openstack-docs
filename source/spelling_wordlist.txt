@@ -88,6 +88,7 @@ Subnets
 Sumit
 Swartzlander
 TCP
+TripleO
 Ubuntu
 Uninstallation
 Unmanage
@@ -214,6 +215,7 @@ ontap
 openstack
 optimizations
 os
+overcloud
 oversubscription
 overutilized
 pNFS
@@ -233,6 +235,7 @@ resize
 scalability
 scalable
 sgid
+snapmirror
 solaris
 solidfire
 stl
@@ -247,6 +250,7 @@ throughputs
 triaging
 uid
 unconfigured
+undercloud
 uninstall
 unix
 unmanage
@@ -267,3 +271,4 @@ webscale
 webscalertp
 weigher
 weighers
+yaml
