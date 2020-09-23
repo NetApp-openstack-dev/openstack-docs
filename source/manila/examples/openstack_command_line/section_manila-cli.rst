@@ -2172,3 +2172,74 @@ Once the task state has transitioned to
 ::
 
             $ manila migration-complete myFlash
+
+Migrating Manila Share Servers
+------------------------------
+
+Starting from Victoria release, manila supports the migration of share servers
+across and within back ends. As with share migration, this operation was built
+to operate in two different phases, which involves at least two operations
+to be requested, the "start" and "complete" operations.
+
+In this section, we'll migrate a share server to a new back end, that is placed
+in a different cluster.
+
+Before starting the share server migration, we can use the
+``share-server-migration-check`` operation to check if the destination back end
+is compatible with our existing share server.
+
+::
+
+    $ manila share-server-migration-check f3089d4f-89e8-4730-b6e6-7cab553df071 openstack2@cmodeMSVMNFS2 \
+                                                                               --nondisruptive False \
+                                                                               --writable True \
+                                                                               --preserve_snapshots True
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Property               | Value                                                                                                                                                                                         |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | compatible             | True                                                                                                                                                                                          |
+    | requested_capabilities | {'writable': 'True', 'nondisruptive': 'False', 'preserve_snapshots': 'True', 'share_network_id': None, 'host': 'openstack2@cmodeMSVMNFS2'}                                                    |
+    | supported_capabilities | {'writable': True, 'nondisruptive': False, 'preserve_snapshots': True, 'share_network_id': 'ac8e103f-c21a-4442-bddc-fdadee093099', 'migration_cancel': True, 'migration_get_progress': False} |
+    +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Now that we know that the destination back end is compatible with our share
+server, we can start the migration, using the same parameters.
+
+::
+
+    $ manila share-server-migration-start f3089d4f-89e8-4730-b6e6-7cab553df071 openstack2@cmodeMSVMNFS2 \
+                                                                               --nondisruptive False \
+                                                                               --writable True \
+                                                                               --preserve_snapshots True
+
+After starting the migration we can check its progress and current task state
+using the command ``share-server-migration-get-progress``.
+
+::
+
+    $ manila share-server-migration-get-progress f3089d4f-89e8-4730-b6e6-7cab553df071
+    +-----------------------------+--------------------------------------+
+    | Property                    | Value                                |
+    +-----------------------------+--------------------------------------+
+    | total_progress              | 0                                    |
+    | task_state                  | migration_driver_in_progress         |
+    | destination_share_server_id | f3fb808f-c2a4-4caa-9805-7caaf55c0522 |
+    +-----------------------------+--------------------------------------+
+
+And finally, once that the task state has transitioned to
+``migration_driver_phase1_done``, we can complete the migration process.
+
+::
+
+    $ manila share-server-migration-complete f3089d4f-89e8-4730-b6e6-7cab553df071
+    +-----------------------------+--------------------------------------+
+    | Property                    | Value                                |
+    +-----------------------------+--------------------------------------+
+    | destination_share_server_id | f3fb808f-c2a4-4caa-9805-7caaf55c0522 |
+    +-----------------------------+--------------------------------------+
+
+.. note::
+   The share server migration can be cancelled using the command
+   ``share-server-migration-cancel``, while the operation remains in the 1st
+   phase, with its task state at ``migration_driver_in_progress`` or
+   ``migration_driver_phase1_done``.
