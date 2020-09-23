@@ -325,6 +325,8 @@ services, please refer to :ref:`figure-6.2` and :ref:`figure-6.3`.
    From Train release, the share server is no longer associated to a share
    network, but with the share network subnet instead.
 
+.. _share-replicas:
+
 Share Replicas
 --------------
 

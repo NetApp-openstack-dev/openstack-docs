@@ -75,6 +75,8 @@ when defining Manila share types with the ``manila type-key`` command.
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``qos``                                  | Boolean   | Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in [#f1]_. See the NetApp driver specific QoS extra-specs in :ref:`Table 6.11, ?~@~\NetApp QoS Specs for use with Manila Share Types?~@~]<table-6.11>`.                                                                                                             |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``netapp:adaptive_qos_policy_group``     | String    | Apply the specified adaptive QoS policy group to the FlexVol volume that corresponds to the Manila Share. *Note that the provided adaptive qos policy group must be created in advance in all SVMs managed by Manila.* Check [#f3]_ for feature restrictions.                                                                                                                    |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
 
@@ -130,3 +132,19 @@ Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that
          shares visible. The config option can be set to ``default`` to retain the
          current value for existing Manila shares on subsequent restarts of the Manila
          service.
+
+.. [#f3] ``netapp:adative_qos_policy_group`` capability expects that the
+         provided adaptive qos policy group has already been created in the
+         storage system. This feature is only supported on ONTAP version 9.4 or
+         higher and needs a cluster scoped account configured in driver
+         options. This feature is only supported when
+         ``driver_handles_share_servers`` is set to ``False`` and does not work
+         with ":ref:`share-replicas`".
+
+         When creating a share using this capability, certify that all backends
+         have the proper Adaptive QoS Policy Group configured in advance. You
+         can also make use of other backend capabilities to force the scheduler
+         to choose the desired backend (e.g. ``share_backend_name``).
+
+
+
