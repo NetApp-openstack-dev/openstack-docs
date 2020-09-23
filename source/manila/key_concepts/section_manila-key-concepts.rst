@@ -325,6 +325,8 @@ services, please refer to :ref:`figure-6.2` and :ref:`figure-6.3`.
    From Train release, the share server is no longer associated to a share
    network, but with the share network subnet instead.
 
+.. _share-replicas:
+
 Share Replicas
 --------------
 
@@ -399,3 +401,38 @@ removed from Manila's database.
    and renames the share-server on the storage backend to the following format:
    ``os_<id>``, where ``<id>`` is the newly assigned UUID. This ensures that the
    same share-server cannot be managed twice.
+
+Share Server Migration
+----------------------
+
+Starting with the Victoria release, NetApp's Manila driver supports the
+migration of Manila share servers - along with its shares, snapshots and access
+rules. This functionality can be useful to handle situations like back end
+evacuation or optimization.
+
+As with share migration, a 2-phase approach is available, which allows
+administrators control the right time to complete the operation, which ends on
+clients disruption. This process of migrating share servers involves different
+operations, but you need only to "start" the migration, and after the service
+has completed the first phase of the migration, request to "complete" the
+operation, in the moment that the disruption of clients can occur. For the list
+of all share server migration commands, refer to
+":ref:`Table 6.10, “Manila API Overview - Share Server Migration<api_overview_table-6.10>`".
+
+NetApp's Manila driver supports share server migration if all the
+following restrictions are fulfilled:
+
+- Source and destination back ends belong to different clusters;
+- Source and destination clusters have the same ONTAP system version, which
+  must greater than or equal to 9.4;
+- Source and destination share networks don't have different security service
+  configurations;
+- Source and destination back ends have compatible capabilities (FlexVol
+  Encryption, SnapRestore license, etc);
+- Destination back end must have enough free space to handle the source share
+  server and all its shares and snapshots;
+- The requested migration can be disruptive.
+
+.. important::
+   In order to have share server migration working across ONTAP clusters, they
+   must be peered in advance and have a valid SnapMirror license installed.

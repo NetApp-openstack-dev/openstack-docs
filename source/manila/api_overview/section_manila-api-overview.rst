@@ -259,7 +259,7 @@ Share Migration API
 +----------------+-------------------------------------+--------------------------------------------------------------------------------------------------------------------+
 | Get Progress   | ``manila migration-get-progress``   | Show the migration progress information for a share.                                                               |
 +----------------+-------------------------------------+--------------------------------------------------------------------------------------------------------------------+
-| Complete       | ``manila migration_complete``       | Complete the migration process by removing the source share, and setting the destination share to ``available``.   |
+| Complete       | ``manila migration-complete``       | Complete the migration process by removing the source share, and setting the destination share to ``available``.   |
 +----------------+-------------------------------------+--------------------------------------------------------------------------------------------------------------------+
 | Cancel         | ``manila migration-cancel``         | Cancel the migration of a share.                                                                                   |
 +----------------+-------------------------------------+--------------------------------------------------------------------------------------------------------------------+
@@ -275,3 +275,39 @@ Table 6.9. Manila API Overview - Share Migration
    metadata, and can perform in-Vserver migrations non-disruptively. In
    order to do so, ``preserve_metadata``, ``preserve_snapshots``, and
    ``nondisruptive`` must be set to ``True``.
+
+Share Server Migration API
+--------------------------
+
+.. _api_overview_table-6.10:
+
++----------------+------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Operation      | CLI Command                                    | Description                                                                                                                                                                                             |
++================+================================================+=========================================================================================================================================================================================================+
+| Check          | ``manila share-server-migration-check``        | Check if the destination host is compatible with the requested share server migration parameters.                                                                                                       |
++----------------+------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Start          | ``manila share-server-migration-start``        | Start the share server migration process to the provided destination.                                                                                                                                   |
++----------------+------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Get Progress   | ``manila share-server-migration-get-progress`` | Show the migration progress information for a share server.                                                                                                                                             |
++----------------+------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Complete       | ``manila share-server-migration-complete``     | Complete the migration process by updating all export locations, disconnecting all clients, and setting the destination share server to ``active`` and the source share server to ``inactive``.         |
++----------------+------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Cancel         | ``manila share-server-migration-cancel``       | Cancel the migration of a share server.                                                                                                                                                                 |
++----------------+------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Table 6.10. Manila API Overview - Share Server Migration
+
+.. note::
+
+   Several parameters need to be specified when starting migration for
+   a share server. For a list of supported parameters, refer to the help text
+   by running ``manila help share-server-migration-start``. For example, the
+   NetApp driver doesn't support migrate share servers non-disruptively. To
+   have the migration accepted by the NetApp driver, ``nondisruptive`` must be
+   set to ``False``, while ``preserve_snapshots`` and ``writable`` can be set
+   to ``True``.
+
+.. note::
+   "Get Progress" operation can't provide the current progress percentage of
+   the data being copied. The command output will inform the current state
+   of the migration and the destination share server id.
