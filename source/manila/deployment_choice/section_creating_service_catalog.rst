@@ -94,6 +94,28 @@ Table 6.10. NetApp supported Extra Specs for use with Manila Share Types
 
 Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that have ``qos=True``.
 
+
+.. _table-6.12:
+
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| NFS Extra spec [#f3]_                    | Type      | Description                                                                                                                                                                                                                                                                                                                                                                      |
++==========================================+===========+==================================================================================================================================================================================================================================================================================================================================================================================+
+| ``netapp:tcp_max_xfer_size``             | String    | Specifies the maximum transfer size (in bytes) that the storage system negotiates with the client for TCP transport of data for NFSv3 and NFSv4.x protocols.  The range is 8192 to 1048576. The default setting is 65536.                                                                                                                                                        |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``netapp:udp_max_xfer_size``             | String    | Specifies the maximum transfer size (in bytes) that the NFS mount protocol negotiates with the client for UDP transport. The range is 8192 to 57344. The default setting is 32768.                                                                                                                                                                                               |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+Table 6.12. NetApp specific NFS configuration Extra Specs.
+
+.. important::
+
+   Different from other Extra Specs, the ones showed in :ref:`Table 6.12, ?~@~\NetApp specific NFS configuration Extra Specs.?~@~]<table-6.12>` are neither to configure the share nor to choose the backend, instead of it is a requirement for the share server where the share should be allocated. In case no share server meets the requirement, a new one will be created.
+
+.. note::
+
+   When creating a share group, the share types must agree on the Extra Specs showed in :ref:`Table 6.12, ?~@~\NetApp specific NFS configuration Extra Specs.?~@~]<table-6.12>`
+
 .. caution::
 
    When using the Manila driver without share server management, you
@@ -130,3 +152,8 @@ Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that
          shares visible. The config option can be set to ``default`` to retain the
          current value for existing Manila shares on subsequent restarts of the Manila
          service.
+
+.. [#f3] The NFS Extra Specs are only available for  ``DHSS=True`` backends that run on
+         ONTAP storage 9.4 or greater. The user should guarantee that the scheduler
+         will allocate the share to a backend with those criteria, otherwise the NFS
+         Extra Specs will have no effect.
