@@ -95,7 +95,7 @@ the following example:
   Custom Configuration Parameters. For instance, the previous example sets
   ``backend_availability_zone=manila-zone-0`` for the back end
   ``tripleo_netapp_single_svm``.
- 
+
   You can define arbitrary Custom
   Configurations using the following syntax:
 
@@ -126,7 +126,7 @@ Manila Configuration Option:
 .. _table-7.1:
 
 +--------------------------------------------------+--------------------------------------------+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| THT Parameter Name                               |  Manila Configuration Option               | Type      | Description                                                                                                                                                                                                                                                                                                      |
+| THT Parameter Name                               |  Manila Configuration Option               | Required  | Description                                                                                                                                                                                                                                                                                                      |
 +==================================================+============================================+===========+==================================================================================================================================================================================================================================================================================================================+
 | ``ManilaNetappBackendName``                      | ``share_backend_name``                     | Required  | The name used by Manila to refer to the Manila backend.                                                                                                                                                                                                                                                          |
 +--------------------------------------------------+--------------------------------------------+-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -198,7 +198,6 @@ multiple smaller environment files:
 
       resource_registry:
         OS::TripleO::Services::ManilaBackendNetapp: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-backend-netapp.yaml
-      resource_registry:
         OS::TripleO::Services::ManilaApi: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-api-container-puppet.yaml
         OS::TripleO::Services::ManilaScheduler: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-scheduler-container-puppet.yaml
         OS::TripleO::Services::ManilaShare: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-share-pacemaker-puppet.yaml
@@ -282,7 +281,7 @@ Deploy Overcloud
 
 Now that you have the Manila back end environment files defined, you can run
 the command to deploy RHOSP Overcloud. Run the following command as ``stack``
-user in the RHOSP Director commandline, specifying the YAML file(s) you
+user in the RHOSP Director command line, specifying the YAML file(s) you
 defined:
 
 .. code-block:: bash
@@ -290,20 +289,23 @@ defined:
 
    (undercloud) [stack@rhosp16-undercloud ~]$ openstack overcloud deploy \
    --templates \
+   -e /home/stack/containers-prepare-parameter.yaml \
    -e /home/stack/templates/tripleo-netapp-single-svm.yaml \
    --stack overcloud
 
-Alternatively, you can use ``--environment-directory`` parameter and specify
-the whole directory to the deployment command. It will consider all the YAML
-files within this directory:
+.. note::
+  Alternatively, you can use ``--environment-directory`` parameter and specify
+  the whole directory to the deployment command. It will consider all the YAML
+  files within this directory:
 
-.. code-block:: bash
-  :name: overcloud-deploy-environment-directory
+  .. code-block:: bash
+    :name: overcloud-deploy-environment-directory
 
-   (undercloud) [stack@rhosp16-undercloud ~]$ openstack overcloud deploy \
-   --templates \
-   --environment-directory /home/stack/templates \
-   --stack overcloud
+     (undercloud) [stack@rhosp16-undercloud ~]$ openstack overcloud deploy \
+     --templates \
+     -e /home/stack/containers-prepare-parameter.yaml \
+     --environment-directory /home/stack/templates \
+     --stack overcloud
 
 After RHOSP Overcloud is deployed, run the following command to check if the
 Manila services are up:
@@ -319,7 +321,7 @@ Create Default Share Type
 
 RHOSP16 Director sets Manila Configuration Option ``default_share_type`` to
 ``default``, but does not create the actual share type. Run the following
-command as ``stack`` user in the RHOSP Director commandline to create the
+command as ``stack`` user in the RHOSP Director command line to create the
 ``default`` share type:
 
 .. code-block:: bash
