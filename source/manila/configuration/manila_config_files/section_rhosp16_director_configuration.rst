@@ -95,7 +95,7 @@ the following example:
   Custom Configuration Parameters. For instance, the previous example sets
   ``backend_availability_zone=manila-zone-0`` for the back end
   ``tripleo_netapp_single_svm``.
- 
+
   You can define arbitrary Custom
   Configurations using the following syntax:
 
@@ -198,7 +198,6 @@ multiple smaller environment files:
 
       resource_registry:
         OS::TripleO::Services::ManilaBackendNetapp: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-backend-netapp.yaml
-      resource_registry:
         OS::TripleO::Services::ManilaApi: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-api-container-puppet.yaml
         OS::TripleO::Services::ManilaScheduler: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-scheduler-container-puppet.yaml
         OS::TripleO::Services::ManilaShare: /usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-share-pacemaker-puppet.yaml
@@ -290,6 +289,7 @@ defined:
 
    (undercloud) [stack@rhosp16-undercloud ~]$ openstack overcloud deploy \
    --templates \
+   -e /home/stack/containers-prepare-parameter.yaml \
    -e /home/stack/templates/tripleo-netapp-single-svm.yaml \
    --stack overcloud
 
@@ -302,6 +302,7 @@ files within this directory:
 
    (undercloud) [stack@rhosp16-undercloud ~]$ openstack overcloud deploy \
    --templates \
+   -e /home/stack/containers-prepare-parameter.yaml \
    --environment-directory /home/stack/templates \
    --stack overcloud
 
