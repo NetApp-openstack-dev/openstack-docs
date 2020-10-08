@@ -1,6 +1,8 @@
 SolidFire Configuration
 =======================
 
+.. _cinder_solidfire_prerequisites:
+
 SolidFire Prerequisites
 -----------------------
 The prerequisites for NetApp SolidFire are:
