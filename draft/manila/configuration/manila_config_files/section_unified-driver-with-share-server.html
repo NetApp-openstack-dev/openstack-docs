@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2020-06-12 20:14</div>
+            <div class="docs-updated">updated: 2020-10-15 18:09</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -192,10 +192,10 @@ lists the configuration options available for the unified driver for an
 ONTAP deployment that manages share servers.</p>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 6%" />
+<col style="width: 7%" />
 <col style="width: 2%" />
 <col style="width: 7%" />
-<col style="width: 85%" />
+<col style="width: 84%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Option</p></th>
@@ -325,6 +325,31 @@ ONTAP deployment that manages share servers.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">60</span></code></p></td>
 <td><p>This option specifies the time interval in seconds at which Manila polls the backend for the progress and health of an ongoing migration.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">server_migration_driver_continue_interval</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">900</span></code></p></td>
+<td><p>This option specifies the time interval in seconds at which Manila polls the backend for the progress and health of an ongoing share server migration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_snapmirror_policy_name_svm_template</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">snapmirror_policy_%(share_server_id)s</span></code></p></td>
+<td><p>This option specifies a string replacement template that is applied when naming SnapMirror policies created for SVMs when migrating share servers.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_snapmirror_release_timeout</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3600</span></code></p></td>
+<td><p>This option specifies a maximum timeout in seconds at which NetApp driver will wait for SnapMirror to be released before proceeding with share server migrating operation. The SnapMirror release operation is part of the process of promoting a destination SVM as the active share server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_server_migration_state_change_timeout</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">3600</span></code></p></td>
+<td><p>This option specifies a maximum timeout in seconds at which NetApp driver will wait for a SVM to change its internal states before proceeding with share server migrating operation. During the share server migration complete operation, the NetApp driver will wait for the destination SVM to be at “running” state before proceeding with the migration process.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_server_migration_check_capacity</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>This option specifies if the NetApp driver will make capacity checks while performing a share server migration. If enabled, the driver will validate if the provided destination back end can hold all shares and snapshots capacities from the source SVM.</p></td>
+</tr>
 </tbody>
 </table>
 <p>Table 6.16. Configuration options for ONTAP with Share Server
@@ -347,7 +372,7 @@ management</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2020-06-12 20:14</div>
+            <div class="docs-updated">updated: 2020-10-15 18:09</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -478,7 +503,7 @@ management</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: f1de05119da4a5e84d9448b62aef4bda6da4988a";
+    var gitSha = "SHA: 15fe2a3ec75d922cce27ec73e5f08db1e2d3b912";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "NetApp Unified Driver for ONTAP with Share Server management in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -489,7 +514,7 @@ management</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2020.1 on 2020-06-12 20:14";
+    var buildstring = "Release: 2020.1 on 2020-10-15 18:09";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +

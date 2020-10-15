@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2020-06-12 20:14</div>
+            <div class="docs-updated">updated: 2020-10-15 18:09</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -140,6 +140,7 @@ ga('send', 'pageview');
 <li><a class="reference internal" href="#share-group-api">Share Group API</a></li>
 <li><a class="reference internal" href="#share-replication-api">Share Replication API</a></li>
 <li><a class="reference internal" href="#share-migration-api">Share Migration API</a></li>
+<li><a class="reference internal" href="#share-server-migration-api">Share Server Migration API</a></li>
 </ul>
 </li>
 </ul>
@@ -590,7 +591,7 @@ administrative privileges.</p>
 <td><p>Show the migration progress information for a share.</p></td>
 </tr>
 <tr class="row-even"><td><p>Complete</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">migration_complete</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">migration-complete</span></code></p></td>
 <td><p>Complete the migration process by removing the source share, and setting the destination share to <code class="docutils literal notranslate"><span class="pre">available</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Cancel</p></td>
@@ -611,6 +612,61 @@ order to do so, <code class="docutils literal notranslate"><span class="pre">pre
 <code class="docutils literal notranslate"><span class="pre">nondisruptive</span></code> must be set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </div>
 </div>
+<div class="section" id="share-server-migration-api">
+<h2>Share Server Migration API<a class="headerlink" href="#share-server-migration-api" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default" id="api-overview-table-6-10">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 18%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>CLI Command</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Check</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-server-migration-check</span></code></p></td>
+<td><p>Check if the destination host is compatible with the requested share server migration parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Start</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-server-migration-start</span></code></p></td>
+<td><p>Start the share server migration process to the provided destination.</p></td>
+</tr>
+<tr class="row-even"><td><p>Get Progress</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-server-migration-get-progress</span></code></p></td>
+<td><p>Show the migration progress information for a share server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Complete</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-server-migration-complete</span></code></p></td>
+<td><p>Complete the migration process by updating all export locations, disconnecting all clients, and setting the destination share server to <code class="docutils literal notranslate"><span class="pre">active</span></code> and the source share server to <code class="docutils literal notranslate"><span class="pre">inactive</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>Cancel</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-server-migration-cancel</span></code></p></td>
+<td><p>Cancel the migration of a share server.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table 6.10. Manila API Overview - Share Server Migration</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Several parameters need to be specified when starting migration for
+a share server. For a list of supported parameters, refer to the help text
+by running <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">help</span> <span class="pre">share-server-migration-start</span></code>. For example, the
+NetApp driver doesn’t support migrate share servers non-disruptively. To
+have the migration accepted by the NetApp driver, <code class="docutils literal notranslate"><span class="pre">nondisruptive</span></code> must be
+set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, while <code class="docutils literal notranslate"><span class="pre">preserve_snapshots</span></code> and <code class="docutils literal notranslate"><span class="pre">writable</span></code> can be set
+to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>“Get Progress” operation can’t provide the current progress percentage of
+the data being copied. The command output will inform the current state
+of the migration and the destination share server id.</p>
+</div>
+</div>
 </div>
 
 
@@ -628,7 +684,7 @@ order to do so, <code class="docutils literal notranslate"><span class="pre">pre
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2020-06-12 20:14</div>
+            <div class="docs-updated">updated: 2020-10-15 18:09</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -759,7 +815,7 @@ order to do so, <code class="docutils literal notranslate"><span class="pre">pre
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: f1de05119da4a5e84d9448b62aef4bda6da4988a";
+    var gitSha = "SHA: 15fe2a3ec75d922cce27ec73e5f08db1e2d3b912";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "API Overview in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -770,7 +826,7 @@ order to do so, <code class="docutils literal notranslate"><span class="pre">pre
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2020.1 on 2020-06-12 20:14";
+    var buildstring = "Release: 2020.1 on 2020-10-15 18:09";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
