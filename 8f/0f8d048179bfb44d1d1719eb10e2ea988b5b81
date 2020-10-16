@@ -1,0 +1,9 @@
+Code-Review+2: Carlos Eduardo <ces.eduardo98@gmail.com>
+QA-Review+2: Carlos Eduardo <ces.eduardo98@gmail.com>
+Release+1: Carlos Eduardo <ces.eduardo98@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Fri, 16 Oct 2020 08:32:22 -0300
+Reviewed-on: https://review.openstack.netapp.com/1403
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/stable/ussuri
