@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2020-10-15 18:40</div>
+            <div class="docs-updated">updated: 2020-11-27 18:43</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -200,32 +200,37 @@ volume types with the <code class="docutils literal notranslate"><span class="pr
 <td><p>ONTAP</p></td>
 <td><p>Limit the candidate volume list to only those on hybrid aggregates.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:qos_policy_group</span></code> <a class="footnote-reference brackets" href="#id2" id="id1">2</a></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:qos_policy_group</span></code> <a class="footnote-reference brackets" href="#id3" id="id1">2</a></p></td>
 <td><p>String</p></td>
 <td><p>ONTAP</p></td>
 <td><p>Specify the name of a QoS policy group, which defines measurable Service Level Objectives (SLO), that should be applied to the Cinder volume at the time of volume creation. Ensure that the QoS policy group is defined within ONTAP before a Cinder volume is created. The QoS policy group specified will be shared among all Cinder volumes whose volume types reference the policy group in their extra specs. Since the SLO is shared with multiple Cinder volumes, the QoS policy group should not be associated with the destination FlexVol volume. If you want to apply an SLO uniquely on a per Cinder volume basis use Cinder backend QoS specs. See <a class="reference internal" href="../key_concepts/section_cinder-key-concepts.html#qos-spec"><span class="std std-ref">Table 4.1</span></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_flexvol_encryption</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:qos_policy_group_is_adaptive</span></code></p></td>
+<td><p>Boolean</p></td>
+<td><p>ONTAP</p></td>
+<td><p>Indicates whether the QoS policy group specified by <code class="docutils literal notranslate"><span class="pre">netapp:qos_policy_group</span></code> is Adaptive or not. The specified adaptive QoS policy group will be applied to the LUN or file that corresponds to the Cinder volume. <em>Note that the provided Adaptive QoS policy group must be created in advance in all SVMs managed by Cinder.</em> Check <a class="footnote-reference brackets" href="#id4" id="id2">3</a> for feature restrictions.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_flexvol_encryption</span></code></p></td>
 <td><p>Boolean</p></td>
 <td><p>ONTAP</p></td>
 <td><p>Limit the candidate volume list to only the ones that have Flexvol Encryption (NVE) enabled on the storage controller. NVE is a software-based technology for encrypting data at rest, one volume at a time.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_mirrored</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_mirrored</span></code></p></td>
 <td><p>Boolean</p></td>
 <td><p>ONTAP</p></td>
 <td><p>Limit the candidate volume list to only the ones that are mirrored on the storage controller.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_dedup</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_dedup</span></code></p></td>
 <td><p>Boolean</p></td>
 <td><p>ONTAP</p></td>
 <td><p>Limit the candidate volume list to only the ones that have deduplication enabled on the storage controller.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_compression</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_compression</span></code></p></td>
 <td><p>Boolean</p></td>
 <td><p>ONTAP</p></td>
 <td><p>Limit the candidate volume list to only the ones that have compression enabled on the storage controller.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">thin_provisioning_support</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">thin_provisioning_support</span></code></p></td>
 <td><p>Boolean</p></td>
 <td><p>ONTAP</p></td>
 <td><p>Limit the candidate volume list to only the ones that support thin provisioning on the storage controller.</p></td>
@@ -234,8 +239,18 @@ volume types with the <code class="docutils literal notranslate"><span class="pr
 </table>
 <p>Table 4.11. NetApp supported Extra Specs for use with Cinder volume Types</p>
 <dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
 <dd><p>Please note that this extra spec has a colon (:) in its name because it is used by the driver to assign the QoS policy group to the OpenStack Block Storage volume after it has been provisioned.</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">3</a></span></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">netapp:qos_policy_group_is_adaptive</span></code> configuration expects that the
+Adaptive QoS policy group specified by <code class="docutils literal notranslate"><span class="pre">netapp:qos_policy_group</span></code> has
+already been created in the storage system. This feature is only supported
+on ONTAP version 9.4 or higher.</p>
+<p>When creating a volume using this capability, certify that all backends
+have the proper Adaptive QoS Policy Group configured in advance. You
+can also make use of other backend capabilities to force the scheduler
+to choose the desired backend (e.g. <code class="docutils literal notranslate"><span class="pre">volume_backend_name</span></code>).</p>
 </dd>
 </dl>
 </div>
@@ -255,7 +270,7 @@ volume types with the <code class="docutils literal notranslate"><span class="pr
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2020-10-15 18:40</div>
+            <div class="docs-updated">updated: 2020-11-27 18:43</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -386,7 +401,7 @@ volume types with the <code class="docutils literal notranslate"><span class="pr
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 519891fff580f0783b346dc38efde7ecfd5cc886";
+    var gitSha = "SHA: 3df94cd079c3e4608d7b13c00ba9511b50c55159";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Theory of Operation: Storage Service Catalog and Cinder Volume Types in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -397,7 +412,7 @@ volume types with the <code class="docutils literal notranslate"><span class="pr
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2020.1 on 2020-10-15 18:40";
+    var buildstring = "Release: 2020.1 on 2020-11-27 18:43";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
