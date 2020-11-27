@@ -1,0 +1,10 @@
+Code-Review+2: Carlos Eduardo <ces.eduardo98@gmail.com>
+Code-Review+2: Douglas Viroel <viroel@gmail.com>
+QA-Review+2: Douglas Viroel <viroel@gmail.com>
+Release+1: Douglas Viroel <viroel@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Fri, 27 Nov 2020 16:44:10 -0200
+Reviewed-on: https://review.openstack.netapp.com/1425
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
