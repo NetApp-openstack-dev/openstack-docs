@@ -237,3 +237,112 @@ and ``SnapshotsOnly``. For example:
     | os-volume-type-access:is_public | True                                 |
     | qos_specs_id                    | None                                 |
     +---------------------------------+--------------------------------------+
+
+SolidFire Storage Assisted Migration
+------------------------------------
+
+Starting on Victoria Release, NetApp SolidFire implements support for Storage
+Assisted Migration. With storage-assisted migration, the operation is optimized
+because it is managed by the storage driver instead of OpenStack Block Storage
+service.
+
+More details about Volume Migration can be found under the official OpenStack
+Documentation in the following link: https://docs.openstack.org/cinder/victoria/contributor/migration.html
+
+There are a few requirements to perform a storage-assisted migration:
+
+- The volume status must be ``available``.
+- Storage-assisted migration can not be performed on replicated volumes.
+- If the destination backend or cluster is the one where the volume is
+  currently placed, nothing will be done.
+
+Here is an example using cinder retype:
+
+::
+
+    $ cinder list
+
+    +--------------------------------------+-----------+------+------+--------------+----------+-------------+
+    | ID                                   | Status    | Name | Size | Volume Type  | Bootable | Attached to |
+    +--------------------------------------+-----------+------+------+--------------+----------+-------------+
+    | ed841a96-4692-4368-a011-5c792aa47020 | available | v1   | 10   | solidfire-1  | false    |             |
+    +--------------------------------------+-----------+------+------+--------------+----------+-------------+
+
+    $ cinder retype --migration-policy on-demand v1 solidfire-2
+
+    +--------------------------------------+-----------+------+------+---------------+----------+-------------+
+    | ID                                   | Status    | Name | Size | Volume Type   | Bootable | Attached to |
+    +--------------------------------------+-----------+------+------+---------------+----------+-------------+
+    | caa7f059-f2e4-44bc-a6c2-c2fdba41d986 | available | v1   | 10   | solidfire-2   | false    |             |
+    | ed841a96-4692-4368-a011-5c792aa47020 | retyping  | v1   | 10   | solidfire-1   | false    |             |
+    +--------------------------------------+-----------+------+------+---------------+----------+-------------+
+
+    $ cinder show ed841a96-4692-4368-a011-5c792aa47020
+
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | attached_servers               | []                                   |
+    | attachment_ids                 | []                                   |
+    | availability_zone              | nova                                 |
+    | bootable                       | false                                |
+    | consistencygroup_id            | None                                 |
+    | created_at                     | 2021-01-08T16:22:27.000000           |
+    | description                    | None                                 |
+    | encrypted                      | False                                |
+    | id                             | ed841a96-4692-4368-a011-5c792aa47020 |
+    | metadata                       |                                      |
+    | migration_status               | migrating                            |
+    | multiattach                    | False                                |
+    | name                           | v1                                   |
+    | os-vol-host-attr:host          | host1@solidfire-1#solidfire-1        |
+    | os-vol-mig-status-attr:migstat | migrating                            |
+    | os-vol-mig-status-attr:name_id | None                                 |
+    | os-vol-tenant-attr:tenant_id   | 08d8fe03a3e74032afd1c4ee665ff2bc     |
+    | replication_status             | None                                 |
+    | size                           | 10                                   |
+    | snapshot_id                    | None                                 |
+    | source_volid                   | None                                 |
+    | status                         | retyping                             |
+    | updated_at                     | 2021-01-08T16:23:56.000000           |
+    | user_id                        | a5a3b146f67447b1abea8f1a929afdce     |
+    | volume_type                    | solidfire-1                          |
+    +--------------------------------+--------------------------------------+
+
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | attached_servers               | []                                   |
+    | attachment_ids                 | []                                   |
+    | availability_zone              | nova                                 |
+    | bootable                       | false                                |
+    | consistencygroup_id            | None                                 |
+    | created_at                     | 2021-01-08T16:22:27.000000           |
+    | description                    | None                                 |
+    | encrypted                      | False                                |
+    | id                             | ed841a96-4692-4368-a011-5c792aa47020 |
+    | metadata                       |                                      |
+    | migration_status               | success                              |
+    | multiattach                    | False                                |
+    | name                           | v1                                   |
+    | os-vol-host-attr:host          | host1@solidfire-2#solidfire-2        |
+    | os-vol-mig-status-attr:migstat | success                              |
+    | os-vol-mig-status-attr:name_id | caa7f059-f2e4-44bc-a6c2-c2fdba41d986 |
+    | os-vol-tenant-attr:tenant_id   | 08d8fe03a3e74032afd1c4ee665ff2bc     |
+    | replication_status             | None                                 |
+    | size                           | 10                                   |
+    | snapshot_id                    | None                                 |
+    | source_volid                   | None                                 |
+    | status                         | available                            |
+    | updated_at                     | 2021-01-08T16:24:25.000000           |
+    | user_id                        | a5a3b146f67447b1abea8f1a929afdce     |
+    | volume_type                    | solidfire-2                          |
+    +--------------------------------+--------------------------------------+
+
+    $ cinder list
+
+    +--------------------------------------+-----------+------+------+---------------+----------+-------------+
+    | ID                                   | Status    | Name | Size | Volume Type   | Bootable | Attached to |
+    +--------------------------------------+-----------+------+------+---------------+----------+-------------+
+    | ed841a96-4692-4368-a011-5c792aa47020 | available | v1   | 10   | solidfire-2   | false    |             |
+    +--------------------------------------+-----------+------+------+---------------+----------+-------------+
