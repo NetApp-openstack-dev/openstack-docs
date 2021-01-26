@@ -1,0 +1,705 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 16</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/cinder_config_files/section_rhosp16_director_ontap_configuration.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/glance/pike">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/nova/pike">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/cinder/pike">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/draft/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/draft/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 16</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_sample_cinder-shares.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Sample nfs.shares file"></i></a>
+    
+    
+    <a href="section_rhosp16_director_solidfire_configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2021-01-26 18:58</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 16</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#deployment-steps">Deployment Steps</a><ul>
+<li><a class="reference internal" href="#prepare-the-environment-files">Prepare the environment files</a><ul>
+<li><a class="reference internal" href="#single-back-end-configuration">Single back end configuration</a></li>
+<li><a class="reference internal" href="#multiple-back-end-configuration">Multiple back end configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deploy-overcloud">Deploy Overcloud</a></li>
+<li><a class="reference internal" href="#test-the-deployed-back-ends">Test the Deployed Back Ends</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <div class="section" id="deploying-netapp-ontap-cinder-driver-in-a-red-hat-openstack-platform-16">
+<h1>Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 16<a class="headerlink" href="#deploying-netapp-ontap-cinder-driver-in-a-red-hat-openstack-platform-16" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<span id="ontap-ontap-rhosp"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This guide shows how to configure and deploy NetApp ONTAP Cinder driver in a
+<strong>Red Hat OpenStack Platform (RHOSP) 16</strong> Overcloud, using RHOSP Director.
+After reading this, you’ll be able to define the proper environment files and
+deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller
+nodes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information about RHOSP, please refer to its <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform">documentation pages</a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>RHOSP16 is based on OpenStack Train release. Features included after Train
+release are not available in RHOSP16.</p>
+</div>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>In order to deploy NetApp Cinder back ends, you should have the following
+requirements satisfied:</p>
+<ul class="simple">
+<li><p>NetApp ONTAP storage controllers deployed and ready to be used as Cinder
+back ends. See <a class="reference internal" href="../ontap_configuration/section_ontap-prereqs.html#data-ontap-config"><span class="std std-ref">ONTAP Configuration</span></a> for more details.</p></li>
+<li><p>RHOSP Director user credentials to deploy Overcloud.</p></li>
+<li><p>RHOSP Overcloud Controller nodes where Cinder services will be installed.</p></li>
+</ul>
+</div>
+<div class="section" id="deployment-steps">
+<h2>Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prepare-the-environment-files">
+<h3>Prepare the environment files<a class="headerlink" href="#prepare-the-environment-files" title="Permalink to this headline">¶</a></h3>
+<p>RHOSP makes use of <strong>TripleO Heat Templates (THT)</strong>, which allows you to define
+the Overcloud resources by creating environment files.</p>
+<div class="section" id="single-back-end-configuration">
+<h4>Single back end configuration<a class="headerlink" href="#single-back-end-configuration" title="Permalink to this headline">¶</a></h4>
+<p>To configure a single NetApp Cinder back end, define an environment file as in
+the following example:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-nfs-backend1.yaml</span></code></p>
+<div class="highlight-yaml notranslate" id="tripleo-netapp-nfs-backend1-yaml"><div class="highlight"><pre><span></span><span class="nt">resource_registry</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">OS::TripleO::Services::CinderBackendNetApp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml</span>
+
+<span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">CinderEnableNetappBackend</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">CinderNetappBackendName</span><span class="p">:</span> <span class="s">&#39;tripleo_netapp_nfs_1&#39;</span>
+  <span class="nt">CinderNetappLogin</span><span class="p">:</span> <span class="s">&#39;admin_username&#39;</span>
+  <span class="nt">CinderNetappPassword</span><span class="p">:</span> <span class="s">&#39;admin_password&#39;</span>
+  <span class="nt">CinderNetappServerHostname</span><span class="p">:</span> <span class="s">&#39;hostname&#39;</span>
+  <span class="nt">CinderNetappServerPort</span><span class="p">:</span> <span class="s">&#39;80&#39;</span>
+  <span class="nt">CinderNetappStorageFamily</span><span class="p">:</span> <span class="s">&#39;ontap_cluster&#39;</span>
+  <span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span> <span class="s">&#39;nfs&#39;</span>
+  <span class="nt">CinderNetappTransportType</span><span class="p">:</span> <span class="s">&#39;http&#39;</span>
+  <span class="nt">CinderNetappVserver</span><span class="p">:</span> <span class="s">&#39;vserver_name&#39;</span>
+  <span class="nt">CinderNetappNfsShares</span><span class="p">:</span> <span class="s">&#39;lif1_ip:/flexvol_1,lif2_ip:/flexvol_1&#39;</span>
+  <span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span> <span class="s">&#39;/etc/cinder/nfs_shares&#39;</span>
+  <span class="nt">CinderNetappNfsMountOptions</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+</pre></div>
+</div>
+<p>Modify the parameter values according to your NetApp ONTAP back end
+configuration.</p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Most THT Configuration Parameters correspond to a Cinder Configuration
+Option.  See <a class="reference internal" href="#table-8-1"><span class="std std-ref">Table 8.1, “NetApp Cinder THT Configuration
+Parameters”</span></a> for a complete list of the THT Configuration
+Parameters and their correspondence to Cinder Configuration Options.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>There are some Cinder Configuration Options that have no correspondent THT
+Configuration Parameter. If you need to set such options, you can define
+Custom Configuration Parameters.</p>
+<p>You can define arbitrary Custom Configurations using the following syntax:</p>
+<div class="highlight-yaml notranslate" id="custom-config-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">cinder::config::cinder_config</span><span class="p p-Indicator">:</span>
+      <span class="nt">&lt;backend_name&gt;/&lt;configuration_name&gt;</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;value&gt;</span>
+</pre></div>
+</div>
+<p>Each configuration will be rendered in <code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code> file as:</p>
+<div class="highlight-default notranslate" id="cinder-conf"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">backend_name</span><span class="p">]</span>
+<span class="n">configuration_name</span><span class="o">=</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://netapp-openstack-dev.github.io/openstack-docs/train/cinder/configuration/cinder_config_files/unified_driver_ontap/section_cinder-conf-nfs.html#table-4-20">Configuration options for ONTAP with NFS (Train)</a>
+and <a class="reference external" href="https://netapp-openstack-dev.github.io/openstack-docs/train/cinder/configuration/cinder_config_files/unified_driver_ontap/section_cinder-conf-iscsi.html#table-4-21">Configuration options for ONTAP with iSCSI (Train)</a>
+for a complete list of the available Cinder Configuration Options.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>RHOSP16 is based on OpenStack Train release. Features and Configuration
+Options included after Train release are not available in RHOSP16.</p>
+</div>
+<p>Most THT Configuration Parameters correspond to a Cinder Configuration Option.
+The following table maps each THT Configuration Parameter to the corresponding
+Cinder Configuration Option:</p>
+<table class="docutils align-default" id="table-8-1">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 7%" />
+<col style="width: 3%" />
+<col style="width: 81%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>THT Parameter Name</p></th>
+<th class="head"><p>Cinder Configuration Option</p></th>
+<th class="head"><p>Required/Optional</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappBackendName</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">volume_backend_name</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>The name used by Cinder to refer to the Cinder backend.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappLogin</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_login</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>Administrative user account name used to access the storage system.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappPassword</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_password</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>Password for the administrative user account specified in the <code class="docutils literal notranslate"><span class="pre">netapp_login</span></code> option.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappServerHostname</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_server_hostname</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>The hostname or IP address for the storage system or proxy server. <em>The value of this option should be the IP address of the cluster management LIF.</em></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappServerPort</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_server_port</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>The TCP port to use for communication with the storage system or proxy server. If not specified, ONTAP drivers will use 80 for HTTP and 443 for HTTPS.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappStorageFamily</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_storage_family</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>The storage family type used on the storage system; valid values are <code class="docutils literal notranslate"><span class="pre">ontap_cluster</span></code> for ONTAP.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappStorageProtocol</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_storage_protocol</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>The storage protocol to be used. Valid options are <code class="docutils literal notranslate"><span class="pre">nfs</span></code>, <code class="docutils literal notranslate"><span class="pre">iscsi</span></code>, or <code class="docutils literal notranslate"><span class="pre">fc</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappTransportType</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_transport_type</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>Transport protocol for communicating with the storage system or proxy server. Valid options include <code class="docutils literal notranslate"><span class="pre">http</span></code> and <code class="docutils literal notranslate"><span class="pre">https</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappVserver</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_vserver</span></code></p></td>
+<td><p>Required</p></td>
+<td><p>This option specifies the storage virtual machine (previously called a Vserver) name on the storage cluster on which provisioning of block storage volumes should occur.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappNfsSharesConfig</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nfs_shares_config</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>The file referenced by this configuration option will contain a list of NFS shares specified by <code class="docutils literal notranslate"><span class="pre">CinderNetappNfsShares</span></code> THT Parameter, each on their own line, to which the driver should attempt to provision new Cinder volumes into.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappNfsMountOptions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nfs_mount_options</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>For NFS protocol only. Mount options passed to the nfs client. See section of the nfs man page for details.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappCopyOffloadToolPath</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_copyoffload_tool_path</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>For NFS protocol only. This option specifies the path of the NetApp copy offload tool binary. Ensure that the binary has execute permissions set which allow the effective user of the <code class="docutils literal notranslate"><span class="pre">cinder-volume</span></code> process to execute the file.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappNasSecureFileOperations</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>For NFS protocol only. If ‘false’, operations on the backing files run as root; if ‘true’, operations on the backing files for cinder volumes run unprivileged, as the cinder user, and are allowed to succeed even when root is squashed. If ‘auto’ and there are existing Cinder volumes, value will be set to ‘false’ (for backwards compatibility); if ‘auto’ and there are no existing Cinder volumes, the value will be set to ‘true’. Default is ‘auto’.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappNasSecureFilePermissions</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>For NFS protocol only. If ‘false’, backing files for cinder volumes are readable by owner, group, and world; if ‘true’, only by owner and group. If ‘auto’ and there are existing Cinder volumes, value will be set to ‘false’ (for backwards compatibility); if ‘auto’ and there are no existing Cinder volumes, the value will be set to ‘true’. Default is ‘auto’.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappHostType</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_host_type</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>This option defines the type of operating system for all initiators that can access a LUN. This information is used when mapping LUNs to individual hosts or groups of hosts. Default is ‘linux’.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappPoolNameSearchPattern</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">netapp_pool_name_search_pattern</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>This option is only utilized when the Cinder driver is configured to use iSCSI off Fibre Channel. It is used to restrict provisioning to the specified FlexVol volumes. Specify the value of this option as a regular expression which will be applied to the names of FlexVol volumes from the storage backend which represent pools in Cinder. <code class="docutils literal notranslate"><span class="pre">^</span></code> (beginning of string) and <code class="docutils literal notranslate"><span class="pre">$</span></code> (end of string) are implicitly wrapped around the regular expression specified before filtering. Default is <code class="docutils literal notranslate"><span class="pre">(.+)</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappAvailabilityZone</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">backend_availability_zone</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p>Availability zone for this volume backend. If not set, the storage_availability_zone option value is used as the default for all backends.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Table 8.1. NetApp Cinder THT Configuration Parameters</p>
+</div>
+<div class="section" id="multiple-back-end-configuration">
+<h4>Multiple back end configuration<a class="headerlink" href="#multiple-back-end-configuration" title="Permalink to this headline">¶</a></h4>
+<p>THT has no templates for configuring multiple NetApp Cinder back ends.
+In order to configure multiple NetApp Cinder back ends, you need to define
+the first back end with THT, and the additional back ends with Custom
+Configurations.</p>
+<p>It’s possible to define all the back ends in a single environment file,
+but for sake of clarity, the following example organizes the back ends in
+multiple smaller environment files:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-nfs-backend1.yaml</span></code></p>
+<p>This file defines the first Cinder volume back end
+<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_1</span></code> and its parameters. The definition of the
+first back end is the same for both single and multiple back end
+configuration:</p>
+<div class="highlight-yaml notranslate" id="cinder-netapp-nfs-backend1-yaml"><div class="highlight"><pre><span></span><span class="nt">resource_registry</span><span class="p">:</span>
+  <span class="l l-Scalar l-Scalar-Plain">OS::TripleO::Services::CinderBackendNetApp</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">/usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml</span>
+
+<span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">CinderEnableNetappBackend</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+  <span class="nt">CinderNetappBackendName</span><span class="p">:</span> <span class="s">&#39;tripleo_netapp_nfs_1&#39;</span>
+  <span class="nt">CinderNetappLogin</span><span class="p">:</span> <span class="s">&#39;admin_username&#39;</span>
+  <span class="nt">CinderNetappPassword</span><span class="p">:</span> <span class="s">&#39;admin_password&#39;</span>
+  <span class="nt">CinderNetappServerHostname</span><span class="p">:</span> <span class="s">&#39;hostname&#39;</span>
+  <span class="nt">CinderNetappServerPort</span><span class="p">:</span> <span class="s">&#39;80&#39;</span>
+  <span class="nt">CinderNetappStorageFamily</span><span class="p">:</span> <span class="s">&#39;ontap_cluster&#39;</span>
+  <span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span> <span class="s">&#39;nfs&#39;</span>
+  <span class="nt">CinderNetappTransportType</span><span class="p">:</span> <span class="s">&#39;http&#39;</span>
+  <span class="nt">CinderNetappVserver</span><span class="p">:</span> <span class="s">&#39;vserver_name&#39;</span>
+  <span class="nt">CinderNetappNfsShares</span><span class="p">:</span> <span class="s">&#39;lif1_ip:/flexvol_1,lif2_ip:/flexvol_1&#39;</span>
+  <span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span> <span class="s">&#39;/etc/cinder/nfs_shares&#39;</span>
+  <span class="nt">CinderNetappNfsMountOptions</span><span class="p">:</span> <span class="s">&#39;&#39;</span>
+</pre></div>
+</div>
+<p>Modify the parameter values according to your NetApp ONTAP back end
+configuration.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-nfs-backend2.yaml</span></code></p>
+<div class="highlight-yaml notranslate" id="cinder-netapp-nfs-backend2-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">cinder::config::cinder_config</span><span class="p p-Indicator">:</span>
+      <span class="nt">tripleo_netapp_nfs_2/volume_backend_name</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_nfs_2</span>
+      <span class="nt">tripleo_netapp_nfs_2/volume_driver</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.netapp.common.NetAppDriver</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_login</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_username</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_password</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_password</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_server_hostname</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hostname</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_server_port</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_transport_type</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_vserver</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">vserver_name</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_storage_protocol</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nfs</span>
+      <span class="nt">tripleo_netapp_nfs_2/nfs_shares_config</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="s">&#39;/etc/cinder/nfs_shares&#39;</span>
+      <span class="nt">tripleo_netapp_nfs_2/netapp_storage_family</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ontap_cluster</span>
+</pre></div>
+</div>
+<p>Modify the parameter values according to your NetApp ONTAP back end
+configuration.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-iscsi-backend1.yaml</span></code></p>
+<p>This file defines the second Cinder volume back end
+<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_iscsi_1</span></code> and its parameters:</p>
+<div class="highlight-yaml notranslate" id="cinder-netapp-iscsi-backend1-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">cinder::config::cinder_config</span><span class="p p-Indicator">:</span>
+      <span class="nt">tripleo_netapp_iscsi_1/volume_backend_name</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_iscsi_1</span>
+      <span class="nt">tripleo_netapp_iscsi_1/volume_driver</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.netapp.common.NetAppDriver</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_login</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_username</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_password</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_password</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_server_hostname</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hostname</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_server_port</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">80</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_transport_type</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">http</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_vserver</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">vserver_name</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_storage_protocol</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">iscsi</span>
+      <span class="nt">tripleo_netapp_iscsi_1/netapp_storage_family</span><span class="p">:</span>
+        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ontap_cluster</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-enabled-backends.yaml</span></code></p>
+<p>This file defines which additional back ends will be enabled. In this
+example, the additional back ends <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_2</span></code> and
+<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_iscsi_1</span></code> will be enabled:</p>
+<div class="highlight-yaml notranslate" id="cinder-enabled-backends-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+    <span class="nt">cinder_user_enabled_backends</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="s">&#39;tripleo_netapp_nfs_2&#39;</span>
+      <span class="p p-Indicator">-</span> <span class="s">&#39;tripleo_netapp_iscsi_1&#39;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The first back end <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_1</span></code> was defined using NetApp THT
+resource registry, and therefore doesn’t need to be added to
+<code class="docutils literal notranslate"><span class="pre">cinder_user_enabled_backends</span></code>.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="deploy-overcloud">
+<h3>Deploy Overcloud<a class="headerlink" href="#deploy-overcloud" title="Permalink to this headline">¶</a></h3>
+<p>Now that you have the Cinder back end environment files defined, you can run
+the command to deploy RHOSP Overcloud. Run the following command as <code class="docutils literal notranslate"><span class="pre">stack</span></code>
+user in the RHOSP Director command line, specifying the YAML file(s) you
+defined:</p>
+<div class="highlight-bash notranslate" id="overcloud-deploy"><div class="highlight"><pre><span></span> <span class="o">(</span>undercloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ openstack overcloud deploy <span class="se">\</span>
+ --templates <span class="se">\</span>
+ -e /home/stack/containers-prepare-parameter.yaml <span class="se">\</span>
+ -e /home/stack/templates/cinder-netapp-nfs-backend1.yaml <span class="se">\</span>
+ -e /home/stack/templates/cinder-netapp-nfs-backend2.yaml <span class="se">\</span>
+ -e /home/stack/templates/cinder-netapp-iscsi-backend1.yaml <span class="se">\</span>
+ -e /home/stack/templates/cinder-enabled-backends.yaml <span class="se">\</span>
+ --stack overcloud
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, you can use <code class="docutils literal notranslate"><span class="pre">--environment-directory</span></code> parameter and specify
+the whole directory to the deployment command. It will consider all the YAML
+files within this directory:</p>
+<div class="highlight-bash notranslate" id="overcloud-deploy-environment-directory"><div class="highlight"><pre><span></span> <span class="o">(</span>undercloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ openstack overcloud deploy <span class="se">\</span>
+ --templates <span class="se">\</span>
+ -e /home/stack/containers-prepare-parameter.yaml <span class="se">\</span>
+ --environment-directory /home/stack/templates <span class="se">\</span>
+ --stack overcloud
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="test-the-deployed-back-ends">
+<h3>Test the Deployed Back Ends<a class="headerlink" href="#test-the-deployed-back-ends" title="Permalink to this headline">¶</a></h3>
+<p>After RHOSP Overcloud is deployed, run the following command to check if the
+Cinder services are up:</p>
+<div class="highlight-bash notranslate" id="cinder-service-list"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ <span class="nb">source</span> ~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder service-list
+</pre></div>
+</div>
+<p>Run the following commands as <code class="docutils literal notranslate"><span class="pre">stack</span></code> user in the RHOSP Director command line
+to create the volume types mapped to the deployed back ends:</p>
+<div class="highlight-bash notranslate" id="create-volume-types"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ <span class="nb">source</span> ~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-create tripleo_netapp_nfs_1
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-key tripleo_netapp_nfs_1 <span class="nb">set</span> <span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_netapp_nfs_1
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-create tripleo_netapp_nfs_2
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-key tripleo_netapp_nfs_2 <span class="nb">set</span> <span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_netapp_nfs_2
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-create tripleo_netapp_iscsi_1
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-key tripleo_netapp_iscsi_1 <span class="nb">set</span> <span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_netapp_iscsi_1
+</pre></div>
+</div>
+<p>Make sure that you’re able to create Cinder volumes with the configured volume
+types:</p>
+<div class="highlight-bash notranslate" id="create-volumes"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ <span class="nb">source</span> ~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder create --volume-type tripleo_netapp_nfs_1 --name v1 <span class="m">1</span>
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder create --volume-type tripleo_netapp_nfs_2 --name v2 <span class="m">1</span>
+<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder create --volume-type tripleo_netapp_iscsi_1 --name v3 <span class="m">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_sample_cinder-shares.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Sample nfs.shares file"></i></a>
+          
+          
+            <a href="section_rhosp16_director_solidfire_configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2021-01-26 18:58</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../../../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2021.1</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../ch_cinder.html">Block Storage (Cinder)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview/section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../key_concepts/section_cinder-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../process_structure/section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api_overview/section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_cinder-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../ch_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_cinder-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documentation</a></li>
+          <li><a href="http://www.netapp.com/us/media/tr-4620.pdf">NetApp SolidFire Storage Config Guide</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Community Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">GitHub</a></li>
+          <li><a href="http://netapp.io/slack">Slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">Twitter @openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">Youtube NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "cinder/configuration/cinder_config_files/section_rhosp16_director_ontap_configuration" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: 1564e926ba932a5c30c9812066f8767de51b464b";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 16 in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "VICTORIA"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2021.1 on 2021-01-26 18:58";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+  </body>
+</html>
