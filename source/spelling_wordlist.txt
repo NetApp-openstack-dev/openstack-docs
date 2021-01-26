@@ -101,6 +101,7 @@ Virtualization
 Vsadmin
 Vserver
 Vservers
+Wallaby
 Webscale
 Workflow
 Yogesh

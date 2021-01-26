@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Victoria release date is
+months starting with the Essex release. The Wallaby release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for October of
-2020, by convention, will start with the letter “V.”
+alphabetically incremented. Hence, the release intended for April of
+2021, by convention, will start with the letter “W.”
 
 +------------+------------------+
 | Release    | Date             |
@@ -53,6 +53,8 @@ alphabetically incremented. Hence, the release intended for October of
 | Ussuri     | May 2020         |
 +------------+------------------+
 | Victoria   | October 2020     |
++------------+------------------+
+| Wallaby    | April 2021       |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
