@@ -59,8 +59,6 @@ system and the OpenStack Cinder service. (See Table 4.19.)
 +======================================+============================+=================================================================================================================================================================================================================+
 | ``sf_account_prefix``                | None                       | Create storage system accounts with this prefix. The default is no prefix.                                                                                                                                      |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``sf_allow_template_caching``        | True                       | Create an internal cache of image copies when a bootable volume is created to eliminate the fetch from OpenStack Glance and QEMU conversion on subsequent calls.                                                |
-+--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``sf_allow_tenant_qos``              | False                      | Allow individual tenants to specify QoS on volume creation. Setting this value to True disables dynamic QOS as well as administrative control over QOS. Changing from the default is not recommended.           |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``sf_api_port``                      | 443                        | The SolidFire storage system API port. Change this value if the device API is behind a proxy on a different port.                                                                                               |
@@ -69,32 +67,40 @@ system and the OpenStack Cinder service. (See Table 4.19.)
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``sf_enable_vag``                    | False                      | Use volume access groups on a per tenant basis instead of using CHAP secrets.                                                                                                                                   |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``sf_enable_volume_mapping``         | True                       | Create an internal mapping of volume IDs and accounts. This option optimizes look-ups and performance at the expense of memory. Use with caution. For very large deployments, this can cause performance issues.|
-+--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``sf_svip``                          | None                       | Overrides the default cluster SVIP with the one specified. This option should only be used when multiple OpenStack instances are accessing the storage cluster from non-default VLANs.                          |
-+--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``sf_template_account_name``         | ``openstack-vtemplate``    | The account name on the SF-Series cluster to use as the owner of the template and cache volumes.                                                                                                                |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``sf_volume_prefix``                 | ``UUID-``                  | Create volumes on the cluster with this prefix. Volumes use the prefix format ``<sf_volume_prefix><cindervolume-id>``. The default is to use the prefix ``UUID-``.                                              |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``replication_device``               | None                       | SolidFire Target Cluster for Replication. This option uses the format ``backend_id:<backend-id>,mvip:<target-mvip>,login:<target-login>,password:<target-password>``                                            |
++--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``sf_provisioning_calc``             | ``maxProvisionedSpace``    | Change how SolidFire reports used space and provisioning calculations. If this parameter is set to ``usedSpace``, the  driver will report correct values as expected by Cinder thin provisioning.               |
++--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``sf_cluster_pairing_timeout``       | 60                         | Set time in seconds to wait for cluster to complete pairing                                                                                                                                                     |
++--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``sf_volume_pairing_timeout``        | 3600                       | Set time in seconds to wait for a migrating volume to complete pairing and sync                                                                                                                                 |
++--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``sf_api_request_timeout``           | 30                         | Set time in seconds to wait for an api request to complete                                                                                                                                                      |
++--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``sf_volume_clone_timeout``          | 600                        | Set time in seconds to wait for a clone of a volume or snapshot to complete                                                                                                                                     |
++--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``sf_volume_create_timeout``         | 60                         | Sets time in seconds to wait for a create volume operation to complete                                                                                                                                          |
 +--------------------------------------+----------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.19. Optional SolidFire Attributes
 
 .. note::
 
-    Set sf_allow_template_caching to False and use the
-    generalized Cinder global caching feature instead
-    of the SolidFire internal image caching feature.
+    SolidFire timeout attributes are used to wait an amount of time for 
+    several tasks completion in order to avoid sync or blocking errors, 
+    be careful modifying its values.
 
-.. tip::
+.. note::
 
-   NetApp recommends the use of the generalized Cinder global caching
-   feature over the SolidFire internal image cache.  As of the Queens
-   release, the default value of sf_allow_template_caching will be
-   set to False.  Also in the Queens release, the SolidFire internal
-   image caching feature will be deprecated.
+    SolidFire internal image caching feature is deprecated
+    since Queens release, thenceforth generalized Cinder global
+    caching feature is used. 
+    Therefore, sf_allow_template_caching and sf_template_account_name
+    attributes are not used anymore.
  
 Multiple OpenStack Cloud Instances
 ----------------------------------
