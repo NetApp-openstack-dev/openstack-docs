@@ -56,6 +56,10 @@ availability features.
    Performance Comparison using FC, iSCSI, and
    NFS <http://www.netapp.com/us/system/pdf-reader.aspx?m=tr-3808.pdf&cc=us>`__.
 
+- Starting from Wallaby cycle, the NFS can be backed by a FlexGroup volume,
+  instead of FlexVol. This operation mode may have much more files and a
+  better cluster utilization.
+
 .. important::
 
    Deploying the NetApp Cinder driver with ONTAP

@@ -1,7 +1,7 @@
 .. _cdot-nfs:
 
 NetApp Unified Driver for ONTAP with NFS
--------------------------------------------------------
+=============================================================
 
 The NetApp unified driver for ONTAP with NFS is a driver
 interface from OpenStack block storage to a ONTAP cluster system to
@@ -49,10 +49,11 @@ following stanza should be added to the Cinder configuration file
 
    where ``ip`` corresponds to the IP address assigned to a Data LIF,
    and ``share`` refers to a junction path for a FlexVol volume within
-   an SVM. Make sure that volumes corresponding to exports have
-   read/write permissions set on the ONTAP controllers. Do *not*
-   put mount options in the ``nfs_shares_config`` file; use
-   ``nfs_mount_options`` instead. For more information on that and
+   an SVM (starting from Wallaby cycle, it may refer to a FlexGroup
+   volume: see :ref:`FlexGroup Pool<flexgroup-pool>`). Make sure that
+   volumes corresponding to exports have read/write permissions set on the
+   ONTAP controllers. Do *not* put mount options in the ``nfs_shares_config``
+   file; use ``nfs_mount_options`` instead. For more information on that and
    other parameters available to affect the behavior of NetApp's NFS
    driver, please refer to
    http://docs.openstack.org/trunk/config-reference/content/nfs-driver-options.html.
@@ -112,6 +113,8 @@ ONTAP deployment that uses the NFS storage protocol.
 +------------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``goodness_function``              | Optional   | (see description)            | This option may be used to override the default goodness function, which allows Cinder to place new volumes on lesser-utilized storage controllers. The default value is "100 - capabilities.utilization".                                                                                                                                                                                                              |
 +------------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``nfs_snapshot_support``           | Optional   | ``False``                    | This option only affects the NFS driver with FlexGroup pool, enabling support for snapshots. Platforms using Libvirt <1.2.7 will encounter issues with snapshots and FlexGroup pool.                                                                                                                                                                                                                                    |
++------------------------------------+------------+------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.20. Configuration options for ONTAP with NFS
 
@@ -126,3 +129,98 @@ Table 4.20. Configuration options for ONTAP with NFS
    admin account.
 
 .. include:: ../../../common/nfs-cache-warning.rst
+
+.. _flexgroup-pool:
+
+FlexGroup Pool
+--------------------------------------
+
+A ONTAP FlexGroup volume is a scale-out NAS container that provides high
+performance along with automatic load distribution and scalability. A FlexGroup
+volume can provision a massive single namespace using the entire cluster
+resources. While the FlexVol is associated to one of the cluster's
+aggregate, the FlexGroup may be associated to several cluster's aggregates.
+
+Starting from Wallaby cycle, the NFS driver can have a pool as a FlexGroup
+volume. This operation does not require any different cinder configuration, only
+providing the ``nfs_shares_config`` with NFS exports pointing to a FlexGroup
+volume.
+
+The FlexGroup pool has a different view of aggregate capabilities,
+replacing a single element by a list of elements. They are
+``netapp_aggregate``, ``netapp_raid_type``, ``netapp_disk_type`` and
+``netapp_hybrid_aggregate``. The ``netapp_aggregate_used_percent``
+capability is an average of used percent of all FlexGroup's aggregates.
+
+The NFS ONTAP driver operating over FlexGroup volume cannot support
+consistency group, multi-attach and revert to snapshot operations.
+The ``utilization`` capability is not calculated, it is always set to
+default of 50.
+
+Given that the FlexClone file is not supported within FlexGroup volume,
+the operations of clone volume, create snapshot and create volume from an
+image do not rely on the ONTAP storage to perform them, using the host
+with the NFS generic driver implementation.
+
+
+.. important::
+
+    The  :ref:`enhanced instance creation<enhanced-instance>` feature cannot
+    be accomplished with NFS driver over FlexGroup pools. It can use the Cinder
+    image cache for avoiding downloading image twice, though.
+
+.. important::
+
+    The FlexGroup pool is only supported using ONTAP storage 9.8 or greater.
+
+.. caution::
+
+    The maximum size for a single Cinder volume that can be created inside
+    a FlexGroup pool is not given by the reported available space. It depends
+    on the available space of the FlexGroup constituents.
+
+.. caution::
+
+    A driver with FlexGroup pools has snapshot support disabled by default,
+    following the NFS generic driver implementation. To enable, you must set
+    ``nfs_snapshot_support`` to true in the backend's configuration section
+    of the cinder configuration file.
+
+    Given that snapshot is provided by the NFS Generic driver, there is a known
+    bug while attaching a volume with snapshots: https://bugzilla.redhat.com/show_bug.cgi?id=1361592
+
+    So, for working with snapshots over FlexGroup pool, you should configure the
+    environment in a insecure manner:
+
+    1) The Libvirt, Qemu, and KVM run as a user belonging to the same group as
+    the OpenStack. The security layer ``security_driver`` should be disabled
+    (neither apparmor nor selinux).
+    Edit the QEMU config */etc/libvirt/qemu.conf* as::
+
+       ...
+       security_driver = "none"
+       ...
+       #user = "root"
+       user = "your_user_name"
+       ...
+       #group = "root"
+       group = "your_group_name"
+       ...
+       #dynamic_ownership = 1
+       dynamic_ownership = 0
+       ...
+
+    2) Set the ``nas_secure_file_operations`` and ``nas_secure_file_permissions``
+    to insecure mode. Make changes to */etc/cinder/cinder.conf* in the backend's
+    configuration stanza::
+
+       [replace-with-nfs-backend]
+       ...
+       nas_secure_file_operations = false
+       nas_secure_file_permissions = false
+       nfs_snapshot_support = true
+       ...
+
+    3) After making the configuration changes, restart the Libvirt, QEMU, KVM
+    and OpenStack processes. It is a disruptive operation that may require
+    planning depending on your environment.

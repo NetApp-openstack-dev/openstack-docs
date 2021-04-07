@@ -140,6 +140,13 @@ Configure NFS
         -policyname default -clientmatch 0.0.0.0/0 -rorule any -rwrule \
         any -superuser any -anon 0
 
+    Use 64-bit NFSv3 identifiers for avoiding File IDs collisions on the FlexGroup
+
+    ::
+
+        set advanced
+        vserver nfs modify -vserver demo-nfs-svm -v3-64bit-identifiers enable
+
     Setup volume
 
     ::
@@ -156,6 +163,8 @@ Configure NFS
         volume create -vserver demo-nfs-svm -volume vol3_mirror_dest \
         -aggregate aggr2 -size 1024g -type DP
 
+        volume create -vserver demo-nfs-svm -volume vol4_flexgroup \
+        -aggr-list aggr1,aggr2 -junction-path /vol4_flexgroup
 
     SSC features
 
