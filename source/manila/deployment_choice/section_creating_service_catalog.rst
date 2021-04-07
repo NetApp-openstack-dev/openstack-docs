@@ -108,6 +108,20 @@ Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that
 
 Table 6.12. NetApp specific NFS configuration Extra Specs.
 
+.. _table-6.13:
+
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| FPolicy Extra spec [#f5]_                | Type      | Description                                                                                                                                                                                                                                                                                                                                                                      |
++==========================================+===========+==================================================================================================================================================================================================================================================================================================================================================================================+
+| ``netapp:fpolicy_extensions_to_include`` | String    | Specifies file extensions to be included for screening. Values should be provided as comma separated list.                                                                                                                                                                                                                                                                       |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``netapp:fpolicy_extensions_to_exclude`` | String    | Specifies file extensions to be excluded for screening. Values should be provided as comma separated list.                                                                                                                                                                                                                                                                       |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``netapp:fpolicy_file_operations``       | String    | Specifies all file operations to be monitored. Values should be provided as comma separated list.                                                                                                                                                                                                                                                                                |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Table 6.13. NetApp FPolicy Extra Specs for use with Manila Share Types.
+
 .. important::
 
    Different from other Extra Specs, the ones showed in
@@ -176,4 +190,24 @@ Table 6.12. NetApp specific NFS configuration Extra Specs.
          ONTAP storage 9.4 or greater. The user should guarantee that the scheduler
          will allocate the share to a backend with those criteria, otherwise the NFS
          Extra Specs will have no effect.
+
+.. [#f5] FPolicy works for backends with and without share server management.
+         When using NetApp backends with SVM administrator accounts, make sure
+         that the assigned access-control role has access set to ``all`` for
+         ``vserver fpolicy`` directory.
+
+         To properly work, ``netapp:fpolicy_extensions_to_include`` or
+         ``netapp:fpolicy_extensions_to_exclude`` must be set, while
+         ``netapp:fpolicy_file_operations`` can be optionally configured. You
+         can change backend's default ``netapp:fpolicy_file_operations``
+         value by updating your manila configuration file.`See
+         :ref:`without-share` and :ref:`with-share` for more details.
+
+         FPolicy in Manila is supported by CIFS, NFSv3 and NFSv4 protocols.
+         Please check ONTAP documentation for more details on compatibility
+         between protocol versions and clients.
+
+         This feature does not work with ":ref:`share-replicas`" to avoid
+         failures on replica promotion, due to lack of FPolicy resources in the
+         destination SVM.
 
