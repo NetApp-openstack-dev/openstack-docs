@@ -221,25 +221,28 @@ using NetApp QoS policy groups, introduced with ONTAP
    throughput value restrictions as a group. The ONTAP
    QoS policy group must be created by the storage administrator on the
    backend prior to specifying the netapp:qos_policy_group option in a
-   Cinder extra-spec. Use the netapp:qos_policy_group option when a
-   Service Level Objective (SLO) needs to be applied to a set of Cinder
-   volumes. For more information on this, see
+   Cinder extra-spec. Whether the policy group is the adaptive type use the
+   Cinder extra-spec netapp:qos_policy_group_is_adaptive. Use the
+   netapp:qos_policy_group option when a Service Level Objective (SLO) needs to
+   be applied to a set of Cinder volumes. For more information on this, see
    :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder volume Types”<table-4.11>`.
 
 -  *QoS Spec*: QoS specifications are added as standalone objects that
    can then be associated with Cinder volume types. A Cinder QoS Spec
    will create a new NetApp QoS policy group for each Cinder volume. A
-   Cinder QoS spec can specify the maximum bytes per second or IOPS
-   throughput value. This throughput value is the maximum for a single
-   Cinder volume created with this QoS spec. When deleting a Cinder
-   volume that has a QoS Spec applied, the NetApp QoS policies
-   associated with that Cinder volume will not immediately be deleted.
-   The driver marks the QoS policies for deletion by the NetApp QoS
-   policy reaping job. The NetApp QoS policy reaping job runs every 60
-   seconds. Refer to NetApp ONTAP documentation for your version of
-   ONTAP to determine NetApp QoS policy group limits. Use
-   the QoS Spec feature when a SLO needs to be applied to a single
-   Cinder volume.
+   Cinder QoS spec can specify either non-adaptive
+   (:ref:`Table 4.1b<qos-spec>`) or an adaptive
+   (:ref:`Table 4.1c<adaptive-qos-spec>`) QoS throughput values. For the first
+   method, it can be a maximum, a minimum or both QoS, using bytes per second
+   or IOPS. For the adaptive method, it must set the maximum (peak) and the
+   minimum (expected) QoS together, and IOPS values are dynamically set
+   according to the volume size. When deleting a Cinder volume that has a QoS
+   Spec applied, the NetApp QoS policies associated with that Cinder volume
+   will not immediately be deleted. The driver marks the QoS policies for
+   deletion by the NetApp QoS policy reaping job. The NetApp QoS policy reaping
+   job runs every 60 seconds. Refer to NetApp ONTAP documentation for your
+   version of ONTAP to determine NetApp QoS policy group limits. Use the QoS
+   Spec feature when a SLO needs to be applied to a single Cinder volume.
 
 .. _qos-spec:
 
@@ -254,8 +257,61 @@ using NetApp QoS policy groups, introduced with ONTAP
 +-----------------+---------------------------------------------------------------------------+
 | maxIOPSperGiB   | The maximum IOPS allowed per GiB of Cinder volume capacity.               |
 +-----------------+---------------------------------------------------------------------------+
+| minIOPS         | The minimum IOPS allowed.                                                 |
++-----------------+---------------------------------------------------------------------------+
+| minIOPSperGiB   | The minimum bytes per second allowed per GiB of Cinder volume capacity.   |
++-----------------+---------------------------------------------------------------------------+
 
-Table 4.1b. NetApp Supported Backend QoS Spec Options
+Table 4.1b. NetApp Non-Adaptive Supported Backend QoS Spec Options.
+
+
+.. _adaptive-qos-spec:
+
++------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| Option                 | Description                                                                                                                          |
++========================+======================================================================================================================================+
+| expectedIOPSperGiB     | The minimum expected IOPS per allocated GiB. ONTAP can only guarantee for AFF platforms.                                             |
++------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| peakIOPSperGiB         | The maximum expected IOPS per allocated GiB.                                                                                         |
++------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| expectedIOPSAllocation | Specifies either the allocated-size or the used-size which determines the minimum throughput calculation. Default = allocated-space. |
++------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| peakIOPSAllocation     | Specifies either the allocated-size or the used-size which determines the maximum throughput calculation. Default = allocated-space. |
++------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| absoluteMinIOPS        | The absolute minimum number of IOPS.                                                                                                 |
++------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+| blockSize              | The application I/O block size. Values: 8K, 16K, 32K, 64K, ANY. Default = 32K.                                                       |
++------------------------+--------------------------------------------------------------------------------------------------------------------------------------+
+
+Table 4.1c. NetApp Adaptive Supported Backend QoS Spec Options.
+
+.. note::
+   The per GiB unit of the non-adaptive method calculates the QoS throughput
+   based on the first allocated volume size, it does not change with the extend
+   volume operation. While for the adaptive method, the QoS throughput is
+   affected by changes on the volume size (or used size).
+
+.. note::
+   You can use the ``absoluteMinIOPS`` field with very small storage objects.
+   It overrides both ``peakIOPSperGiB`` and/or ``expectedIOPSperGiB`` when
+   ``absoluteMinIOPS`` is greater than the calculated ``expectedIOPSperGiB``.
+   For example, if you set ``expectedIOPSperGiB`` to 1,000 IOPS/GiB, and the
+   volume size is less than 1 GB, the calculated ``expectedIOPSperGiB`` will be
+   a fractional IOP. The calculated ``peakIOPSperGiB`` will be an even smaller
+   fraction. You can avoid this by setting ``absoluteMinIOPS`` to a realistic
+   value.
+
+.. important::
+   The non-adaptive QoS minimum is only supported by storage ONTAP All Flash
+   FAS (AFF) with version equal or greater than 9.3 for NFS and 9.2 for iSCSI
+   and FCP. Select Premium with SSD and C190 storages are also supported
+   starting on ONTAP 9.6. The driver reports this support by the capability
+   ``netapp_qos_min_support``.
+
+.. important::
+   The adaptive QoS specs can only be used with ONTAP version equal to
+   or greater than 9.4, excepting the ``expectedIOPSAllocation`` and
+   ``blockSize`` specs which require at least 9.5.
 
 .. warning::
    While SolidFire supports volume retyping, ONTAP does not.
@@ -285,7 +341,7 @@ protocol used:
    option ``netapp_pool_name_search_pattern``.
 
 -  *NFS*: a Cinder pool is created for each junction path from FlexVol
-   volumes that are listed in the configuration option
+   or FlexGroup volumes that are listed in the configuration option
    ``nfs_shares_config``.
 
 
@@ -394,6 +450,10 @@ is taken with no effect to Cinder.
    groups. Future releases will involve a migration of existing
    consistency group operations to use generic volume group operations.
 
+.. caution::
+   Consistency group operations are not supported when the storage pool
+   is a FlexGroup volume.
+
 Backup and Restore
 ------------------
 
@@ -435,6 +495,13 @@ for your Cinder backend. For more details on the configuration and
 failover process, refer to `Cinder Replication with
 NetApp <http://netapp.io/2016/10/14/cinder-replication-netapp-perfect-cheesecake-recipe/>`__
 
+.. caution::
+   The NFS driver with FlexGroup pool can only automatically create the
+   disaster recovery partner if the source FlexGroup volume was created using
+   the default number of constituents. For custom source FlexGroup pool, the
+   administrator has to create the replica FlexGroup volume manually with
+   the same custom number of constituents as the source.
+
 Revert to Snapshot
 ------------------
 
@@ -446,3 +513,7 @@ taking the snapshot.
 An optimized implementation of the revert to snapshot operation is used for
 the SolidFire driver. For ONTAP backends, the feature works by using a
 generic implementation that works for NFS/iSCSI/FC driver modes.
+
+.. caution::
+   Revert to snapshot is not supported when the storage pool
+   is a FlexGroup volume.

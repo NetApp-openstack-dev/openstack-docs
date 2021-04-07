@@ -54,11 +54,19 @@ snapshot copies, and clones within FlexVol volumes.
    Infinite Volumes, as ONTAP currently only supports FlexClone
    files and FlexClone LUNs with FlexVol volumes.
 
-Cinder volume Representation within a FlexVol Volume
+.. important::
+
+   Starting from Wallaby release, the NetApp's OpenStack Cinder driver
+   supports the NFS mode with FlexGroup volume as a pool. The FlexGroup
+   has the same meaning of the FlexVol explained here in the Cinder
+   context. See: :ref:`FlexGroup pool<flexgroup-pool>`
+
+Cinder volume Representation within a ONTAP Volume
 ----------------------------------------------------
 
 A Cinder volume has a different representation in ONTAP when stored
-in a FlexVol volume, dependent on storage protocol utilized with Cinder:
+in an ONTAP volume, dependent on storage protocol
+utilized with Cinder:
 
 -  *iSCSI*: When utilizing the iSCSI storage protocol, a Cinder volume
    is stored as an iSCSI LUN.
@@ -187,6 +195,12 @@ blocks, minimizing physical disk space usage.
    When Cinder is deployed with ONTAP, Cinder snapshots are
    created leveraging the FlexClone feature of ONTAP. As such, a
    license option for FlexClone must be enabled.
+
+.. important::
+
+   Due to the current lack of the FlexClone feature for FlexGroups, Snapshot
+   operations relies on the NFS generic implementation.
+   See: :ref:`FlexGroup Pool<flexgroup-pool>`
 
 ONTAP Consistency Groups
 ------------------------

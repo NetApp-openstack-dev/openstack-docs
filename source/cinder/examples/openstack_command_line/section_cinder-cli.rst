@@ -560,14 +560,15 @@ spec, and lastly associate the QoS spec with the volume type.
 
 ::
 
-    $ cinder qos-create qos_demo maxIOPS=100
+    $ cinder qos-create qos_demo minIOPS= 50 maxIOPS=100
     +----------+--------------------------------------+
     | Property |                Value                 |
     +----------+--------------------------------------+
     | consumer |               back-end               |
     |    id    | db081cde-1a9a-41bd-a8a3-a0259db7409b |
     |   name   |               qos_demo               |
-    |  specs   |         {u'maxIOPS': u'100'}         |
+    |  specs   |              minIOPS: 50             |
+    |          |              maxIOPS: 100            |
     +----------+--------------------------------------+
 
 ::
@@ -580,7 +581,8 @@ spec, and lastly associate the QoS spec with the volume type.
     +--------------------------------------+----------+----------+----------------------+
     |                  ID                  |   Name   | Consumer |        specs         |
     +--------------------------------------+----------+----------+----------------------+
-    | db081cde-1a9a-41bd-a8a3-a0259db7409b | qos_demo | back-end | {u'maxIOPS': u'100'} |
+    | db081cde-1a9a-41bd-a8a3-a0259db7409b | qos_demo | back-end |  minIOPS: 50         |
+    |                                      |          |          |  maxIOPS: 100        |
     +--------------------------------------+----------+----------+----------------------+
 
 ::
@@ -627,7 +629,7 @@ been created on the NetApp storage controller.
     Name             Vserver     Class        Wklds Throughput
     ---------------- ----------- ------------ ----- ------------
     openstack-66027b97-11d1-4399-b8c6-031ad8e38da0
-                     dustins01   user-defined 1     0-100IOPS
+                     dustins01   user-defined 1     50-100IOPS
 
 The name of the QoS policy group created on the storage controller
 contains the UUID of the Cinder volume that was created previously. This
