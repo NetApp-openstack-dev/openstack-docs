@@ -122,7 +122,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2021-04-13 13:19</div>
+            <div class="docs-updated">updated: 2021-04-13 14:54</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -220,62 +220,73 @@ system and the OpenStack Cinder service. (See Table 4.19.)</p>
 <td><p>None</p></td>
 <td><p>Create storage system accounts with this prefix. The default is no prefix.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_allow_template_caching</span></code></p></td>
-<td><p>True</p></td>
-<td><p>Create an internal cache of image copies when a bootable volume is created to eliminate the fetch from OpenStack Glance and QEMU conversion on subsequent calls.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_allow_tenant_qos</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_allow_tenant_qos</span></code></p></td>
 <td><p>False</p></td>
 <td><p>Allow individual tenants to specify QoS on volume creation. Setting this value to True disables dynamic QOS as well as administrative control over QOS. Changing from the default is not recommended.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_api_port</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_api_port</span></code></p></td>
 <td><p>443</p></td>
 <td><p>The SolidFire storage system API port. Change this value if the device API is behind a proxy on a different port.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_emulate_512</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_emulate_512</span></code></p></td>
 <td><p>True</p></td>
 <td><p>Set 512-byte emulation on volume creation. Note: The default is to enable 512 emulation. Required for KVM hypervisors.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_enable_vag</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_enable_vag</span></code></p></td>
 <td><p>False</p></td>
 <td><p>Use volume access groups on a per tenant basis instead of using CHAP secrets.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_enable_volume_mapping</span></code></p></td>
-<td><p>True</p></td>
-<td><p>Create an internal mapping of volume IDs and accounts. This option optimizes look-ups and performance at the expense of memory. Use with caution. For very large deployments, this can cause performance issues.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_svip</span></code></p></td>
 <td><p>None</p></td>
 <td><p>Overrides the default cluster SVIP with the one specified. This option should only be used when multiple OpenStack instances are accessing the storage cluster from non-default VLANs.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_template_account_name</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">openstack-vtemplate</span></code></p></td>
-<td><p>The account name on the SF-Series cluster to use as the owner of the template and cache volumes.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_volume_prefix</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_volume_prefix</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">UUID-</span></code></p></td>
 <td><p>Create volumes on the cluster with this prefix. Volumes use the prefix format <code class="docutils literal notranslate"><span class="pre">&lt;sf_volume_prefix&gt;&lt;cindervolume-id&gt;</span></code>. The default is to use the prefix <code class="docutils literal notranslate"><span class="pre">UUID-</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">replication_device</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">replication_device</span></code></p></td>
 <td><p>None</p></td>
-<td><p>SolidFire Target Cluster for Replication. This option uses the format <code class="docutils literal notranslate"><span class="pre">backend_id:&lt;backend-id&gt;,mvip:&lt;target-mvip&gt;,login:&lt;target-login&gt;,password:&lt;target-password&gt;</span></code></p></td>
+<td><p>SolidFire Target Cluster for Replication. This option uses the format <code class="docutils literal notranslate"><span class="pre">backend_id:&lt;backend-id&gt;,mvip:&lt;target-mvip&gt;,login:&lt;target-login&gt;,password:&lt;target-password&gt;</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_provisioning_calc</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">maxProvisionedSpace</span></code></p></td>
+<td><p>Change how SolidFire reports used space and provisioning calculations. If this parameter is set to <code class="docutils literal notranslate"><span class="pre">usedSpace</span></code>, the  driver will report correct values as expected by Cinder thin provisioning.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_cluster_pairing_timeout</span></code></p></td>
+<td><p>60</p></td>
+<td><p>Set time in seconds to wait for cluster to complete pairing.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_volume_pairing_timeout</span></code></p></td>
+<td><p>3600</p></td>
+<td><p>Set time in seconds to wait for a migrating volume to complete pairing and sync.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_api_request_timeout</span></code></p></td>
+<td><p>30</p></td>
+<td><p>Set time in seconds to wait for an API request to complete.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sf_volume_clone_timeout</span></code></p></td>
+<td><p>600</p></td>
+<td><p>Set time in seconds to wait for a clone of a volume or snapshot to complete.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">sf_volume_create_timeout</span></code></p></td>
+<td><p>60</p></td>
+<td><p>Sets time in seconds to wait for a create volume operation to complete.</p></td>
 </tr>
 </tbody>
 </table>
 <p>Table 4.19. Optional SolidFire Attributes</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Set sf_allow_template_caching to False and use the
-generalized Cinder global caching feature instead
-of the SolidFire internal image caching feature.</p>
+<p>SolidFire timeout attributes are used to wait an amount of time for
+several tasks completion in order to avoid sync or blocking issues.</p>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>NetApp recommends the use of the generalized Cinder global caching
-feature over the SolidFire internal image cache.  As of the Queens
-release, the default value of sf_allow_template_caching will be
-set to False.  Also in the Queens release, the SolidFire internal
-image caching feature will be deprecated.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SolidFire internal image caching feature is deprecated
+since Queens release, thenceforth generalized Cinder global
+caching feature is used.
+<code class="docutils literal notranslate"><span class="pre">sf_allow_template_caching</span></code> and <code class="docutils literal notranslate"><span class="pre">sf_template_account_name</span></code>
+attributes are not valid configuration options anymore.</p>
 </div>
 </div>
 <div class="section" id="multiple-openstack-cloud-instances">
@@ -533,7 +544,7 @@ $ cinder list
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2021-04-13 13:19</div>
+            <div class="docs-updated">updated: 2021-04-13 14:54</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -664,7 +675,7 @@ $ cinder list
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 0f5ab8b6f66fbf35c7dae56e205eda1921e78e6c";
+    var gitSha = "SHA: 8ad1ac6df6225efa3d1210113db4bd8fc506eed0";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "NetApp Driver for SolidFire in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -675,7 +686,7 @@ $ cinder list
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.1 on 2021-04-13 13:19";
+    var buildstring = "Release: 2021.1 on 2021-04-13 14:54";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
