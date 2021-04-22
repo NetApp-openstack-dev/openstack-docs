@@ -60,6 +60,13 @@ ONTAP, a share server corresponds to a storage virtual machine
    a single SVM within a cluster through the use of the
    ``netapp_vserver`` configuration option.
 
+.. important::
+
+   Starting from Wallaby release, administrators can configure limits for
+   total size and amount of instances in a share server. It helps with
+   cloud resources balance between entities. For more details,
+   please refer to the :ref:`configuration session. <with-share>`
+
 With Share Server Management
 ----------------------------
 
