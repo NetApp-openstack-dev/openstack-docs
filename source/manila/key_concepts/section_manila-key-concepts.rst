@@ -253,6 +253,17 @@ can be associated to multiple security services.
    Kerberos) and then add this Security Service to the already created
    Share Network.
 
+.. important::
+
+   Starting from Wallaby release, Manila is able to add/update security
+   services that are currently being used. Updating a security service requires
+   that both former and latter security servers have the same type. While
+   adding a security service to an in-use share network, make sure that the
+   share network does not contain any security service of the same type,
+   otherwise the operation will be denied. For more details on such operations,
+   please refer to the
+   :ref:`security service modification session <modifying_security_services>`
+
 Share Networks
 --------------
 
