@@ -1043,6 +1043,236 @@ necessary before creating the CIFS share.
     | metadata                    | {}                                   |
     +-----------------------------+--------------------------------------+
 
+
+.. _modifying_security_services:
+
+Modifying security services of in-use share networks
+----------------------------------------------------
+
+As of Wallaby release, manila supports updating security services for share
+networks that are currently being used. In order to do such operation, you must
+make sure that all share servers deployed under the share network can handle
+being updated. Share networks and share servers now have a new field called
+`security_service_update_support`.
+
+.. important::
+
+   For share servers deployed before the Wallaby release, the field
+   `security_service_update_support` is going to be set as `False`, and if the
+   share backend supports adding/updating security service on its share
+   servers, administrators can modify this field using the `manila-manage`
+   commands. Manila will only perform adding/updating security services in a
+   share network if all share servers pertaining to it can handle this
+   operation. The `security_service_update_support` field in the share network
+   considers all share servers within it, and it makes it the perfect indicator
+   to whether the update is going to be supported or not.
+
+Let's create an empty share network:
+
+::
+
+    $ manila share-network-create --neutron-net-id <neutron-net-id> \
+                                  --neutron-subnet-id <neutron-subnet-id> \
+                                  --name share-network-1
+
+Now create a new share using the brand new network:
+
+::
+
+    $ manila create cifs 50 --share-network share-network-1 --share-type platinum --name myshare3
+    +---------------------------------------+--------------------------------------+
+    | Property                              | Value                                |
+    +---------------------------------------+--------------------------------------+
+    | status                                | creating                             |
+    | share_type_name                       | platinum                             |
+    | description                           | None                                 |
+    | availability_zone                     | None                                 |
+    | share_network_id                      | 848366d5-ae20-495e-af78-98f82301173a |
+    | share_server_id                       | None                                 |
+    | share_group_id                        | None                                 |
+    | host                                  |                                      |
+    | revert_to_snapshot_support            | True                                 |
+    | access_rules_status                   | active                               |
+    | snapshot_id                           | None                                 |
+    | create_share_from_snapshot_support    | True                                 |
+    | is_public                             | False                                |
+    | task_state                            | None                                 |
+    | snapshot_support                      | True                                 |
+    | id                                    | bfa862cb-82a2-4c07-86ab-0c3bbe3459e7 |
+    | size                                  | 50                                   |
+    | source_share_group_snapshot_member_id | None                                 |
+    | user_id                               | 75a6db01ffda4ba59637e307e6c768e0     |
+    | name                                  | myshare3                             |
+    | share_type                            | 2e3734eb-54fe-4e5c-a5ca-6ef9de4c3524 |
+    | has_replicas                          | False                                |
+    | replication_type                      | None                                 |
+    | created_at                            | 2021-03-31T00:17:05.000000           |
+    | share_proto                           | CIFS                                 |
+    | mount_snapshot_support                | False                                |
+    | project_id                            | 4aaa76d5ab2341b6bb84a9a911c1550b     |
+    | metadata                              | {}                                   |
+    +---------------------------------------+--------------------------------------+
+
+::
+
+    $ manila list
+    +--------------------------------------+----------+------+-------------+-----------+-----------+-----------------+-----------------------------------+-------------------+
+    | ID                                   | Name     | Size | Share Proto | Status    | Is Public | Share Type Name | Host                              | Availability Zone |
+    +--------------------------------------+----------+------+-------------+-----------+-----------+-----------------+-----------------------------------+-------------------+
+    | dfae168f-ac70-42e0-9779-b1aebc98d0ce | myshare1 | 50   | CIFS        | available | False     | platinum        | openstack2@cmodeMSVMNFS#aggr_2    | az_1              |
+    | e423a08d-efbb-4c93-8027-7f22b91946da | myshare2 | 50   | NFS         | available | False     | gold            | openstack2@cmodeSSVMNFS_02#aggr_2 | az_2              |
+    | bfa862cb-82a2-4c07-86ab-0c3bbe3459e7 | myshare3 | 50   | CIFS        | available | False     | platinum        | openstack2@cmodeMSVMNFS#aggr_2    | az_1              |
+    +--------------------------------------+----------+------+-------------+-----------+-----------+-----------------+-----------------------------------+-------------------+
+
+Let's create a security service to be attached in the share network:
+
+::
+
+    $ manila security-service-create kerberos --dns-ip 10.150.XXX.XXX  \
+                                              --domain stack1.netapp.com \
+                                              --user Administrator \
+                                              --password updated_password
+                                              --name ac11
+    +-------------+--------------------------------------+
+    | Property    | Value                                |
+    +-------------+--------------------------------------+
+    | status      | new                                  |
+    | domain      | stack1.netapp.com                    |
+    | password    | password                             |
+    | name        | ac11                                 |
+    | dns_ip      | 10.150.XXX.XXX                       |
+    | created_at  | 2021-03-31T00:17:06.000000           |
+    | updated_at  | None                                 |
+    | server      | None                                 |
+    | user        | Administrator                        |
+    | project_id  | b568323d304046d8a8abaa8e822f17e3     |
+    | type        | kerberos                             |
+    | id          | 259a203d-9e11-49cd-83d7-e5c986c01221 |
+    | description | None                                 |
+    +-------------+--------------------------------------+
+
+
+Adding security services to in-use share networks
+-------------------------------------------------
+
+In order to add or update security servers for share network that are being
+used, the user must check if such operation can be handled. If the result of
+such checks is positive, manila will allow the user to perform such actions.
+
+Checking if the security service can be added to a share network that is being
+used:
+
+::
+
+    $ manila share-network-security-service-add-check \
+       share-network-1 \
+       ac11
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | Property            | Value                                                                                                                                   |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | compatible          | None                                                                                                                                    |
+    | requested_operation | {'operation': 'add_security_service', 'current_security_service': None, 'new_security_service': '259a203d-9e11-49cd-83d7-e5c986c01221'} |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+
+Check the result of the operation:
+
+::
+
+    $ manila share-network-security-service-add-check \
+       share-network-1 \
+       ac11
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | Property            | Value                                                                                                                                   |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+    | compatible          | True                                                                                                                                    |
+    | requested_operation | {'operation': 'add_security_service', 'current_security_service': None, 'new_security_service': '259a203d-9e11-49cd-83d7-e5c986c01221'} |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------+
+
+Then, just run the command to add the security service to the share network:
+
+::
+
+    $ manila share-network-security-service-add share-network-1 ac11
+
+
+Updating security services of in-use share networks
+---------------------------------------------------
+
+Let' s create a security service with updated info to replace the former
+security service.
+
+::
+
+    $ manila security-service-create kerberos --dns-ip 10.150.XXX.XXX  \
+                                              --domain stack1.netapp.com \
+                                              --user Administrator \
+                                              --password updated_password
+                                              --name ac11_updated
+    +-------------+--------------------------------------+
+    | Property    | Value                                |
+    +-------------+--------------------------------------+
+    | status      | new                                  |
+    | domain      | stack1.netapp.com                    |
+    | password    | updated_password                     |
+    | name        | ac11_updated                         |
+    | dns_ip      | 10.150.XXX.XXX                       |
+    | created_at  | 2021-04-23T13:11:19.304355           |
+    | updated_at  | None                                 |
+    | server      | None                                 |
+    | user        | Administrator                        |
+    | project_id  | b568323d304046d8a8abaa8e822f17e3     |
+    | type        | kerberos                             |
+    | id          | 77be4e88-5c96-4724-9cb8-319f63f14390 |
+    | description | None                                 |
+    +-------------+--------------------------------------+
+
+First, there is need to check if the update for security services of the same
+type can be performed:
+
+::
+
+    $ manila share-network-security-service-update-check \
+       share-network-1 \
+       ac11 \
+       ac11_updated
+    +---------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Property            | Value                                                                                                                                                                      |
+    +---------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | compatible          | None                                                                                                                                                                       |
+    | requested_operation | {'operation': 'update_security_service', 'current_security_service': 259a203d-9e11-49cd-83d7-e5c986c01221', 'new_security_service': '59a203d-9e11-49cd-83d7-e5c986c01221'} |
+    +---------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Check the result of the operation:
+
+::
+
+    $ manila share-network-security-service-update-check \
+       share-network-1 \
+       ac11 \
+       ac11_updated
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | Property            | Value                                                                                                                                                                       |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+    | compatible          | True                                                                                                                                                                        |
+    | requested_operation | {'operation': 'update_security_service', 'current_security_service': '259a203d-9e11-49cd-83d7-e5c986c01221', 'new_security_service': '259a203d-9e11-49cd-83d7-e5c986c01221'} |
+    +---------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+Then, just run the command which will actually update the security service of
+the share network:
+
+::
+
+    $ manila share-network-security-service-update \
+        share-network-1 \
+        ac11 \
+        ac11_updated
+    $ manila share-network-security-service-list sharenetwork1
+    +--------------------------------------+--------------+--------+-----------+
+    | id                                   | name         | status | type      |
+    +--------------------------------------+--------------+--------+-----------+
+    | 8971c5f6-52ec-4c53-bf6a-3fae38a9221e | ac11_updated | new    | kerberos  |
+    +--------------------------------------+--------------+--------+-----------+
+
 Managing and Unmanaging Manila Shares
 -------------------------------------
 
