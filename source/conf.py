@@ -63,7 +63,7 @@ releases = [
     'austin', 'bexar', 'cactus', 'diablo', 'essex', 'folsom', 'grizzly',
     'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
     'ocata', 'pike', 'queens', 'rocky', 'stein', 'train', 'ussuri', 'victoria',
-    'wallaby',
+    'wallaby', 'xena',
 ]
 unnamed = list(string.ascii_lowercase[len(releases) % 26:])
 releases += unnamed
@@ -129,9 +129,9 @@ copyright = u'2021, NetApp'
 # built documents.
 #
 # The short X.Y version.
-version = '2021.1'
+version = '2021.2'
 # The full version, including alpha/beta/rc tags.
-release = '2021.1'
+release = '2021.2'
 
 # A few variables have to be set for the log-a-bug feature.
 #   giturl: The location of conf.py on Git. Must be set manually.

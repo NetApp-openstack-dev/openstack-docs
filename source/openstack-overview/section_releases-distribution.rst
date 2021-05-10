@@ -56,6 +56,8 @@ alphabetically incremented. Hence, the release intended for April of
 +------------+------------------+
 | Wallaby    | April 2021       |
 +------------+------------------+
+| Xena       | October 2021     |
++------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
 
