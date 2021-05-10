@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 <!-- Bootstrap CSS -->
 <link href="../../_static/css/bootstrap.css" rel="stylesheet">
@@ -122,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2021-04-13 14:54</div>
+            <div class="docs-updated">updated: 2021-05-10 13:11</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -148,14 +149,14 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="api-overview">
+  <section id="api-overview">
 <h1>API Overview<a class="headerlink" href="#api-overview" title="Permalink to this headline">¶</a></h1>
 <p>This section describes some of the most commonly used Manila API calls
 and their corresponding CLI commands. It is not meant to be a
 comprehensive list that is representative of all functionality present
 in Manila; for more information, please refer to the help text from
 running <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">help</span></code>.</p>
-<div class="section" id="share-api">
+<section id="share-api">
 <h2>Share API<a class="headerlink" href="#share-api" title="Permalink to this headline">¶</a></h2>
 <p>Table 6.1, “Manila API Overview - Share” specifies the valid
 operations that can be performed on Manila shares. Please note that
@@ -213,8 +214,8 @@ names or UUID.</p>
 </tbody>
 </table>
 <p>Table 6.1. Manila API Overview - Share</p>
-</div>
-<div class="section" id="share-access-api">
+</section>
+<section id="share-access-api">
 <h2>Share Access API<a class="headerlink" href="#share-access-api" title="Permalink to this headline">¶</a></h2>
 <p>Table 6.2, “Manila API Overview - Share Access” specifies the valid
 access operations that can be performed on Manila shares. Please note
@@ -253,8 +254,8 @@ the section called “<a class="reference internal" href="../key_concepts/sectio
 </tbody>
 </table>
 <p>Table 6.2. Manila API Overview - Share Access</p>
-</div>
-<div class="section" id="share-export-location-api">
+</section>
+<section id="share-export-location-api">
 <h2>Share Export Location API<a class="headerlink" href="#share-export-location-api" title="Permalink to this headline">¶</a></h2>
 <p>Table 6.3, “Manila API Overview - Share Export Location” specifies the
 operations that can be performed to get export locations of Manila
@@ -287,8 +288,8 @@ performance.</p>
 </tbody>
 </table>
 <p>Table 6.3. Manila API Overview - Share Export Location</p>
-</div>
-<div class="section" id="snapshot-api">
+</section>
+<section id="snapshot-api">
 <h2>Snapshot API<a class="headerlink" href="#snapshot-api" title="Permalink to this headline">¶</a></h2>
 <p>Table 6.4, “Manila API Overview - Snapshot” specifies the valid
 operations that can be performed on Manila snapshots. Please note that
@@ -371,8 +372,8 @@ supported extra specs, refer to
 </tbody>
 </table>
 <p>Table 6.4. Manila API Overview - Snapshot</p>
-</div>
-<div class="section" id="share-type-api">
+</section>
+<section id="share-type-api">
 <h2>Share Type API<a class="headerlink" href="#share-type-api" title="Permalink to this headline">¶</a></h2>
 <p>Table 6.5, “Manila API Overview - Share Type” specifies the valid
 operations that can be performed on Manila share types. Please note that
@@ -407,8 +408,8 @@ requires administrative privileges.</p>
 </tbody>
 </table>
 <p>Table 6.5. Manila API Overview - Share Type</p>
-</div>
-<div class="section" id="share-type-extra-specs-api">
+</section>
+<section id="share-type-extra-specs-api">
 <h2>Share Type Extra Specs API<a class="headerlink" href="#share-type-extra-specs-api" title="Permalink to this headline">¶</a></h2>
 <p>Table 6.6, “Manila API Overview - Share Type Extra Specs” specifies
 the valid operations that can be performed on Manila share type extra
@@ -444,8 +445,8 @@ administrative privileges.</p>
 </tbody>
 </table>
 <p>Table 6.6. Manila API Overview - Share Type Extra Specs</p>
-</div>
-<div class="section" id="share-group-api">
+</section>
+<section id="share-group-api">
 <h2>Share Group API<a class="headerlink" href="#share-group-api" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
@@ -515,8 +516,8 @@ administrative privileges.</p>
 </tbody>
 </table>
 <p>Table 6.7. Manila API Overview - Share Groups</p>
-</div>
-<div class="section" id="share-replication-api">
+</section>
+<section id="share-replication-api">
 <h2>Share Replication API<a class="headerlink" href="#share-replication-api" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
@@ -566,8 +567,8 @@ administrative privileges.</p>
 </tbody>
 </table>
 <p>Table: 6.8. Manila API Overview - Share Replication</p>
-</div>
-<div class="section" id="share-migration-api">
+</section>
+<section id="share-migration-api">
 <h2>Share Migration API<a class="headerlink" href="#share-migration-api" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default" id="table-6-9">
 <colgroup>
@@ -611,8 +612,8 @@ metadata, and can perform in-Vserver migrations non-disruptively. In
 order to do so, <code class="docutils literal notranslate"><span class="pre">preserve_metadata</span></code>, <code class="docutils literal notranslate"><span class="pre">preserve_snapshots</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">nondisruptive</span></code> must be set to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </div>
-</div>
-<div class="section" id="share-server-migration-api">
+</section>
+<section id="share-server-migration-api">
 <h2>Share Server Migration API<a class="headerlink" href="#share-server-migration-api" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default" id="api-overview-table-6-10">
 <colgroup>
@@ -666,8 +667,8 @@ to <code class="docutils literal notranslate"><span class="pre">True</span></cod
 the data being copied. The command output will inform the current state
 of the migration and the destination share server id.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
@@ -684,7 +685,7 @@ of the migration and the destination share server id.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2021-04-13 14:54</div>
+            <div class="docs-updated">updated: 2021-05-10 13:11</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -815,7 +816,7 @@ of the migration and the destination share server id.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 8ad1ac6df6225efa3d1210113db4bd8fc506eed0";
+    var gitSha = "SHA: 19b0df454b74d6fa723f12f72426f3706c143ba2";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "API Overview in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -826,7 +827,7 @@ of the migration and the destination share server id.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.1 on 2021-04-13 14:54";
+    var buildstring = "Release: 2021.1 on 2021-05-10 13:11";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
@@ -835,5 +836,6 @@ of the migration and the destination share server id.</p>
     logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
 </script>
 
+<script src="../../_static/documentation_options.js" type="text/javascript"></script>
   </body>
 </html>

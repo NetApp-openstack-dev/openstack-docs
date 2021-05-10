@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 <!-- Bootstrap CSS -->
 <link href="../../../_static/css/bootstrap.css" rel="stylesheet">
@@ -122,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2021-04-13 14:54</div>
+            <div class="docs-updated">updated: 2021-05-10 13:11</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -168,9 +169,9 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="manila-command-line-interface-cli">
+  <section id="manila-command-line-interface-cli">
 <h1>Manila Command Line Interface (CLI)<a class="headerlink" href="#manila-command-line-interface-cli" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="manila-service-verification">
+<section id="manila-service-verification">
 <h2>Manila Service Verification<a class="headerlink" href="#manila-service-verification" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we use the Manila CLI to verify that the configuration
 presented in the section called “<a class="reference internal" href="../../configuration/manila_config_files/section_sample_manila-conf.html#manila-conf-ex"><span class="std std-ref">Sample manila.conf</span></a>” has been
@@ -185,8 +186,8 @@ properly initialized by Manila.</p>
 +----+------------------+-------------------------------+------+---------+-------+----------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="creating-and-defining-manila-share-types">
+</section>
+<section id="creating-and-defining-manila-share-types">
 <h2>Creating and Defining Manila Share Types<a class="headerlink" href="#creating-and-defining-manila-share-types" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we create a variety of Manila Share Types that leverage
 both the default capabilities of each driver, as well as the NetApp
@@ -303,12 +304,12 @@ $ manila type-key flash set netapp_hybrid_aggregate=&quot;&lt;is&gt; False&quot;
 +--------------------------------------+---------+--------------------------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="creating-manila-share-network-objects">
+</section>
+<section id="creating-manila-share-network-objects">
 <h2>Creating Manila Share Network Objects<a class="headerlink" href="#creating-manila-share-network-objects" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we create two manila share network objects, doing so
 to demonstrate that share-network-objects are used only with share servers.</p>
-<div class="section" id="network-plugin-neutronnetworkplugin">
+<section id="network-plugin-neutronnetworkplugin">
 <h3>Network Plugin: NeutronNetworkPlugin<a class="headerlink" href="#network-plugin-neutronnetworkplugin" title="Permalink to this headline">¶</a></h3>
 <p>In this scenario the configurable Neutron Network Plugin is in use.
 As such each share network object is free to us any appropriate
@@ -384,8 +385,8 @@ network_api_class = manila.network.neutron.neutron_network_plugin.NeutronNetwork
 +-------------------+--------------------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="network-plugin-neutronsinglenetworkplugin">
+</section>
+<section id="network-plugin-neutronsinglenetworkplugin">
 <h3>Network Plugin: NeutronSingleNetworkPlugin<a class="headerlink" href="#network-plugin-neutronsinglenetworkplugin" title="Permalink to this headline">¶</a></h3>
 <p>In this scenario the simple Neutron Network Plugin is in use.
 As such each share network will use the Neutron Network and
@@ -467,9 +468,9 @@ When deleting a share network, you must make sure that it does not contain
 more than one share network subnet attached and all its subnets can not
 contain any related resource such as shares, share servers and so on.</p>
 </div>
-</div>
-</div>
-<div class="section" id="creating-manila-share-network-subnets">
+</section>
+</section>
+<section id="creating-manila-share-network-subnets">
 <h2>Creating Manila Share Network Subnets<a class="headerlink" href="#creating-manila-share-network-subnets" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we create a manila share network subnet in the previously
 created share network, a feature available since Train release. It
@@ -546,10 +547,10 @@ below.</p>
                                     8240a732-1713-4070-b863-042e794cc852
 </pre></div>
 </div>
-</div>
-<div class="section" id="creating-manila-shares-with-share-types">
+</section>
+<section id="creating-manila-shares-with-share-types">
 <h2>Creating Manila Shares with Share Types<a class="headerlink" href="#creating-manila-shares-with-share-types" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="without-share-server-management">
+<section id="without-share-server-management">
 <h3>Without Share Server Management<a class="headerlink" href="#without-share-server-management" title="Permalink to this headline">¶</a></h3>
 <p>In this section, we create shares with the default type, as well as
 all but the shared share type.</p>
@@ -660,8 +661,8 @@ all but the shared share type.</p>
 +-------------------------------------+----------+----+------------+----------+-----------+-----------------+------------------------------------+------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="with-share-server-management">
+</section>
+<section id="with-share-server-management">
 <h3>With Share Server Management<a class="headerlink" href="#with-share-server-management" title="Permalink to this headline">¶</a></h3>
 <p>In this section we create three shares, two on the share network object built upon
 the Simple Neutron Network Plugin and one built upon the Configurable Neutron
@@ -769,9 +770,9 @@ Network Plugin.</p>
 +-------------------------------------+--------+------+------------+-----------+-----------+-----------------+-----------------------------------+------------------+
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="viewing-share-servers">
+</section>
+</section>
+<section id="viewing-share-servers">
 <h2>Viewing Share Servers<a class="headerlink" href="#viewing-share-servers" title="Permalink to this headline">¶</a></h2>
 <p>Shares created against any one share network are placed on the same SVM.
 Notice that there are two share-servers for the three shares.</p>
@@ -821,8 +822,8 @@ Notice the vserver names in the manila share-server-show command</p>
 +----------------------+-------------------------------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="viewing-flexvols">
+</section>
+<section id="viewing-flexvols">
 <h2>Viewing Flexvols<a class="headerlink" href="#viewing-flexvols" title="Permalink to this headline">¶</a></h2>
 <p>We’ll now look at the CLI output from the ONTAP cluster to see what
 FlexVol volumes were created for the Manila share objects, as well as
@@ -876,8 +877,8 @@ aggregates with SSD drives, as seen in the command output below.</p>
 <span class="n">There</span> <span class="n">are</span> <span class="n">no</span> <span class="n">entries</span> <span class="n">matching</span> <span class="n">your</span> <span class="n">query</span><span class="o">.</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="granting-access-to-shares">
+</section>
+<section id="granting-access-to-shares">
 <h2>Granting Access To Shares<a class="headerlink" href="#granting-access-to-shares" title="Permalink to this headline">¶</a></h2>
 <p>We’ll now add access rules for any IP-connected client to mount these
 NFS shares with full read/write privileges.</p>
@@ -932,8 +933,8 @@ NFS shares with full read/write privileges.</p>
 +--------------+--------------------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="viewing-export-locations">
+</section>
+<section id="viewing-export-locations">
 <h2>Viewing Export Locations<a class="headerlink" href="#viewing-export-locations" title="Permalink to this headline">¶</a></h2>
 <p>We’ll now list the export location(s) for one of the new shares to see
 its network path. There may be multiple export locations for a given
@@ -948,8 +949,8 @@ should use the preferred path for optimum performance.</p>
 +-------------------------------------------------------------+-----------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="manila-quality-of-service">
+</section>
+<section id="manila-quality-of-service">
 <h2>Manila Quality of Service<a class="headerlink" href="#manila-quality-of-service" title="Permalink to this headline">¶</a></h2>
 <p>Manila Administrators have the ability to create share types with throughput
 limits specified for each share that users create. The following examples
@@ -1067,8 +1068,8 @@ supported specs refer to
 +--------------------------------------+----------+------+-------------+-----------+-----------+-----------------+-----------------------------------+-------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="creating-a-manila-cifs-share-with-security-service">
+</section>
+<section id="creating-a-manila-cifs-share-with-security-service">
 <h2>Creating a Manila CIFS share with security service<a class="headerlink" href="#creating-a-manila-cifs-share-with-security-service" title="Permalink to this headline">¶</a></h2>
 <p>As previously noted, creation of a CIFS share requires the co-deployment
 of one of three security services (LDAP, Active Directory, or Kerberos).
@@ -1133,8 +1134,8 @@ $ manila share-network-security-service-add &lt;share_network&gt; &lt;security_s
 +-----------------------------+--------------------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="managing-and-unmanaging-manila-shares">
+</section>
+<section id="managing-and-unmanaging-manila-shares">
 <h2>Managing and Unmanaging Manila Shares<a class="headerlink" href="#managing-and-unmanaging-manila-shares" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we use the admin-only <code class="docutils literal notranslate"><span class="pre">manage</span></code> command to bring
 storage resources under Manila management. A share is an ONTAP
@@ -1339,8 +1340,8 @@ the same for <code class="docutils literal notranslate"><span class="pre">DHSS=T
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ manila unmanage eb470d1c-1a10-4025-8384-4fc44e81013a
 </pre></div>
 </div>
-</div>
-<div class="section" id="managing-and-unmanaging-manila-share-servers">
+</section>
+<section id="managing-and-unmanaging-manila-share-servers">
 <span id="manage-share-server"></span><h2>Managing and unmanaging Manila Share Servers<a class="headerlink" href="#managing-and-unmanaging-manila-share-servers" title="Permalink to this headline">¶</a></h2>
 <p>Beginning with the Stein release, Manila supports managing and
 unmanaging share servers. Using the admin-only <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-server-manage</span></code>
@@ -1413,7 +1414,7 @@ with an IP address in this network.</p>
 <span class="n">Vserver</span>     <span class="n">Interface</span>  <span class="n">Admin</span><span class="o">/</span><span class="n">Oper</span> <span class="n">Address</span><span class="o">/</span><span class="n">Mask</span>       <span class="n">Node</span>          <span class="n">Port</span>    <span class="n">Home</span>
 <span class="o">-----------</span> <span class="o">----------</span> <span class="o">----------</span> <span class="o">------------------</span> <span class="o">-------------</span> <span class="o">-------</span> <span class="o">----</span>
 <span class="n">test_manage_share_server</span>
-            <span class="n">data_lif_1</span>   <span class="n">up</span><span class="o">/</span><span class="n">up</span>    <span class="mf">100.250</span><span class="o">.</span><span class="mf">119.21</span><span class="o">/</span><span class="mi">22</span>  <span class="n">cluster1</span><span class="o">-</span><span class="mi">01</span>   <span class="n">e0a</span>     <span class="n">true</span>
+            <span class="n">data_lif_1</span>   <span class="n">up</span><span class="o">/</span><span class="n">up</span>    <span class="mf">100.250.119.21</span><span class="o">/</span><span class="mi">22</span>  <span class="n">cluster1</span><span class="o">-</span><span class="mi">01</span>   <span class="n">e0a</span>     <span class="n">true</span>
 </pre></div>
 </div>
 <p>We can now manage the share server using the <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">share-server-manage</span></code>
@@ -1543,8 +1544,8 @@ share network entity was moved to the share network subnet entity. So you
 will also need to specify a share network subnet while managing a share
 server.</p>
 </div>
-</div>
-<div class="section" id="creating-manila-share-groups">
+</section>
+<section id="creating-manila-share-groups">
 <h2>Creating Manila Share Groups<a class="headerlink" href="#creating-manila-share-groups" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we’ll create and work with share groups and
 share group (SG) snapshots. First we list the share types
@@ -1784,15 +1785,15 @@ above.</p>
 +--------------------------------+--------------------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="creating-manila-share-replicas">
+</section>
+<section id="creating-manila-share-replicas">
 <h2>Creating Manila Share Replicas<a class="headerlink" href="#creating-manila-share-replicas" title="Permalink to this headline">¶</a></h2>
 <p>Starting from Train release, manila allows the creation of share replicas in
 both ‘driver_handles_share_servers’ True and False modes. In this section,
 we’ll create and use share replicas. Most operations are equal for both
 ‘driver_handles_share_servers’ True and False modes, however the creation of
 the share is different, as shown below.</p>
-<div class="section" id="creating-a-share-replica-without-share-server-management">
+<section id="creating-a-share-replica-without-share-server-management">
 <h3>Creating a Share Replica Without Share Server management<a class="headerlink" href="#creating-a-share-replica-without-share-server-management" title="Permalink to this headline">¶</a></h3>
 <p>We’ll start creating a share replica
 operating under <cite>driver_handles_share_servers=False</cite> mode. Then, we’ll start
@@ -1956,8 +1957,8 @@ become in-sync, refer to the section called <a class="reference internal" href="
 +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="creating-a-share-replica-with-share-server-management">
+</section>
+<section id="creating-a-share-replica-with-share-server-management">
 <h3>Creating a Share Replica With Share Server management<a class="headerlink" href="#creating-a-share-replica-with-share-server-management" title="Permalink to this headline">¶</a></h3>
 <p>Now, let’s see how it works when manila is operating under
 <cite>driver_handles_share_servers=True</cite> mode. In the below example, a share
@@ -2117,8 +2118,8 @@ become in sync, refer to the section called <a class="reference internal" href="
 +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------+-------------------+----------------------------+
 </pre></div>
 </div>
-</div>
-<div class="section" id="promoting-a-share-replica">
+</section>
+<section id="promoting-a-share-replica">
 <h3>Promoting a share replica<a class="headerlink" href="#promoting-a-share-replica" title="Permalink to this headline">¶</a></h3>
 <p>Finally, let’s see the promote process for the share replica. This operation
 is the same for both ‘driver_handles_share_servers’ True and False modes.</p>
@@ -2143,9 +2144,9 @@ is the same for both ‘driver_handles_share_servers’ True and False modes.</p
 +--------------------------------------+-----------+---------------+--------------------------------------+-------------------------------------+-------------------+----------------------------+
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="migrating-manila-shares">
+</section>
+</section>
+<section id="migrating-manila-shares">
 <h2>Migrating Manila Shares<a class="headerlink" href="#migrating-manila-shares" title="Permalink to this headline">¶</a></h2>
 <p>In this section, we’ll migrate a share from one pool to another.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ manila migration-start myFlash ocata@cmode_multi_svm_nfs#manila --writable False \
@@ -2169,8 +2170,8 @@ is the same for both ‘driver_handles_share_servers’ True and False modes.</p
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ manila migration-complete myFlash
 </pre></div>
 </div>
-</div>
-<div class="section" id="migrating-manila-share-servers">
+</section>
+<section id="migrating-manila-share-servers">
 <h2>Migrating Manila Share Servers<a class="headerlink" href="#migrating-manila-share-servers" title="Permalink to this headline">¶</a></h2>
 <p>Starting from Victoria release, manila supports the migration of share servers
 across and within back ends. As with share migration, this operation was built
@@ -2240,8 +2241,8 @@ using the command <code class="docutils literal notranslate"><span class="pre">s
 phase, with its task state at <code class="docutils literal notranslate"><span class="pre">migration_driver_in_progress</span></code> or
 <code class="docutils literal notranslate"><span class="pre">migration_driver_phase1_done</span></code>.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
@@ -2258,7 +2259,7 @@ phase, with its task state at <code class="docutils literal notranslate"><span c
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2021-04-13 14:54</div>
+            <div class="docs-updated">updated: 2021-05-10 13:11</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -2389,7 +2390,7 @@ phase, with its task state at <code class="docutils literal notranslate"><span c
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 8ad1ac6df6225efa3d1210113db4bd8fc506eed0";
+    var gitSha = "SHA: 19b0df454b74d6fa723f12f72426f3706c143ba2";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Manila Command Line Interface (CLI) in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -2400,7 +2401,7 @@ phase, with its task state at <code class="docutils literal notranslate"><span c
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.1 on 2021-04-13 14:54";
+    var buildstring = "Release: 2021.1 on 2021-05-10 13:11";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
@@ -2409,5 +2410,6 @@ phase, with its task state at <code class="docutils literal notranslate"><span c
     logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
 </script>
 
+<script src="../../../_static/documentation_options.js" type="text/javascript"></script>
   </body>
 </html>

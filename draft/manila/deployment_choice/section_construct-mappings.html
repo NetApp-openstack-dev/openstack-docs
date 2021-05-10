@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
 <!-- Bootstrap CSS -->
 <link href="../../_static/css/bootstrap.css" rel="stylesheet">
@@ -122,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2021-04-13 14:54</div>
+            <div class="docs-updated">updated: 2021-05-10 13:11</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -143,9 +144,9 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <div class="section" id="theory-of-operation-mapping-netapp-to-openstack-terminology">
+  <section id="theory-of-operation-mapping-netapp-to-openstack-terminology">
 <h1>Theory of Operation: Mapping NetApp to OpenStack Terminology<a class="headerlink" href="#theory-of-operation-mapping-netapp-to-openstack-terminology" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="manila-backends-and-ontap">
+<section id="manila-backends-and-ontap">
 <h2>Manila backends and ONTAP<a class="headerlink" href="#manila-backends-and-ontap" title="Permalink to this headline">¶</a></h2>
 <p>Storage Virtual Machines (SVMs, formerly known as Vservers) contain one
 or more FlexVol volumes and one or more LIFs through which they serve
@@ -160,8 +161,8 @@ cluster. However, the shares and LIFs are exclusive to the SVM. Multiple
 SVMs can coexist in a single cluster without being bound to any node in
 a cluster. However, they are bound to the physical cluster on which they
 exist.</p>
-</div>
-<div class="section" id="manila-shares-and-flexvol-volumes">
+</section>
+<section id="manila-shares-and-flexvol-volumes">
 <h2>Manila shares and FlexVol volumes<a class="headerlink" href="#manila-shares-and-flexvol-volumes" title="Permalink to this headline">¶</a></h2>
 <p>ONTAP FlexVol volumes (commonly referred to as volumes) and
 OpenStack File Share Storage shares (commonly referred to as Manila
@@ -169,8 +170,8 @@ shares) are semantically analogous. A FlexVol volume is a container of
 logical data elements (for example: files, Snapshot copies, clones,
 LUNs, etc.) that is abstracted from physical elements (for example:
 individual disks, and RAID groups).</p>
-</div>
-<div class="section" id="manila-qos">
+</section>
+<section id="manila-qos">
 <span id="manila-qos-attribute"></span><h2>Manila QoS<a class="headerlink" href="#manila-qos" title="Permalink to this headline">¶</a></h2>
 <p>Storage Quality of Service is a cluster-wide feature on ONTAP that requires no
 additional license. It allows users to set throughput limits and/or monitor
@@ -184,8 +185,8 @@ group.</p>
 <p>When using QoS via Manila, the driver will not allow sharing QoS
 policy-groups. If a share type supports QoS, a new policy-group is created for
 every share of that type.</p>
-</div>
-<div class="section" id="manila-scheduling-and-resource-pool-selection">
+</section>
+<section id="manila-scheduling-and-resource-pool-selection">
 <span id="manila-scheduling-and-resource-selection"></span><h2>Manila scheduling and resource pool selection<a class="headerlink" href="#manila-scheduling-and-resource-pool-selection" title="Permalink to this headline">¶</a></h2>
 <p>When Manila shares are created, the Manila scheduler selects a resource
 pool from the available storage pools: see “<a class="reference internal" href="../key_concepts/section_manila-key-concepts.html#manila-storage-pools"><span class="std std-ref">Storage Pools</span></a>”
@@ -223,8 +224,8 @@ basis in the Manila configuration file.</p>
 <p>The controller utilization values used by the filter and goodness functions are only
 available when cluster-scoped credentials are supplied in the Manila configuration file.</p>
 </div>
-</div>
-<div class="section" id="manila-snapshots-versus-netapp-snapshots">
+</section>
+<section id="manila-snapshots-versus-netapp-snapshots">
 <h2>Manila snapshots versus NetApp Snapshots<a class="headerlink" href="#manila-snapshots-versus-netapp-snapshots" title="Permalink to this headline">¶</a></h2>
 <p>A NetApp Snapshot copy is a point-in-time file system image.
 Low-overhead NetApp Snapshot copies are made possible by the unique
@@ -245,8 +246,8 @@ are accessible as read-only and online versions of the data.</p>
 are directly leveraged within an Manila context, as a user of Manila
 requests a snapshot be taken of a particular Manila share.</p>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
               </div>
@@ -263,7 +264,7 @@ requests a snapshot be taken of a particular Manila share.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2021-04-13 14:54</div>
+            <div class="docs-updated">updated: 2021-05-10 13:11</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -394,7 +395,7 @@ requests a snapshot be taken of a particular Manila share.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 8ad1ac6df6225efa3d1210113db4bd8fc506eed0";
+    var gitSha = "SHA: 19b0df454b74d6fa723f12f72426f3706c143ba2";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Theory of Operation: Mapping NetApp to OpenStack Terminology in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -405,7 +406,7 @@ requests a snapshot be taken of a particular Manila share.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.1 on 2021-04-13 14:54";
+    var buildstring = "Release: 2021.1 on 2021-05-10 13:11";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
@@ -414,5 +415,6 @@ requests a snapshot be taken of a particular Manila share.</p>
     logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
 </script>
 
+<script src="../../_static/documentation_options.js" type="text/javascript"></script>
   </body>
 </html>
