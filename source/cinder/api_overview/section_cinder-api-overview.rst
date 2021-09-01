@@ -49,7 +49,7 @@ names or UUID.
 +--------------------+-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 | Unmanage           | ``cinder unmanage``           | Cease management of an existing Cinder volume without deleting the backing storage object                                                 |
 +--------------------+-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| Revert to snapshot | ``cinder revert-to-snapshot`` | Restore a Cinder volume to the state and data of the most recent snapshot. This command is only available in microversion 3.40 and above. |
+| Revert to snapshot | ``cinder revert-to-snapshot`` | Restore a Cinder volume to the state and data of the most recent snapshot. This command is only available starting from Xena release.     |
 +--------------------+-------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 4.2. Cinder API Overview - Volume
