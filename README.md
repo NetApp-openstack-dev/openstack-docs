@@ -39,6 +39,12 @@ From inside the repository, build this guide with:
 tox -e docs
 ```
 
+It requires [PyEnchant installation](https://pyenchant.github.io/pyenchant/install.html#installing-the-enchant-c-library). On Ubuntu:
+
+```
+sudo apt install python3-enchant
+```
+
 A "build" folder is created with doctrees and html output.
 
 

@@ -512,7 +512,9 @@ taking the snapshot.
 
 An optimized implementation of the revert to snapshot operation is used for
 the SolidFire driver. For ONTAP backends, the feature works by using a
-generic implementation that works for NFS/iSCSI/FC driver modes.
+generic implementation that works for NFS/iSCSI/FC driver modes. From Xena
+release, ONTAP is also performed using the storage with a safer and faster
+approach.
 
 .. caution::
    Revert to snapshot is not supported when the storage pool
