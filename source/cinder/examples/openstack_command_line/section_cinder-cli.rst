@@ -931,7 +931,7 @@ In this section, we will create a new volume, take a snapshot from it and
 revert to that last snapshot.
 
 .. note::
-   This command is only available in microversion 3.40 and above.
+   This command is only available in microversion 3.62 and above.
 
 .. note::
    You can only revert the volume to the last snapshot taken. If you need to
@@ -992,4 +992,4 @@ revert to that last snapshot.
 
 ::
 
-    $ cinder --os-volume-api-version=3.40 revert-to-snapshot a2dee3cd-d14a-4920-8a73-17a3a8ca8fdc
+    $ cinder --os-volume-api-version=3.62 revert-to-snapshot a2dee3cd-d14a-4920-8a73-17a3a8ca8fdc
