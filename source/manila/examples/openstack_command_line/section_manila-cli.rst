@@ -2451,7 +2451,13 @@ is compatible with our existing share server.
     +------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. note::
-   NetApp driver only supports disruptive share server migration.
+   Until Wallaby release, the NetApp ONTAP driver for Manila only supports
+   disruptive share server migration.
+
+.. note::
+   As from Xena release, the NetApp ONTAP driver supports non-disruptive
+   migrations if no network changes were identified and the preconditions
+   described :ref:`here <server_migration_with_svm_migrate>` are met.
 
 Now that we know that the destination back end is compatible with our share
 server, we can start the migration, using the same parameters.
