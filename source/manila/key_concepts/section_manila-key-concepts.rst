@@ -430,12 +430,19 @@ operation, in the moment that the disruption of clients can occur. For the list
 of all share server migration commands, refer to
 ":ref:`Table 6.10, “Manila API Overview - Share Server Migration<api_overview_table-6.10>`".
 
+.. important::
+   In order to have share server migration working across ONTAP clusters, they
+   must be peered in advance and have a valid SnapMirror license installed.
+
+Share Server Migration With SVM DR
+----------------------------------
+
 NetApp's Manila driver supports share server migration if all the
 following restrictions are fulfilled:
 
 - Source and destination back ends belong to different clusters;
 - Source and destination clusters have the same ONTAP system version, which
-  must greater than or equal to 9.4;
+  must be greater than or equal to 9.4;
 - Source and destination share networks don't have different security service
   configurations;
 - Source and destination back ends have compatible capabilities (FlexVol
@@ -444,6 +451,30 @@ following restrictions are fulfilled:
   server and all its shares and snapshots;
 - The requested migration can be disruptive.
 
-.. important::
-   In order to have share server migration working across ONTAP clusters, they
-   must be peered in advance and have a valid SnapMirror license installed.
+
+Share Server Migration With SVM Migrate (Available From Xena Release)
+---------------------------------------------------------------------
+
+SVM Migrate, different from SVM DR is a NetApp specific mechanism developed
+to allow administrators to move entire share servers from one cluster to
+another. This mechanism is meant to actually migrate share servers in a very
+efficient way. This migration mechanism supports non-disruptive migrations,
+as long as no network changes are perceived when an administrator specifies a
+new share network in the migration start process.
+
+NetApp's Manila driver supports share server migration using SVM Migrate on
+Xena release if all the following requirements are met:
+
+- Source and destination back ends belong to different clusters;
+- Source and destination clusters have the same ONTAP system version, which
+  must be greater than or equal to 9.10;
+- Source and destination share networks don't have different security service
+  configurations;
+- Source and destination back ends have compatible capabilities (FlexVol
+  Encryption, SnapRestore license, etc);
+- Destination back end must have enough free space to handle the source share
+  server and all its shares and snapshots;
+- The share server does not have NFS version 4.0 enabled;
+- Both source and destination clusters are AFF;
+- Both source and destination clusters contain a pre created policy from type
+  'migrate';
