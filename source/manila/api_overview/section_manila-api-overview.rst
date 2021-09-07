@@ -302,10 +302,17 @@ Table 6.10. Manila API Overview - Share Server Migration
    Several parameters need to be specified when starting migration for
    a share server. For a list of supported parameters, refer to the help text
    by running ``manila help share-server-migration-start``. For example, the
-   NetApp driver doesn't support migrate share servers non-disruptively. To
-   have the migration accepted by the NetApp driver, ``nondisruptive`` must be
-   set to ``False``, while ``preserve_snapshots`` and ``writable`` can be set
-   to ``True``.
+   NetApp driver doesn't support migrate share servers non-disruptively until
+   Wallaby release. Until Wallaby, to have the migration accepted by the NetApp
+   driver, ``nondisruptive`` must be set to ``False``, while
+   ``preserve_snapshots`` and ``writable`` can be set to ``True``.
+
+.. important::
+   As from Xena release, the NetApp ONTAP driver is able to perform
+   non-disruptive migrations of share servers when the ONTAP Cluster Version
+   is >= 9.10. In order to have a non-disruptive migration accepted, a new
+   share network with different neutron network ID or neutron subnet ID can not
+   be specified.
 
 .. note::
    "Get Progress" operation can't provide the current progress percentage of
