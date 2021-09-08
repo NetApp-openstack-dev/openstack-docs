@@ -362,7 +362,9 @@ writable, readable, and DR.
    The NetApp Unified Driver for ONTAP provides DR replication only if you are
    operating *without* Share Server management until Stein Release. From Train
    release, the NetApp Unified Driver for ONTAP *with* Share Server
-   management does support DR style replication.
+   management does support DR style replication. From Xena release, the NetApp
+   Unified Driver also supports the Readable replication type, in older
+   releases, only the DR type was supported.
 
 Share Migration
 ---------------
