@@ -137,6 +137,8 @@ share server management - with Cluster-wide Administrative Account”<table-6.19
 +-----------------------------+----------------+
 | ``statistics``              | ``all``        |
 +-----------------------------+----------------+
+| ``job`` [#f1]_              | ``readonly``   |
++-----------------------------+----------------+
 
 Table 6.17. Common Access Level Permissions Required with Any Manila Driver
 
@@ -257,3 +259,7 @@ Storage Networking Considerations
    nodes and the Data LIF interfaces from ONTAP.
 
 2. LIF assignment
+
+.. rubric:: Footnotes
+
+.. [#f1] ``job`` access is only required when a FlexGroup pool is configured.

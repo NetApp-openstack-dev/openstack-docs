@@ -5,6 +5,7 @@ admin
 Admin
 admins
 af
+aggr
 aggrs
 Agrawal
 aix
@@ -36,6 +37,7 @@ bugfixes
 burstIOPS
 Callaway
 cDOT
+cdotWithFlexGroup
 Ceilometer
 CentOS
 cgsnapshot
@@ -76,8 +78,13 @@ FC
 Fibre
 filesystem
 Filesystems
+fg
 flexclone
 Flexclone
+flexgroup
+flexgroups
+FlexGroup
+FlexGroups
 flexvol
 Flexvol
 flexvols
