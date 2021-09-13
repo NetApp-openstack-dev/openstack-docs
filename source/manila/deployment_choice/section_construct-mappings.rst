@@ -5,7 +5,7 @@ Manila backends and ONTAP
 -------------------------
 
 Storage Virtual Machines (SVMs, formerly known as Vservers) contain one
-or more FlexVol volumes and one or more LIFs through which they serve
+or more FlexVol/FlexGroup volumes and one or more LIFs through which they serve
 data to clients.
 
 SVMs securely isolate the shared virtualized data storage and network,
@@ -20,14 +20,14 @@ SVMs can coexist in a single cluster without being bound to any node in
 a cluster. However, they are bound to the physical cluster on which they
 exist.
 
-Manila shares and FlexVol volumes
----------------------------------
+Manila shares and FlexVol/FlexGroup volumes
+-------------------------------------------
 
-ONTAP FlexVol volumes (commonly referred to as volumes) and
+ONTAP FlexVol and FlexGroup volumes (commonly referred to as volumes) and
 OpenStack File Share Storage shares (commonly referred to as Manila
-shares) are semantically analogous. A FlexVol volume is a container of
-logical data elements (for example: files, Snapshot copies, clones,
-LUNs, etc.) that is abstracted from physical elements (for example:
+shares) are semantically analogous. A FlexVol or FlexGroup volume is a
+container of logical data elements (for example: files, Snapshot copies,
+clones, LUNs, etc.) that is abstracted from physical elements (for example:
 individual disks, and RAID groups).
 
 .. _manila_qos_attribute:
@@ -57,6 +57,13 @@ When Manila shares are created, the Manila scheduler selects a resource
 pool from the available storage pools: see ":ref:`manila_storage_pools`"
 for an overview.
 
+Before Xena release, NetApp's Manila driver reports all pools to provision the
+volumes as FlexVol ONTAP volume only. With Xena, the driver can report a pool
+for FlexGroup ONTAP volume provision (see :ref:`manila_flexgroup_pools`). Those
+pools can work together or standalone. The pool report its style with
+``netapp_flexgroup`` capability that can be used by scheduler to filter pool
+with desired style.
+
 Beginning with Kilo, each of NetApp's Manila drivers report per-pool
 capacity to the scheduler.  When a new share is provisioned, the scheduler
 capacity filter eliminates too-small pools from consideration.  Similarly,
@@ -74,6 +81,14 @@ The default filter function supplied by the ONTAP drivers is
 "capabilities.utilization < 70", beyond which point latency may be adversely
 affected by additional Manila shares.  The filter function may be overridden
 on a per-backend basis in the Manila configuration file.
+
+.. note::
+
+    For FlexGroup pools, introduced in Xena release, the default filter
+    function is the minimum possible share size to be provisioned. This minimum
+    value depends on the number of aggregates in the pool (100GB each). The
+    default filter is an ONTAP requirement, so custom filter function is highly
+    recommended to keep with that condition.
 
 Each candidate pool that passes the filters is then considered by the scheduler's
 weighers so that the optimum one is chosen for a new share.  As stated above, as
@@ -108,11 +123,12 @@ changes to data objects are reflected in updates to the current version
 of the objects, as if NetApp Snapshot copies did not exist. Meanwhile,
 the NetApp Snapshot version of the data remains completely stable. A
 NetApp Snapshot incurs no performance overhead; users can comfortably
-store up to 255 NetApp Snapshot copies per FlexVol volume, all of which
-are accessible as read-only and online versions of the data.
+store up to 255 NetApp Snapshot copies per FlexVol volume and 1023 per
+FlexGroup volume, all of which are accessible as read-only and online versions
+of the data.
 
 .. important::
 
-   Since NetApp Snapshots are taken at the FlexVol level, they can and
-   are directly leveraged within an Manila context, as a user of Manila
+   Since NetApp Snapshots are taken at the FlexVol/FlexGroup level, they can
+   and are directly leveraged within an Manila context, as a user of Manila
    requests a snapshot be taken of a particular Manila share.

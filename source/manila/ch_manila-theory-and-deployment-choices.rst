@@ -13,3 +13,4 @@ Theory of Operation & Deployment Choices
    deployment_choice/section_manila-conf.rst
    deployment_choice/section_utilizing_share_servers.rst
    deployment_choice/section_network-plugins-overview.rst
+   deployment_choice/section_utilizing_flexgroup_pool.rst
