@@ -20,8 +20,8 @@ support together with the filter scheduler.
 When the NetApp unified driver is used with an ONTAP
 storage system, you can leverage extra specs with Manila share types to
 ensure that Manila shares are created on storage backends that have
-certain properties (e.g. thin provisioning, disk type, RAID type, QoS Support)
-configured.
+certain properties (e.g. thin provisioning, disk type, RAID type, QoS Support,
+FlexGroup/FlexVol style) configured.
 
 Extra specs are associated with Manila share types, so that when users
 request shares of a particular share type, they are created on storage
@@ -76,6 +76,8 @@ when defining Manila share types with the ``manila type-key`` command.
 | ``qos``                                  | Boolean   | Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in [#f1]_. See the NetApp driver specific QoS extra-specs in :ref:`Table 6.11, ?~@~\NetApp QoS Specs for use with Manila Share Types?~@~]<table-6.11>`.                                                                                                             |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``netapp:adaptive_qos_policy_group``     | String    | Apply the specified adaptive QoS policy group to the FlexVol volume that corresponds to the Manila Share. *Note that the provided adaptive qos policy group must be created in advance in all SVMs managed by Manila.* Check [#f3]_ for feature restrictions.                                                                                                                    |
++------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``netapp_flexgroup``                     | Boolean   | Allow scheduling to pool with FlexGroup or FlexVol style.                                                                                                                                                                                                                                                                                                                        |
 +------------------------------------------+-----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Table 6.10. NetApp supported Extra Specs for use with Manila Share Types

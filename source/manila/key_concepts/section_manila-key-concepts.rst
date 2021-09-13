@@ -65,8 +65,10 @@ scheduling logic is performed completely within the Manila scheduler.
 
 .. important::
 
-   For NetApp's Manila drivers, a Manila storage pool is an aggregate
-   defined within ONTAP.
+   For NetApp's Manila drivers, before Xena release, a Manila storage pool is
+   an aggregate defined within ONTAP. From Xena release, the storage pool can
+   be either an aggregate (FlexVol provisioning) or a set of aggregates
+   (FlexGroup provisioning, see :ref:`manila_flexgroup_pools`).
 
 .. _manila_driver:
 
@@ -194,16 +196,22 @@ snapshot.
 
 .. note::
 
-   When using NetApp's Manila drivers, Share Groups are synonymous
-   with the conventional ``Consistency Group`` construct. Beginning
-   with the Rocky release, OpenStack recommends the usage of Share
-   Groups to create a grouping construct which operates on groups
-   of shares.
+   When using NetApp's Manila drivers, before Xena release, Share Groups are
+   synonymous with the conventional ``Consistency Group`` construct. From Xena,
+   if FlexGroup pool is configured, the consistency group is not supported, so the
+   Share Groups will not have the features of a ``Consistency Group``.
+   Beginning with the Rocky release, OpenStack recommends the usage of Share
+   Groups to create a grouping construct which operates on groups of shares.
 
 .. note::
 
    All shares in a share group must be on the same share network
    and share server.
+
+.. warning::
+
+    From Xena release, configuring FlexGroup pool drops the consistency group
+    support for the entire backend. Even FlexVol pools lose its support.
 
 .. _share-access-rules:
 
@@ -380,6 +388,10 @@ completing the process using the ``manila migration-complete`` command.
 For the list of migration commands, refer to
 ":ref:`Table 6.9, “Manila API Overview - Share Migration<table-6.9>`".
 
+.. caution::
+
+    FlexGroup shares cannot be migrated.
+
 Share Management
 ----------------
 
@@ -451,7 +463,8 @@ following restrictions are fulfilled:
   Encryption, SnapRestore license, etc);
 - Destination back end must have enough free space to handle the source share
   server and all its shares and snapshots;
-- The requested migration can be disruptive.
+- The requested migration can be disruptive;
+- The share server does not contain any FlexGroup share.
 
 
 .. _server_migration_with_svm_migrate:
@@ -481,4 +494,4 @@ Xena release if all the following requirements are met:
 - The share server does not have NFS version 4.0 enabled;
 - Both source and destination clusters are AFF;
 - Both source and destination clusters contain a pre created policy from type
-  'migrate';
+  'migrate'.
