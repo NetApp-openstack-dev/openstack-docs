@@ -137,6 +137,8 @@ share server management - with Cluster-wide Administrative Account”<table-6.19
 +-----------------------------+----------------+
 | ``statistics``              | ``all``        |
 +-----------------------------+----------------+
+| ``snapmirror``              | ``all``        |
++-----------------------------+----------------+
 
 Table 6.17. Common Access Level Permissions Required with Any Manila Driver
 
@@ -145,9 +147,7 @@ Table 6.17. Common Access Level Permissions Required with Any Manila Driver
 +-------------------------------------------------------+----------------+
 | Command                                       	| Access Level   |
 +=======================================================+================+
-| ``vserver cifs create``                		| ``all``        |
-+-------------------------------------------------------+----------------+
-| ``vserver cifs delete``                		| ``all``        |
+| ``vserver cifs``                      		| ``all``        |
 +-------------------------------------------------------+----------------+
 | ``vserver nfs kerberos interface``     		| ``all``        |
 +-------------------------------------------------------+----------------+
