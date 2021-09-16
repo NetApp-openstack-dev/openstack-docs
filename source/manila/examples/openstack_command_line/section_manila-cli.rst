@@ -1999,6 +1999,11 @@ we'll create and use share replicas. Most operations are equal for both
 'driver_handles_share_servers' True and False modes, however the creation of
 the share is different, as shown below.
 
+.. note::
+
+    The examples below are using ``dr`` replication type, but starting from Xena
+    release, the user can also set ``replication_type`` to ``readable``.
+
 Creating a Share Replica Without Share Server management
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2019,7 +2024,7 @@ creating a share type.
     | ID                   | ce1709ef-0b20-4cbf-9fc0-2b75adfee9b8 |
     +----------------------+--------------------------------------+
 
-Assign replication_type and snapshot_support attributes to the replication share-type
+Assign replication_type and snapshot_support attributes to the replication share-type.
 
 ::
 
