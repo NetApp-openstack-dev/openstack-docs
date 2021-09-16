@@ -1,0 +1,10 @@
+Code-Review+2: Nahim Alves de Souza <nahimsouza@outlook.com>
+Code-Review+2: Fábio Oliveira <fabioaurelio1269@gmail.com>
+Release+1: Caique Mello <caique_mellosbo@hotmail.com>
+QA-Review+2: Felipe Rodrigues <felipefuty01@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Thu, 16 Sep 2021 10:22:54 -0300
+Reviewed-on: https://review.openstack.netapp.com/1585
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
