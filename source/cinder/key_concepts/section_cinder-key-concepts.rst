@@ -519,3 +519,29 @@ approach.
 .. caution::
    Revert to snapshot is not supported when the storage pool
    is a FlexGroup volume.
+
+Storage Assisted Migration
+--------------------------
+
+Starting from Xena release, Cinder supports storage assisted migration feature.
+This feature can be used to migrate ONTAP NFS/iSCSI/FC drivers within the same
+cluster. In most scenarios it will happen in a non-disruptive way.
+List of possible scenarios:
+
+1. Within a Storage Virtual Machine (SVM). This operation is non-disruptive on
+   iSCSI and FC drivers. NFS drivers requires the volume to be in `available`
+   status.
+
+2. Between SVMs at same cluster. This operation is disruptive in all cases and
+   requires the volume to be in `available` status.
+
+3. Between two different clusters is not supported for storage assisted, driver
+   will automatically fallback to host assisted migration.
+
+.. note::
+   Storage Assisted Migration between backends/stanza requires the cluster
+   admin account. Using SVM scoped account, it will fallback to host assisted.
+
+.. caution::
+   Storage Assisted Migration is not supported when the storage pool
+   is a FlexGroup volume.
