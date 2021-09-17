@@ -994,3 +994,201 @@ revert to that last snapshot.
 ::
 
     $ cinder --os-volume-api-version=3.62 revert-to-snapshot a2dee3cd-d14a-4920-8a73-17a3a8ca8fdc
+
+
+Volume Migration
+------------------
+In this section, we will create a new volume and migrate it to another pool in
+the same backend.
+
+.. note::
+   Before Xena release, this command was performed with the host migration,
+   being always disruptive. From Xena release, this command can be performed
+   using the storage approach, becoming faster and non-disruptive within a same
+   SVM. On NFS drivers is always disruptive.
+
+.. note::
+   During the migration, the volume property ``migration_status`` is set to
+   ``migrating`` and then ``success`` if succeed or ``error`` when fail.
+
+.. note::
+   Storage Assisted Migration has a time limit to happen. The time is defined
+   by ``netapp_migrate_volume_timeout`` driver option. The default value is
+   3600 seconds. When the timeout is reached:
+
+   - on disruptive operations, the migration is canceled, the volume goes back
+     to original state and the copy on target is deleted.
+
+   - on non-disruptive operations, there is no way of stopping the migration,
+     the volume status is set as ```maintenance``. Then the user must watch
+     over the migration status and when it succeed, reset the volume state to
+     the status before migration using:
+     ``cinder reset-state --type volume --state <state> <name|id>`` - must know
+     the volume status before migration.
+
+::
+
+    $ cinder create --volume-type backend-iscsi --name v1 10
+    +--------------------------------+--------------------------------------+
+    | Property                       | Value                                |
+    +--------------------------------+--------------------------------------+
+    | attachments                    | []                                   |
+    | availability_zone              | nova                                 |
+    | bootable                       | false                                |
+    | consistencygroup_id            | None                                 |
+    | created_at                     | 2021-09-17T19:00:31.000000           |
+    | description                    | None                                 |
+    | encrypted                      | False                                |
+    | id                             | a562f979-a9e6-4891-b487-7d3eca1bab54 |
+    | metadata                       | {}                                   |
+    | migration_status               | None                                 |
+    | multiattach                    | False                                |
+    | name                           | v1                                   |
+    | os-vol-host-attr:host          | None                                 |
+    | os-vol-mig-status-attr:migstat | None                                 |
+    | os-vol-mig-status-attr:name_id | None                                 |
+    | os-vol-tenant-attr:tenant_id   | 7c40c38a667f4170b6dd7c72e2018d4b     |
+    | replication_status             | None                                 |
+    | size                           | 10                                   |
+    | snapshot_id                    | None                                 |
+    | source_volid                   | None                                 |
+    | status                         | creating                             |
+    | updated_at                     | None                                 |
+    | user_id                        | c337225cb6e54b1c8b3e0773e1a444a5     |
+    | volume_type                    | backend-iscsi                        |
+    +--------------------------------+--------------------------------------+
+
+::
+
+    $ cinder show v1
+    +--------------------------------+-------------------------------------------------------------+
+    | Property                       | Value                                                       |
+    +--------------------------------+-------------------------------------------------------------+
+    | attached_servers               | []                                                          |
+    | attachment_ids                 | []                                                          |
+    | availability_zone              | nova                                                        |
+    | bootable                       | false                                                       |
+    | consistencygroup_id            | None                                                        |
+    | created_at                     | 2021-09-17T19:00:31.000000                                  |
+    | description                    | None                                                        |
+    | encrypted                      | False                                                       |
+    | id                             | a562f979-a9e6-4891-b487-7d3eca1bab54                        |
+    | metadata                       |                                                             |
+    | migration_status               | None                                                        |
+    | multiattach                    | False                                                       |
+    | name                           | v1                                                          |
+    | os-vol-host-attr:host          | host@backend-iscsi#pool-000                                 |
+    | os-vol-mig-status-attr:migstat | None                                                        |
+    | os-vol-mig-status-attr:name_id | None                                                        |
+    | os-vol-tenant-attr:tenant_id   | 7c40c38a667f4170b6dd7c72e2018d4b                            |
+    | replication_status             | None                                                        |
+    | size                           | 10                                                          |
+    | snapshot_id                    | None                                                        |
+    | source_volid                   | None                                                        |
+    | status                         | available                                                   |
+    | updated_at                     | 2021-09-17T19:00:32.000000                                  |
+    | user_id                        | c337225cb6e54b1c8b3e0773e1a444a5                            |
+    | volume_type                    | backend-iscsi                                               |
+    +--------------------------------+-------------------------------------------------------------+
+
+::
+
+    $ cinder migrate --help
+    usage: cinder migrate [--force-host-copy [<True|False>]] [--lock-volume [<True|False>]] <volume> <host>
+
+    Migrates volume to a new host.
+
+    Positional Arguments:
+    <volume>              ID of volume to migrate.
+    <host>                Destination host. Takes the form: host@backend-name#pool
+
+    Optional arguments:
+    --force-host-copy     Disables any driver optimizations and forces the data to be copied by the host. Default=False
+    --lock-volume         Prevents other processes from aborting the migration, sets the volume state as maintenance during migration. Default=False
+
+::
+
+    $ cinder get-pools
+    +----------+-------------------------------------------------------------+
+    | Property | Value                                                       |
+    +----------+-------------------------------------------------------------+
+    | name     | host@backend-iscsi#pool-000                                 |
+    +----------+-------------------------------------------------------------+
+    +----------+-------------------------------------------------------------+
+    | Property | Value                                                       |
+    +----------+-------------------------------------------------------------+
+    | name     | host@backend-iscsi#pool-001                                 |
+    +----------+-------------------------------------------------------------+
+
+::
+
+    $ cinder migrate v1 host@backend-iscsi#pool-001
+    Request to migrate volume a3f8d969-9549-4750-a479-ea2b7687b484 has been accepted.
+
+::
+
+    # The volume migration_status changes to migrating when migration starts.
+    $ cinder show v1
+    +--------------------------------+-------------------------------------------------------------+
+    | Property                       | Value                                                       |
+    +--------------------------------+-------------------------------------------------------------+
+    | attached_servers               | []                                                          |
+    | attachment_ids                 | []                                                          |
+    | availability_zone              | nova                                                        |
+    | bootable                       | false                                                       |
+    | consistencygroup_id            | None                                                        |
+    | created_at                     | 2021-09-17T19:33:37.000000                                  |
+    | description                    | None                                                        |
+    | encrypted                      | False                                                       |
+    | id                             | a3f8d969-9549-4750-a479-ea2b7687b484                        |
+    | metadata                       |                                                             |
+    | migration_status               | migrating                                                   |
+    | multiattach                    | False                                                       |
+    | name                           | v1                                                          |
+    | os-vol-host-attr:host          | host@backend-iscsi#pool-000                                 |
+    | os-vol-mig-status-attr:migstat | migrating                                                   |
+    | os-vol-mig-status-attr:name_id | None                                                        |
+    | os-vol-tenant-attr:tenant_id   | 7c40c38a667f4170b6dd7c72e2018d4b                            |
+    | replication_status             | None                                                        |
+    | size                           | 10                                                          |
+    | snapshot_id                    | None                                                        |
+    | source_volid                   | None                                                        |
+    | status                         | available                                                   |
+    | updated_at                     | 2021-09-17T19:34:09.000000                                  |
+    | user_id                        | c337225cb6e54b1c8b3e0773e1a444a5                            |
+    | volume_type                    | backend-iscsi                                               |
+    +--------------------------------+-------------------------------------------------------------+
+
+::
+
+    # The volume migration_status changes to success when migration ends.
+    $ cinder show v1
+    +--------------------------------+-------------------------------------------------------------+
+    | Property                       | Value                                                       |
+    +--------------------------------+-------------------------------------------------------------+
+    | attached_servers               | []                                                          |
+    | attachment_ids                 | []                                                          |
+    | availability_zone              | nova                                                        |
+    | bootable                       | false                                                       |
+    | consistencygroup_id            | None                                                        |
+    | created_at                     | 2021-09-17T19:33:37.000000                                  |
+    | description                    | None                                                        |
+    | encrypted                      | False                                                       |
+    | id                             | a3f8d969-9549-4750-a479-ea2b7687b484                        |
+    | metadata                       |                                                             |
+    | migration_status               | success                                                     |
+    | multiattach                    | False                                                       |
+    | name                           | v1                                                          |
+    | os-vol-host-attr:host          | host@backend-iscsi#pool-001                                 |
+    | os-vol-mig-status-attr:migstat | success                                                     |
+    | os-vol-mig-status-attr:name_id | None                                                        |
+    | os-vol-tenant-attr:tenant_id   | 7c40c38a667f4170b6dd7c72e2018d4b                            |
+    | replication_status             | None                                                        |
+    | size                           | 10                                                          |
+    | snapshot_id                    | None                                                        |
+    | source_volid                   | None                                                        |
+    | status                         | available                                                   |
+    | updated_at                     | 2021-09-17T19:34:24.000000                                  |
+    | user_id                        | c337225cb6e54b1c8b3e0773e1a444a5                            |
+    | volume_type                    | backend-iscsi                                               |
+    +--------------------------------+-------------------------------------------------------------+
