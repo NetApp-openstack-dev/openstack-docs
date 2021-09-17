@@ -519,3 +519,44 @@ approach.
 .. caution::
    Revert to snapshot is not supported when the storage pool
    is a FlexGroup volume.
+
+Storage Assisted Migration
+--------------------------
+
+Starting from Xena release, Cinder supports storage assisted migration feature.
+This feature can be used to migrate ONTAP NFS/iSCSI/FC drivers within the same
+cluster. In most scenarios it will happen in a non-disruptive way.
+List of possible scenarios:
+
+.. note::
+   Storage Assisted Migration has a time limit to happen. The time is defined
+   by ``netapp_migrate_volume_timeout`` driver option. The default value is
+   3600 seconds. When the timeout is reached:
+
+   - on disruptive operations, the migration is canceled, the volume goes back
+     to original state and the copy on target is deleted.
+
+   - on non-disruptive operations, there is no way of stopping the migration,
+     the volume status is set as ```maintenance``. Then the user must watch
+     over the migration status and when it succeed, reset the volume state to
+     the status before migration using:
+     ``cinder reset-state --type volume --state <state> <name|id>`` - must know
+     the volume status before migration.
+
+1. Within a Storage Virtual Machine (SVM). This operation is non-disruptive on
+   iSCSI and FC drivers. NFS drivers requires the volume to be in `available`
+   status.
+
+2. Between SVMs at same cluster. This operation is disruptive in all cases and
+   requires the volume to be in `available` status.
+
+3. Between two different clusters is not supported for storage assisted, driver
+   will automatically fallback to host assisted migration.
+
+.. note::
+   Storage Assisted Migration between backends/stanza requires the cluster
+   admin account. Using SVM scoped account, it will fallback to host assisted.
+
+.. caution::
+   Storage Assisted Migration is not supported when the storage pool
+   is a FlexGroup volume.
