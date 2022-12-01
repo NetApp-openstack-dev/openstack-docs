@@ -1,0 +1,10 @@
+Code-Review+2: Felipe Rodrigues <felipefuty01@gmail.com>
+Code-Review+2: Caique Mello <caique_mellosbo@hotmail.com>
+QA-Review+2: Caique Mello <caique_mellosbo@hotmail.com>
+Release+1: Caique Mello <caique_mellosbo@hotmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Thu, 01 Dec 2022 11:27:26 -0200
+Reviewed-on: https://review.openstack.netapp.com/1589
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
