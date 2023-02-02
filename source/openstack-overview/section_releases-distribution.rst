@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Wallaby release date is
+months starting with the Essex release. The Yoga release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for April of
-2021, by convention, will start with the letter “W.”
+alphabetically incremented. Hence, the release intended for March of
+2022, by convention, will start with the letter “Y.”
 
 +------------+------------------+
 | Release    | Date             |
@@ -57,6 +57,8 @@ alphabetically incremented. Hence, the release intended for April of
 | Wallaby    | April 2021       |
 +------------+------------------+
 | Xena       | October 2021     |
++------------+------------------+
+| Yoga       | March 2022       |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
