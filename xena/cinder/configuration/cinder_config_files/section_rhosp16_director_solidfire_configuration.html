@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+    <title>OpenStack Docs: Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+<!-- Bootstrap CSS -->
+<link href="../../../_static/css/bootstrap.css" rel="stylesheet">
+
+<!-- Pygments CSS -->
+<link href="../../../_static/css/native.css" rel="stylesheet">
+
+<!-- Fonts -->
+<link href="../../../_static/css/font-awesome.css" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+
+<!-- Custom CSS -->
+<link href="../../../_static/css/combined.css" rel="stylesheet">
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" href="../../../_static/bespoke.css" type="text/css" />
+<link rel="stylesheet" href="../../../_static/sphinxmark.css" type="text/css" />
+  
+
+
+<!-- Google Analytics -->
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-86037601-2', 'auto');
+ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+  </head>
+  <body>
+
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/cinder_config_files/section_rhosp16_director_solidfire_configuration.rst -->
+
+ <script type="text/javascript">
+    (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+                (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+        e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+    })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+    _st('install','aDn5L_vgZ2yzRcE893kK','2.0.0');
+</script>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button class="navbar-toggle" data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="brand-wrapper">
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
+      </div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="search-container tiny">
+         <form class="docs-main-search-form">
+    <input type="text" class="st-default-search-input custom-search-box" placeholder="Search OpenStack">
+</form>
+        <i class="fa fa-times close-search"></i>
+      </div>
+      <ul class="nav navbar-nav navbar-main show">
+        <li>
+           <li>
+    <input type="text" class="st-default-search-input custom-search-box-mobile" placeholder="Search OpenStack">
+</li>
+        </li>
+        <li>
+          <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/glance/pike">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/nova/pike">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/cinder/pike">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/draft/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/draft/">Swift Documentation</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.container -->
+</nav>
+    <div class="container docs-book-wrapper">
+      <div class="row">
+        <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
+<div class="row">
+  <div class="col-lg-8">
+      <h2>Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16</h2>
+    
+  </div>
+  <div class="docs-actions">
+    
+    <a href="section_rhosp16_director_ontap_configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 16"></i></a>
+    
+    
+    <a href="../nfs_backup_config/section_nfs-config.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NFS Backup Configuration"></i></a>
+    
+    <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+    
+  </div>
+</div>
+          <div class="row docs-byline">
+            <div class="docs-updated">updated: 2023-02-14 15:09</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="docs-top-contents">
+
+<h5><a href="../../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#deployment-steps">Deployment Steps</a><ul>
+<li><a class="reference internal" href="#prepare-the-environment-files">Prepare the environment files</a><ul>
+<li><a class="reference internal" href="#multiple-back-end-configuration">Multiple back end configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#deploy-overcloud">Deploy Overcloud</a></li>
+<li><a class="reference internal" href="#test-the-deployed-back-ends">Test the Deployed Back Ends</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+              <div class="docs-body">
+
+  <section id="deploying-netapp-solidfire-cinder-driver-in-a-red-hat-openstack-platform-16">
+<h1>Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16<a class="headerlink" href="#deploying-netapp-solidfire-cinder-driver-in-a-red-hat-openstack-platform-16" title="Permalink to this heading">¶</a></h1>
+<section id="overview">
+<span id="solidfire-solidfire-rhosp"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>This guide shows how to configure and deploy NetApp SolidFire Cinder driver in a
+<strong>Red Hat OpenStack Platform (RHOSP) 16</strong> Overcloud, using RHOSP Director.
+After reading this, you’ll be able to define the proper environment files and
+deploy single or multiple SolidFire Cinder back ends in RHOSP Overcloud Controller
+nodes.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information about RHOSP, please refer to its <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform">documentation pages</a>.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>RHOSP16 is based on OpenStack Train release. Features included after Train
+release are not available in RHOSP16.</p>
+</div>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
+<p>In order to deploy NetApp SolidFire Cinder back ends, you should have the
+following requirements satisfied:</p>
+<ul class="simple">
+<li><p>NetApp SolidFire storage controllers deployed and ready to be used as Cinder
+back ends. See <a class="reference internal" href="../solidfire_configuration/section_solidfire-config.html#cinder-solidfire-prerequisites"><span class="std std-ref">SolidFire Prerequisites</span></a> for more details.</p></li>
+<li><p>RHOSP Director user credentials to deploy Overcloud.</p></li>
+<li><p>RHOSP Overcloud Controller nodes where Cinder services will be installed.</p></li>
+</ul>
+</section>
+<section id="deployment-steps">
+<h2>Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permalink to this heading">¶</a></h2>
+<section id="prepare-the-environment-files">
+<h3>Prepare the environment files<a class="headerlink" href="#prepare-the-environment-files" title="Permalink to this heading">¶</a></h3>
+<p>RHOSP makes use of <strong>TripleO Heat Templates (THT)</strong>, which allows you to define
+the Overcloud resources by creating environment files.</p>
+<section id="multiple-back-end-configuration">
+<h4>Multiple back end configuration<a class="headerlink" href="#multiple-back-end-configuration" title="Permalink to this heading">¶</a></h4>
+<p>Define NetApp SolidFire Cinder back ends using Custom THT Configuration syntax.
+It’s possible to define all the back ends in a single environment file, but for
+sake of clarity, the following example organizes the back ends in multiple
+smaller environment files:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-solidfire-backend1.yaml</span></code></p>
+<p>This file defines the first Cinder volume back end
+<code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_1</span></code> and its parameters:</p>
+<div class="highlight-yaml notranslate" id="cinder-solidfire-backend1-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/volume_backend_name</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_solidfire_1</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/volume_driver</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.solidfire.SolidFireDriver</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/san_ip</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">san_ip_1</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/san_login</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_username</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/san_password</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_password</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-solidfire-backend2.yaml</span></code></p>
+<p>This file defines the second Cinder volume back end
+<code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_2</span></code> and its parameters:</p>
+<div class="highlight-yaml notranslate" id="cinder-solidfire-backend2-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/volume_backend_name</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_solidfire_2</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/volume_driver</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.solidfire.SolidFireDriver</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/san_ip</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">san_ip_2</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/san_login</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_username</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/san_password</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_password</span>
+</pre></div>
+</div>
+<p>Modify the parameter values according to your NetApp SolidFire back end
+configuration.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-enabled-backends.yaml</span></code></p>
+<p>This file defines which back ends will be enabled. In this example, two
+back ends <code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_1</span></code> and <code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_2</span></code> will be
+enabled:</p>
+<div class="highlight-yaml notranslate" id="cinder-enabled-backends-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder_user_enabled_backends</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;tripleo_solidfire_1&#39;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;tripleo_solidfire_2&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can define arbitrary Custom THT Configurations using the following syntax:</p>
+<div class="highlight-yaml notranslate" id="custom-config-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">&lt;backend_name&gt;/&lt;configuration_name&gt;</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;value&gt;</span>
+</pre></div>
+</div>
+<p>Each configuration will be rendered in <code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code> file as:</p>
+<div class="highlight-default notranslate" id="cinder-conf"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">backend_name</span><span class="p">]</span>
+<span class="n">configuration_name</span><span class="o">=</span><span class="n">value</span>
+</pre></div>
+</div>
+<p>See <a class="reference external" href="https://netapp-openstack-dev.github.io/openstack-docs/train/cinder/configuration/cinder_config_files/section_solidfire-conf.html#optional-cinder-configuration-attributes">Optional Cinder Configuration Attributes (Train)</a>
+for a complete list of the available Cinder Configuration Options.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>RHOSP16 is based on OpenStack Train release. Features and Configuration
+Options included after Train release are not available in RHOSP16.</p>
+</div>
+</section>
+</section>
+<section id="deploy-overcloud">
+<h3>Deploy Overcloud<a class="headerlink" href="#deploy-overcloud" title="Permalink to this heading">¶</a></h3>
+<p>Now that you have the Cinder back end environment files defined, you can run
+the command to deploy RHOSP Overcloud. Run the following command as <code class="docutils literal notranslate"><span class="pre">stack</span></code>
+user in the RHOSP Director command line, specifying the YAML file(s) you
+defined:</p>
+<div class="highlight-bash notranslate" id="overcloud-deploy"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--templates<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/containers-prepare-parameter.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-solidfire-backend1.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-solidfire-backend2.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-enabled-backends.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--stack<span class="w"> </span>overcloud
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Alternatively, you can use <code class="docutils literal notranslate"><span class="pre">--environment-directory</span></code> parameter and specify
+the whole directory to the deployment command. It will consider all the YAML
+files within this directory:</p>
+<div class="highlight-bash notranslate" id="overcloud-deploy-environment-directory"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--templates<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/containers-prepare-parameter.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--environment-directory<span class="w"> </span>/home/stack/templates<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--stack<span class="w"> </span>overcloud
+</pre></div>
+</div>
+</div>
+</section>
+<section id="test-the-deployed-back-ends">
+<h3>Test the Deployed Back Ends<a class="headerlink" href="#test-the-deployed-back-ends" title="Permalink to this heading">¶</a></h3>
+<p>After RHOSP Overcloud is deployed, run the following command to check if the
+Cinder services are up:</p>
+<div class="highlight-bash notranslate" id="cinder-service-list"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>service-list
+</pre></div>
+</div>
+<p>Run the following commands as <code class="docutils literal notranslate"><span class="pre">stack</span></code> user in the RHOSP Director command line
+to create the volume types mapped to the deployed back ends:</p>
+<div class="highlight-bash notranslate" id="create-volume-types"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-create<span class="w"> </span>solidfire1
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-key<span class="w"> </span>solidfire1<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_solidfire_1
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-create<span class="w"> </span>solidfire2
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-key<span class="w"> </span>solidfire1<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_solidfire_2
+</pre></div>
+</div>
+<p>Make sure that you’re able to create Cinder volumes with the configured volume
+types:</p>
+<div class="highlight-bash notranslate" id="create-volumes"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>create<span class="w"> </span>--volume-type<span class="w"> </span>solidfire1<span class="w"> </span>--name<span class="w"> </span>v1<span class="w"> </span><span class="m">1</span>
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>create<span class="w"> </span>--volume-type<span class="w"> </span>solidfire2<span class="w"> </span>--name<span class="w"> </span>v2<span class="w"> </span><span class="m">1</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+              </div>
+            </div>
+          </div>
+          <div class="docs-actions">
+          
+            <a href="section_rhosp16_director_ontap_configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 16"></i></a>
+          
+          
+            <a href="../nfs_backup_config/section_nfs-config.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NFS Backup Configuration"></i></a>
+          
+            <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
+          
+          </div>
+          <div class="row docs-byline bottom">
+            <div class="docs-updated">updated: 2023-02-14 15:09</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
+<p>
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
+</p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
+            <!-- ID buglinkbottom added so that pre-filled doc bugs
+                 are sent to Launchpad projects related to the
+                 document -->
+              <a href="#" id="logABugLink2" class="docs-footer-actions"><i class="fa fa-bug"></i> found an error? report a bug</a>
+              <a href="http://netapp.io/slack/" class="docs-footer-actions"><i class="fa fa-question-circle"></i> questions?</a>
+            </div>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-4 col-sm-4 col-lg-pull-9 col-md-pull-8 col-sm-pull-8 docs-sidebar">
+  <div class="btn-group docs-sidebar-releases">
+<a href="../../../index.html">
+  <button href="#" type="button"
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2021.2</button>
+</a>
+
+  </div>
+  <div class="docs-sidebar-toc">
+    <div class="docs-sidebar-section" id="table-of-contents">
+      <h4></h4>
+      <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_executive-summary.html">Executive Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_openstack-overview.html">OpenStack Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_netapp-storage.html">NetApp Systems and Software</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/appendix_packaging.html">Installing OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_glance-image-service.html">Image Service (Glance)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_nova.html">Compute Service (Nova)</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../ch_cinder.html">Block Storage (Cinder)</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../overview/section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../key_concepts/section_cinder-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../process_structure/section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api_overview/section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_cinder-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../ch_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../ch_cinder-examples.html">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_manila.html">Shared Filesystems (Manila)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_swift.html">Object Storage (Swift)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_operations.html">Day two operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ch_appendix.html">Appendix</a></li>
+</ul>
+
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+<footer>
+  <div class="container">
+    <div class="row footer-links">
+      <div class="col-lg-2 col-sm-2">
+        <h3>NetApp Resources</h3>
+        <ul>
+          <li><a href="http://netapp.io/openstack/#resources">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documentation</a></li>
+          <li><a href="http://www.netapp.com/us/media/tr-4620.pdf">NetApp SolidFire Storage Config Guide</a></li>
+          <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>News</h3>
+        <ul>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Community Blog</a></li>
+          <li><a href="http://openstack.org/news/">Community News</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-sm-2">
+        <h3>Social Media</h3>
+        <ul>
+          <li><a href="https://www.github.com/netapp">GitHub</a></li>
+          <li><a href="http://netapp.io/slack">Slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">Twitter @openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">Youtube NetAppTV</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-sm-4">
+        <h3>Legal</h3>
+        <p class="fine-print">
+          The OpenStack project is provided under the
+          <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- jQuery -->
+<script type="text/javascript" src="../../../_static/js/jquery-3.1.1.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script type="text/javascript" src="../../../_static/js/bootstrap.js"></script>
+
+<!-- The rest of the JS -->
+<script type="text/javascript" src="../../../_static/js/navigation.js"></script>
+
+<!-- Docs JS -->
+<script type="text/javascript" src="../../../_static/js/docs.js"></script>
+
+<!-- Popovers -->
+<script type="text/javascript" src="../../../_static/js/webui-popover.js"></script>
+
+<!-- Javascript for page -->
+<script language="JavaScript">
+/* build a description of this page including SHA, source location on git repo,
+   build time and the project's launchpad bug tag. Set the HREF of the bug
+   buttons */
+
+    var lineFeed = "%0A";
+    var gitURL = "Source: Can't derive source file URL";
+
+    /* there have been cases where "pagename" wasn't set; better check for it */
+        /* The URL of the source file on Git is based on the giturl variable
+           in conf.py, which must be manually initialized to the source file
+           URL in Git.
+           "pagename" is a standard sphinx parameter containing the name of
+           the source file, without extension.                             */
+
+        var sourceFile = "cinder/configuration/cinder_config_files/section_rhosp16_director_solidfire_configuration" + ".rst";
+        gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
+
+    /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
+    var gitSha = "SHA: 7bc8325a83b6a71f6ac20bd0598b8fb120b86a17";
+        var bugProject = "NetApp-openstack-dev/openstack-docs";
+        var bugTitle = "Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16 in NetApp OpenStack Docs";
+    var fieldTags = "docs, dog";
+    var watermark = "XENA"
+        var useStoryboard = "";
+
+
+    /* "last_updated" is the build date and time. It relies on the
+       conf.py variable "html_last_updated_fmt", which should include
+       year/month/day as well as hours and minutes                   */
+    var buildstring = "Release: 2021.2 on 2023-02-14 15:09";
+
+    var fieldComment = encodeURI(buildstring) +
+                       lineFeed + encodeURI(gitSha) +
+                       lineFeed + encodeURI(gitURL) ;
+
+    logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
+</script>
+
+<script src="../../../_static/documentation_options.js" type="text/javascript"></script>
+<script src="../../../_static/sphinx_highlight.js" type="text/javascript"></script>
+  </body>
+</html>
