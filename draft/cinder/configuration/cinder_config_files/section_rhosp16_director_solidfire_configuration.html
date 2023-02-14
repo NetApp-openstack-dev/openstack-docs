@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
 <!-- Bootstrap CSS -->
 <link href="../../../_static/css/bootstrap.css" rel="stylesheet">
@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2021-05-10 14:44</div>
+            <div class="docs-updated">updated: 2023-02-14 15:17</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -151,9 +151,9 @@ ga('send', 'pageview');
               <div class="docs-body">
 
   <section id="deploying-netapp-solidfire-cinder-driver-in-a-red-hat-openstack-platform-16">
-<h1>Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16<a class="headerlink" href="#deploying-netapp-solidfire-cinder-driver-in-a-red-hat-openstack-platform-16" title="Permalink to this headline">¶</a></h1>
+<h1>Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16<a class="headerlink" href="#deploying-netapp-solidfire-cinder-driver-in-a-red-hat-openstack-platform-16" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<span id="solidfire-solidfire-rhosp"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<span id="solidfire-solidfire-rhosp"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>This guide shows how to configure and deploy NetApp SolidFire Cinder driver in a
 <strong>Red Hat OpenStack Platform (RHOSP) 16</strong> Overcloud, using RHOSP Director.
 After reading this, you’ll be able to define the proper environment files and
@@ -170,7 +170,7 @@ release are not available in RHOSP16.</p>
 </div>
 </section>
 <section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
 <p>In order to deploy NetApp SolidFire Cinder back ends, you should have the
 following requirements satisfied:</p>
 <ul class="simple">
@@ -181,13 +181,13 @@ back ends. See <a class="reference internal" href="../solidfire_configuration/se
 </ul>
 </section>
 <section id="deployment-steps">
-<h2>Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permalink to this headline">¶</a></h2>
+<h2>Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permalink to this heading">¶</a></h2>
 <section id="prepare-the-environment-files">
-<h3>Prepare the environment files<a class="headerlink" href="#prepare-the-environment-files" title="Permalink to this headline">¶</a></h3>
+<h3>Prepare the environment files<a class="headerlink" href="#prepare-the-environment-files" title="Permalink to this heading">¶</a></h3>
 <p>RHOSP makes use of <strong>TripleO Heat Templates (THT)</strong>, which allows you to define
 the Overcloud resources by creating environment files.</p>
 <section id="multiple-back-end-configuration">
-<h4>Multiple back end configuration<a class="headerlink" href="#multiple-back-end-configuration" title="Permalink to this headline">¶</a></h4>
+<h4>Multiple back end configuration<a class="headerlink" href="#multiple-back-end-configuration" title="Permalink to this heading">¶</a></h4>
 <p>Define NetApp SolidFire Cinder back ends using Custom THT Configuration syntax.
 It’s possible to define all the back ends in a single environment file, but for
 sake of clarity, the following example organizes the back ends in multiple
@@ -197,18 +197,18 @@ smaller environment files:</p>
 <p>This file defines the first Cinder volume back end
 <code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_1</span></code> and its parameters:</p>
 <div class="highlight-yaml notranslate" id="cinder-solidfire-backend1-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
-  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">cinder::config::cinder_config</span><span class="p p-Indicator">:</span>
-      <span class="nt">tripleo_solidfire_1/volume_backend_name</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tripleo_solidfire_1</span>
-      <span class="nt">tripleo_solidfire_1/volume_driver</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.solidfire.SolidFireDriver</span>
-      <span class="nt">tripleo_solidfire_1/san_ip</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">san_ip_1</span>
-      <span class="nt">tripleo_solidfire_1/san_login</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_username</span>
-      <span class="nt">tripleo_solidfire_1/san_password</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_password</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/volume_backend_name</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_solidfire_1</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/volume_driver</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.solidfire.SolidFireDriver</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/san_ip</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">san_ip_1</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/san_login</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_username</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_1/san_password</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_password</span>
 </pre></div>
 </div>
 </li>
@@ -216,18 +216,18 @@ smaller environment files:</p>
 <p>This file defines the second Cinder volume back end
 <code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_2</span></code> and its parameters:</p>
 <div class="highlight-yaml notranslate" id="cinder-solidfire-backend2-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
-  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">cinder::config::cinder_config</span><span class="p p-Indicator">:</span>
-      <span class="nt">tripleo_solidfire_2/volume_backend_name</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tripleo_solidfire_2</span>
-      <span class="nt">tripleo_solidfire_2/volume_driver</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.solidfire.SolidFireDriver</span>
-      <span class="nt">tripleo_solidfire_2/san_ip</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">san_ip_2</span>
-      <span class="nt">tripleo_solidfire_2/san_login</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_username</span>
-      <span class="nt">tripleo_solidfire_2/san_password</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">admin_password</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/volume_backend_name</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_solidfire_2</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/volume_driver</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.solidfire.SolidFireDriver</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/san_ip</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">san_ip_2</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/san_login</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_username</span>
+<span class="w">      </span><span class="nt">tripleo_solidfire_2/san_password</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_password</span>
 </pre></div>
 </div>
 <p>Modify the parameter values according to your NetApp SolidFire back end
@@ -238,10 +238,10 @@ configuration.</p>
 back ends <code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_1</span></code> and <code class="docutils literal notranslate"><span class="pre">tripleo_solidfire_2</span></code> will be
 enabled:</p>
 <div class="highlight-yaml notranslate" id="cinder-enabled-backends-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
-  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-    <span class="nt">cinder_user_enabled_backends</span><span class="p">:</span>
-      <span class="p p-Indicator">-</span> <span class="s">&#39;tripleo_solidfire_1&#39;</span>
-      <span class="p p-Indicator">-</span> <span class="s">&#39;tripleo_solidfire_2&#39;</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder_user_enabled_backends</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;tripleo_solidfire_1&#39;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;tripleo_solidfire_2&#39;</span>
 </pre></div>
 </div>
 </li>
@@ -250,10 +250,10 @@ enabled:</p>
 <p class="admonition-title">Note</p>
 <p>You can define arbitrary Custom THT Configurations using the following syntax:</p>
 <div class="highlight-yaml notranslate" id="custom-config-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
-  <span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-    <span class="l l-Scalar l-Scalar-Plain">cinder::config::cinder_config</span><span class="p p-Indicator">:</span>
-      <span class="nt">&lt;backend_name&gt;/&lt;configuration_name&gt;</span><span class="p">:</span>
-        <span class="nt">value</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">&lt;value&gt;</span>
+<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">&lt;backend_name&gt;/&lt;configuration_name&gt;</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;value&gt;</span>
 </pre></div>
 </div>
 <p>Each configuration will be rendered in <code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code> file as:</p>
@@ -272,18 +272,18 @@ Options included after Train release are not available in RHOSP16.</p>
 </section>
 </section>
 <section id="deploy-overcloud">
-<h3>Deploy Overcloud<a class="headerlink" href="#deploy-overcloud" title="Permalink to this headline">¶</a></h3>
+<h3>Deploy Overcloud<a class="headerlink" href="#deploy-overcloud" title="Permalink to this heading">¶</a></h3>
 <p>Now that you have the Cinder back end environment files defined, you can run
 the command to deploy RHOSP Overcloud. Run the following command as <code class="docutils literal notranslate"><span class="pre">stack</span></code>
 user in the RHOSP Director command line, specifying the YAML file(s) you
 defined:</p>
-<div class="highlight-bash notranslate" id="overcloud-deploy"><div class="highlight"><pre><span></span> <span class="o">(</span>undercloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ openstack overcloud deploy <span class="se">\</span>
- --templates <span class="se">\</span>
- -e /home/stack/containers-prepare-parameter.yaml <span class="se">\</span>
- -e /home/stack/templates/cinder-solidfire-backend1.yaml <span class="se">\</span>
- -e /home/stack/templates/cinder-solidfire-backend2.yaml <span class="se">\</span>
- -e /home/stack/templates/cinder-enabled-backends.yaml <span class="se">\</span>
- --stack overcloud
+<div class="highlight-bash notranslate" id="overcloud-deploy"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--templates<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/containers-prepare-parameter.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-solidfire-backend1.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-solidfire-backend2.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-enabled-backends.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--stack<span class="w"> </span>overcloud
 </pre></div>
 </div>
 <div class="admonition note">
@@ -291,37 +291,37 @@ defined:</p>
 <p>Alternatively, you can use <code class="docutils literal notranslate"><span class="pre">--environment-directory</span></code> parameter and specify
 the whole directory to the deployment command. It will consider all the YAML
 files within this directory:</p>
-<div class="highlight-bash notranslate" id="overcloud-deploy-environment-directory"><div class="highlight"><pre><span></span> <span class="o">(</span>undercloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ openstack overcloud deploy <span class="se">\</span>
- --templates <span class="se">\</span>
- -e /home/stack/containers-prepare-parameter.yaml <span class="se">\</span>
- --environment-directory /home/stack/templates <span class="se">\</span>
- --stack overcloud
+<div class="highlight-bash notranslate" id="overcloud-deploy-environment-directory"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--templates<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/containers-prepare-parameter.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--environment-directory<span class="w"> </span>/home/stack/templates<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--stack<span class="w"> </span>overcloud
 </pre></div>
 </div>
 </div>
 </section>
 <section id="test-the-deployed-back-ends">
-<h3>Test the Deployed Back Ends<a class="headerlink" href="#test-the-deployed-back-ends" title="Permalink to this headline">¶</a></h3>
+<h3>Test the Deployed Back Ends<a class="headerlink" href="#test-the-deployed-back-ends" title="Permalink to this heading">¶</a></h3>
 <p>After RHOSP Overcloud is deployed, run the following command to check if the
 Cinder services are up:</p>
-<div class="highlight-bash notranslate" id="cinder-service-list"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ <span class="nb">source</span> ~/overcloudrc
-<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder service-list
+<div class="highlight-bash notranslate" id="cinder-service-list"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>service-list
 </pre></div>
 </div>
 <p>Run the following commands as <code class="docutils literal notranslate"><span class="pre">stack</span></code> user in the RHOSP Director command line
 to create the volume types mapped to the deployed back ends:</p>
-<div class="highlight-bash notranslate" id="create-volume-types"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ <span class="nb">source</span> ~/overcloudrc
-<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-create solidfire1
-<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-key solidfire1 <span class="nb">set</span> <span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_solidfire_1
-<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-create solidfire2
-<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder type-key solidfire1 <span class="nb">set</span> <span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_solidfire_2
+<div class="highlight-bash notranslate" id="create-volume-types"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-create<span class="w"> </span>solidfire1
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-key<span class="w"> </span>solidfire1<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_solidfire_1
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-create<span class="w"> </span>solidfire2
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>type-key<span class="w"> </span>solidfire1<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">volume_backend_name</span><span class="o">=</span>tripleo_solidfire_2
 </pre></div>
 </div>
 <p>Make sure that you’re able to create Cinder volumes with the configured volume
 types:</p>
-<div class="highlight-bash notranslate" id="create-volumes"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ <span class="nb">source</span> ~/overcloudrc
-<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder create --volume-type solidfire1 --name v1 <span class="m">1</span>
-<span class="o">(</span>overcloud<span class="o">)</span> <span class="o">[</span>stack@rhosp16-undercloud ~<span class="o">]</span>$ cinder create --volume-type solidfire2 --name v2 <span class="m">1</span>
+<div class="highlight-bash notranslate" id="create-volumes"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>create<span class="w"> </span>--volume-type<span class="w"> </span>solidfire1<span class="w"> </span>--name<span class="w"> </span>v1<span class="w"> </span><span class="m">1</span>
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>cinder<span class="w"> </span>create<span class="w"> </span>--volume-type<span class="w"> </span>solidfire2<span class="w"> </span>--name<span class="w"> </span>v2<span class="w"> </span><span class="m">1</span>
 </pre></div>
 </div>
 </section>
@@ -343,7 +343,7 @@ types:</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2021-05-10 14:44</div>
+            <div class="docs-updated">updated: 2023-02-14 15:17</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -474,18 +474,18 @@ types:</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 65453ce3aa7d656d282d7b1f516cced22421bf19";
+    var gitSha = "SHA: 188b446e5097612347693919911e4d3e62516834";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deploying NetApp SolidFire Cinder driver in a Red Hat OpenStack Platform 16 in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
-    var watermark = "XENA DRAFT"
+    var watermark = "YOGA DRAFT"
         var useStoryboard = "";
 
 
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2021-05-10 14:44";
+    var buildstring = "Release: 2021.2 on 2023-02-14 15:17";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
@@ -495,5 +495,6 @@ types:</p>
 </script>
 
 <script src="../../../_static/documentation_options.js" type="text/javascript"></script>
+<script src="../../../_static/sphinx_highlight.js" type="text/javascript"></script>
   </body>
 </html>
