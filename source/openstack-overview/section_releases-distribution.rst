@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Yoga release date is
+months starting with the Essex release. The Zed release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for March of
-2022, by convention, will start with the letter “Y.”
+alphabetically incremented. Hence, the release intended for October of
+2022, by convention, will start with the letter “Z”.
 
 +------------+------------------+
 | Release    | Date             |
@@ -59,6 +59,8 @@ alphabetically incremented. Hence, the release intended for March of
 | Xena       | October 2021     |
 +------------+------------------+
 | Yoga       | March 2022       |
++------------+------------------+
+| Zed        | October 2022     |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
