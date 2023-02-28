@@ -1,0 +1,9 @@
+Code-Review+2: Felipe Rodrigues <felipefuty01@gmail.com>
+QA-Review+2: Felipe Rodrigues <felipefuty01@gmail.com>
+Release+1: Felipe Rodrigues <felipefuty01@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Tue, 28 Feb 2023 11:59:26 -0300
+Reviewed-on: https://review.openstack.netapp.com/1718
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/gh-pages
