@@ -294,9 +294,13 @@ A share network subnet is an entity that defines a relationship between a
 single tenant's network/subnet (as defined in an OpenStack network
 service (Neutron)) and the Manila share instance created by the same.
 Since Train release, such information that once belonged to the share network
-entity, is now under the share network subnet management.
+entity, is now under the share network subnet object.
 This change led to another change in the share server object, which is now
 associated to a share network subnet instead of a share network.
+The share network subnet is defined for each Availability Zone (AZ) during
+share network creation. From Yoga release, a single AZ of the share network
+can be configured with multiple share network subnets (they must be on the
+same VLAN segment).
 
 Share Servers
 -------------

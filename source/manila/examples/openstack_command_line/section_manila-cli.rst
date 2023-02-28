@@ -2505,3 +2505,463 @@ And finally, once that the task state has transitioned to
    ``share-server-migration-cancel``, while the operation remains in the 1st
    phase, with its task state at ``migration_driver_in_progress`` or
    ``migration_driver_phase1_done``.
+
+Setting up share server with multiple subnets
+---------------------------------------------
+
+Starting from Yoga release, manila supports the share network AZ containing
+multiple share network subnets. As result, the share server created in
+this share network and AZ will be configured with allocation of each subnet.
+
+In this section, we'll create a share network with multiple share network
+subnets. Then, we'll trigger a creation of share with its share server. This
+share server will have allocation of each subnet.
+
+.. note::
+
+   NetApp driver only supports multiple share network subnets on the same
+   VLAN segment.
+
+
+The neutron has a network called ``private`` in the VLAN segment ``3371``, as
+shows:
+
+::
+
+    $ openstack network show private
+    +---------------------------+----------------------------------------------------------------------------+
+    | Field                     | Value                                                                      |
+    +---------------------------+----------------------------------------------------------------------------+
+    | admin_state_up            | UP                                                                         |
+    | availability_zone_hints   |                                                                            |
+    | availability_zones        |                                                                            |
+    | created_at                | 2023-01-19T01:07:13Z                                                       |
+    | description               |                                                                            |
+    | dns_domain                | None                                                                       |
+    | id                        | fafb5141-bbd8-4905-aacc-ffaa382f5595                                       |
+    | ipv4_address_scope        | None                                                                       |
+    | ipv6_address_scope        | None                                                                       |
+    | is_default                | None                                                                       |
+    | is_vlan_transparent       | None                                                                       |
+    | mtu                       | 1500                                                                       |
+    | name                      | private                                                                    |
+    | port_security_enabled     | True                                                                       |
+    | project_id                | 3d70d4a77f80405783505b0841b7d06f                                           |
+    | provider:network_type     | vlan                                                                       |
+    | provider:physical_network | public                                                                     |
+    | provider:segmentation_id  | 3371                                                                       |
+    | qos_policy_id             | None                                                                       |
+    | revision_number           | 3                                                                          |
+    | router:external           | Internal                                                                   |
+    | segments                  | None                                                                       |
+    | shared                    | False                                                                      |
+    | status                    | ACTIVE                                                                     |
+    | subnets                   | 960bca38-0b9a-4d4b-9709-e94e0d088e75, deacbbee-761a-4ffb-8a6e-637f076233a6 |
+    | tags                      |                                                                            |
+    | tenant_id                 | 3d70d4a77f80405783505b0841b7d06f                                           |
+    | updated_at                | 2023-02-28T12:05:28Z                                                       |
+    +---------------------------+----------------------------------------------------------------------------+
+
+The ``private`` network has two subnets, the first one:
+
+::
+
+    $ openstack subnet show 960bca38-0b9a-4d4b-9709-e94e0d088e75
+    +----------------------+--------------------------------------+
+    | Field                | Value                                |
+    +----------------------+--------------------------------------+
+    | allocation_pools     | 10.0.0.2-10.0.0.62                   |
+    | cidr                 | 10.0.0.0/26                          |
+    | created_at           | 2023-01-19T01:10:33Z                 |
+    | description          |                                      |
+    | dns_nameservers      |                                      |
+    | dns_publish_fixed_ip | None                                 |
+    | enable_dhcp          | True                                 |
+    | gateway_ip           | 10.0.0.1                             |
+    | host_routes          |                                      |
+    | id                   | 960bca38-0b9a-4d4b-9709-e94e0d088e75 |
+    | ip_version           | 4                                    |
+    | ipv6_address_mode    | None                                 |
+    | ipv6_ra_mode         | None                                 |
+    | name                 | private_sub_ipv4                     |
+    | network_id           | fafb5141-bbd8-4905-aacc-ffaa382f5595 |
+    | project_id           | 3d70d4a77f80405783505b0841b7d06f     |
+    | revision_number      | 0                                    |
+    | segment_id           | None                                 |
+    | service_types        |                                      |
+    | subnetpool_id        | 008fb194-7098-4f24-bd27-ea66b3e463b7 |
+    | tags                 |                                      |
+    | updated_at           | 2023-01-19T01:10:33Z                 |
+    +----------------------+--------------------------------------+
+
+The ``private`` network has two subnets, the second one:
+
+::
+
+    $ openstack subnet show deacbbee-761a-4ffb-8a6e-637f076233a6
+    +----------------------+--------------------------------------+
+    | Field                | Value                                |
+    +----------------------+--------------------------------------+
+    | allocation_pools     | 10.0.0.66-10.0.0.126                 |
+    | cidr                 | 10.0.0.64/26                         |
+    | created_at           | 2023-02-28T12:05:28Z                 |
+    | description          |                                      |
+    | dns_nameservers      |                                      |
+    | dns_publish_fixed_ip | None                                 |
+    | enable_dhcp          | True                                 |
+    | gateway_ip           | 10.0.0.65                            |
+    | host_routes          |                                      |
+    | id                   | deacbbee-761a-4ffb-8a6e-637f076233a6 |
+    | ip_version           | 4                                    |
+    | ipv6_address_mode    | None                                 |
+    | ipv6_ra_mode         | None                                 |
+    | name                 | private_sub2_ipv4                    |
+    | network_id           | fafb5141-bbd8-4905-aacc-ffaa382f5595 |
+    | project_id           | 3d70d4a77f80405783505b0841b7d06f     |
+    | revision_number      | 0                                    |
+    | segment_id           | None                                 |
+    | service_types        |                                      |
+    | subnetpool_id        | 008fb194-7098-4f24-bd27-ea66b3e463b7 |
+    | tags                 |                                      |
+    | updated_at           | 2023-02-28T12:05:28Z                 |
+    +----------------------+--------------------------------------+
+
+With this neutron configuration, we can create a Manila share network called
+``my_test_net`` in the AZ ``nova`` containing the first subnet of the
+``private`` neutron network:
+
+::
+
+    $ manila share-network-create --name my_test_net --neutron-net-id fafb5141-bbd8-4905-aacc-ffaa382f5595 \
+                                                                               --neutron-subnet-id 960bca38-0b9a-4d4b-9709-e94e0d088e75 \
+                                                                               --availability-zone nova
+
+The ``my_test_net`` has one share network subnet in the ``nova`` AZ.
+Now, we add the second neutron subnet:
+
+::
+
+    $ manila share-network-subnet-create my_test_net --neutron-net-id fafb5141-bbd8-4905-aacc-ffaa382f5595 \
+                                                                               --neutron-subnet-id deacbbee-761a-4ffb-8a6e-637f076233a6 \
+                                                                               --availability-zone nova
+
+As result, the ``my_test_net`` in the ``nova`` AZ has two share network
+subnets. Then, we create a share that will trigger the creation of a share
+server with the multiple allocations (one for each subnet):
+
+::
+
+    $ manila create NFS 1 --share-type dhss_true --share-network my_test_net --availability-zone nova
+
+The share server ``85016a6d-2e71-45bf-85ce-4a98b9ccb80a`` has been created.
+It has one allocation of each subnet as the field
+``details:ports`` shows:
+
+::
+
+    $ manila share-server-show 85016a6d-2e71-45bf-85ce-4a98b9ccb80a
+    +-----------------------------------+-----------------------------------------------------------------------------------------------------------+
+    | Property                          | Value                                                                                                     |
+    +-----------------------------------+-----------------------------------------------------------------------------------------------------------+
+    | id                                | 85016a6d-2e71-45bf-85ce-4a98b9ccb80a                                                                      |
+    | project_id                        | 3d70d4a77f80405783505b0841b7d06f                                                                          |
+    | updated_at                        | 2023-02-28T12:37:20.203149                                                                                |
+    | status                            | active                                                                                                    |
+    | host                              | 55-felipen-vm@netapp1                                                                                     |
+    | share_network_name                | my_test_net                                                                                               |
+    | share_network_id                  | 8b04355a-e6c6-45e6-8fbb-77e2ee3a637f                                                                      |
+    | created_at                        | 2023-02-28T12:37:10.814669                                                                                |
+    | is_auto_deletable                 | True                                                                                                      |
+    | identifier                        | 85016a6d-2e71-45bf-85ce-4a98b9ccb80a                                                                      |
+    | task_state                        | None                                                                                                      |
+    | source_share_server_id            | None                                                                                                      |
+    | security_service_update_support   | True                                                                                                      |
+    | share_network_subnet_ids          | ['4e93a90b-886b-4fcc-a0a7-df27903d9b0a', '54421e94-9091-4a6f-9834-c40f11ed81f6']                          |
+    | network_allocation_update_support | True                                                                                                      |
+    | details:vserver_name              | felipen_85016a6d-2e71-45bf-85ce-4a98b9ccb80a                                                              |
+    | details:ports                     | {"beb6dd0a-28ce-4221-aef7-f5082e58e712": "10.0.0.96", "3036c494-9c04-43fb-89f9-a74e84370ecf": "10.0.0.8"} |
+    | details:nfs_config                | {"tcp-max-xfer-size": "65536", "udp-max-xfer-size": "32768"}                                              |
+    +-----------------------------------+-----------------------------------------------------------------------------------------------------------+
+
+In ONTAP side, we can see that the equivalent vserver has the interfaces for
+each subnet (all being on the same VLAN segment):
+
+::
+
+    OSTK-select25::> network interface show -vserver felipen_85016a6d-2e71-45bf-85ce-4a98b9ccb80a
+                Logical    Status     Network            Current       Current Is
+    Vserver     Interface  Admin/Oper Address/Mask       Node          Port    Home
+    ----------- ---------- ---------- ------------------ ------------- ------- ----
+    felipen_85016a6d-2e71-45bf-85ce-4a98b9ccb80a
+                os_3036c494-9c04-43fb-89f9-a74e84370ecf
+                             up/up    10.0.0.8/26        OSTK-select25-01
+                                                                       e0b-3371
+                                                                               true
+                os_beb6dd0a-28ce-4221-aef7-f5082e58e712
+                            up/up    10.0.0.96/26       OSTK-select25-01
+                                                                       e0b-3371
+                                                                               true
+
+Adding subnet for existing share server
+-------------------------------------------
+
+Starting from Yoga release, manila supports the share network AZ containing
+multiple share network subnets. As result, an existing share server with
+a single share network subnet can be updated with a new subnet.
+
+In this section, we'll add a new share network subnet for a share network that
+contains a share server. It will trigger an update of share server allocations
+adding a new one for the added share network subnet.
+
+.. note::
+   NetApp driver only supports multiple share network subnets on the same
+   VLAN segment.
+
+The neutron has a network called ``private`` in the VLAN segment ``3371``, as
+shows:
+
+::
+
+    $ openstack network show private
+    +---------------------------+----------------------------------------------------------------------------+
+    | Field                     | Value                                                                      |
+    +---------------------------+----------------------------------------------------------------------------+
+    | admin_state_up            | UP                                                                         |
+    | availability_zone_hints   |                                                                            |
+    | availability_zones        |                                                                            |
+    | created_at                | 2023-01-19T01:07:13Z                                                       |
+    | description               |                                                                            |
+    | dns_domain                | None                                                                       |
+    | id                        | fafb5141-bbd8-4905-aacc-ffaa382f5595                                       |
+    | ipv4_address_scope        | None                                                                       |
+    | ipv6_address_scope        | None                                                                       |
+    | is_default                | None                                                                       |
+    | is_vlan_transparent       | None                                                                       |
+    | mtu                       | 1500                                                                       |
+    | name                      | private                                                                    |
+    | port_security_enabled     | True                                                                       |
+    | project_id                | 3d70d4a77f80405783505b0841b7d06f                                           |
+    | provider:network_type     | vlan                                                                       |
+    | provider:physical_network | public                                                                     |
+    | provider:segmentation_id  | 3371                                                                       |
+    | qos_policy_id             | None                                                                       |
+    | revision_number           | 3                                                                          |
+    | router:external           | Internal                                                                   |
+    | segments                  | None                                                                       |
+    | shared                    | False                                                                      |
+    | status                    | ACTIVE                                                                     |
+    | subnets                   | 960bca38-0b9a-4d4b-9709-e94e0d088e75, deacbbee-761a-4ffb-8a6e-637f076233a6 |
+    | tags                      |                                                                            |
+    | tenant_id                 | 3d70d4a77f80405783505b0841b7d06f                                           |
+    | updated_at                | 2023-02-28T12:05:28Z                                                       |
+    +---------------------------+----------------------------------------------------------------------------+
+
+The ``private`` network has two subnets, the first one:
+
+::
+
+    $ openstack subnet show 960bca38-0b9a-4d4b-9709-e94e0d088e75
+    +----------------------+--------------------------------------+
+    | Field                | Value                                |
+    +----------------------+--------------------------------------+
+    | allocation_pools     | 10.0.0.2-10.0.0.62                   |
+    | cidr                 | 10.0.0.0/26                          |
+    | created_at           | 2023-01-19T01:10:33Z                 |
+    | description          |                                      |
+    | dns_nameservers      |                                      |
+    | dns_publish_fixed_ip | None                                 |
+    | enable_dhcp          | True                                 |
+    | gateway_ip           | 10.0.0.1                             |
+    | host_routes          |                                      |
+    | id                   | 960bca38-0b9a-4d4b-9709-e94e0d088e75 |
+    | ip_version           | 4                                    |
+    | ipv6_address_mode    | None                                 |
+    | ipv6_ra_mode         | None                                 |
+    | name                 | private_sub_ipv4                     |
+    | network_id           | fafb5141-bbd8-4905-aacc-ffaa382f5595 |
+    | project_id           | 3d70d4a77f80405783505b0841b7d06f     |
+    | revision_number      | 0                                    |
+    | segment_id           | None                                 |
+    | service_types        |                                      |
+    | subnetpool_id        | 008fb194-7098-4f24-bd27-ea66b3e463b7 |
+    | tags                 |                                      |
+    | updated_at           | 2023-01-19T01:10:33Z                 |
+    +----------------------+--------------------------------------+
+
+The ``private`` network has two subnets, the second one:
+
+::
+
+    $ openstack subnet show deacbbee-761a-4ffb-8a6e-637f076233a6
+    +----------------------+--------------------------------------+
+    | Field                | Value                                |
+    +----------------------+--------------------------------------+
+    | allocation_pools     | 10.0.0.66-10.0.0.126                 |
+    | cidr                 | 10.0.0.64/26                         |
+    | created_at           | 2023-02-28T12:05:28Z                 |
+    | description          |                                      |
+    | dns_nameservers      |                                      |
+    | dns_publish_fixed_ip | None                                 |
+    | enable_dhcp          | True                                 |
+    | gateway_ip           | 10.0.0.65                            |
+    | host_routes          |                                      |
+    | id                   | deacbbee-761a-4ffb-8a6e-637f076233a6 |
+    | ip_version           | 4                                    |
+    | ipv6_address_mode    | None                                 |
+    | ipv6_ra_mode         | None                                 |
+    | name                 | private_sub2_ipv4                    |
+    | network_id           | fafb5141-bbd8-4905-aacc-ffaa382f5595 |
+    | project_id           | 3d70d4a77f80405783505b0841b7d06f     |
+    | revision_number      | 0                                    |
+    | segment_id           | None                                 |
+    | service_types        |                                      |
+    | subnetpool_id        | 008fb194-7098-4f24-bd27-ea66b3e463b7 |
+    | tags                 |                                      |
+    | updated_at           | 2023-02-28T12:05:28Z                 |
+    +----------------------+--------------------------------------+
+
+With this neutron configuration, we can create a Manila share network called
+``my_test_net`` in the AZ ``nova`` containing the first subnet of the
+``private`` neutron network:
+
+::
+
+    $ manila share-network-create --name my_test_net --neutron-net-id fafb5141-bbd8-4905-aacc-ffaa382f5595 \
+                                                                               --neutron-subnet-id 960bca38-0b9a-4d4b-9709-e94e0d088e75 \
+                                                                               --availability-zone nova
+
+The ``my_test_net`` has one share network subnet in the ``nova`` AZ.
+Then, we create a share that will trigger the creation of a share
+server:
+
+::
+
+    $ manila create NFS 1 --share-type dhss_true --share-network my_test_net --availability-zone nova
+
+The share server ``85016a6d-2e71-45bf-85ce-4a98b9ccb80a`` has been created.
+It has one allocation of the share network subnet as the field
+``details:ports`` shows:
+
+::
+
+    $ manila share-server-show ef872a6e-dd98-42e4-9a2b-21fb499a7b36
+    +-----------------------------------+--------------------------------------------------------------+
+    | Property                          | Value                                                        |
+    +-----------------------------------+--------------------------------------------------------------+
+    | id                                | ef872a6e-dd98-42e4-9a2b-21fb499a7b36                         |
+    | project_id                        | 3d70d4a77f80405783505b0841b7d06f                             |
+    | updated_at                        | 2023-02-28T12:58:31.430079                                   |
+    | status                            | active                                                       |
+    | host                              | 55-felipen-vm@netapp1                                        |
+    | share_network_name                | my_test_net                                                  |
+    | share_network_id                  | 6680600e-5416-476b-8727-8af932137aad                         |
+    | created_at                        | 2023-02-28T12:58:23.672379                                   |
+    | is_auto_deletable                 | True                                                         |
+    | identifier                        | ef872a6e-dd98-42e4-9a2b-21fb499a7b36                         |
+    | task_state                        | None                                                         |
+    | source_share_server_id            | None                                                         |
+    | security_service_update_support   | True                                                         |
+    | share_network_subnet_ids          | ['884f9c41-d568-4cb5-b2a5-0ffdbb761275']                     |
+    | network_allocation_update_support | True                                                         |
+    | details:vserver_name              | felipen_ef872a6e-dd98-42e4-9a2b-21fb499a7b36                 |
+    | details:ports                     | {"d6c0398b-5404-4473-a829-226c44b0ebb9": "10.0.0.58"}        |
+    | details:nfs_config                | {"tcp-max-xfer-size": "65536", "udp-max-xfer-size": "32768"} |
+    +-----------------------------------+--------------------------------------------------------------+
+
+
+In ONTAP side, we can see that the equivalent vserver has one interface:
+
+::
+
+    OSTK-select25::> network interface show -vserver felipen_ef872a6e-dd98-42e4-9a2b-21fb499a7b36
+                Logical    Status     Network            Current       Current Is
+    Vserver     Interface  Admin/Oper Address/Mask       Node          Port    Home
+    ----------- ---------- ---------- ------------------ ------------- ------- ----
+    felipen_ef872a6e-dd98-42e4-9a2b-21fb499a7b36
+                os_d6c0398b-5404-4473-a829-226c44b0ebb9
+                             up/up    10.0.0.58/26       OSTK-select25-01
+                                                                       e0b-3371
+                                                                               true
+
+
+To add the second share network subnet for the existing share server, we
+must call the check command to validate the possibility:
+
+::
+
+    $ manila share-network-subnet-create-check my_test_net --neutron-net-id fafb5141-bbd8-4905-aacc-ffaa382f5595 \
+                                                                               --neutron-subnet-id deacbbee-761a-4ffb-8a6e-637f076233a6 \
+                                                                               --availability-zone nova
+
+We need to trigger the previous call until the Manila response ``compatible``
+is ``True`` or ``False``:
+
+::
+
+    $ manila share-network-subnet-create-check my_test_net --neutron-net-id fafb5141-bbd8-4905-aacc-ffaa382f5595 \
+                                                                               --neutron-subnet-id deacbbee-761a-4ffb-8a6e-637f076233a6 \
+                                                                               --availability-zone nova
+    +--------------------+-----------------------------------+
+    | Property           | Value                             |
+    +--------------------+-----------------------------------+
+    | compatible         | True                              |
+    | hosts_check_result | {'55-felipen-vm@netapp1': True}   |
+    +--------------------+-----------------------------------+
+
+Given that the host is compatible with the new share network subnet, we can
+trigger the actual creation:
+
+::
+
+    $ manila share-network-subnet-create my_test_net --neutron-net-id fafb5141-bbd8-4905-aacc-ffaa382f5595 \
+                                                                               --neutron-subnet-id deacbbee-761a-4ffb-8a6e-637f076233a6 \
+                                                                               --availability-zone nova
+
+The operation can take some time. The share network and share server are
+locked while the update of new share network subnet runs. After it finishes,
+we can see that the share server has two allocations as the field
+``details:ports`` shows:
+
+::
+
+    $ manila share-server-show ef872a6e-dd98-42e4-9a2b-21fb499a7b36
+    +-----------------------------------+------------------------------------------------------------------------------------------------------------+
+    | Property                          | Value                                                                                                      |
+    +-----------------------------------+------------------------------------------------------------------------------------------------------------+
+    | id                                | ef872a6e-dd98-42e4-9a2b-21fb499a7b36                                                                       |
+    | project_id                        | 3d70d4a77f80405783505b0841b7d06f                                                                           |
+    | updated_at                        | 2023-02-28T13:12:31.610506                                                                                 |
+    | status                            | active                                                                                                     |
+    | host                              | 55-felipen-vm@netapp1                                                                                      |
+    | share_network_name                | my_test_net                                                                                                |
+    | share_network_id                  | 6680600e-5416-476b-8727-8af932137aad                                                                       |
+    | created_at                        | 2023-02-28T12:58:23.672379                                                                                 |
+    | is_auto_deletable                 | True                                                                                                       |
+    | identifier                        | ef872a6e-dd98-42e4-9a2b-21fb499a7b36                                                                       |
+    | task_state                        | None                                                                                                       |
+    | source_share_server_id            | None                                                                                                       |
+    | security_service_update_support   | True                                                                                                       |
+    | share_network_subnet_ids          | ['884f9c41-d568-4cb5-b2a5-0ffdbb761275', 'a155f233-aeb3-42d6-a353-1d8b558650db']                           |
+    | network_allocation_update_support | True                                                                                                       |
+    | details:vserver_name              | felipen_ef872a6e-dd98-42e4-9a2b-21fb499a7b36                                                               |
+    | details:ports                     | {"d6c0398b-5404-4473-a829-226c44b0ebb9": "10.0.0.58", "f8326404-fd1c-4ba8-994a-0ae11e1606c5": "10.0.0.73"} |
+    | details:nfs_config                | {"tcp-max-xfer-size": "65536", "udp-max-xfer-size": "32768"}                                               |
+    +-----------------------------------+------------------------------------------------------------------------------------------------------------+
+
+In the ONTAP side, the equivalent vserver now has two logical interfaces:
+
+::
+
+    OSTK-select25::> network interface show -vserver felipen_ef872a6e-dd98-42e4-9a2b-21fb499a7b36
+                Logical    Status     Network            Current       Current Is
+    Vserver     Interface  Admin/Oper Address/Mask       Node          Port    Home
+    ----------- ---------- ---------- ------------------ ------------- ------- ----
+    felipen_ef872a6e-dd98-42e4-9a2b-21fb499a7b36
+                os_d6c0398b-5404-4473-a829-226c44b0ebb9
+                             up/up    10.0.0.58/26       OSTK-select25-01
+                                                                       e0b-3371
+                                                                               true
+                os_f8326404-fd1c-4ba8-994a-0ae11e1606c5
+                             up/up    10.0.0.73/26       OSTK-select25-01
+                                                                       e0b-3371
+                                                                               true
