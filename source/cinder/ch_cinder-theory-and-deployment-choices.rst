@@ -15,3 +15,4 @@ Theory of Operation and Deployment Choices
    deployment_choice/section_iscsi-v-nfs.rst
    deployment_choice/section_nfs-security.rst
    deployment_choice/section_unidirectional-chap.rst
+   deployment_choice/section_rest-client.rst
