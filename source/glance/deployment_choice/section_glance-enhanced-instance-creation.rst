@@ -16,7 +16,7 @@ technologies, namely:
 ::
 
   1) NetApp Flexclone technology, sometimes referred to as Rapid Cloning
-  2) NetApp Copy Offload tool.
+  2) NetApp File Copy technology or NetApp Copy Offload tool.
 
 The former technology is supported by Cinder volumes backed by
 NFS, iSCSI and FC protocols while the latter is supported only
@@ -29,24 +29,32 @@ The NetApp FlexClone technology is leveraged to rapidly clone Cinder
 volumes from cached image-volumes. As said above, this technology is
 leveraged regardless of the underlying protocol.
 
-NetApp Copy Offload Tool
-------------------------
+NetApp Copy Offload Tool or NetApp File Copy
+---------------------------------------------
 
-The NetApp Copy Offload tool was added in the Icehouse release to
-enable Glance images to be efficiently copied to a destination
-Cinder volume.  When Cinder and Glance are configured to use the
-NetApp Copy Offload tool, a controller-side copy is attempted before
-reverting to downloading the image from Glance. Copy offload improves
-instance provisioning times while reducing the consumption of
-bandwidth and CPU cycles on the host(s) running Glance and Cinder.
-This is due to the copy operation being performed completely within
+.. caution::
+
+   The Copy Offload tool is deprecated since Zed release. It will be removed
+   soon. Please, prefer the method File Copy technology.
+
+The NetApp Copy Offload tool was added in the Icehouse release, while
+File Copy approach in the Zed release. Both enable Glance images to be
+efficiently copied to a destination Cinder volume. The last was added to
+replace the first one.
+
+When Cinder and Glance are configured to use the NetApp Copy Offload tool,
+a controller-side copy is attempted before reverting to downloading the image
+from Glance.
+
+Copy offload and File Copy improve instance provisioning times while reducing
+the consumption of bandwidth and CPU cycles on the host(s) running Glance and
+Cinder. This is due to the copy operation being performed completely within
 the storage cluster.
 
+.. note::
 
-.. tip::
-
-   For maximum Enhanced Instance Creation performance, it is recommended
-   to use the NetApp Copy Offload tool with NFS.
+   The File Copy approach does not require any setup, the driver has the logic
+   internally. Just disabling Copy Offload tool makes the File Copy being used.
 
 .. note::
 
@@ -62,16 +70,16 @@ the storage cluster.
       ``nfs modify -vserver openstack_vs1 -vstorage enabled``
 
 Figure 5.1, “Enhanced Instance Creation with NetApp Copy Offload Tool
-Flowchart” below describes the workflow associated with the Enhanced
-Instance Cloning capability of the NetApp NFS driver when using the
-NetApp Copy Offload tool.
+and File Copy Technology Flowchart” below describes the workflow associated
+with the Enhanced Instance Cloning capability of the NetApp NFS driver when using the
+deprecated NetApp Copy Offload or File Copy technology.
 
 .. figure:: ../../images/rapid_cloning_flowchart.png
-   :alt: Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
+   :alt: Enhanced Instance Creation with NetApp Copy Offload Tool and File Copy Technology Flowchart
    :width: 5.75000in
    :align: center
 
-   Figure 5.1. Enhanced Instance Creation with NetApp Copy Offload Tool Flowchart
+   Figure 5.1. Enhanced Instance Creation with NetApp Copy Offload Tool and File Copy Technology Flowchart
 
 .. note::
 

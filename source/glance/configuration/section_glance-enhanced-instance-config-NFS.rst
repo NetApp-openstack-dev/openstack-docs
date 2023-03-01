@@ -3,6 +3,13 @@
 Enhanced Instance Creation with ONTAP NFS as a Cinder Backend
 =============================================================
 
+.. caution::
+
+   The Copy Offload tool is deprecated since Zed release. The tool setup
+   steps should be ignored. Having the Glance store in the same cluster as the
+   Cinder NFS backend is enough to enhance the instance creation. So, just
+   make the Glance steps.
+
 The following checklist provides the steps necessary for configuration
 of Enhanced Instance Creation and Copy Offload with NetApp FAS and/or
 AFF (ONTAP) for NFS:
