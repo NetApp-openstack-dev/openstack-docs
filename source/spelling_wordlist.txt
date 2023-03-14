@@ -12,6 +12,8 @@ aix
 Akhtar
 Akshai
 amongst
+antelope
+Antelope
 api
 API
 apparmor
