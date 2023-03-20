@@ -5,7 +5,7 @@ Theory of Operation: NetApp Cinder Drivers Overview
 
 NetApp's Cinder Drivers enable the usage of ONTAP and SolidFire
 backends for provisioning and maintaining OpenStack block
-storage volumes. NetApp ONTAP drivers for iSCSI, NFS and FC are
+storage volumes. NetApp ONTAP drivers for iSCSI, NVMe/TCP, NFS and FC are
 offered as a single, unified driver.
 
 Where to Obtain the Drivers
@@ -40,5 +40,8 @@ ought to be employed given varying use cases:
 
 -  :ref:`NetApp ONTAP with Fibre
    Channel <cdot-fc>`
+
+-  :ref:`NetApp ONTAP with
+   NVMe/TCP <cdot-nvme>`
 
 -  :ref:`SolidFire <solidfire>`

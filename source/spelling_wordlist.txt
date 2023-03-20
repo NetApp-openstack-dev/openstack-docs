@@ -180,6 +180,8 @@ NFS
 nondisruptive
 Nondisruptive
 nondisruptively
+nvme
+NVMe
 ocata
 Ocata
 Olby

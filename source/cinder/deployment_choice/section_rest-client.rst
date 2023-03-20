@@ -7,6 +7,10 @@ before using ZAPI communication. If desired, the REST communication can be
 selected. However, this REST client still relies on ZAPI calls for consistency
 group snapshot operation.
 
+The NVMe/TCP ONTAP driver has been delivered with Antelope cycle. This driver
+only runs with REST communication mode and it does not require enabling this
+mode as other driver does.
+
 .. important::
 
    The REST mode still relies on ZAPI for some calls, so the ONTAP

@@ -12,7 +12,7 @@ and writable block storage that could be utilized as the root disk for a
 compute instance, or as secondary storage that could be attached and/or
 detached from a compute instance. The underlying connection between the
 consumer of the volume and the Cinder service providing the volume can
-be achieved with the iSCSI, NFS, or Fibre Channel storage protocols
+be achieved with the iSCSI, NFS, Fibre Channel or NVMe/TCP storage protocols
 (dependent on the support of the Cinder driver deployed).
 
 .. warning::
@@ -41,8 +41,8 @@ will attempt to locate an object within a specified Cinder backend and
 create the necessary metadata within the Cinder database to allow it to
 be managed like any other Cinder volume. The operation will also rename
 the volume to a name appropriate to the particular Cinder driver in use.
-The imported storage object could be a file, LUN, or a volume depending
-on the protocol (iSCSI/FC/NFS). This feature is
+The imported storage object could be a file, LUN, NVMe namespace or a volume
+depending on the protocol (iSCSI/FC/NFS/NVMe). This feature is
 useful in migration scenarios where virtual machines or other data need
 to be managed by Cinder; refer to the section called
 ":ref:`cinder-manage`" for an example of the ``cinder manage`` command.
@@ -147,7 +147,7 @@ are created on storage backends that meet the specified criteria.
    -  ``driver_version``: The version of the driver (e.g. ``1.0``)
 
    -  ``storage_protocol``: The protocol used by the backend to export
-      block storage to clients (e.g. ``iSCSI``, ``fc``, or ``nfs``)
+      block storage to clients (e.g. ``iSCSI``, ``fc``, ``nvme`` or ``nfs``)
 
    For a table of NetApp supported extra specs, refer to
    :ref:`Table 4.11, “NetApp supported Extra Specs for use with Cinder volume Types”<table-4.11>`.
@@ -316,6 +316,9 @@ Table 4.1c. NetApp Adaptive Supported Backend QoS Spec Options.
 .. warning::
    While SolidFire supports volume retyping, ONTAP does not.
 
+.. warning::
+   Cinder NVMe/TCP ONTAP driver does not support QoS.
+
 .. _storage-pools:
 
 Storage Pools
@@ -334,7 +337,7 @@ For NetApp's Cinder drivers, a Cinder pool is a single container. The
 container that is mapped to a Cinder pool is dependent on the storage
 protocol used:
 
--  *iSCSI and Fibre Channel*: a Cinder pool is created for every FlexVol
+-  *iSCSI, NVMe/TCP and Fibre Channel*: a Cinder pool is created for every FlexVol
    volume within the SVM specified by the configuration option
    ``netapp_vserver``, or for ONTAP, all
    FlexVol volumes within the system unless limited by the configuration
@@ -512,9 +515,9 @@ taking the snapshot.
 
 An optimized implementation of the revert to snapshot operation is used for
 the SolidFire driver. For ONTAP backends, the feature works by using a
-generic implementation that works for NFS/iSCSI/FC driver modes. From Xena
-release, ONTAP is also performed using the storage with a safer and faster
-approach.
+generic implementation that works for NFS/iSCSI/FC/NVMe driver modes. From Xena
+release, ONTAP NFS, iSCSI and FC drivers are also performed using the storage
+with a safer and faster approach.
 
 .. caution::
    Revert to snapshot is not supported when the storage pool

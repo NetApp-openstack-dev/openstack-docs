@@ -217,6 +217,12 @@ the ONTAP user:
 
        security login create –username openstack –application ontapi –authmethod password –role openstack
 
+3. (REST mode only) Add access for ``http`` application [#f2]_
+
+   ::
+
+       security login create –username openstack –application http –authmethod password –role openstack
+
 Creating Role for SVM-Scoped Account
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -237,6 +243,12 @@ the ONTAP user:
    ::
 
        security login create –username openstack –application ontapi –authmethod password –role openstack -vserver [vserver_name]
+
+3. (REST mode only) Add access for ``http`` application [#f2]_
+
+   ::
+
+       security login create –username openstack –application http –authmethod password –role openstack -vserver [vserver_name]
 
 .. tip::
 
@@ -262,4 +274,8 @@ Storage Networking Considerations
 
 .. rubric:: Footnotes
 
-.. [#f1] ``job`` access is only required when a FlexGroup pool is configured.
+.. [#f1] ``job`` access is only required if a FlexGroup pool is configured or
+         running with REST mode.
+
+.. [#f2] The step 3 is only required if enabling the REST communication mode.
+         See :ref:`manila_rest_communication` for more details.

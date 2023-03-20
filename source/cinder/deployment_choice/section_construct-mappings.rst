@@ -77,6 +77,9 @@ utilized with Cinder:
 -  *Fibre Channel*: When utilizing the Fibre Channel storage protocol, a
    Cinder volume is stored as a Fibre Channel LUN.
 
+-  *NVMe over TCP*: When utilizing the NVMe over TCP protocol, a Cinder volume
+   is stored as a NVMe namespace.
+
 .. _cinder-schedule-resource-pool:
 
 Cinder Scheduling and Resource Pool Selection
@@ -178,17 +181,17 @@ Since NetApp Snapshots are taken at the FlexVol level, they can not be
 directly leveraged within an OpenStack context, as a user of Cinder
 requests a snapshot be taken of a particular Cinder volume (not the
 containing FlexVol volume). As a Cinder volume is represented as either
-a file on NFS or as a LUN (in the case of iSCSI or Fibre Channel), the
-way that Cinder snapshots are created is through use of ONTAP's
-FlexClone technology. By leveraging the FlexClone technology to
+a file on NFS, NVMe namespace or a LUN (in the case of iSCSI or Fibre
+Channel), the way that Cinder snapshots are created is through use of
+ONTAP's FlexClone technology. By leveraging the FlexClone technology to
 facilitate Cinder snapshots, it is possible to create many thousands of
 Cinder snapshots for a single Cinder volume.
 
-FlexClone files or FlexClone LUNs and their parent files or LUNs that
-are present in the FlexClone volume continue to share blocks the same
-way they do in the parent FlexVol volume. In fact, all the FlexClone
-entities and their parents share the same underlying physical data
-blocks, minimizing physical disk space usage.
+FlexClone files, FlexClone NVMe namespaces or FlexClone LUNs and their parent
+files, NVMe namespaces or LUNs that are present in the FlexClone volume
+continue to share blocks the same way they do in the parent FlexVol volume.
+In fact, all the FlexClone entities and their parents share the same underlying
+physical data blocks, minimizing physical disk space usage.
 
 .. important::
 

@@ -125,3 +125,12 @@ These are the valid network plugins:
 The network plugin is chosen by setting the value of the network_api_class
 configuration option within the driver-specific stanza of the manila.conf
 configuration file.
+
+.. important::
+
+   From the Antelope release of OpenStack, the NetApp driver can have the
+   VLAN id set manually configuring the share network subnet metadata with
+   ``set_vlan`` property containing the desired id. As result, the
+   segmentation type and segmentation id from the plugins are totally ignored
+   if setting ``set_vlan`` metadata property. Similarly, the MTU can be
+   manually set with ``set_mtu`` metadata property.
