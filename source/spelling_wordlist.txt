@@ -33,6 +33,8 @@ baremetal
 bexar
 Bexar
 blockSize
+Bobcat
+bobcat
 bootable
 bootloader
 bugfixes

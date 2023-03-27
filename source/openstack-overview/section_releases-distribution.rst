@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Antelope release date is
+months starting with the Essex release. The Bobcat release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for March of
-2023, by convention, will start with the letter “A”.
+alphabetically incremented. Hence, the release intended for October of
+2023, by convention, will start with the letter “B”.
 
 +------------+------------------+
 | Release    | Date             |
@@ -63,6 +63,8 @@ alphabetically incremented. Hence, the release intended for March of
 | Zed        | October 2022     |
 +------------+------------------+
 | Antelope   | March 2023       |
++------------+------------------+
+| Bobcat     | October 2023     |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date
