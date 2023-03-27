@@ -1,0 +1,9 @@
+Code-Review+2: Felipe Rodrigues <felipefuty01@gmail.com>
+QA-Review+2: Felipe Rodrigues <felipefuty01@gmail.com>
+Release+1: Felipe Rodrigues <felipefuty01@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Mon, 27 Mar 2023 11:27:10 -0300
+Reviewed-on: https://review.openstack.netapp.com/1728
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
