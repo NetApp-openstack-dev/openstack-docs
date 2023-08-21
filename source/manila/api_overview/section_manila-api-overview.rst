@@ -315,6 +315,9 @@ Table 6.10. Manila API Overview - Share Server Migration
    neutron subnet ID can not be specified.
 
 .. note::
-   "Get Progress" operation can't provide the current progress percentage of
-   the data being copied. The command output will inform the current state
-   of the migration and the destination share server id.
+
+   As from Bobcat release, "Get Progress" operation can provide the current
+   progress percentage of the data being copied. The command output will
+   inform the percentage based in the total size of shares (GBs) transfered
+   from source to destination share server, the current state of the migration
+   and the destination share server id.
