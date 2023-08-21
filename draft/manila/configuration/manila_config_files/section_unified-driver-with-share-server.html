@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2023-02-14 15:17</div>
+            <div class="docs-updated">updated: 2023-03-27 11:55</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -385,10 +385,36 @@ ONTAP deployment that manages share servers.</p>
 <td><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 <td><p>Specify if the FlexVol pools must not be reported when the <code class="docutils literal notranslate"><span class="pre">netapp_enable_flexgroup</span></code> is enabled.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_snapmirror_last_transfer_size_limit</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">1024</span></code></p></td>
+<td><p>This option sets the last transfer size limit (in KB) of snapmirror to decide whether replica is in sync or out of sync.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_snapmirror_schedule</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">hourly</span></code></p></td>
+<td><p>An interval in either minutes or hours used to update the SnapMirror relationship. Few valid values are: 5min, 10min, 30min, hourly etc. The schedule at the “destination” host will be the one that will be considered when creating a new replica, or promoting a replica.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_use_legacy_client</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+<td><p>Select which ONTAP client to use for retrieving and modifying data on the storage. The legacy client relies on ZAPI calls. If set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, the new REST client is used, which runs REST calls if supported, otherwise falls back to the equivalent ZAPI call.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp_rest_operation_timeout</span></code></p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">60</span></code></p></td>
+<td><p>The maximum time in seconds to wait for completing a REST asynchronous operation.</p></td>
+</tr>
 </tbody>
 </table>
 <p>Table 6.16. Configuration options for ONTAP with Share Server
 management.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The option <code class="docutils literal notranslate"><span class="pre">netapp_use_legacy_client</span></code> can only be set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+(storage communication through REST API) when using ONTAP storage 9.12.1
+or newer. See <a class="reference internal" href="../../deployment_choice/section_rest-client.html#manila-rest-communication"><span class="std std-ref">Deployment Choices: REST Communication Mode</span></a> for more details.</p>
+</div>
 </section>
 </section>
 
@@ -407,7 +433,7 @@ management.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2023-02-14 15:17</div>
+            <div class="docs-updated">updated: 2023-03-27 11:55</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -538,18 +564,18 @@ management.</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 188b446e5097612347693919911e4d3e62516834";
+    var gitSha = "SHA: 1c1ef80edc40346ead646dd9e3d97f8a1e74992c";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "NetApp Unified Driver for ONTAP with Share Server management in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
-    var watermark = "YOGA DRAFT"
+    var watermark = "BOBCAT DRAFT"
         var useStoryboard = "";
 
 
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2023-02-14 15:17";
+    var buildstring = "Release: 2021.2 on 2023-03-27 11:55";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
