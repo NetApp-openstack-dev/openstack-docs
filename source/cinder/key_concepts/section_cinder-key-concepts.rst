@@ -563,3 +563,24 @@ SVMs. On NFS drivers is always disruptive. List of possible scenarios:
 .. caution::
    Storage Assisted Migration is not supported when the storage pool
    is a FlexGroup volume.
+
+Active/Active high availability mode support
+--------------------------------------------
+
+Starting from Bobcat release (2023.2), Cinder supports active/active high availability mode feature for NetApp NFS protocol based backends. This feature can be used to failover ONTAP NFS drivers within or across ONTAP clusters. It means, if you have a backend exposed via NFS protocol to cinder, all the cinder volumes reside inside this backend can be automatically failed over to replication targets in OpenStack cluster when the host is down. For Cinder Active/Active support, NetApp uses the replication functionality built over in the previous releases to fail over. 
+
+.. note::
+   The support is present only for NetApp NFS driver, and not for iSCSI and FCP drivers. 
+
+1. When you look for Active/Active support, it is important to configure Replication target, and it should be configured properly for the backend resides in primary host. User can use the following options in cinder.conf to configure that:  
+
+``replication_device = backend_id:target_cmodeNfs``
+
+``netapp_replication_aggregate_map = backend_id:target_cmodeNfs,source_aggr_1:destination_aggr_1,source_aggr_2:destination_aggr_2``
+
+
+2. For replications, if the backend is different between primary and secondary, users should configure relevant vserver & cluster peering properly. This is needed to handle snapmirror relationship operations between source and destination.   
+
+.. note::
+   You can refer to this article to know how to configure replication targets for NetApp volumes 
+   https://netapp.io/2016/10/14/cinder-replication-netapp-perfect-cheesecake-recipe
