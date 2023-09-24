@@ -8,6 +8,7 @@ af
 aggr
 aggrs
 Agrawal
+aiq
 aix
 Akhtar
 Akshai
@@ -56,6 +57,7 @@ conf
 config
 contrib
 copyoffload
+cpu
 dedup
 dedupe
 deduplication
