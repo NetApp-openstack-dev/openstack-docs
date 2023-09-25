@@ -6,6 +6,7 @@ NetApp OpenStack Deployment & Operations Guide
 This repository contains documentation to aid operators and users of
 OpenStack clouds powered by NetApp Storage Systems.
 
+
 The latest build of this documentation is live here:
 
  https://netapp-openstack-dev.github.io/openstack-docs/draft/
