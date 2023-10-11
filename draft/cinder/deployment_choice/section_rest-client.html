@@ -3,10 +3,11 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Sample nfs.shares file</title>
+    <title>OpenStack Docs: Deployment Choices: REST Communication Mode</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!-- Bootstrap CSS -->
 <link href="../../_static/css/bootstrap.css" rel="stylesheet">
@@ -47,7 +48,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/configuration/section_sample_cinder-shares.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/cinder/deployment_choice/section_rest-client.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -68,9 +69,9 @@ ga('send', 'pageview');
         <span class="icon-bar"></span>
       </button>
       <div class="brand-wrapper">
-        <a class="navbar-brand" href="http://netapp.io/"></a>
+        <a class="navbar-brand" href="http://netapp.io/openstack"></a>
       </div>
-      <div class="search-icon show"><i class="fa fa-search"></i> Search</div></div>
+      <div class="search-icon hide"><i class="fa fa-search"></i> Search</div></div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <div class="search-container tiny">
          <form class="docs-main-search-form">
@@ -85,22 +86,16 @@ ga('send', 'pageview');
 </li>
         </li>
         <li>
-          <a class="drop" id="dropdownMenuSoftware">Social Media <i class="fa fa-caret-down"></i></a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://https://www.github.com/netapp">github/netapp</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="http://netapp.io/slack">slack</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://twitter.com/@openstacknetapp">twitter/@openstacknetapp</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://www.youtube.com/user/NetAppTV">youtube/users/NetAppTV</a></li>
-          </ul>
-        </li>
-        <li>
           <a class="drop" id="dropdownMenuSoftware">Upstream Docs <i class="fa fa-caret-down"></i></a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuSoftware">
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/cinder.html">Cinder Documentation</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/glance.html">Glance Documentation</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/ocata/">Manila Documentation</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/ocata/install-guide-rdo/nova.html">Nova Documentation</a></li>
-            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/ocata/">Swift Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/software/start/">Getting Started</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://openstack.org/projects/openstack-faq/">Common Questions</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://developer.openstack.org/">API Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/glance/pike">Glance Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/nova/pike">Nova Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/cinder/pike">Cinder Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/shared-file-systems/draft/">Manila Documentation</a></li>
+            <li role="presentation"><a role="menuitem" tabindex="-1" href="https://docs.openstack.org/project-install-guide/object-storage/draft/">Swift Documentation</a></li>
           </ul>
         </li>
       </ul>
@@ -113,44 +108,84 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Sample nfs.shares file</h2>
+      <h2>Deployment Choices: REST Communication Mode</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_sample_cinder-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Sample cinder.conf"></i></a>
+    <a href="section_unidirectional-chap.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choices: Unidirectional CHAP Authentication"></i></a>
     
     
-    <a href="section_nfs-config.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NFS Backup Configuration"></i></a>
+    <a href="../ch_cinder-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2017-08-31 15:23</div>
+            <div class="docs-updated">updated: 2023-10-11 10:50</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="docs-top-contents">
 
+<h5><a href="../../index.html">Contents</a></h5>
+<ul>
+<li><a class="reference internal" href="#">Deployment Choices: REST Communication Mode</a><ul>
+<li><a class="reference internal" href="#configuration-options">Configuration Options</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
               <div class="docs-body">
 
-  <div class="section" id="sample-nfs-shares-file">
-<span id="shares-conf"></span><h1>Sample nfs.shares file<a class="headerlink" href="#sample-nfs-shares-file" title="Permalink to this headline">¶</a></h1>
-<p>This section provides an example Cinder configuration file
-(<code class="docutils literal"><span class="pre">nfs.shares</span></code>) that contains four pools (known as flexvols within ONTAP)
-The nfs.shares file is required by Cinder when using the NFS storage protocol.
-The nfs.shares file is referenced via nfs_shares_config=/etc/cinder/nfs.shares</p>
-<p>The contents of the nfs.shares file is as such:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">10.63</span><span class="o">.</span><span class="mf">40.153</span><span class="p">:</span><span class="o">/</span><span class="n">vol2_dedup</span>
-<span class="mf">10.63</span><span class="o">.</span><span class="mf">40.153</span><span class="p">:</span><span class="o">/</span><span class="n">vol3_compressed</span>
-<span class="mf">10.63</span><span class="o">.</span><span class="mf">40.153</span><span class="p">:</span><span class="o">/</span><span class="n">vol4_mirrored</span>
-<span class="mf">10.63</span><span class="o">.</span><span class="mf">40.153</span><span class="p">:</span><span class="o">/</span><span class="n">vol5_plain</span>
+  <section id="deployment-choices-rest-communication-mode">
+<h1>Deployment Choices: REST Communication Mode<a class="headerlink" href="#deployment-choices-rest-communication-mode" title="Permalink to this heading">¶</a></h1>
+<p>From Zed cycle, NetApp drivers NFS, iSCSI and FCP have the option to request
+ONTAP operations through REST API. By default, the drivers keep working as
+before using ZAPI communication. If desired, the REST communication can be
+selected. However, this REST client still relies on ZAPI calls for consistency
+group snapshot operation.</p>
+<p>The NVMe/TCP ONTAP driver has been delivered with Antelope cycle. This driver
+only runs with REST communication mode and it does not require enabling this
+mode as other driver does.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The REST mode still relies on ZAPI for some calls, so the ONTAP
+administrative user account must have access for running <code class="docutils literal notranslate"><span class="pre">ONTAPI</span></code>
+application even when using the drivers with REST communication mode.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The drivers can only be configured with REST communication with ONTAP
+storage 9.11.1 or newer.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Enabling ONTAP REST client changes the behavior of QoS specs. Earlier,
+QoS values could be represented in BPS (bytes per second), but now REST
+client only supports integer values represented in MBPS (Megabytes per
+second). It means that though the operators specify the QoS value in BPS,
+it will be converted to MBPS and rounded up. It only affects new volumes.</p>
+</div>
+<section id="configuration-options">
+<h2>Configuration Options<a class="headerlink" href="#configuration-options" title="Permalink to this heading">¶</a></h2>
+<p>To enable REST client for the NetApp ONTAP drivers (iSCSI, FCP or NFS), the
+following option should be added to the appropriate NetApp
+stanza in the Cinder configuration file (cinder.conf).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">myONTAPBackend</span><span class="p">]</span>
+<span class="n">netapp_use_legacy_client</span> <span class="o">=</span>  <span class="kc">False</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Operations running with REST client may take some time to be finished. The
+option <code class="docutils literal notranslate"><span class="pre">netapp_async_rest_timeout</span></code> configures the time to wait for the
+completion. Default is 60 seconds.</p>
 </div>
+</section>
+</section>
 
 
               </div>
@@ -158,26 +193,22 @@ The nfs.shares file is referenced via nfs_shares_config=/etc/cinder/nfs.shares</
           </div>
           <div class="docs-actions">
           
-            <a href="section_sample_cinder-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Sample cinder.conf"></i></a>
+            <a href="section_unidirectional-chap.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deployment Choices: Unidirectional CHAP Authentication"></i></a>
           
           
-            <a href="section_nfs-config.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: NFS Backup Configuration"></i></a>
+            <a href="../ch_cinder-configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Configuration"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2017-08-31 15:23</div>
+            <div class="docs-updated">updated: 2023-10-11 10:50</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
-<a href="https://creativecommons.org/licenses/by/3.0/">
- <img src="../../_static/images/docs/license.png" alt="Creative Commons Attribution 3.0 License"/>
-</a>
 <p>
- Except where otherwise noted, this document is licensed under
- <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons
- Attribution 3.0 License</a>.
+ This document is licensed under
+ <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 license</a>.
 </p>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 docs-actions-wrapper">
@@ -193,7 +224,7 @@ The nfs.shares file is referenced via nfs_shares_config=/etc/cinder/nfs.shares</
   <div class="btn-group docs-sidebar-releases">
 <a href="../../index.html">
   <button href="#" type="button"
-          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2017.2</button>
+          class="btn docs-sidebar-release-select">NetApp OpenStack Docs 2021.2</button>
 </a>
 
   </div>
@@ -208,19 +239,19 @@ The nfs.shares file is referenced via nfs_shares_config=/etc/cinder/nfs.shares</
 <li class="toctree-l1"><a class="reference internal" href="../../ch_glance-image-service.html">Image Service (Glance)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_nova.html">Compute Service (Nova)</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../../ch_cinder.html">Block Storage (Cinder)</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../section_cinder-overview.html">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_cinder-key-concepts.html">Key Concepts</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_cinder-processes.html">Process Structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../section_cinder-api-overview.html">API Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../ch_cinder-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../ch_cinder-configuration.html">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview/section_cinder-overview.html">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../key_concepts/section_cinder-key-concepts.html">Key Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../process_structure/section_cinder-processes.html">Process Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api_overview/section_cinder-api-overview.html">API Overview</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ch_cinder-theory-and-deployment-choices.html">Theory of Operation and Deployment Choices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ch_cinder-configuration.html">Configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ch_cinder-examples.html">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_manila.html">Shared Filesystems (Manila)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_swift.html">Object Storage (Swift)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../ch_operations.html">Day two operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../appendices/appendix_debug.html">Troubleshooting OpenStack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ch_appendix.html">Appendix</a></li>
 </ul>
 
     </div>
@@ -232,28 +263,29 @@ The nfs.shares file is referenced via nfs_shares_config=/etc/cinder/nfs.shares</
   <div class="container">
     <div class="row footer-links">
       <div class="col-lg-2 col-sm-2">
-        <h3>NetApp Support</h3>
+        <h3>NetApp Resources</h3>
         <ul>
-          <li><a href="https://community.netapp.com//">NetApp Community Forums</a></li>
+          <li><a href="http://netapp.io/openstack/#resources">NetApp OpenStack Resources</a></li>
+          <li><a href="http://docs.netapp.com">NetApp documentation</a></li>
+          <li><a href="http://www.netapp.com/us/media/tr-4620.pdf">NetApp SolidFire Storage Config Guide</a></li>
           <li><a href="https://mysupport.netapp.com/">NetApp Support</a></li>
         </ul>
       </div>
       <div class="col-lg-2 col-sm-2">
-        <h3>News & Blogs</h3>
+        <h3>News</h3>
         <ul>
-          <li><a href="http://planet.openstack.org/">Commnunity Blog</a></li>
+          <li><a href="http://netapp.io/blog/">Netapp's thePub</a></li>
+          <li><a href="http://planet.openstack.org/">Community Blog</a></li>
           <li><a href="http://openstack.org/news/">Community News</a></li>
-          <li><a href="http://netapp.io/blog/">thePub Blog</a></li>
         </ul>
       </div>
       <div class="col-lg-2 col-sm-2">
-        <h3>Upstream Documentation</h3>
+        <h3>Social Media</h3>
         <ul>
-          <li><a href="http://openstack.org/software/start/">Getting Started</a></li>
-          <li><a href="http://openstack.org/projects/openstack-faq/">Common Questions</a></li>
-          <li><a href="http://openstack.org/projects/">Projects</a></li>
-          <li><a href="http://docs.openstack.org">OpenStack Manuals</a></li>
-          <li><a href="http://developer.openstack.org">API Documentation</a></li>
+          <li><a href="https://www.github.com/netapp">GitHub</a></li>
+          <li><a href="http://netapp.io/slack">Slack</a></li>
+          <li><a href="https://twitter.com/@openstacknetapp">Twitter @openstacknetapp</a></li>
+          <li><a href="https://www.youtube.com/user/NetAppTV">Youtube NetAppTV</a></li>
         </ul>
       </div>
       <div class="col-lg-4 col-sm-4">
@@ -297,22 +329,22 @@ The nfs.shares file is referenced via nfs_shares_config=/etc/cinder/nfs.shares</
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "cinder/configuration/section_sample_cinder-shares" + ".rst";
+        var sourceFile = "cinder/deployment_choice/section_rest-client" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 38da4445e90f2ea1a6e896b234b0fb4507f4fae7";
+    var gitSha = "SHA: f92cfbc26a5c327d35f018c2f7cf516e8e313e4e";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Sample nfs.shares file in NetApp OpenStack Docs";
+        var bugTitle = "Deployment Choices: REST Communication Mode in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
-    var watermark = "PIKE DRAFT"
+    var watermark = "CARACAL DRAFT"
         var useStoryboard = "";
 
 
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2017.2 on 2017-08-31 15:23";
+    var buildstring = "Release: 2021.2 on 2023-10-11 10:50";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
@@ -321,5 +353,7 @@ The nfs.shares file is referenced via nfs_shares_config=/etc/cinder/nfs.shares</
     logABug(bugTitle, bugProject, fieldComment, fieldTags, watermark);
 </script>
 
+<script src="../../_static/documentation_options.js" type="text/javascript"></script>
+<script src="../../_static/sphinx_highlight.js" type="text/javascript"></script>
   </body>
 </html>
