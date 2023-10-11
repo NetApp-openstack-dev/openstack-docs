@@ -40,6 +40,8 @@ bootloader
 bugfixes
 burstIOPS
 Callaway
+caracal
+Caracal
 cDOT
 cdotWithFlexGroup
 Ceilometer

@@ -2,10 +2,10 @@ OpenStack Releases and Distributions
 ====================================
 
 OpenStack’s major release cadence switched from every three months to six
-months starting with the Essex release. The Bobcat release date is
+months starting with the Essex release. The Caracal release date is
 tentative as of the date of this writing. Successive releases are
-alphabetically incremented. Hence, the release intended for October of
-2023, by convention, will start with the letter “B”.
+alphabetically incremented. Hence, the release intended for April of
+2024, by convention, will start with the letter “C”.
 
 +------------+------------------+
 | Release    | Date             |
@@ -65,6 +65,8 @@ alphabetically incremented. Hence, the release intended for October of
 | Antelope   | March 2023       |
 +------------+------------------+
 | Bobcat     | October 2023     |
++------------+------------------+
+| Caracal    | April 2024       |
 +------------+------------------+
 
 Table 2.1: OpenStack Releases to Date

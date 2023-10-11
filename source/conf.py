@@ -63,7 +63,7 @@ releases = [
     'austin', 'bexar', 'cactus', 'diablo', 'essex', 'folsom', 'grizzly',
     'havana', 'icehouse', 'juno', 'kilo', 'liberty', 'mitaka', 'newton',
     'ocata', 'pike', 'queens', 'rocky', 'stein', 'train', 'ussuri', 'victoria',
-    'wallaby', 'xena', 'yoga', 'zed', 'antelope', 'bobcat'
+    'wallaby', 'xena', 'yoga', 'zed', 'antelope', 'bobcat', 'caracal'
 ]
 unnamed = list(string.ascii_lowercase[len(releases) % 26:])
 releases += unnamed
