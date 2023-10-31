@@ -1,0 +1,10 @@
+Code-Review+2: Felipe Rodrigues <felipefuty01@gmail.com>
+Code-Review+2: Saravanan Manickam <manicsaran@gmail.com>
+QA-Review+2: Saravanan Manickam <manicsaran@gmail.com>
+Release+1: Saravanan Manickam <manicsaran@gmail.com>
+Verified+2: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-by: NetApp-CI <ng-openstack-ci@netapp.com>
+Submitted-at: Tue, 31 Oct 2023 14:44:44 -0200
+Reviewed-on: https://review.openstack.netapp.com/1762
+Project: NetApp-openstack-dev/openstack-docs
+Branch: refs/heads/master
