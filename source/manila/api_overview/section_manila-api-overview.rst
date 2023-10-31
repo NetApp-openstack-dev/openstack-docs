@@ -318,6 +318,6 @@ Table 6.10. Manila API Overview - Share Server Migration
 
    As from Bobcat release, "Get Progress" operation can provide the current
    progress percentage of the data being copied. The command output will
-   inform the percentage based in the total size of shares (GBs) transfered
+   inform the percentage based in the total size of shares (GBs) transferred
    from source to destination share server, the current state of the migration
    and the destination share server id.
