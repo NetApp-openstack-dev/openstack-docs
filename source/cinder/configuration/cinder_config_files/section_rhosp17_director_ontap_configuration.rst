@@ -332,7 +332,7 @@ defined:
 .. code-block:: bash
   :name: overcloud-deploy
 
-   (undercloud) [stack@rhosp16-undercloud ~]$ openstack overcloud deploy \
+   (undercloud) [stack@rhosp17-undercloud ~]$ openstack overcloud deploy \
    --templates \
    -e /home/stack/containers-prepare-parameter.yaml \
    -e /home/stack/templates/cinder-netapp-nfs-backend1.yaml \
@@ -352,7 +352,7 @@ defined:
   .. code-block:: bash
     :name: overcloud-deploy-environment-directory
 
-     (undercloud) [stack@rhosp16-undercloud ~]$ openstack overcloud deploy \
+     (undercloud) [stack@rhosp17-undercloud ~]$ openstack overcloud deploy \
      --templates \
      -e /home/stack/containers-prepare-parameter.yaml \
      --environment-directory /home/stack/templates \
@@ -368,8 +368,8 @@ Cinder services are up:
 .. code-block:: bash
   :name: cinder-service-list
 
-  [stack@rhosp16-undercloud ~]$ source ~/overcloudrc
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder service-list
+  [stack@rhosp17-undercloud ~]$ source ~/overcloudrc
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder service-list
 
 
 Run the following commands as ``stack`` user in the RHOSP Director command line
@@ -378,13 +378,13 @@ to create the volume types mapped to the deployed back ends:
 .. code-block:: bash
   :name: create-volume-types
 
-  [stack@rhosp16-undercloud ~]$ source ~/overcloudrc
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder type-create tripleo_netapp_nfs_1
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder type-key tripleo_netapp_nfs_1 set volume_backend_name=tripleo_netapp_nfs_1
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder type-create tripleo_netapp_nfs_2
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder type-key tripleo_netapp_nfs_2 set volume_backend_name=tripleo_netapp_nfs_2
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder type-create tripleo_netapp_iscsi_1
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder type-key tripleo_netapp_iscsi_1 set volume_backend_name=tripleo_netapp_iscsi_1
+  [stack@rhosp17-undercloud ~]$ source ~/overcloudrc
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder type-create tripleo_netapp_nfs_1
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder type-key tripleo_netapp_nfs_1 set volume_backend_name=tripleo_netapp_nfs_1
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder type-create tripleo_netapp_nfs_2
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder type-key tripleo_netapp_nfs_2 set volume_backend_name=tripleo_netapp_nfs_2
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder type-create tripleo_netapp_iscsi_1
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder type-key tripleo_netapp_iscsi_1 set volume_backend_name=tripleo_netapp_iscsi_1
 
 Make sure that you're able to create Cinder volumes with the configured volume
 types:
@@ -392,8 +392,8 @@ types:
 .. code-block:: bash
   :name: create-volumes
 
-  [stack@rhosp16-undercloud ~]$ source ~/overcloudrc
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder create --volume-type tripleo_netapp_nfs_1 --name v1 1
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder create --volume-type tripleo_netapp_nfs_2 --name v2 1
-  (overcloud) [stack@rhosp16-undercloud ~]$ cinder create --volume-type tripleo_netapp_iscsi_1 --name v3 1
+  [stack@rhosp17-undercloud ~]$ source ~/overcloudrc
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder create --volume-type tripleo_netapp_nfs_1 --name v1 1
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder create --volume-type tripleo_netapp_nfs_2 --name v2 1
+  (overcloud) [stack@rhosp17-undercloud ~]$ cinder create --volume-type tripleo_netapp_iscsi_1 --name v3 1
 
