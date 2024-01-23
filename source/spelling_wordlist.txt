@@ -227,6 +227,10 @@ rdac
 resize
 Resizing
 Resync
+rhosp
+rhosp17
+RHOSP
+RHOSP17
 Rushi
 Sajid
 scalability

@@ -4,8 +4,8 @@ Sample cinder.conf
 ==================
 
 This section provides an example Cinder configuration file
-(``cinder.conf``) that contains three backends - one for
-SolidFire, one for ONTAP with the NFS storage protocol,
+(``cinder.conf``) that contains four backends - one for
+SolidFire, two for ONTAP with the NFS storage protocol,
 and one for ONTAP with the iSCSI storage protocol.
 
 ::
@@ -35,9 +35,10 @@ and one for ONTAP with the iSCSI storage protocol.
     cinder_volume_usage_audit_period=hour
     control_exchange=cinder
 
-    enabled_backends=solidfire,cdot-iscsi,cdot-nfs
+    enabled_backends=solidfire,cdot-iscsi,cdot-nfs1,cdot-nfs2
 
     [solidfire]
+    #Not supported in rhosp17
     volume_backend_name=solidfire
     volume_driver=cinder.volume.drivers.solidfire.SolidFireDriver
     san_ip=172.17.1.182
@@ -55,7 +56,7 @@ and one for ONTAP with the iSCSI storage protocol.
     netapp_password=netapp123
     netapp_vserver=demo-iscsi-svm
 
-    [cdot-nfs]
+    [cdot-nfs1]
     volume_backend_name=cdot-nfs
     volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
     netapp_server_hostname=10.63.40.150
@@ -64,6 +65,19 @@ and one for ONTAP with the iSCSI storage protocol.
     netapp_storage_family=ontap_cluster
     netapp_login=admin
     netapp_password=netapp123
-    netapp_vserver=demo-nfs-svm
-    nfs_shares_config=/etc/cinder/nfs.shares
+    netapp_vserver=demo-nfs-svm-1
+    nfs_shares_config=/etc/cinder/nfs_shares1
+    nfs_mount_options=lookupcache=pos
+
+    [cdot-nfs2]
+    volume_backend_name=cdot-nfs
+    volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
+    netapp_server_hostname=10.63.42.151
+    netapp_server_port=80
+    netapp_storage_protocol=nfs
+    netapp_storage_family=ontap_cluster
+    netapp_login=admin
+    netapp_password=netapp123
+    netapp_vserver=demo-nfs-svm-2
+    nfs_shares_config=/etc/cinder/nfs_shares2
     nfs_mount_options=lookupcache=pos
