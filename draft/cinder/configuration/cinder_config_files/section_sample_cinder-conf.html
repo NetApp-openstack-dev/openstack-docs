@@ -116,14 +116,14 @@ ga('send', 'pageview');
     <a href="unified_driver_ontap/section_cinder-conf-fcp.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for ONTAP with Fibre Channel"></i></a>
     
     
-    <a href="section_sample_cinder-shares.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Sample nfs.shares file"></i></a>
+    <a href="section_sample_cinder-shares.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Sample nfs_shares file"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2023-10-31 22:46</div>
+            <div class="docs-updated">updated: 2024-01-24 01:12</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -135,8 +135,8 @@ ga('send', 'pageview');
   <section id="sample-cinder-conf">
 <span id="cinder-conf"></span><h1>Sample cinder.conf<a class="headerlink" href="#sample-cinder-conf" title="Permalink to this heading">¶</a></h1>
 <p>This section provides an example Cinder configuration file
-(<code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code>) that contains three backends - one for
-SolidFire, one for ONTAP with the NFS storage protocol,
+(<code class="docutils literal notranslate"><span class="pre">cinder.conf</span></code>) that contains four backends - one for
+SolidFire, two for ONTAP with the NFS storage protocol,
 and one for ONTAP with the iSCSI storage protocol.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[DEFAULT]
 rabbit_password=netapp123
@@ -163,9 +163,10 @@ cinder_volume_usage_audit=True
 cinder_volume_usage_audit_period=hour
 control_exchange=cinder
 
-enabled_backends=solidfire,cdot-iscsi,cdot-nfs
+enabled_backends=solidfire,cdot-iscsi,cdot-nfs1,cdot-nfs2
 
 [solidfire]
+#Not supported in rhosp17
 volume_backend_name=solidfire
 volume_driver=cinder.volume.drivers.solidfire.SolidFireDriver
 san_ip=172.17.1.182
@@ -183,7 +184,7 @@ netapp_login=admin
 netapp_password=netapp123
 netapp_vserver=demo-iscsi-svm
 
-[cdot-nfs]
+[cdot-nfs1]
 volume_backend_name=cdot-nfs
 volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
 netapp_server_hostname=10.63.40.150
@@ -192,8 +193,21 @@ netapp_storage_protocol=nfs
 netapp_storage_family=ontap_cluster
 netapp_login=admin
 netapp_password=netapp123
-netapp_vserver=demo-nfs-svm
-nfs_shares_config=/etc/cinder/nfs.shares
+netapp_vserver=demo-nfs-svm-1
+nfs_shares_config=/etc/cinder/nfs_shares1
+nfs_mount_options=lookupcache=pos
+
+[cdot-nfs2]
+volume_backend_name=cdot-nfs
+volume_driver=cinder.volume.drivers.netapp.common.NetAppDriver
+netapp_server_hostname=10.63.42.151
+netapp_server_port=80
+netapp_storage_protocol=nfs
+netapp_storage_family=ontap_cluster
+netapp_login=admin
+netapp_password=netapp123
+netapp_vserver=demo-nfs-svm-2
+nfs_shares_config=/etc/cinder/nfs_shares2
 nfs_mount_options=lookupcache=pos
 </pre></div>
 </div>
@@ -208,13 +222,13 @@ nfs_mount_options=lookupcache=pos
             <a href="unified_driver_ontap/section_cinder-conf-fcp.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: NetApp Unified Driver for ONTAP with Fibre Channel"></i></a>
           
           
-            <a href="section_sample_cinder-shares.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Sample nfs.shares file"></i></a>
+            <a href="section_sample_cinder-shares.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Sample nfs_shares file"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2023-10-31 22:46</div>
+            <div class="docs-updated">updated: 2024-01-24 01:12</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -345,18 +359,18 @@ nfs_mount_options=lookupcache=pos
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: aadd5c7c494351b09b94fe62752a6cc06da385fe";
+    var gitSha = "SHA: df3887f33cce83c879053517db4a5e7a7b40405c";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Sample cinder.conf in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
-    var watermark = "draft"
+    var watermark = "BOBCAT"
         var useStoryboard = "";
 
 
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2023-10-31 22:46";
+    var buildstring = "Release: 2021.2 on 2024-01-24 01:12";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
