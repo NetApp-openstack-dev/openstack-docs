@@ -264,6 +264,7 @@ thePub
 throughputs
 triaging
 TripleO
+tripleo
 Ubuntu
 uid
 unconfigured

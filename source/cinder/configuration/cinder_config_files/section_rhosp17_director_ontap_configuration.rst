@@ -14,8 +14,8 @@ nodes.
 
 .. note::
 
-  For more information about RHOSP17, please refer to its `documentation pages
-  <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/17.0>`_.
+  For more information about RHOSP, please refer to its `documentation pages
+  <https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/17.1>`_.
 
 .. warning::
 
@@ -35,6 +35,9 @@ requirements satisfied:
 
 - RHOSP Overcloud Controller nodes where Cinder services will be installed.
 
+.. note::
+
+  The driver supports FCP, but it is not certified for RHOSP17.
 
 Deployment Steps
 ----------------
@@ -61,18 +64,53 @@ the following example:
 
     parameter_defaults:
       CinderEnableNetappBackend: true
+      CinderNetappBackendName: 'tripleo_netapp_nfs1'
+      CinderNetappMultiConfig: {}
+      CinderNetappLogin: 'admin' #Default value for NetApp login      
+      CinderNetappPassword: 'secret_password'
+      CinderNetappServerHostname: 'hostname'
+      CinderNetappServerPort: '80'
+      CinderNetappSizeMultiplier: '1.2'
+      CinderNetappStorageFamily: 'ontap_cluster'
+      CinderNetappStorageProtocol: 'nfs'
+      CinderNetappTransportType: 'http'
+      CinderNetappVfiler: ''
+      CinderNetappVserver: 'vserver_name'
+      CinderNetappPartnerBackendName: ''
+      CinderNetappNfsShares: 'lif1_ip:/flexvol_1'
+      CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares'
+      CinderNetappNfsMountOptions: 'context=system_u:object_r:container_file_t:s0'
+      CinderNetappCopyOffloadToolPath: ''
+      CinderNetappControllerIps: ''
+      CinderNetappSaPassword: ''
+      CinderNetappPoolNameSearchPattern: '(.+)'
+      CinderNetappHostType: ''
+      CinderNetappWebservicePath: '/devmgr/v2'
+  
+  Alternatively user can define a simplified environment file as in 
+  the following example:    
+  
+- ``/home/stack/templates/cinder-netapp-nfs-backend1.yaml``
+
+  .. code-block:: yaml
+    :name: tripleo-netapp-nfs-backend.yaml
+
+    resource_registry:
+      OS::TripleO::Services::CinderBackendNetApp: /usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml
+
+    parameter_defaults:
+      CinderEnableNetappBackend: true
       CinderNetappBackendName: 'tripleo_netapp_nfs_1'
       CinderNetappLogin: 'admin_username'
       CinderNetappPassword: 'admin_password'
       CinderNetappServerHostname: 'hostname'
       CinderNetappServerPort: '80'
       CinderNetappStorageFamily: 'ontap_cluster'
-      CinderNetappStorageProtocol: 'nfs'
+      CinderNetappStorageProtocol: '<nfs/iscsi>'
       CinderNetappTransportType: 'http'
       CinderNetappVserver: 'vserver_name'
       CinderNetappNfsShares: 'lif1_ip:/flexvol_1'
       CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares'
-      CinderNetappNfsMountOptions: ''
 
   Modify the parameter values according to your NetApp ONTAP back end
   configuration.
@@ -153,10 +191,6 @@ Cinder Configuration Option:
 +--------------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``CinderNetappCopyOffloadToolPath``              | ``netapp_copyoffload_tool_path``           | Optional          | For NFS protocol only. This option specifies the path of the NetApp copy offload tool binary. Ensure that the binary has execute permissions set which allow the effective user of the ``cinder-volume`` process to execute the file.                                                                                                                                                                                                                                                                        |
 +--------------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``CinderNetappNasSecureFileOperations``          | ``nas_secure_file_operations``             | Optional          | For NFS protocol only. If 'false', operations on the backing files run as root; if 'true', operations on the backing files for cinder volumes run unprivileged, as the cinder user, and are allowed to succeed even when root is squashed. If 'auto' and there are existing Cinder volumes, value will be set to 'false' (for backwards compatibility); if 'auto' and there are no existing Cinder volumes, the value will be set to 'true'. Default is 'auto'.                                              |
-+--------------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``CinderNetappNasSecureFilePermissions``         | ``nas_secure_file_permissions``            | Optional          | For NFS protocol only. If 'false', backing files for cinder volumes are readable by owner, group, and world; if 'true', only by owner and group. If 'auto' and there are existing Cinder volumes, value will be set to 'false' (for backwards compatibility); if 'auto' and there are no existing Cinder volumes, the value will be set to 'true'. Default is 'auto'.                                                                                                                                        |
-+--------------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``CinderNetappHostType``                         | ``netapp_host_type``                       | Optional          | This option defines the type of operating system for all initiators that can access a LUN. This information is used when mapping LUNs to individual hosts or groups of hosts. Default is 'linux'.                                                                                                                                                                                                                                                                                                            |
 +--------------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | ``CinderNetappPoolNameSearchPattern``            | ``netapp_pool_name_search_pattern``        | Optional          | This option is only utilized when the Cinder driver is configured to use iSCSI off Fibre Channel. It is used to restrict provisioning to the specified FlexVol volumes. Specify the value of this option as a regular expression which will be applied to the names of FlexVol volumes from the storage backend which represent pools in Cinder. ``^`` (beginning of string) and ``$`` (end of string) are implicitly wrapped around the regular expression specified before filtering. Default is ``(.+)``. |
@@ -181,10 +215,9 @@ multiple smaller environment files:
 
 - ``/home/stack/templates/cinder-netapp-nfs-backend1.yaml``
 
-  This file defines the first Cinder volume back end
-  ``tripleo_netapp_nfs_1`` and its parameters. The definition of the
-  first back end is the same for both single and multiple back end
-  configuration:
+  This file defines the multiple Cinder volume backends
+  ``tripleo_netapp_nfs_1``, ``tripleo_netapp_nfs_2`` and 
+  ``tripleo_netapp_iscsi_1`` and their parameters.
 
   .. code-block:: yaml
     :name: cinder-netapp-nfs-backend1.yaml
@@ -194,137 +227,51 @@ multiple smaller environment files:
 
     parameter_defaults:
       CinderEnableNetappBackend: true
-      CinderNetappBackendName: 'tripleo_netapp_nfs_1'
-      CinderNetappLogin: 'admin_username'
-      CinderNetappPassword: 'admin_password'
+      CinderNetappLogin: 'admin'#Default value for the Netapp backends'
+      CinderNetappPassword: 'secret_password'
       CinderNetappServerHostname: 'hostname'
+      CinderNetappBackendName: 'tripleo_netapp_nfs_1'
       CinderNetappServerPort: '80'
+      CinderNetappSizeMultiplier: '1.2'
       CinderNetappStorageFamily: 'ontap_cluster'
       CinderNetappStorageProtocol: 'nfs'
       CinderNetappTransportType: 'http'
+      CinderNetappVfiler: ''
       CinderNetappVserver: 'vserver_name'
-      CinderNetappNfsShares: 'lif1_ip:/flexvol_1'
+      CinderNetappPartnerBackendName: ''
+      CinderNetappNfsShares: 'lif_ip:/flexvol'
       CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares1'
-      CinderNetappNfsMountOptions: ''
+      CinderNetappNfsMountOptions: 'context=system_u:object_r:container_file_t:s0'
+      CinderNetappCopyOffloadToolPath: ''
+      CinderNetappControllerIps: ''
+      CinderNetappSaPassword: ''
+      CinderNetappPoolNameSearchPattern: '(.+)'
+      CinderNetappHostType: ''
+      CinderNetappWebservicePath: '/devmgr/v2'
+      CinderNetappBackendName:
+        - tripleo_netapp_nfs_2  
+        - tripleo_netapp_iscsi_1
+      CinderNetappMultiConfig:
+        tripleo_netapp_nfs_2:
+          CinderNetappPassword: 'secret_password_2'
+          CinderNetappServerHostname: 'hostname2'
+          CinderNetappVserver: 'vserver_name_2'
+          CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares2'
+          CinderNetappStorageProtocol: 'nfs'
+        tripleo_netapp_iscsi_1:
+          CinderNetappPassword: 'secret_password_3'
+          CinderNetappServerHostname: 'hostname3'
+          CinderNetappVserver: 'vserver_name_3'
+          CinderNetappStorageProtocol: 'iscsi'
 
   Modify the parameter values according to your NetApp ONTAP back end
   configuration.
-
-- ``/home/stack/templates/cinder-netapp-nfs-backend2.yaml``
-
-  .. code-block:: yaml
-    :name: cinder-netapp-nfs-backend2.yaml
-
-    parameter_defaults:
-      ControllerExtraConfig:
-        cinder::config::cinder_config:
-          tripleo_netapp_nfs_2/volume_backend_name:
-            value: tripleo_netapp_nfs_2
-          tripleo_netapp_nfs_2/volume_driver:
-            value: cinder.volume.drivers.netapp.common.NetAppDriver
-          tripleo_netapp_nfs_2/netapp_login:
-            value: admin_username
-          tripleo_netapp_nfs_2/netapp_password:
-            value: admin_password
-          tripleo_netapp_nfs_2/netapp_server_hostname:
-            value: hostname
-          tripleo_netapp_nfs_2/netapp_server_port:
-            value: 80
-          tripleo_netapp_nfs_2/netapp_transport_type:
-            value: http
-          tripleo_netapp_nfs_2/netapp_vserver:
-            value: vserver_name
-          tripleo_netapp_nfs_2/netapp_storage_protocol:
-            value: nfs
-          tripleo_netapp_nfs_2/nfs_shares_config:
-            value: '/etc/cinder/nfs_shares2'
-          tripleo_netapp_nfs_2/netapp_storage_family:
-            value: ontap_cluster
-
-  Modify the parameter values according to your NetApp ONTAP back end
-  configuration.
-
-
-- ``/home/stack/templates/cinder-netapp-iscsi-backend1.yaml``
-
-  This file defines the second Cinder volume back end
-  ``tripleo_netapp_iscsi_1`` and its parameters:
-
-  .. code-block:: yaml
-    :name: cinder-netapp-iscsi-backend1.yaml
-
-    parameter_defaults:
-      ControllerExtraConfig:
-        cinder::config::cinder_config:
-          tripleo_netapp_iscsi_1/volume_backend_name:
-            value: tripleo_netapp_iscsi_1
-          tripleo_netapp_iscsi_1/volume_driver:
-            value: cinder.volume.drivers.netapp.common.NetAppDriver
-          tripleo_netapp_iscsi_1/netapp_login:
-            value: admin_username
-          tripleo_netapp_iscsi_1/netapp_password:
-            value: admin_password
-          tripleo_netapp_iscsi_1/netapp_server_hostname:
-            value: hostname
-          tripleo_netapp_iscsi_1/netapp_server_port:
-            value: 80
-          tripleo_netapp_iscsi_1/netapp_transport_type:
-            value: http
-          tripleo_netapp_iscsi_1/netapp_vserver:
-            value: vserver_name
-          tripleo_netapp_iscsi_1/netapp_storage_protocol:
-            value: iscsi
-          tripleo_netapp_iscsi_1/netapp_storage_family:
-            value: ontap_cluster
-
-  Modify the parameter values according to your NetApp ONTAP back end
-  configuration.
-
-
-- ``/home/stack/templates/cinder-backup.yaml``
-
-  This file defines cinder backup service and its parameters:
-
-  .. code-block:: yaml
-    :name: cinder-backup.yaml
-
-    resource_registry:
-      OS::TripleO::Services::CinderBackup: /usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backup-container-puppet.yaml
-
-    parameter_defaults:
-      CinderBackupBackend: nfs
-      CinderBackupNfsShare: '<lif_ip>/backup_vol'
-      ControllerExtraConfig:
-      cinder::config::cinder_config:
-        DEFAULT/backup_use_same_host:
-          value: True
-
-- ``/home/stack/templates/cinder-enabled-backends.yaml``
-
-  This file defines which additional back ends will be enabled. In this
-  example, the additional back ends ``tripleo_netapp_nfs_2`` and
-  ``tripleo_netapp_iscsi_1`` will be enabled:
-
-  .. code-block:: yaml
-    :name: cinder-enabled-backends.yaml
-
-    parameter_defaults:
-      ControllerExtraConfig:
-        cinder_user_enabled_backends:
-          - 'tripleo_netapp_nfs_2'
-          - 'tripleo_netapp_iscsi_1'
-            
-
-  .. note::
-    The first back end ``tripleo_netapp_nfs_1`` was defined using NetApp THT
-    resource registry, and therefore doesn't need to be added to
-    ``cinder_user_enabled_backends``.
 
 
 Deploy Overcloud
 ^^^^^^^^^^^^^^^^
 
-Now that you have the Cinder back end environment files defined, you can run
+Now that you have the Cinder back end environment file defined, you can run
 the command to deploy RHOSP Overcloud. Run the following command as ``stack``
 user in the RHOSP Director command line, specifying the YAML file(s) you
 defined:
@@ -336,11 +283,10 @@ defined:
    --templates \
    -e /home/stack/containers-prepare-parameter.yaml \
    -e /home/stack/templates/cinder-netapp-nfs-backend1.yaml \
-   -e /home/stack/templates/cinder-netapp-nfs-backend2.yaml \
-   -e /home/stack/templates/cinder-netapp-iscsi-backend1.yaml \
-   -e /home/stack/templates/cinder-backup.yaml \
-   -e /home/stack/templates/cinder-enabled-backends.yaml \
-
+   -n /home/stack/templates/no-network/network_data.yaml \
+   -e /home/stack/templates/overcloud-networks-deployed.yaml \
+   -e /home/stack/templates/overcloud-vip-deployed.yaml \
+   -e /home/stack/templates/overcloud-baremetal-deployed.yaml \
    --stack overcloud
 
 .. note::
