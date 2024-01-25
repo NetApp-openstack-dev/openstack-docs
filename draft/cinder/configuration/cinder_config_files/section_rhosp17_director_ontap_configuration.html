@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2024-01-24 01:25</div>
+            <div class="docs-updated">updated: 2024-01-25 23:36</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -162,7 +162,7 @@ deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller
 nodes.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>For more information about RHOSP17, please refer to its <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/17.0">documentation pages</a>.</p>
+<p>For more information about RHOSP, please refer to its <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/17.1">documentation pages</a>.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -180,6 +180,10 @@ back ends. See <a class="reference internal" href="../ontap_configuration/sectio
 <li><p>RHOSP Director user credentials to deploy Overcloud.</p></li>
 <li><p>RHOSP Overcloud Controller nodes where Cinder services will be installed.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The driver supports FCP, but it is not certified for RHOSP17.</p>
+</div>
 </section>
 <section id="deployment-steps">
 <h2>Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permalink to this heading">¶</a></h2>
@@ -198,18 +202,50 @@ the following example:</p>
 
 <span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">CinderEnableNetappBackend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">CinderNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_nfs1&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappMultiConfig</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{}</span>
+<span class="w">  </span><span class="nt">CinderNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin&#39;</span><span class="w"> </span><span class="c1">#Default value for NetApp login</span>
+<span class="w">  </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;secret_password&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappSizeMultiplier</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1.2&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappStorageFamily</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ontap_cluster&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;nfs&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappTransportType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappVfiler</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappPartnerBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappNfsShares</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;lif1_ip:/flexvol_1&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappNfsMountOptions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;context=system_u:object_r:container_file_t:s0&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappCopyOffloadToolPath</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappControllerIps</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappSaPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappPoolNameSearchPattern</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;(.+)&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappHostType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappWebservicePath</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/devmgr/v2&#39;</span>
+</pre></div>
+</div>
+<p>Alternatively user can define a simplified environment file as in
+the following example:</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-nfs-backend1.yaml</span></code></p>
+<div class="highlight-yaml notranslate" id="tripleo-netapp-nfs-backend-yaml"><div class="highlight"><pre><span></span><span class="nt">resource_registry</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">OS::TripleO::Services::CinderBackendNetApp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml</span>
+
+<span class="nt">parameter_defaults</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">CinderEnableNetappBackend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">CinderNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_nfs_1&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_password&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappStorageFamily</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ontap_cluster&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;nfs&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&lt;nfs/iscsi&gt;&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappTransportType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappNfsShares</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;lif1_ip:/flexvol_1&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappNfsMountOptions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
 </pre></div>
 </div>
 <p>Modify the parameter values according to your NetApp ONTAP back end
@@ -322,16 +358,6 @@ Cinder Configuration Option:</p>
 <td><p>Optional</p></td>
 <td><p>For NFS protocol only. This option specifies the path of the NetApp copy offload tool binary. Ensure that the binary has execute permissions set which allow the effective user of the <code class="docutils literal notranslate"><span class="pre">cinder-volume</span></code> process to execute the file.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappNasSecureFileOperations</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">nas_secure_file_operations</span></code></p></td>
-<td><p>Optional</p></td>
-<td><p>For NFS protocol only. If ‘false’, operations on the backing files run as root; if ‘true’, operations on the backing files for cinder volumes run unprivileged, as the cinder user, and are allowed to succeed even when root is squashed. If ‘auto’ and there are existing Cinder volumes, value will be set to ‘false’ (for backwards compatibility); if ‘auto’ and there are no existing Cinder volumes, the value will be set to ‘true’. Default is ‘auto’.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappNasSecureFilePermissions</span></code></p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">nas_secure_file_permissions</span></code></p></td>
-<td><p>Optional</p></td>
-<td><p>For NFS protocol only. If ‘false’, backing files for cinder volumes are readable by owner, group, and world; if ‘true’, only by owner and group. If ‘auto’ and there are existing Cinder volumes, value will be set to ‘false’ (for backwards compatibility); if ‘auto’ and there are no existing Cinder volumes, the value will be set to ‘true’. Default is ‘auto’.</p></td>
-</tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CinderNetappHostType</span></code></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">netapp_host_type</span></code></p></td>
 <td><p>Optional</p></td>
@@ -362,133 +388,61 @@ but for sake of clarity, the following example organizes the back ends in
 multiple smaller environment files:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-nfs-backend1.yaml</span></code></p>
-<p>This file defines the first Cinder volume back end
-<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_1</span></code> and its parameters. The definition of the
-first back end is the same for both single and multiple back end
-configuration:</p>
+<p>This file defines the multiple Cinder volume backends
+<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_1</span></code>, <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_2</span></code> and
+<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_iscsi_1</span></code> and their parameters.</p>
 <div class="highlight-yaml notranslate" id="cinder-netapp-nfs-backend1-yaml"><div class="highlight"><pre><span></span><span class="nt">resource_registry</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">OS::TripleO::Services::CinderBackendNetApp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml</span>
 
 <span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">CinderEnableNetappBackend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">CinderNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_nfs_1&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_password&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin&#39;</span><span class="c1">#Default value for the Netapp backends&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;secret_password&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_nfs_1&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappSizeMultiplier</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1.2&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappStorageFamily</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ontap_cluster&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;nfs&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappTransportType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappVfiler</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappNfsShares</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;lif1_ip:/flexvol_1&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappPartnerBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappNfsShares</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;lif_ip:/flexvol&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares1&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappNfsMountOptions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappNfsMountOptions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;context=system_u:object_r:container_file_t:s0&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappCopyOffloadToolPath</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappControllerIps</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappSaPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappPoolNameSearchPattern</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;(.+)&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappHostType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappWebservicePath</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/devmgr/v2&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappBackendName</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_nfs_2</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_iscsi_1</span>
+<span class="w">  </span><span class="nt">CinderNetappMultiConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tripleo_netapp_nfs_2</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;secret_password_2&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname2&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name_2&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares2&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;nfs&#39;</span>
+<span class="w">    </span><span class="nt">tripleo_netapp_iscsi_1</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;secret_password_3&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname3&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name_3&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;iscsi&#39;</span>
 </pre></div>
 </div>
 <p>Modify the parameter values according to your NetApp ONTAP back end
 configuration.</p>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-nfs-backend2.yaml</span></code></p>
-<div class="highlight-yaml notranslate" id="cinder-netapp-nfs-backend2-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/volume_backend_name</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_nfs_2</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/volume_driver</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.netapp.common.NetAppDriver</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_login</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_username</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_password</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_password</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_server_hostname</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hostname</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_server_port</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_transport_type</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_vserver</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vserver_name</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_storage_protocol</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nfs</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/nfs_shares_config</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares2&#39;</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_nfs_2/netapp_storage_family</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ontap_cluster</span>
-</pre></div>
-</div>
-<p>Modify the parameter values according to your NetApp ONTAP back end
-configuration.</p>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-netapp-iscsi-backend1.yaml</span></code></p>
-<p>This file defines the second Cinder volume back end
-<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_iscsi_1</span></code> and its parameters:</p>
-<div class="highlight-yaml notranslate" id="cinder-netapp-iscsi-backend1-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/volume_backend_name</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_iscsi_1</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/volume_driver</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cinder.volume.drivers.netapp.common.NetAppDriver</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_login</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_username</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_password</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">admin_password</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_server_hostname</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hostname</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_server_port</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_transport_type</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">http</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_vserver</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vserver_name</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_storage_protocol</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">iscsi</span>
-<span class="w">      </span><span class="nt">tripleo_netapp_iscsi_1/netapp_storage_family</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ontap_cluster</span>
-</pre></div>
-</div>
-<p>Modify the parameter values according to your NetApp ONTAP back end
-configuration.</p>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-backup.yaml</span></code></p>
-<p>This file defines cinder backup service and its parameters:</p>
-<div class="highlight-yaml notranslate" id="cinder-backup-yaml"><div class="highlight"><pre><span></span><span class="nt">resource_registry</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">OS::TripleO::Services::CinderBackup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backup-container-puppet.yaml</span>
-
-<span class="nt">parameter_defaults</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">CinderBackupBackend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nfs</span>
-<span class="w">  </span><span class="nt">CinderBackupNfsShare</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&lt;lif_ip&gt;/backup_vol&#39;</span>
-<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">cinder::config::cinder_config</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">DEFAULT/backup_use_same_host</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-</pre></div>
-</div>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/cinder-enabled-backends.yaml</span></code></p>
-<p>This file defines which additional back ends will be enabled. In this
-example, the additional back ends <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_2</span></code> and
-<code class="docutils literal notranslate"><span class="pre">tripleo_netapp_iscsi_1</span></code> will be enabled:</p>
-<div class="highlight-yaml notranslate" id="cinder-enabled-backends-yaml"><div class="highlight"><pre><span></span><span class="nt">parameter_defaults</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">cinder_user_enabled_backends</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_nfs_2&#39;</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_iscsi_1&#39;</span>
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The first back end <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_nfs_1</span></code> was defined using NetApp THT
-resource registry, and therefore doesn’t need to be added to
-<code class="docutils literal notranslate"><span class="pre">cinder_user_enabled_backends</span></code>.</p>
-</div>
 </li>
 </ul>
 </section>
 </section>
 <section id="deploy-overcloud">
 <h3>Deploy Overcloud<a class="headerlink" href="#deploy-overcloud" title="Permalink to this heading">¶</a></h3>
-<p>Now that you have the Cinder back end environment files defined, you can run
+<p>Now that you have the Cinder back end environment file defined, you can run
 the command to deploy RHOSP Overcloud. Run the following command as <code class="docutils literal notranslate"><span class="pre">stack</span></code>
 user in the RHOSP Director command line, specifying the YAML file(s) you
 defined:</p>
@@ -496,11 +450,10 @@ defined:</p>
 <span class="w"> </span>--templates<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>-e<span class="w"> </span>/home/stack/containers-prepare-parameter.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-netapp-nfs-backend1.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-netapp-nfs-backend2.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-netapp-iscsi-backend1.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-backup.yaml<span class="w"> </span><span class="se">\</span>
-<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/cinder-enabled-backends.yaml<span class="w"> </span><span class="se">\</span>
-
+<span class="w"> </span>-n<span class="w"> </span>/home/stack/templates/no-network/network_data.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/overcloud-networks-deployed.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/overcloud-vip-deployed.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/overcloud-baremetal-deployed.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--stack<span class="w"> </span>overcloud
 </pre></div>
 </div>
@@ -564,7 +517,7 @@ types:</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2024-01-24 01:25</div>
+            <div class="docs-updated">updated: 2024-01-25 23:36</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -706,7 +659,7 @@ types:</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2024-01-24 01:25";
+    var buildstring = "Release: 2021.2 on 2024-01-25 23:36";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
