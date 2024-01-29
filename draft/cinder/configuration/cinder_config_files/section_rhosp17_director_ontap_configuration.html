@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2024-01-25 23:36</div>
+            <div class="docs-updated">updated: 2024-01-29 21:41</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -395,11 +395,11 @@ multiple smaller environment files:</p>
 <span class="w">  </span><span class="nt">OS::TripleO::Services::CinderBackendNetApp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml</span>
 
 <span class="nt">parameter_defaults</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">CinderEnableIscsiBackend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">CinderEnableNetappBackend</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">  </span><span class="nt">CinderNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin&#39;</span><span class="c1">#Default value for the Netapp backends&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;secret_password&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_nfs_1&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappSizeMultiplier</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1.2&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappStorageFamily</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ontap_cluster&#39;</span>
@@ -409,7 +409,7 @@ multiple smaller environment files:</p>
 <span class="w">  </span><span class="nt">CinderNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappPartnerBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappNfsShares</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;lif_ip:/flexvol&#39;</span>
-<span class="w">  </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares1&#39;</span>
+<span class="w">  </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappNfsMountOptions</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;context=system_u:object_r:container_file_t:s0&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappCopyOffloadToolPath</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappControllerIps</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
@@ -418,13 +418,18 @@ multiple smaller environment files:</p>
 <span class="w">  </span><span class="nt">CinderNetappHostType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappWebservicePath</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/devmgr/v2&#39;</span>
 <span class="w">  </span><span class="nt">CinderNetappBackendName</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_nfs_1</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_nfs_2</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tripleo_netapp_iscsi_1</span>
 <span class="w">  </span><span class="nt">CinderNetappMultiConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">tripleo_netapp_nfs_1</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;secret_password_1&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares1&#39;</span>
 <span class="w">    </span><span class="nt">tripleo_netapp_nfs_2</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">CinderNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;secret_password_2&#39;</span>
 <span class="w">      </span><span class="nt">CinderNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname2&#39;</span>
 <span class="w">      </span><span class="nt">CinderNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name_2&#39;</span>
+<span class="w">      </span><span class="nt">CinderNetappNfsShares</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;lif_ip2:/flexvol2&#39;</span>
 <span class="w">      </span><span class="nt">CinderNetappNfsSharesConfig</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;/etc/cinder/nfs_shares2&#39;</span>
 <span class="w">      </span><span class="nt">CinderNetappStorageProtocol</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;nfs&#39;</span>
 <span class="w">    </span><span class="nt">tripleo_netapp_iscsi_1</span><span class="p">:</span>
@@ -438,6 +443,16 @@ multiple smaller environment files:</p>
 configuration.</p>
 </li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each Netapp backend’s CinderNetappNfsSharesConfig must be unique.
+In the above example, tripleo_netapp_nfs_1’s CinderNetappNfsSharesConfig
+(‘/etc/cinder/nfs_shares1’) will be configured with the content copied
+from default CinderNetappNfsShares. For the backend tripleo_netapp_nfs_2,
+CinderNetappNfsSharesConfig (‘/etc/cinder/nfs_shares2’) will have content
+of CinderNetappNfsShares in the same block if mentioned,  otherwise it will
+have default CinderNetappNfsShares.</p>
+</div>
 </section>
 </section>
 <section id="deploy-overcloud">
@@ -517,7 +532,7 @@ types:</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2024-01-25 23:36</div>
+            <div class="docs-updated">updated: 2024-01-29 21:41</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -648,7 +663,7 @@ types:</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 922c16764772bea0d357bab58d66e3f7f05e09cc";
+    var gitSha = "SHA: aca313c49ba2deaf791d4629f12b412cca3e3f89";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 17 in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -659,7 +674,7 @@ types:</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2024-01-25 23:36";
+    var buildstring = "Release: 2021.2 on 2024-01-29 21:41";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
