@@ -226,11 +226,11 @@ multiple smaller environment files:
       OS::TripleO::Services::CinderBackendNetApp: /usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml
 
     parameter_defaults:
+      CinderEnableIscsiBackend: false
       CinderEnableNetappBackend: true
       CinderNetappLogin: 'admin'#Default value for the Netapp backends'
       CinderNetappPassword: 'secret_password'
       CinderNetappServerHostname: 'hostname'
-      CinderNetappBackendName: 'tripleo_netapp_nfs_1'
       CinderNetappServerPort: '80'
       CinderNetappSizeMultiplier: '1.2'
       CinderNetappStorageFamily: 'ontap_cluster'
@@ -240,7 +240,7 @@ multiple smaller environment files:
       CinderNetappVserver: 'vserver_name'
       CinderNetappPartnerBackendName: ''
       CinderNetappNfsShares: 'lif_ip:/flexvol'
-      CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares1'
+      CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares'
       CinderNetappNfsMountOptions: 'context=system_u:object_r:container_file_t:s0'
       CinderNetappCopyOffloadToolPath: ''
       CinderNetappControllerIps: ''
@@ -249,13 +249,18 @@ multiple smaller environment files:
       CinderNetappHostType: ''
       CinderNetappWebservicePath: '/devmgr/v2'
       CinderNetappBackendName:
+        - tripleo_netapp_nfs_1
         - tripleo_netapp_nfs_2  
         - tripleo_netapp_iscsi_1
       CinderNetappMultiConfig:
+        tripleo_netapp_nfs_1:
+          CinderNetappPassword: 'secret_password_1'
+          CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares1'
         tripleo_netapp_nfs_2:
           CinderNetappPassword: 'secret_password_2'
           CinderNetappServerHostname: 'hostname2'
           CinderNetappVserver: 'vserver_name_2'
+          CinderNetappNfsShares: 'lif_ip2:/flexvol2'
           CinderNetappNfsSharesConfig: '/etc/cinder/nfs_shares2'
           CinderNetappStorageProtocol: 'nfs'
         tripleo_netapp_iscsi_1:
@@ -267,6 +272,15 @@ multiple smaller environment files:
   Modify the parameter values according to your NetApp ONTAP back end
   configuration.
 
+.. note::
+
+  Each Netapp backend's CinderNetappNfsSharesConfig must be unique.
+  In the above example, tripleo_netapp_nfs_1's CinderNetappNfsSharesConfig 
+  ('/etc/cinder/nfs_shares1') will be configured with the content copied 
+  from default CinderNetappNfsShares. For the backend tripleo_netapp_nfs_2, 
+  CinderNetappNfsSharesConfig ('/etc/cinder/nfs_shares2') will have content 
+  of CinderNetappNfsShares in the same block if mentioned,  otherwise it will 
+  have default CinderNetappNfsShares.
 
 Deploy Overcloud
 ^^^^^^^^^^^^^^^^
