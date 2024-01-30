@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2024-01-29 21:41</div>
+            <div class="docs-updated">updated: 2024-01-30 19:07</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -156,18 +156,18 @@ ga('send', 'pageview');
 <section id="overview">
 <span id="ontap-ontap-rhosp17"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>This guide shows how to configure and deploy NetApp ONTAP Cinder driver in a
-<strong>Red Hat OpenStack Platform (RHOSP) 17</strong> Overcloud, using RHOSP Director.
-After reading this, you’ll be able to define the proper environment files and
-deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller
-nodes.</p>
+<strong>Red Hat OpenStack Platform (RHOSP) 17</strong> Overcloud and <strong>Red Hat OpenStack Platform (RHOSP) 17.1</strong>
+using RHOSP Director. After reading this, you’ll be able to define the proper environment files and
+deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller nodes. The guide
+shares examples of RHOSP 17, and they work same for RHOSP 17.1 unless explicitly called out.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>For more information about RHOSP, please refer to its <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/17.1">documentation pages</a>.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>RHOSP17 is based on OpenStack Wallaby release. Features included after Wallaby
-release are not available in RHOSP17.</p>
+<p>RHOSP17 and RHOSP17.1 are based on OpenStack Wallaby release. Features included after Wallaby
+release are not available in RHOSP17. RHOSP17.1 has additional backport fixes from upstream.</p>
 </div>
 </section>
 <section id="requirements">
@@ -182,7 +182,7 @@ back ends. See <a class="reference internal" href="../ontap_configuration/sectio
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The driver supports FCP, but it is not certified for RHOSP17.</p>
+<p>The driver supports FCP, but it is not certified for RHOSP17 and RHOSP 17.1.</p>
 </div>
 </section>
 <section id="deployment-steps">
@@ -284,7 +284,8 @@ for a complete list of the available Cinder Configuration Options.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>RHOSP17 is based on OpenStack Wallaby release. Features and Configuration
-Options included after Wallaby release are not available in RHOSP17.</p>
+Options included after Wallaby release are not available in RHOSP17. RHOSP17.1 has additional
+backport fixes from upstream.</p>
 </div>
 <p>Most THT Configuration Parameters correspond to a Cinder Configuration Option.
 The following table maps each THT Configuration Parameter to the corresponding
@@ -532,7 +533,7 @@ types:</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2024-01-29 21:41</div>
+            <div class="docs-updated">updated: 2024-01-30 19:07</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -663,7 +664,7 @@ types:</p>
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: aca313c49ba2deaf791d4629f12b412cca3e3f89";
+    var gitSha = "SHA: 5b18862786e2c4282b407552466631bf849ff3a3";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 17 in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -674,7 +675,7 @@ types:</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2024-01-29 21:41";
+    var buildstring = "Release: 2021.2 on 2024-01-30 19:07";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
