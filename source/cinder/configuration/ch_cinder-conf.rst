@@ -14,3 +14,4 @@ Cinder Configuration Files
    cinder_config_files/section_sample_cinder-shares.rst
    cinder_config_files/section_rhosp16_director_ontap_configuration.rst
    cinder_config_files/section_rhosp16_director_solidfire_configuration.rst
+   cinder_config_files/section_rhosp17_director_ontap_configuration.rst
