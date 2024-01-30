@@ -7,10 +7,10 @@ Overview
 --------
 
 This guide shows how to configure and deploy NetApp ONTAP Cinder driver in a
-**Red Hat OpenStack Platform (RHOSP) 17** Overcloud, using RHOSP Director.
-After reading this, you'll be able to define the proper environment files and
-deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller
-nodes.
+**Red Hat OpenStack Platform (RHOSP) 17** Overcloud and **Red Hat OpenStack Platform (RHOSP) 17.1**
+using RHOSP Director. After reading this, you'll be able to define the proper environment files and
+deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller nodes. The guide 
+shares examples of RHOSP 17, and they work same for RHOSP 17.1 unless explicitly called out. 
 
 .. note::
 
@@ -19,8 +19,8 @@ nodes.
 
 .. warning::
 
-  RHOSP17 is based on OpenStack Wallaby release. Features included after Wallaby
-  release are not available in RHOSP17.
+  RHOSP17 and RHOSP17.1 are based on OpenStack Wallaby release. Features included after Wallaby
+  release are not available in RHOSP17. RHOSP17.1 has additional backport fixes from upstream. 
 
 Requirements
 ------------
@@ -37,7 +37,7 @@ requirements satisfied:
 
 .. note::
 
-  The driver supports FCP, but it is not certified for RHOSP17.
+  The driver supports FCP, but it is not certified for RHOSP17 and RHOSP 17.1.
 
 Deployment Steps
 ----------------
@@ -156,7 +156,8 @@ the following example:
 .. warning::
 
   RHOSP17 is based on OpenStack Wallaby release. Features and Configuration
-  Options included after Wallaby release are not available in RHOSP17.
+  Options included after Wallaby release are not available in RHOSP17. RHOSP17.1 has additional 
+  backport fixes from upstream. 
 
 Most THT Configuration Parameters correspond to a Cinder Configuration Option.
 The following table maps each THT Configuration Parameter to the corresponding
