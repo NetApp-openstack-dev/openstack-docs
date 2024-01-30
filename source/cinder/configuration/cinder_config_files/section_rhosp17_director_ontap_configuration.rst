@@ -63,6 +63,7 @@ the following example:
       OS::TripleO::Services::CinderBackendNetApp: /usr/share/openstack-tripleo-heat-templates/deployment/cinder/cinder-backend-netapp-puppet.yaml
 
     parameter_defaults:
+      CinderEnableIscsiBackend: false
       CinderEnableNetappBackend: true
       CinderNetappBackendName: 'tripleo_netapp_nfs1'
       CinderNetappMultiConfig: {}
