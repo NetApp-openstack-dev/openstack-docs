@@ -1,5 +1,5 @@
-Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 17
-=======================================================================
+Deploying NetApp ONTAP Cinder driver in a Red Hat OpenStack Platform 17 and 17.1
+================================================================================
 
 .. _ontap-ontap-rhosp17:
 
@@ -8,9 +8,9 @@ Overview
 
 This guide shows how to configure and deploy NetApp ONTAP Cinder driver in a
 **Red Hat OpenStack Platform (RHOSP) 17** Overcloud and **Red Hat OpenStack Platform (RHOSP) 17.1**
-using RHOSP Director. After reading this, you'll be able to define the proper environment files and
-deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller nodes. The guide 
-shares examples of RHOSP 17, and they work same for RHOSP 17.1 unless explicitly called out. 
+Overcloud using RHOSP Director. After reading this, you'll be able to define the proper environment files and
+deploy single or multiple ONTAP Cinder back ends in RHOSP Overcloud Controller nodes. **The guide 
+shares examples of RHOSP 17, and they work same for RHOSP 17.1 unless explicitly called out.** 
 
 .. note::
 
@@ -20,7 +20,7 @@ shares examples of RHOSP 17, and they work same for RHOSP 17.1 unless explicitly
 .. warning::
 
   RHOSP17 and RHOSP17.1 are based on OpenStack Wallaby release. Features included after Wallaby
-  release are not available in RHOSP17. RHOSP17.1 has additional backport fixes from upstream. 
+  release are not available in RHOSP17. The release RHOSP17.1 has additional backport fixes from upstream. 
 
 Requirements
 ------------
@@ -156,7 +156,7 @@ the following example:
 .. warning::
 
   RHOSP17 is based on OpenStack Wallaby release. Features and Configuration
-  Options included after Wallaby release are not available in RHOSP17. RHOSP17.1 has additional 
+  Options included after Wallaby release are not available in RHOSP17. The release RHOSP17.1 has additional 
   backport fixes from upstream. 
 
 Most THT Configuration Parameters correspond to a Cinder Configuration Option.
