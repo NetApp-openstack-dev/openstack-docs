@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!-- Bootstrap CSS -->
 <link href="../../_static/css/bootstrap.css" rel="stylesheet">
@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2021-05-10 15:21</div>
+            <div class="docs-updated">updated: 2024-01-30 22:10</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -133,7 +133,7 @@ ga('send', 'pageview');
               <div class="docs-body">
 
   <section id="theory-of-operation-storage-service-catalog-and-manila-share-types">
-<h1>Theory of Operation: Storage Service Catalog and Manila Share Types<a class="headerlink" href="#theory-of-operation-storage-service-catalog-and-manila-share-types" title="Permalink to this headline">¶</a></h1>
+<h1>Theory of Operation: Storage Service Catalog and Manila Share Types<a class="headerlink" href="#theory-of-operation-storage-service-catalog-and-manila-share-types" title="Permalink to this heading">¶</a></h1>
 <p>The Storage Service Catalog (SSC) is a concept that describes a set of
 capabilities that enables efficient, repeated, and consistent use and
 management of storage resources by the definition of policy-based
@@ -160,11 +160,6 @@ specs, etc). You can use the specs in
 <a class="reference internal" href="#table-6-10"><span class="std std-ref">Table 6.10, “NetApp supported Extra Specs for use with Manila Share Types”</span></a>
 when defining Manila share types with the <code class="docutils literal notranslate"><span class="pre">manila</span> <span class="pre">type-key</span></code> command.</p>
 <table class="docutils align-default" id="table-6-10">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 3%" />
-<col style="width: 87%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Extra spec</p></th>
 <th class="head"><p>Type</p></th>
@@ -218,7 +213,7 @@ when defining Manila share types with the <code class="docutils literal notransl
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:hide_snapdir</span></code></p></td>
 <td><p>Boolean</p></td>
-<td><p>Control visibility of the <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory for each newly created share. By default, each share allows access to its <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory, which contains files of each snapshot that is taken. To restrict access to the directory, this option should be set to <code class="docutils literal notranslate"><span class="pre">True</span></code>. For shares that have already been created, refer <a class="footnote-reference brackets" href="#f2" id="id1">2</a>.</p></td>
+<td><p>Control visibility of the <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory for each newly created share. By default, each share allows access to its <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory, which contains files of each snapshot that is taken. To restrict access to the directory, this option should be set to <code class="docutils literal notranslate"><span class="pre">True</span></code>. For shares that have already been created, refer <a class="footnote-reference brackets" href="#f2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:language</span></code></p></td>
 <td><p>String</p></td>
@@ -250,21 +245,16 @@ when defining Manila share types with the <code class="docutils literal notransl
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">qos</span></code></p></td>
 <td><p>Boolean</p></td>
-<td><p>Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in <a class="footnote-reference brackets" href="#f1" id="id2">1</a>. See the NetApp driver specific QoS extra-specs in <a class="reference internal" href="#table-6-11"><span class="std std-ref">Table 6.11, ?~&#64;~NetApp QoS Specs for use with Manila Share Types?~&#64;~]</span></a>.</p></td>
+<td><p>Allow scheduling to an aggregate (pool) that supports defining QoS. See how this is determined by the driver in <a class="footnote-reference brackets" href="#f1" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. See the NetApp driver specific QoS extra-specs in <a class="reference internal" href="#table-6-11"><span class="std std-ref">Table 6.11, ?~&#64;~NetApp QoS Specs for use with Manila Share Types?~&#64;~]</span></a>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">netapp:adaptive_qos_policy_group</span></code></p></td>
 <td><p>String</p></td>
-<td><p>Apply the specified adaptive QoS policy group to the FlexVol volume that corresponds to the Manila Share. <em>Note that the provided adaptive qos policy group must be created in advance in all SVMs managed by Manila.</em> Check <a class="footnote-reference brackets" href="#f3" id="id3">3</a> for feature restrictions.</p></td>
+<td><p>Apply the specified adaptive QoS policy group to the FlexVol volume that corresponds to the Manila Share. <em>Note that the provided adaptive qos policy group must be created in advance in all SVMs managed by Manila.</em> Check <a class="footnote-reference brackets" href="#f3" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> for feature restrictions.</p></td>
 </tr>
 </tbody>
 </table>
 <p>Table 6.10. NetApp supported Extra Specs for use with Manila Share Types</p>
 <table class="docutils align-default" id="table-6-11">
-<colgroup>
-<col style="width: 34%" />
-<col style="width: 9%" />
-<col style="width: 57%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>QoS Extra spec</p></th>
 <th class="head"><p>Type</p></th>
@@ -292,13 +282,8 @@ when defining Manila share types with the <code class="docutils literal notransl
 </table>
 <p>Table 6.11. NetApp specific QoS Extra Specs for use with Manila Share Types that have <code class="docutils literal notranslate"><span class="pre">qos=True</span></code>.</p>
 <table class="docutils align-default" id="table-6-12">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 3%" />
-<col style="width: 87%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>NFS Extra spec <a class="footnote-reference brackets" href="#f4" id="id4">4</a></p></th>
+<tr class="row-odd"><th class="head"><p>NFS Extra spec <a class="footnote-reference brackets" href="#f4" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a></p></th>
 <th class="head"><p>Type</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
@@ -316,13 +301,8 @@ when defining Manila share types with the <code class="docutils literal notransl
 </table>
 <p>Table 6.12. NetApp specific NFS configuration Extra Specs.</p>
 <table class="docutils align-default" id="table-6-13">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 3%" />
-<col style="width: 87%" />
-</colgroup>
 <thead>
-<tr class="row-odd"><th class="head"><p>FPolicy Extra spec <a class="footnote-reference brackets" href="#f5" id="id5">5</a></p></th>
+<tr class="row-odd"><th class="head"><p>FPolicy Extra spec <a class="footnote-reference brackets" href="#f5" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a></p></th>
 <th class="head"><p>Type</p></th>
 <th class="head"><p>Description</p></th>
 </tr>
@@ -369,9 +349,10 @@ appropriate permissions are set. See the section called
 permissions for an SVM admin account.</p>
 </div>
 <p class="rubric">Footnotes</p>
-<dl class="footnote brackets">
-<dt class="label" id="f1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">qos</span></code> is reported as a capability by the Manila driver to
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p><code class="docutils literal notranslate"><span class="pre">qos</span></code> is reported as a capability by the Manila driver to
 the Manila scheduler for each ONTAP aggregate (Manila storage pool).
 This value will either be True (QoS is supported) or
 False (QoS is not supported) for all aggregates belonging
@@ -384,9 +365,10 @@ you want the driver to support Manila QoS.
 (See “<a class="reference internal" href="../configuration/ontap_configuration/section_ontap-config.html#account-perm"><span class="std std-ref">Account Permission Considerations</span></a>”). Be aware that ONTAP Users with Vsadmin
 (SVM administrator) role do not have permission to create or
 modify QoS policy groups.</p>
-</dd>
-<dt class="label" id="f2"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
-<dd><p>To hide the <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory of shares that have already been
+</aside>
+<aside class="footnote brackets" id="f2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">2</a><span class="fn-bracket">]</span></span>
+<p>To hide the <code class="docutils literal notranslate"><span class="pre">.snapshot</span></code> directory of shares that have already been
 created, the <code class="docutils literal notranslate"><span class="pre">netapp_reset_snapdir_visibility</span></code> config option can be
 set to <code class="docutils literal notranslate"><span class="pre">hidden</span></code> for the associated backend in <code class="docutils literal notranslate"><span class="pre">manila.conf</span></code>. Upon
 restarting the Manila service, the changes will take effect. The config
@@ -394,9 +376,10 @@ option may be set to <code class="docutils literal notranslate"><span class="pre
 shares visible. The config option can be set to <code class="docutils literal notranslate"><span class="pre">default</span></code> to retain the
 current value for existing Manila shares on subsequent restarts of the Manila
 service.</p>
-</dd>
-<dt class="label" id="f3"><span class="brackets"><a class="fn-backref" href="#id3">3</a></span></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">netapp:adative_qos_policy_group</span></code> capability expects that the
+</aside>
+<aside class="footnote brackets" id="f3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p><code class="docutils literal notranslate"><span class="pre">netapp:adative_qos_policy_group</span></code> capability expects that the
 provided adaptive qos policy group has already been created in the
 storage system. This feature is only supported on ONTAP version 9.4 or
 higher and needs a cluster scoped account configured in driver
@@ -407,15 +390,17 @@ with “<a class="reference internal" href="../key_concepts/section_manila-key-c
 have the proper Adaptive QoS Policy Group configured in advance. You
 can also make use of other backend capabilities to force the scheduler
 to choose the desired backend (e.g. <code class="docutils literal notranslate"><span class="pre">share_backend_name</span></code>).</p>
-</dd>
-<dt class="label" id="f4"><span class="brackets"><a class="fn-backref" href="#id4">4</a></span></dt>
-<dd><p>The NFS Extra Specs are only available for <code class="docutils literal notranslate"><span class="pre">DHSS=True</span></code> backends that run on
+</aside>
+<aside class="footnote brackets" id="f4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>The NFS Extra Specs are only available for <code class="docutils literal notranslate"><span class="pre">DHSS=True</span></code> backends that run on
 ONTAP storage 9.4 or greater. The user should guarantee that the scheduler
 will allocate the share to a backend with those criteria, otherwise the NFS
 Extra Specs will have no effect.</p>
-</dd>
-<dt class="label" id="f5"><span class="brackets"><a class="fn-backref" href="#id5">5</a></span></dt>
-<dd><p>FPolicy works for backends with and without share server management.
+</aside>
+<aside class="footnote brackets" id="f5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>FPolicy works for backends with and without share server management.
 When using NetApp backends with SVM administrator accounts, make sure
 that the assigned access-control role has access set to <code class="docutils literal notranslate"><span class="pre">all</span></code> for
 <code class="docutils literal notranslate"><span class="pre">vserver</span> <span class="pre">fpolicy</span></code> directory.</p>
@@ -431,8 +416,8 @@ between protocol versions and clients.</p>
 <p>This feature does not work with “<a class="reference internal" href="../key_concepts/section_manila-key-concepts.html#share-replicas"><span class="std std-ref">Share Replicas</span></a>” to avoid
 failures on replica promotion, due to lack of FPolicy resources in the
 destination SVM.</p>
-</dd>
-</dl>
+</aside>
+</aside>
 </section>
 
 
@@ -450,7 +435,7 @@ destination SVM.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2021-05-10 15:21</div>
+            <div class="docs-updated">updated: 2024-01-30 22:10</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -592,7 +577,7 @@ destination SVM.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2021-05-10 15:21";
+    var buildstring = "Release: 2021.2 on 2024-01-30 22:10";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
@@ -602,5 +587,6 @@ destination SVM.</p>
 </script>
 
 <script src="../../_static/documentation_options.js" type="text/javascript"></script>
+<script src="../../_static/sphinx_highlight.js" type="text/javascript"></script>
   </body>
 </html>

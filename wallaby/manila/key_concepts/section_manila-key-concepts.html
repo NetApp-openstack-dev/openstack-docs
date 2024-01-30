@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <!-- Bootstrap CSS -->
 <link href="../../_static/css/bootstrap.css" rel="stylesheet">
@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2021-05-10 15:21</div>
+            <div class="docs-updated">updated: 2024-01-30 22:10</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -157,9 +157,9 @@ ga('send', 'pageview');
               <div class="docs-body">
 
   <section id="key-concepts">
-<h1>Key Concepts<a class="headerlink" href="#key-concepts" title="Permalink to this headline">¶</a></h1>
+<h1>Key Concepts<a class="headerlink" href="#key-concepts" title="Permalink to this heading">¶</a></h1>
 <section id="share">
-<h2>Share<a class="headerlink" href="#share" title="Permalink to this headline">¶</a></h2>
+<h2>Share<a class="headerlink" href="#share" title="Permalink to this heading">¶</a></h2>
 <p>A Manila share is the fundamental resource unit allocated by the Shared
 File System service. It represents an allocation of a persistent,
 readable, and writable filesystem that can be accessed by OpenStack
@@ -184,7 +184,7 @@ Manila.</p>
 a single Manila backend within a single resource pool.</p>
 </section>
 <section id="backend">
-<h2>Backend<a class="headerlink" href="#backend" title="Permalink to this headline">¶</a></h2>
+<h2>Backend<a class="headerlink" href="#backend" title="Permalink to this heading">¶</a></h2>
 <p>A Manila backend is the configuration object that represents a single
 provider of resource pools upon which provisioning requests for shared
 file systems may be fulfilled. A Manila backend communicates with the
@@ -203,7 +203,7 @@ its own configuration stanza with the same name as listed in the
 </div>
 </section>
 <section id="storage-pools">
-<span id="manila-storage-pools"></span><h2>Storage Pools<a class="headerlink" href="#storage-pools" title="Permalink to this headline">¶</a></h2>
+<span id="manila-storage-pools"></span><h2>Storage Pools<a class="headerlink" href="#storage-pools" title="Permalink to this heading">¶</a></h2>
 <p>With the Kilo release of OpenStack, Manila has introduced the concept of
 “storage pools”. The backend storage may present one or more logical
 storage resource pools from which Manila will select as a storage
@@ -218,7 +218,7 @@ defined within ONTAP.</p>
 </div>
 </section>
 <section id="driver">
-<span id="manila-driver"></span><h2>Driver<a class="headerlink" href="#driver" title="Permalink to this headline">¶</a></h2>
+<span id="manila-driver"></span><h2>Driver<a class="headerlink" href="#driver" title="Permalink to this heading">¶</a></h2>
 <p>A Manila driver is a particular implementation of a Manila backend that
 maps the abstract APIs and primitives of Manila to appropriate
 constructs within the particular storage solution underpinning the
@@ -251,7 +251,7 @@ type definitions when determining which pool will fulfill a provisioning
 request.</p>
 </section>
 <section id="extra-spec">
-<h2>Extra Spec<a class="headerlink" href="#extra-spec" title="Permalink to this headline">¶</a></h2>
+<h2>Extra Spec<a class="headerlink" href="#extra-spec" title="Permalink to this heading">¶</a></h2>
 <p>An extra spec is a key/value pair, expressed in the style of
 <code class="docutils literal notranslate"><span class="pre">key=value</span></code>. Extra specs are associated with Manila share types, so
 that when users request shares of a particular share type, the shares
@@ -275,7 +275,7 @@ block storage to clients (e.g. <code class="docutils literal notranslate"><span 
 </div>
 </section>
 <section id="snapshot">
-<h2>Snapshot<a class="headerlink" href="#snapshot" title="Permalink to this headline">¶</a></h2>
+<h2>Snapshot<a class="headerlink" href="#snapshot" title="Permalink to this heading">¶</a></h2>
 <p>A Manila snapshot is a point-in-time, read-only copy of a Manila share.
 Snapshots can be created from an existing Manila share that is
 operational regardless of whether a client has mounted the file system.
@@ -320,7 +320,7 @@ configured. More details are available <a class="reference internal" href="../co
 </div>
 </section>
 <section id="share-group">
-<h2>Share Group<a class="headerlink" href="#share-group" title="Permalink to this headline">¶</a></h2>
+<h2>Share Group<a class="headerlink" href="#share-group" title="Permalink to this heading">¶</a></h2>
 <p>A Manila share group is a grouping construct that makes it possible
 to group shares. Share groups make it possible to perform actions
 on a group of shares, such as generating consistent, point-in-time
@@ -343,7 +343,7 @@ and share server.</p>
 </div>
 </section>
 <section id="share-access-rules">
-<span id="id1"></span><h2>Share Access Rules<a class="headerlink" href="#share-access-rules" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Share Access Rules<a class="headerlink" href="#share-access-rules" title="Permalink to this heading">¶</a></h2>
 <p>Share access rules define which clients can access a particular Manila
 share. Access rules can be declared for NFS shares by listing the valid
 IP networks (using CIDR notation) which should have access to the share.
@@ -371,7 +371,7 @@ invoke a resync of access rules on the backend driver.</p>
 </div>
 </section>
 <section id="security-services">
-<h2>Security Services<a class="headerlink" href="#security-services" title="Permalink to this headline">¶</a></h2>
+<h2>Security Services<a class="headerlink" href="#security-services" title="Permalink to this heading">¶</a></h2>
 <p>Security services are the concept in Manila that allow Finer-grained
 client access rules to be declared for authentication or authorization
 to access share content. External services including LDAP, Active
@@ -398,7 +398,7 @@ please refer to the
 </div>
 </section>
 <section id="share-networks">
-<h2>Share Networks<a class="headerlink" href="#share-networks" title="Permalink to this headline">¶</a></h2>
+<h2>Share Networks<a class="headerlink" href="#share-networks" title="Permalink to this heading">¶</a></h2>
 <p>A share network is an object that defines a relationship between a set of
 tenant’s networks/subnets (as defined in an OpenStack network service
 (Neutron or Nova-network)) and the Manila shares created by the same
@@ -412,7 +412,7 @@ creating shares.</p>
 </div>
 </section>
 <section id="share-network-subnets">
-<h2>Share Network Subnets<a class="headerlink" href="#share-network-subnets" title="Permalink to this headline">¶</a></h2>
+<h2>Share Network Subnets<a class="headerlink" href="#share-network-subnets" title="Permalink to this heading">¶</a></h2>
 <p>A share network subnet is an entity that defines a relationship between a
 single tenant’s network/subnet (as defined in an OpenStack network
 service (Neutron)) and the Manila share instance created by the same.
@@ -422,7 +422,7 @@ This change led to another change in the share server object, which is now
 associated to a share network subnet instead of a share network.</p>
 </section>
 <section id="share-servers">
-<h2>Share Servers<a class="headerlink" href="#share-servers" title="Permalink to this headline">¶</a></h2>
+<h2>Share Servers<a class="headerlink" href="#share-servers" title="Permalink to this heading">¶</a></h2>
 <p>A share server is a logical entity that manages the shares that are
 created on a specific share network. Depending on the implementation of
 a specific Manila driver, a share server may be a configuration object
@@ -467,7 +467,7 @@ network, but with the share network subnet instead.</p>
 </div>
 </section>
 <section id="share-replicas">
-<span id="id2"></span><h2>Share Replicas<a class="headerlink" href="#share-replicas" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2>Share Replicas<a class="headerlink" href="#share-replicas" title="Permalink to this heading">¶</a></h2>
 <p>Share replicas are a way to mirror share data to another storage pool so
 that the data is stored in multiple locations to allow failover in a
 disaster situation. Manila currently allows three types of replication:
@@ -491,7 +491,7 @@ management does support DR style replication.</p>
 </div>
 </section>
 <section id="share-migration">
-<h2>Share Migration<a class="headerlink" href="#share-migration" title="Permalink to this headline">¶</a></h2>
+<h2>Share Migration<a class="headerlink" href="#share-migration" title="Permalink to this heading">¶</a></h2>
 <p>Starting with the Ocata release, NetApp’s Manila driver supports
 non-disruptive migration of Manila shares - along with the filesystem
 metadata and snapshots, if desired. This can be useful in a variety of
@@ -503,7 +503,7 @@ For the list of migration commands, refer to
 “<a class="reference internal" href="../api_overview/section_manila-api-overview.html#table-6-9"><span class="std std-ref">Table 6.9, “Manila API Overview - Share Migration</span></a>”.</p>
 </section>
 <section id="share-management">
-<h2>Share Management<a class="headerlink" href="#share-management" title="Permalink to this headline">¶</a></h2>
+<h2>Share Management<a class="headerlink" href="#share-management" title="Permalink to this heading">¶</a></h2>
 <p>Managing and unmanaging of shares is an admin-only operation that makes it
 possible to control the visibility of shared filesystem storage with respect
 to Manila. Managing a share refers to registering a non-Manila share with its
@@ -519,7 +519,7 @@ This ensures that the same share cannot be managed twice.</p>
 </div>
 </section>
 <section id="share-server-management">
-<h2>Share Server Management<a class="headerlink" href="#share-server-management" title="Permalink to this headline">¶</a></h2>
+<h2>Share Server Management<a class="headerlink" href="#share-server-management" title="Permalink to this heading">¶</a></h2>
 <p>Since share-servers are logical containers that associate shares with share-networks,
 there is also a provision to manage and unmanage them. Admin users can manage
 share-servers by specifying the host, share-network and the driver-specific identifier
@@ -536,7 +536,7 @@ same share-server cannot be managed twice.</p>
 </div>
 </section>
 <section id="share-server-migration">
-<h2>Share Server Migration<a class="headerlink" href="#share-server-migration" title="Permalink to this headline">¶</a></h2>
+<h2>Share Server Migration<a class="headerlink" href="#share-server-migration" title="Permalink to this heading">¶</a></h2>
 <p>Starting with the Victoria release, NetApp’s Manila driver supports the
 migration of Manila share servers - along with its shares, snapshots and access
 rules. This functionality can be useful to handle situations like back end
@@ -586,7 +586,7 @@ must be peered in advance and have a valid SnapMirror license installed.</p>
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2021-05-10 15:21</div>
+            <div class="docs-updated">updated: 2024-01-30 22:10</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -728,7 +728,7 @@ must be peered in advance and have a valid SnapMirror license installed.</p>
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2021-05-10 15:21";
+    var buildstring = "Release: 2021.2 on 2024-01-30 22:10";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
@@ -738,5 +738,6 @@ must be peered in advance and have a valid SnapMirror license installed.</p>
 </script>
 
 <script src="../../_static/documentation_options.js" type="text/javascript"></script>
+<script src="../../_static/sphinx_highlight.js" type="text/javascript"></script>
   </body>
 </html>
