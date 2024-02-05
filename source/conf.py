@@ -107,6 +107,7 @@ if watermark == '':
         else:
             watermark = "%s DRAFT" % releases[rel_index + 1].upper()
 
+watermark = "CARACAL DRAFT"
 # -- Options for sphinxmark -----------------------------------------------
 sphinxmark_enable = True
 sphinxmark_div = 'docs-body'
