@@ -129,9 +129,9 @@ copyright = u'2021, NetApp'
 # built documents.
 #
 # The short X.Y version.
-version = '2021.2'
+version = '2024.1'
 # The full version, including alpha/beta/rc tags.
-release = '2021.2'
+release = '2024.1'
 
 # A few variables have to be set for the log-a-bug feature.
 #   giturl: The location of conf.py on Git. Must be set manually.
