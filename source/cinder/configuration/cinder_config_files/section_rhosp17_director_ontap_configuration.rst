@@ -206,14 +206,8 @@ Table 8.1. NetApp Cinder THT Configuration Parameters
 Multiple back end configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-THT has no templates for configuring multiple NetApp Cinder back ends.
-In order to configure multiple NetApp Cinder back ends, you need to define
-the first back end with THT, and the additional back ends with Custom
-Configurations.
-
-It's possible to define all the back ends in a single environment file,
-but for sake of clarity, the following example organizes the back ends in
-multiple smaller environment files:
+To configure multiple NetApp Cinder backends, define an environment file as in
+the following example:
 
 - ``/home/stack/templates/cinder-netapp-nfs-backend1.yaml``
 
