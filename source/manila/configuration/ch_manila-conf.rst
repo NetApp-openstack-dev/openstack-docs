@@ -13,3 +13,4 @@ Manila Configuration Files
    manila_config_files/network_plugins/section_configurable_neutron_port_binding_network_plugin.rst
    manila_config_files/section_sample_manila-conf.rst
    manila_config_files/section_rhosp16_director_configuration.rst
+   manila_config_files/section_rhosp17_director_configuration.rst
