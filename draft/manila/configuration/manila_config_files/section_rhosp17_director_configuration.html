@@ -3,7 +3,7 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 
-    <title>OpenStack Docs: Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 16</title>
+    <title>OpenStack Docs: Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,7 +48,7 @@ ga('send', 'pageview');
   </head>
   <body>
 
-<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/manila/configuration/manila_config_files/section_rhosp16_director_configuration.rst -->
+<!-- SOURCE_FILE: https://github.com/NetApp-openstack-dev/openstack-docs/manila/configuration/manila_config_files/section_rhosp17_director_configuration.rst -->
 
  <script type="text/javascript">
     (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
@@ -108,15 +108,15 @@ ga('send', 'pageview');
         <div class="col-lg-9 col-md-8 col-sm-8 col-lg-push-3 col-md-push-4 col-sm-push-4">
 <div class="row">
   <div class="col-lg-8">
-      <h2>Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 16</h2>
+      <h2>Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1</h2>
     
   </div>
   <div class="docs-actions">
     
-    <a href="section_sample_manila-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Sample manila.conf"></i></a>
+    <a href="section_rhosp16_director_configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 16"></i></a>
     
     
-    <a href="section_rhosp17_director_configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1"></i></a>
+    <a href="../../ch_manila-examples.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Examples"></i></a>
     
     <a id="logABugLink1" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
     
@@ -131,13 +131,13 @@ ga('send', 'pageview');
 
 <h5><a href="../../../index.html">Contents</a></h5>
 <ul>
-<li><a class="reference internal" href="#">Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 16</a><ul>
+<li><a class="reference internal" href="#">Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1</a><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#deployment-steps">Deployment Steps</a><ul>
 <li><a class="reference internal" href="#prepare-the-environment-files">Prepare the environment files</a><ul>
-<li><a class="reference internal" href="#single-back-end-configuration">Single back end configuration</a></li>
-<li><a class="reference internal" href="#multiple-back-end-configuration">Multiple back end configuration</a></li>
+<li><a class="reference internal" href="#single-backend-configuration">Single backend configuration</a></li>
+<li><a class="reference internal" href="#multiple-backend-configuration">Multiple backend configuration</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#deploy-overcloud">Deploy Overcloud</a></li>
@@ -151,14 +151,14 @@ ga('send', 'pageview');
               </div>
               <div class="docs-body">
 
-  <section id="deploying-netapp-ontap-manila-driver-in-a-red-hat-openstack-platform-16">
-<h1>Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 16<a class="headerlink" href="#deploying-netapp-ontap-manila-driver-in-a-red-hat-openstack-platform-16" title="Permalink to this heading">¶</a></h1>
+  <section id="deploying-netapp-ontap-manila-driver-in-a-red-hat-openstack-platform-17-1">
+<h1>Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1<a class="headerlink" href="#deploying-netapp-ontap-manila-driver-in-a-red-hat-openstack-platform-17-1" title="Permalink to this heading">¶</a></h1>
 <section id="overview">
-<span id="manila-rhosp"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<span id="manila-rhosp17-1"></span><h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
 <p>This guide shows how to configure and deploy NetApp ONTAP Manila driver in a
-<strong>Red Hat OpenStack Platform (RHOSP) 16</strong> Overcloud, using RHOSP Director.
+<strong>Red Hat OpenStack Platform (RHOSP) 17.1</strong> Overcloud, using RHOSP Director.
 After reading this, you’ll be able to define the proper environment files and
-deploy single or multiple ONTAP Manila back ends in RHOSP Overcloud Controller
+deploy single or multiple ONTAP Manila backends in RHOSP Overcloud Controller
 nodes.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -166,20 +166,24 @@ nodes.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>RHOSP16 is based on OpenStack Train release. Features included after Train
-release are not available in RHOSP16.</p>
+<p>RHOSP17.1 is based on OpenStack Wallaby release. Features included after Wallaby
+release are not available in RHOSP17.1.</p>
 </div>
 </section>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">¶</a></h2>
-<p>In order to deploy NetApp Manila back ends, you should have the following
+<p>In order to deploy NetApp Manila backends, you should have the following
 requirements satisfied:</p>
 <ul class="simple">
 <li><p>NetApp ONTAP storage controllers deployed and ready to be used as Manila
-back ends. See <a class="reference internal" href="../ontap_configuration/section_ontap-config.html#manila-data-ontap-prerequisites"><span class="std std-ref">ONTAP Prerequisites</span></a> for more details.</p></li>
+backends. See <a class="reference internal" href="../ontap_configuration/section_ontap-config.html#manila-data-ontap-prerequisites"><span class="std std-ref">ONTAP Prerequisites</span></a> for more details.</p></li>
 <li><p>RHOSP Director user credentials to deploy Overcloud.</p></li>
 <li><p>RHOSP Overcloud Controller nodes where Manila services will be installed.</p></li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The driver supports SnapMirror and FlexClone, but it is not certified for RHOSP 17.1.</p>
+</div>
 </section>
 <section id="deployment-steps">
 <h2>Deployment Steps<a class="headerlink" href="#deployment-steps" title="Permalink to this heading">¶</a></h2>
@@ -187,9 +191,9 @@ back ends. See <a class="reference internal" href="../ontap_configuration/sectio
 <h3>Prepare the environment files<a class="headerlink" href="#prepare-the-environment-files" title="Permalink to this heading">¶</a></h3>
 <p>RHOSP makes use of <strong>TripleO Heat Templates (THT)</strong>, which allows you to define
 the Overcloud resources by creating environment files.</p>
-<section id="single-back-end-configuration">
-<h4>Single back end configuration<a class="headerlink" href="#single-back-end-configuration" title="Permalink to this heading">¶</a></h4>
-<p>To configure a single NetApp Manila back end, define an environment file as in
+<section id="single-backend-configuration">
+<h4>Single backend configuration<a class="headerlink" href="#single-backend-configuration" title="Permalink to this heading">¶</a></h4>
+<p>To configure a single NetApp Manila backend, define an environment file as in
 the following example:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/tripleo-netapp-single-svm.yaml</span></code></p>
@@ -202,27 +206,40 @@ the following example:</p>
 <span class="w">  </span><span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ManilaNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_single_svm&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappDriverHandlesShareServers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;false&#39;</span>
+<span class="w">    </span><span class="c1">#Set above value to &#39;true&#39; in case of DHSS=True</span>
 <span class="w">    </span><span class="nt">ManilaNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_password&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappTransportType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappStorageFamily</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ontap_cluster&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
-<span class="w">    </span><span class="nt">ManilaNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;svm_name&#39;</span>
+<span class="w">    </span><span class="nt">ManilaNetappVolumeNameTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;share_%(share_id)s&#39;</span>
+<span class="w">    </span><span class="nt">ManilaNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
+<span class="w">    </span><span class="c1">#Use below aggregate param incase of DHSS=True and remove above vserver param.</span>
+<span class="w">    </span><span class="c1">#ManilaNetappRootVolumeAggr: &#39;aggr0&#39;</span>
 <span class="w">    </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">manila::config::manila_config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">tripleo_netapp_single_svm/replication_domain</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;netapp_replication_domain&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_single_svm/backend_availability_zone</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;manila-zone-0&#39;</span>
 </pre></div>
 </div>
-<p>Modify the parameter values according to your NetApp ONTAP back end
+<p>Modify the parameter values according to your NetApp ONTAP backend
 configuration.</p>
 </li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
+<p>The ManilaNetAppVserver’s volume-delete-retention-hours should be set to 0 before
+running the tests. Follow below commands on ONTAP to set it.</p>
+<p>&gt; set diagnostic</p>
+<p>&gt; vserver modify -vserver &lt;vserver_name&gt; -volume-delete-retention-hours 0</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>Each THT Configuration Parameter corresponds to a Manila
-Configuration Option. See <a class="reference internal" href="section_rhosp17_director_configuration.html#table-7-1"><span class="std std-ref">Table 7.1, “Manila NetApp THT Configuration
+Configuration Option. See <a class="reference internal" href="#table-7-1"><span class="std std-ref">Table 7.1, “Manila NetApp THT Configuration
 Parameters “</span></a> for a complete list of the THT Configuration
 Parameters and their correspondence to Manila Configuration Options.</p>
 </div>
@@ -231,7 +248,7 @@ Parameters and their correspondence to Manila Configuration Options.</p>
 <p>There are some Manila Configuration Options that have no correspondent THT
 Configuration Parameter. If you need to set such options, you can define
 Custom Configuration Parameters. For instance, the previous example sets
-<code class="docutils literal notranslate"><span class="pre">backend_availability_zone=manila-zone-0</span></code> for the back end
+<code class="docutils literal notranslate"><span class="pre">backend_availability_zone=manila-zone-0</span></code> for the backend
 <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_single_svm</span></code>.</p>
 <p>You can define arbitrary Custom
 Configurations using the following syntax:</p>
@@ -242,14 +259,14 @@ Configurations using the following syntax:</p>
 <span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;value&gt;</span>
 </pre></div>
 </div>
-<p>See <a class="reference external" href="https://netapp-openstack-dev.github.io/openstack-docs/train/manila/configuration/manila_config_files/section_unified-driver-with-share-server.html">NetApp Unified Driver for ONTAP with Share Server management (Train)</a>
-and <a class="reference external" href="https://netapp-openstack-dev.github.io/openstack-docs/train/manila/configuration/manila_config_files/section_unified-driver-without-share-server.html">NetApp Unified Driver for ONTAP without Share Server management (Train)</a>
+<p>See <a class="reference external" href="https://netapp-openstack-dev.github.io/openstack-docs/wallaby/manila/configuration/manila_config_files/section_unified-driver-with-share-server.html">NetApp Unified Driver for ONTAP with Share Server management (Wallaby)</a>
+and <a class="reference external" href="https://netapp-openstack-dev.github.io/openstack-docs/wallaby/manila/configuration/manila_config_files/section_unified-driver-without-share-server.html">NetApp Unified Driver for ONTAP without Share Server management (Wallaby)</a>
 for a complete list of the available Manila Configuration Options.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>RHOSP16 is based on OpenStack Train release. Features and Configuration
-Options included after Train release are not available in RHOSP16.</p>
+<p>RHOSP17.1 is based on OpenStack Wallaby release. Features and Configuration
+Options included after Wallaby release are not available in RHOSP17.1.</p>
 </div>
 <p>Each THT Configuration Parameter corresponds to a Manila Configuration Option.
 The following table maps each THT Configuration Parameter to the corresponding
@@ -372,20 +389,20 @@ Manila Configuration Option:</p>
 </table>
 <p>Table 7.1. Manila NetApp THT Configuration Parameters</p>
 </section>
-<section id="multiple-back-end-configuration">
-<h4>Multiple back end configuration<a class="headerlink" href="#multiple-back-end-configuration" title="Permalink to this heading">¶</a></h4>
-<p>THT has no templates for configuring multiple NetApp Manila back ends.
-In order to configure multiple NetApp Manila back ends, you need to define
-the first back end with THT, and the additional back ends with Custom
+<section id="multiple-backend-configuration">
+<h4>Multiple backend configuration<a class="headerlink" href="#multiple-backend-configuration" title="Permalink to this heading">¶</a></h4>
+<p>THT has no templates for configuring multiple NetApp Manila backends.
+In order to configure multiple NetApp Manila backends, you need to define
+the first backend with THT, and the additional backends with Custom
 Configurations.</p>
-<p>It’s possible to define all the back ends in a single environment file,
-but for sake of clarity, the following example organizes the back ends in
+<p>It’s possible to define all the backends in a single environment file,
+but for sake of clarity, the following example organizes the backends in
 multiple smaller environment files:</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/tripleo-netapp-multi-svm-1.yaml</span></code></p>
-<p>This file defines the first Manila share back end
+<p>This file defines the first Manila share backend
 <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_multi_svm_1</span></code> and its parameters. The definition of the
-first back end is the same for both single and multiple back end
+first backend is the same for both single and multiple backend
 configuration:</p>
 <div class="highlight-yaml notranslate" id="tripleo-netapp-multi-svm-1-yaml"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">resource_registry</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">OS::TripleO::Services::ManilaBackendNetapp</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/usr/share/openstack-tripleo-heat-templates/deployment/manila/manila-backend-netapp.yaml</span>
@@ -396,14 +413,18 @@ configuration:</p>
 
 <span class="w">  </span><span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ManilaNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_multi_svm_1&#39;</span>
-<span class="w">    </span><span class="nt">ManilaNetappDriverHandlesShareServers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;true&#39;</span>
+<span class="w">    </span><span class="nt">ManilaNetappDriverHandlesShareServers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;false&#39;</span>
+<span class="w">    </span><span class="c1">#Set above value to &#39;true&#39; in case of DHSS=True</span>
 <span class="w">    </span><span class="nt">ManilaNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_password&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappTransportType</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappStorageFamily</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;ontap_cluster&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
-<span class="w">    </span><span class="nt">ManilaNetappRootVolumeAggr</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;aggr0&#39;</span>
+<span class="w">    </span><span class="nt">ManilaNetappVolumeNameTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;share_%(share_id)s&#39;</span>
+<span class="w">    </span><span class="nt">ManilaNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
+<span class="w">    </span><span class="c1">#Use below aggregate param incase of DHSS=True and remove above vserver param.</span>
+<span class="w">    </span><span class="c1">#ManilaNetappRootVolumeAggr: &#39;aggr0&#39;</span>
 <span class="w">    </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">manila::config::manila_config</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_1/replication_domain</span><span class="p">:</span>
@@ -412,12 +433,12 @@ configuration:</p>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;manila-zone-0&#39;</span>
 </pre></div>
 </div>
-<p>Modify the parameter values according to your NetApp ONTAP back end
+<p>Modify the parameter values according to your NetApp ONTAP backend
 configuration.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/manila-enabled-backends.yaml</span></code></p>
-<p>This file defines which additional back ends will be enabled. In this
-example, one additional back end <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_multi_svm_2</span></code> will be
+<p>This file defines which additional backends will be enabled. In this
+example, one additional backend <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_multi_svm_2</span></code> will be
 enabled:</p>
 <div class="highlight-yaml notranslate" id="manila-enabled-backends-yaml"><div class="highlight"><pre><span></span><span class="w">   </span><span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">     </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
@@ -427,7 +448,7 @@ enabled:</p>
 </div>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">/home/stack/templates/tripleo-netapp-multi-svm-2.yaml</span></code></p>
-<p>This file defines the second Manila share back end
+<p>This file defines the second Manila share backend
 <code class="docutils literal notranslate"><span class="pre">tripleo_netapp_multi_svm_2</span></code> and its parameters:</p>
 <div class="highlight-yaml notranslate" id="tripleo-netapp-multi-svm-2-yaml"><div class="highlight"><pre><span></span><span class="w">  </span><span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
@@ -437,7 +458,8 @@ enabled:</p>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/share_driver</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;manila.share.drivers.netapp.common.NetAppDriver&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/driver_handles_share_servers</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;True&#39;</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;false&#39;</span>
+<span class="w">        </span><span class="c1">#Set above value to &#39;true&#39; in case of DHSS=True</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_login</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_password</span><span class="p">:</span>
@@ -450,39 +472,55 @@ enabled:</p>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;http&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_server_port</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
-<span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_root_volume_aggregate</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;aggr0&#39;</span>
+<span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_vserver</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;vserver_name&gt;</span>
+<span class="w">        </span><span class="c1">#Use below aggregate param incase of DHSS=True and remove above vserver param.</span>
+<span class="w">        </span><span class="c1">#tripleo_netapp_multi_svm_2/netapp_root_volume_aggregate:</span>
+<span class="w">          </span><span class="c1">#value: &#39;aggr0&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/replication_domain</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;netapp_replication_domain&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/backend_availability_zone</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;manila-zone-0&#39;</span>
 </pre></div>
 </div>
-<p>Modify the parameter values according to your NetApp ONTAP back end
+<p>Modify the parameter values according to your NetApp ONTAP backend
 configuration.</p>
 </li>
 </ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The ManilaNetAppVserver’s volume-delete-retention-hours should be set to 0 before
+running the tests. Follow below commands on ONTAP to set it.</p>
+<p>&gt; set diagnostic</p>
+<p>&gt; vserver modify -vserver &lt;vserver_name&gt; -volume-delete-retention-hours 0</p>
+</div>
 </section>
 </section>
 <section id="deploy-overcloud">
 <h3>Deploy Overcloud<a class="headerlink" href="#deploy-overcloud" title="Permalink to this heading">¶</a></h3>
-<p>Now that you have the Manila back end environment files defined, you can run
+<p>Now that you have the Manila backend environment files defined, you can run
 the command to deploy RHOSP Overcloud. Run the following command as <code class="docutils literal notranslate"><span class="pre">stack</span></code>
 user in the RHOSP Director command line, specifying the YAML file(s) you
-defined:</p>
-<div class="highlight-bash notranslate" id="overcloud-deploy"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+defined:
+To deploy single backend,</p>
+<div class="highlight-bash notranslate" id="overcloud-deploy"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--templates<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>-e<span class="w"> </span>/home/stack/containers-prepare-parameter.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/tripleo-netapp-single-svm.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-n<span class="w"> </span>/home/stack/templates/no-network/network_data.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/overcloud-networks-deployed.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/overcloud-vip-deployed.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>-e<span class="w"> </span>/home/stack/templates/overcloud-baremetal-deployed.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--stack<span class="w"> </span>overcloud
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Alternatively, you can use <code class="docutils literal notranslate"><span class="pre">--environment-directory</span></code> parameter and specify
+<p>Alternatively for single/multiple backend deployment,
+you can use <code class="docutils literal notranslate"><span class="pre">--environment-directory</span></code> parameter and specify
 the whole directory to the deployment command. It will consider all the YAML
 files within this directory:</p>
-<div class="highlight-bash notranslate" id="overcloud-deploy-environment-directory"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
+<div class="highlight-bash notranslate" id="overcloud-deploy-environment-directory"><div class="highlight"><pre><span></span><span class="w"> </span><span class="o">(</span>undercloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>openstack<span class="w"> </span>overcloud<span class="w"> </span>deploy<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--templates<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>-e<span class="w"> </span>/home/stack/containers-prepare-parameter.yaml<span class="w"> </span><span class="se">\</span>
 <span class="w"> </span>--environment-directory<span class="w"> </span>/home/stack/templates<span class="w"> </span><span class="se">\</span>
@@ -492,25 +530,23 @@ files within this directory:</p>
 </div>
 <p>After RHOSP Overcloud is deployed, run the following command to check if the
 Manila services are up:</p>
-<div class="highlight-bash notranslate" id="manila-service-list"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
-<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>manila<span class="w"> </span>service-list
+<div class="highlight-bash notranslate" id="manila-service-list"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>manila<span class="w"> </span>service-list
 </pre></div>
 </div>
 </section>
 <section id="create-default-share-type">
 <h3>Create Default Share Type<a class="headerlink" href="#create-default-share-type" title="Permalink to this heading">¶</a></h3>
-<p>RHOSP16 Director sets Manila Configuration Option <code class="docutils literal notranslate"><span class="pre">default_share_type</span></code> to
+<p>RHOSP17.1 Director sets Manila Configuration Option <code class="docutils literal notranslate"><span class="pre">default_share_type</span></code> to
 <code class="docutils literal notranslate"><span class="pre">default</span></code>, but does not create the actual share type. Run the following
 command as <code class="docutils literal notranslate"><span class="pre">stack</span></code> user in the RHOSP Director command line to create the
 <code class="docutils literal notranslate"><span class="pre">default</span></code> share type:</p>
-<div class="highlight-bash notranslate" id="id1"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
-<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp16-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>manila<span class="w"> </span>type-create<span class="w"> </span>default<span class="w"> </span><span class="nb">false</span>
+<div class="highlight-bash notranslate" id="id1"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
+<span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>manila<span class="w"> </span>type-create<span class="w"> </span>default<span class="w"> </span><span class="nb">false</span>
 </pre></div>
 </div>
 <p>Replace <code class="docutils literal notranslate"><span class="pre">false</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> in the command above if you want the shares to be
-created in <code class="docutils literal notranslate"><span class="pre">DHSS=True</span></code> back ends by default.</p>
-<p>For more information about Manila share types, see <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_openstack_platform/16.0/html/storage_guide/ch-shares#creating_a_share_type">Shared File System Service</a>
-guide.</p>
+created in <code class="docutils literal notranslate"><span class="pre">DHSS=True</span></code> backends by default.</p>
 </section>
 </section>
 </section>
@@ -521,10 +557,10 @@ guide.</p>
           </div>
           <div class="docs-actions">
           
-            <a href="section_sample_manila-conf.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Sample manila.conf"></i></a>
+            <a href="section_rhosp16_director_configuration.html"><i class="fa fa-angle-double-left" data-toggle="tooltip" data-placement="top" title="Previous: Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 16"></i></a>
           
           
-            <a href="section_rhosp17_director_configuration.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1"></i></a>
+            <a href="../../ch_manila-examples.html"><i class="fa fa-angle-double-right" data-toggle="tooltip" data-placement="top" title="Next: Examples"></i></a>
           
             <a id="logABugLink3" href="" target="_blank" title="Found an error? Report a bug against this page"><i class="fa fa-bug" data-toggle="tooltip" data-placement="top" title="Report a Bug"></i></a>
           
@@ -657,13 +693,13 @@ guide.</p>
            "pagename" is a standard sphinx parameter containing the name of
            the source file, without extension.                             */
 
-        var sourceFile = "manila/configuration/manila_config_files/section_rhosp16_director_configuration" + ".rst";
+        var sourceFile = "manila/configuration/manila_config_files/section_rhosp17_director_configuration" + ".rst";
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
     var gitSha = "SHA: 09509c6b34244d6886f8410d2d11dc124a9d7220";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
-        var bugTitle = "Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 16 in NetApp OpenStack Docs";
+        var bugTitle = "Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1 in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
     var watermark = "CARACAL DRAFT"
         var useStoryboard = "";
