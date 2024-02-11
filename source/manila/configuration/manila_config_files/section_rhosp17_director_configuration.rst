@@ -91,16 +91,6 @@ the following example:
 
 .. note::
 
-  The ManilaNetAppVserver's volume-delete-retention-hours should be set to 0 before 
-  running the tests. Follow below commands on ONTAP to set it.
-
-  > set diagnostic
-
-  > vserver modify -vserver <vserver_name> -volume-delete-retention-hours 0
-  
-
-.. note::
-
   Each THT Configuration Parameter corresponds to a Manila
   Configuration Option. See :ref:`Table 7.1, "Manila NetApp THT Configuration
   Parameters "<table-7.1>` for a complete list of the THT Configuration
@@ -304,8 +294,15 @@ multiple smaller environment files:
 
 .. note::
 
-  The ManilaNetAppVserver's volume-delete-retention-hours should be set to 0 before 
-  running the tests. Follow below commands on ONTAP to set it.
+  Starting from ONTAP 9.13.1, there is a design change on deleting flexclone volumes. 
+  ONTAP 9.13.1 has introduced volume retention option by default. It means that, the
+  flexclone volumes (equivalent to "shares created from snapshot" in OpenStack) which 
+  are deleted in OpenStack would be retained in ONTAP by default, and that will cause
+  share deletion problems in Manila. i.e Manila will not be able to delete such shares,
+  as the equivalent flexclone volumes would be still linked in "volume clones" of parent
+  volume in ONTAP. To avoid waiting for the retention period,and to delete the flexclone
+  share immediately in OpenStack or ONTAP, user can can set the retention period to 0 for
+  the share server being used here.  
 
   > set diagnostic
 
