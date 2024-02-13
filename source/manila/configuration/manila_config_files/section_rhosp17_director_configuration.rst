@@ -35,10 +35,6 @@ requirements satisfied:
 
 - RHOSP Overcloud Controller nodes where Manila services will be installed.
 
-.. note::
-
-  The driver supports SnapMirror and FlexClone, but it is not certified for RHOSP 17.1.
-
 Deployment Steps
 ----------------
 
@@ -314,10 +310,7 @@ To deploy single backend,
    --templates \
    -e /home/stack/containers-prepare-parameter.yaml \
    -e /home/stack/templates/tripleo-netapp-single-svm.yaml \
-   -n /home/stack/templates/no-network/network_data.yaml \
-   -e /home/stack/templates/overcloud-networks-deployed.yaml \
-   -e /home/stack/templates/overcloud-vip-deployed.yaml \
-   -e /home/stack/templates/overcloud-baremetal-deployed.yaml \
+   ...
    --stack overcloud
 
 .. note::
@@ -357,3 +350,10 @@ command as ``stack`` user in the RHOSP Director command line to create the
 
   [stack@rhosp171-undercloud ~]$ source ~/overcloudrc
   (overcloud) [stack@rhosp171-undercloud ~]$ manila type-create default false
+  #Setting up snapshot-related extra-specs as these features are disabled by default.
+  (overcloud) [stack@rhosp171-undercloud ~]$ manila type-key default set snapshot_support=True create_share_from_snapshot_support=True revert_to_snapshot_support=True
+
+.. note::
+  For more netapp specific extra-specs, please refer below link.
+  
+  https://netapp-openstack-dev.github.io/openstack-docs/wallaby/manila/deployment_choice/section_creating_service_catalog.html
