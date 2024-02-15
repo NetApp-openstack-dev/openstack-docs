@@ -313,20 +313,23 @@ To deploy single backend,
    ...
    --stack overcloud
 
+
+Alternatively for single/multiple backend deployment, you can use 
+``--environment-directory`` parameter and specify the whole directory 
+to the deployment command. It will consider all the YAML files within 
+this directory:
+
+.. code-block:: bash
+  :name: overcloud-deploy-environment-directory
+
+   (undercloud) [stack@rhosp171-undercloud ~]$ openstack overcloud deploy \
+   --templates \
+   -e /home/stack/containers-prepare-parameter.yaml \
+   --environment-directory /home/stack/templates \
+   --stack overcloud
+
 .. note::
-  Alternatively for single/multiple backend deployment, 
-  you can use ``--environment-directory`` parameter and specify
-  the whole directory to the deployment command. It will consider all the YAML
-  files within this directory:
-
-  .. code-block:: bash
-    :name: overcloud-deploy-environment-directory
-
-     (undercloud) [stack@rhosp171-undercloud ~]$ openstack overcloud deploy \
-     --templates \
-     -e /home/stack/containers-prepare-parameter.yaml \
-     --environment-directory /home/stack/templates \
-     --stack overcloud
+  By default, Manila is deployed with both NFS and CIFS protocols enabled.     
 
 After RHOSP Overcloud is deployed, run the following command to check if the
 Manila services are up:
