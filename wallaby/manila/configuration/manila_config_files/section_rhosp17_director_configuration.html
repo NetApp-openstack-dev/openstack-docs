@@ -123,7 +123,7 @@ ga('send', 'pageview');
   </div>
 </div>
           <div class="row docs-byline">
-            <div class="docs-updated">updated: 2024-02-15 20:20</div>
+            <div class="docs-updated">updated: 2024-02-23 01:45</div>
           </div>
           <div class="row">
             <div class="col-lg-12">
@@ -202,6 +202,7 @@ the following example:</p>
 <span class="w">  </span><span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ManilaNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_single_svm&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappDriverHandlesShareServers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;false&#39;</span>
+<span class="w">    </span><span class="c1">#Set above value to &#39;true&#39; in case of DHSS=True</span>
 <span class="w">    </span><span class="nt">ManilaNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_password&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
@@ -210,6 +211,8 @@ the following example:</p>
 <span class="w">    </span><span class="nt">ManilaNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappVolumeNameTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;share_%(share_id)s&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
+<span class="w">    </span><span class="c1">#Use below aggregate param incase of DHSS=True and remove above vserver param.</span>
+<span class="w">    </span><span class="c1">#ManilaNetappRootVolumeAggr: &#39;aggr0&#39;</span>
 <span class="w">    </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">manila::config::manila_config</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_single_svm/replication_domain</span><span class="p">:</span>
@@ -400,6 +403,7 @@ configuration:</p>
 <span class="w">  </span><span class="nt">parameter_defaults</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">ManilaNetappBackendName</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;tripleo_netapp_multi_svm_1&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappDriverHandlesShareServers</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;false&#39;</span>
+<span class="w">    </span><span class="c1">#Set above value to &#39;true&#39; in case of DHSS=True</span>
 <span class="w">    </span><span class="nt">ManilaNetappLogin</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappPassword</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_password&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappServerHostname</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;hostname&#39;</span>
@@ -408,6 +412,9 @@ configuration:</p>
 <span class="w">    </span><span class="nt">ManilaNetappServerPort</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappVolumeNameTemplate</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;share_%(share_id)s&#39;</span>
 <span class="w">    </span><span class="nt">ManilaNetappVserver</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;vserver_name&#39;</span>
+<span class="w">    </span><span class="c1">#Use below aggregate param incase of DHSS=True and remove above vserver param.</span>
+<span class="w">    </span><span class="c1">#tripleo_netapp_multi_svm_2/netapp_root_volume_aggregate:</span>
+<span class="w">      </span><span class="c1">#value: &#39;aggr0&#39;</span>
 <span class="w">    </span><span class="nt">ControllerExtraConfig</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">manila::config::manila_config</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_1/replication_domain</span><span class="p">:</span>
@@ -442,6 +449,7 @@ enabled:</p>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;manila.share.drivers.netapp.common.NetAppDriver&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/driver_handles_share_servers</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;false&#39;</span>
+<span class="w">        </span><span class="c1">#Set above value to &#39;true&#39; in case of DHSS=True</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_login</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;admin_username&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_password</span><span class="p">:</span>
@@ -456,6 +464,9 @@ enabled:</p>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;80&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/netapp_vserver</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;vserver_name&gt;</span>
+<span class="w">        </span><span class="c1">#Use below aggregate params incase of DHSS=True and remove above vserver param.</span>
+<span class="w">        </span><span class="c1">#tripleo_netapp_multi_svm_2/netapp_aggregate:</span>
+<span class="w">          </span><span class="c1">#value: &lt;aggr_name&gt;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/replication_domain</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;netapp_replication_domain&#39;</span>
 <span class="w">        </span><span class="nt">tripleo_netapp_multi_svm_2/backend_availability_zone</span><span class="p">:</span>
@@ -468,7 +479,8 @@ configuration.</p>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Starting from ONTAP 9.13.1, there is a design change on deleting flexclone volumes.
+<p>[Applicable only incase of DHSS=False]
+Starting from ONTAP 9.13.1, there is a design change on deleting flexclone volumes.
 ONTAP 9.13.1 has introduced volume retention option by default. It means that, the
 flexclone volumes (equivalent to “shares created from snapshot” in OpenStack) which
 are deleted in OpenStack would be retained in ONTAP by default, and that will cause
@@ -527,6 +539,7 @@ command as <code class="docutils literal notranslate"><span class="pre">stack</s
 <code class="docutils literal notranslate"><span class="pre">default</span></code> share type:</p>
 <div class="highlight-bash notranslate" id="id1"><div class="highlight"><pre><span></span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">source</span><span class="w"> </span>~/overcloudrc
 <span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>manila<span class="w"> </span>type-create<span class="w"> </span>default<span class="w"> </span><span class="nb">false</span>
+<span class="c1">#Replace ``false`` to ``true`` in the above command for DHSS=True backends.</span>
 <span class="c1">#Setting up snapshot-related extra-specs as these features are disabled by default.</span>
 <span class="o">(</span>overcloud<span class="o">)</span><span class="w"> </span><span class="o">[</span>stack@rhosp171-undercloud<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span>manila<span class="w"> </span>type-key<span class="w"> </span>default<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">snapshot_support</span><span class="o">=</span>True<span class="w"> </span><span class="nv">create_share_from_snapshot_support</span><span class="o">=</span>True<span class="w"> </span><span class="nv">revert_to_snapshot_support</span><span class="o">=</span>True
 </pre></div>
@@ -555,7 +568,7 @@ command as <code class="docutils literal notranslate"><span class="pre">stack</s
           
           </div>
           <div class="row docs-byline bottom">
-            <div class="docs-updated">updated: 2024-02-15 20:20</div>
+            <div class="docs-updated">updated: 2024-02-23 01:45</div>
           </div>
           <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-8 docs-license">
@@ -686,7 +699,7 @@ command as <code class="docutils literal notranslate"><span class="pre">stack</s
         gitURL = "Source: https://github.com/NetApp-openstack-dev/openstack-docs" + "/" + sourceFile;
 
     /* gitsha, project, bug_tag and watermark rely on variables in conf.py */
-    var gitSha = "SHA: 069972eb5f923167635ecfd9065a8ab2478351c2";
+    var gitSha = "SHA: f832d36ab1965ba5de1ef6f44d7ddf223eac88c2";
         var bugProject = "NetApp-openstack-dev/openstack-docs";
         var bugTitle = "Deploying NetApp ONTAP Manila driver in a Red Hat OpenStack Platform 17.1 in NetApp OpenStack Docs";
     var fieldTags = "docs, dog";
@@ -697,7 +710,7 @@ command as <code class="docutils literal notranslate"><span class="pre">stack</s
     /* "last_updated" is the build date and time. It relies on the
        conf.py variable "html_last_updated_fmt", which should include
        year/month/day as well as hours and minutes                   */
-    var buildstring = "Release: 2021.2 on 2024-02-15 20:20";
+    var buildstring = "Release: 2021.2 on 2024-02-23 01:45";
 
     var fieldComment = encodeURI(buildstring) +
                        lineFeed + encodeURI(gitSha) +
