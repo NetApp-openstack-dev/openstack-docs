@@ -64,6 +64,7 @@ the following example:
       parameter_defaults:
         ManilaNetappBackendName: 'tripleo_netapp_single_svm'
         ManilaNetappDriverHandlesShareServers: 'false'
+        #Set above value to 'true' in case of DHSS=True
         ManilaNetappLogin: 'admin_username'
         ManilaNetappPassword: 'admin_password'
         ManilaNetappServerHostname: 'hostname'
@@ -72,6 +73,8 @@ the following example:
         ManilaNetappServerPort: '80'
         ManilaNetappVolumeNameTemplate: 'share_%(share_id)s'
         ManilaNetappVserver: 'vserver_name'
+        #Use below aggregate param incase of DHSS=True and remove above vserver param.
+        #ManilaNetappRootVolumeAggr: 'aggr0'
         ControllerExtraConfig:
           manila::config::manila_config:
             tripleo_netapp_single_svm/replication_domain:
@@ -207,6 +210,7 @@ multiple smaller environment files:
       parameter_defaults:
         ManilaNetappBackendName: 'tripleo_netapp_multi_svm_1'
         ManilaNetappDriverHandlesShareServers: 'false'
+        #Set above value to 'true' in case of DHSS=True
         ManilaNetappLogin: 'admin_username'
         ManilaNetappPassword: 'admin_password'
         ManilaNetappServerHostname: 'hostname'
@@ -215,6 +219,9 @@ multiple smaller environment files:
         ManilaNetappServerPort: '80'
         ManilaNetappVolumeNameTemplate: 'share_%(share_id)s'
         ManilaNetappVserver: 'vserver_name'
+        #Use below aggregate param incase of DHSS=True and remove above vserver param.
+        #tripleo_netapp_multi_svm_2/netapp_root_volume_aggregate:
+          #value: 'aggr0'
         ControllerExtraConfig:
           manila::config::manila_config:
             tripleo_netapp_multi_svm_1/replication_domain:
@@ -256,6 +263,7 @@ multiple smaller environment files:
               value: 'manila.share.drivers.netapp.common.NetAppDriver'
             tripleo_netapp_multi_svm_2/driver_handles_share_servers:
               value: 'false'
+            #Set above value to 'true' in case of DHSS=True
             tripleo_netapp_multi_svm_2/netapp_login:
               value: 'admin_username'
             tripleo_netapp_multi_svm_2/netapp_password:
@@ -270,16 +278,19 @@ multiple smaller environment files:
               value: '80'
             tripleo_netapp_multi_svm_2/netapp_vserver:
               value: <vserver_name>  
+            #Use below aggregate params incase of DHSS=True and remove above vserver param.
+            #tripleo_netapp_multi_svm_2/netapp_aggregate:
+              #value: <aggr_name>
             tripleo_netapp_multi_svm_2/replication_domain:
               value: 'netapp_replication_domain'
             tripleo_netapp_multi_svm_2/backend_availability_zone:
               value: 'manila-zone-0'
 
   Modify the parameter values according to your NetApp ONTAP backend
-  configuration.
+  configuration. 
 
 .. note::
-
+  [Applicable only incase of DHSS=False] 
   Starting from ONTAP 9.13.1, there is a design change on deleting flexclone volumes. 
   ONTAP 9.13.1 has introduced volume retention option by default. It means that, the
   flexclone volumes (equivalent to "shares created from snapshot" in OpenStack) which 
@@ -353,6 +364,7 @@ command as ``stack`` user in the RHOSP Director command line to create the
 
   [stack@rhosp171-undercloud ~]$ source ~/overcloudrc
   (overcloud) [stack@rhosp171-undercloud ~]$ manila type-create default false
+  #Replace ``false`` to ``true`` in the above command for DHSS=True backends.
   #Setting up snapshot-related extra-specs as these features are disabled by default.
   (overcloud) [stack@rhosp171-undercloud ~]$ manila type-key default set snapshot_support=True create_share_from_snapshot_support=True revert_to_snapshot_support=True
 
