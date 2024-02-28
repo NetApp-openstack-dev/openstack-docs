@@ -81,6 +81,17 @@ the following example:
               value: 'netapp_replication_domain'
             tripleo_netapp_single_svm/backend_availability_zone:
               value: 'manila-zone-0'
+            #Use all below lines incase of CIFS DHSS=True  
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_network_type:
+              #value: flat
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_mask:
+              #value: 255.255.255.0
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_ip_version:
+              #value: 4
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_gateway:
+              #value: *.*.*.*
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_allowed_ip_ranges:
+              #value: *.*.*.*-*.*.*.*
 
   Modify the parameter values according to your NetApp ONTAP backend
   configuration.
@@ -228,6 +239,17 @@ multiple smaller environment files:
               value: 'netapp_replication_domain'
             tripleo_netapp_multi_svm_1/backend_availability_zone:
               value: 'manila-zone-0'
+            #Use all below lines incase of CIFS DHSS=True  
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_network_type:
+              #value: flat
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_mask:
+              #value: 255.255.255.0
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_ip_version:
+              #value: 4
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_gateway:
+              #value: *.*.*.*
+            #tripleo_netapp_cifs_ss_1/standalone_network_plugin_allowed_ip_ranges:
+              #value: *.*.*.*-*.*.*.*  
   
   Modify the parameter values according to your NetApp ONTAP backend
   configuration.
@@ -284,7 +306,18 @@ multiple smaller environment files:
             tripleo_netapp_multi_svm_2/replication_domain:
               value: 'netapp_replication_domain'
             tripleo_netapp_multi_svm_2/backend_availability_zone:
-              value: 'manila-zone-0'
+              `value: 'manila-zone-0'
+            #Use all below lines incase of CIFS DHSS=True  
+            #tripleo_netapp_cifs_ss_2/standalone_network_plugin_network_type:
+              #value: flat
+            #tripleo_netapp_cifs_ss_2/standalone_network_plugin_mask:
+              #value: 255.255.255.0
+            #tripleo_netapp_cifs_ss_2/standalone_network_plugin_ip_version:
+              #value: 4
+            #tripleo_netapp_cifs_ss_2/standalone_network_plugin_gateway:
+              #value: *.*.*.*
+            #tripleo_netapp_cifs_ss_2/standalone_network_plugin_allowed_ip_ranges:
+              #value: *.*.*.*-*.*.*.*  
 
   Modify the parameter values according to your NetApp ONTAP backend
   configuration. 
