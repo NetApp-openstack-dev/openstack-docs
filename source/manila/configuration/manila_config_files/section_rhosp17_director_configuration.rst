@@ -81,7 +81,7 @@ the following example:
               value: 'netapp_replication_domain'
             tripleo_netapp_single_svm/backend_availability_zone:
               value: 'manila-zone-0'
-            #Use all below lines incase of CIFS DHSS=True  
+            #Use below configuration options for enabling "Standalone Network Plugin" with DHSS=True
             #tripleo_netapp_cifs_ss_1/standalone_network_plugin_network_type:
               #value: flat
             #tripleo_netapp_cifs_ss_1/standalone_network_plugin_mask:
@@ -94,14 +94,17 @@ the following example:
               #value: *.*.*.*-*.*.*.*
 
   Modify the parameter values according to your NetApp ONTAP backend
-  configuration.
+  configuration. 
 
 .. note::
 
-  Each THT Configuration Parameter corresponds to a Manila
+  1. Each THT Configuration Parameter corresponds to a Manila
   Configuration Option. See :ref:`Table 7.1, "Manila NetApp THT Configuration
   Parameters "<table-7.1>` for a complete list of the THT Configuration
   Parameters and their correspondence to Manila Configuration Options.
+        
+  2. For information on Standalone Network Plug-in, please refer to this 
+  https://netapp-openstack-dev.github.io/openstack-docs/wallaby/manila/configuration/manila_config_files/network_plugins/section_standalone_network_plugin.html#standalone-network-plugin
 
 .. note::
 
@@ -239,7 +242,7 @@ multiple smaller environment files:
               value: 'netapp_replication_domain'
             tripleo_netapp_multi_svm_1/backend_availability_zone:
               value: 'manila-zone-0'
-            #Use all below lines incase of CIFS DHSS=True  
+            #Use below configuration options for enabling "Standalone Network Plugin" with DHSS=True
             #tripleo_netapp_cifs_ss_1/standalone_network_plugin_network_type:
               #value: flat
             #tripleo_netapp_cifs_ss_1/standalone_network_plugin_mask:
@@ -306,7 +309,7 @@ multiple smaller environment files:
             tripleo_netapp_multi_svm_2/replication_domain:
               value: 'netapp_replication_domain'
             tripleo_netapp_multi_svm_2/backend_availability_zone:
-              `value: 'manila-zone-0'
+              value: 'manila-zone-0'
             #Use all below lines incase of CIFS DHSS=True  
             #tripleo_netapp_cifs_ss_2/standalone_network_plugin_network_type:
               #value: flat
