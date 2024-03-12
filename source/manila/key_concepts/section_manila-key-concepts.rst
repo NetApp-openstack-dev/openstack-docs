@@ -503,8 +503,8 @@ Xena release if all the following requirements are met:
 
 .. _share_backup:
 
-Share Backup (Share Backups using NetApp technologies available from Caracal Release)
--------------------------------------------------------------------------------------
+Share Backup (available from Caracal Release)
+---------------------------------------------
 
 A new type of NFS based generic backup driver was introduced in Bobcat release which 
 takes the responsibility for share related backup operations. The backup driver will 
