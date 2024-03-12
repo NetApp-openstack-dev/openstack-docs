@@ -54,6 +54,8 @@ chown
 cinderSecureEnvIndicator
 Cisco
 cloudlike
+cluster
+clusters
 codenamed
 conf
 config
@@ -71,6 +73,7 @@ dhss
 Diablo
 differentiators
 dm
+eng
 EF
 efficiencies
 enablement
@@ -292,6 +295,7 @@ VMware
 vnic
 Vsadmin
 vserver
+vservers
 Vserver
 Vservers
 VServers

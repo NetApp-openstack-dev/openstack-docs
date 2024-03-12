@@ -499,3 +499,22 @@ Xena release if all the following requirements are met:
 - Both source and destination clusters are AFF;
 - Both source and destination clusters contain a pre created policy from type
   'migrate'.
+  
+
+.. _share_backup:
+
+Share Backup (Share Backups using NetApp technologies available from Caracal Release)
+-------------------------------------------------------------------------------------
+
+A new type of NFS based generic backup driver was introduced in Bobcat release which 
+takes the responsibility for share related backup operations. The backup driver will 
+be configured at the manila data service node, and provide the basic abilities
+
+- Create a backup.
+- Delete a backup.
+- Restore a backup in specified share.
+
+In Caracal release, the solution has been extended for NetApp specific shares. i.e the 
+NetApp unified driver has been updated to create/edit/delete/restore backups  using 
+SnapVault relationship. It effectively uses all the ONTAP concepts like snapshot,
+peering of ontap vservers within and across ontap clusters, and replication engine. 

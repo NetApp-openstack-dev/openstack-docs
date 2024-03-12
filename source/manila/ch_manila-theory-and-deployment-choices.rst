@@ -16,3 +16,4 @@ Theory of Operation & Deployment Choices
    deployment_choice/section_utilizing_flexgroup_pool.rst
    deployment_choice/section_rest-client.rst
    deployment_choice/section_active_iq_weigher.rst
+   deployment_choice/section_share_backup
