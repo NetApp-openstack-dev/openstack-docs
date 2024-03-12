@@ -21,15 +21,14 @@ separate stanza as how we do earlier. .
 
 .. note::
    The sample config will look like this: 
-   ``eng_backup`` is the backup_type here.
-      
+   ``eng_backup`` is the backup_type here.::
+
        [eng_backup]
        backup_type_name=my_backup
        netapp_backup_backend_section_name = ontap2
        netapp_backup_vserver = backup_vserver_name
        netapp_backup_share = backup_volume_name_inside_vserver 
        netapp_snapmirror_job_timeout = 180
-       
 
        [ontap_cluster_1]
        vendor_name = NetApp
@@ -37,7 +36,7 @@ separate stanza as how we do earlier. .
        driver_handles_share_servers = False
        netapp_login = admin
        ....
-       ,,,,
+       ....
        enabled_backup_types = eng_backup
 
 
